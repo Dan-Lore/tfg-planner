@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TFG Planner</title>
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('tfg-theme');
+          var theme = 'dark';
+          if (raw === 'light' || raw === 'dark') {
+            theme = raw;
+          } else if (raw) {
+            var data = JSON.parse(raw);
+            if (data.state && (data.state.theme === 'light' || data.state.theme === 'dark')) {
+              theme = data.state.theme;
+            }
+          } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            theme = 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

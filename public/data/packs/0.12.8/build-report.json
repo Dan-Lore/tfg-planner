@@ -1,0 +1,3047 @@
+{
+  "modpackVersion": "0.12.8",
+  "tag": "0.12.8",
+  "generatedAt": "2026-06-17T10:27:03.657Z",
+  "stats": {
+    "substrateRecipes": 0,
+    "datapackRecipes": 0,
+    "kubejsRecipes": 2450,
+    "removes": 0,
+    "replaces": 79,
+    "finalRecipes": 2436,
+    "machines": 67,
+    "items": 2642,
+    "fluids": 319,
+    "recipesWithEnergy": 675,
+    "filesScanned": 323,
+    "filesUnparsed": 0,
+    "goldenMatched": 4,
+    "goldenMismatched": 0,
+    "goldenMissing": 0
+  },
+  "warnings": [
+    {
+      "file": "substrate/gtceu-jar",
+      "reason": "GTCEu JAR contains no static recipe JSON (runtime datagen); using KubeJS-effective recipes only"
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 160
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 169
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 178
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 234
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 449
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.machines.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 692
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.recycling.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 67
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 919
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 941
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 28
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 41
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 52
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 56
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 64
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 74
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 100
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 143
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 149
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\utility.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 99
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\utility.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 99
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\utility.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 251
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gregtech\\utility.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 251
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 107
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 430
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 434
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 507
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 512
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 516
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 519
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 522
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 527
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 530
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 533
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 536
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 541
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 544
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 547
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 573
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.greenhouse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 592
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\aquaponics\\recipes.pisciculture.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 145
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\beneath\\tags.beneath.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 31
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\beneath\\tags.beneath.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 59
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 96
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 367
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 371
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 375
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 379
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 383
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 387
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 408
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 412
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 139
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 140
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 156
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 184
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 213
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 229
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 245
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 246
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 263
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 279
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 296
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 316
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\recipes.repair.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 333
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\equipment\\tags.equipment.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 61
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\europa\\tags.europa.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\events.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\data.crops.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\data.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 274
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 43
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 124
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 131
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 190
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 247
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 262
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 420
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 430
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 440
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 450
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 460
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 470
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 541
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 559
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1009
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1577
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1861
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\recipes.meal_bags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 83
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 27
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 38
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 45
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 49
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 99
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 139
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 154
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 167
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 180
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 196
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 201
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 214
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 231
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 279
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\food\\tags.food.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 343
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\json_tool.armor_trim.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 73
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\json_tool.armor_trim.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 134
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\json_tool.armor_trim.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 169
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\json_tool.armor_trim.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 177
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\json_tool.armor_trim.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 193
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 108
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 141
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 151
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 161
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 166
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 171
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\loot.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 176
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.casings.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 32
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuits.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 134
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuits.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 141
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuits.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 150
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuits.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 214
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuits.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 221
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuit_board.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 19
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuit_board.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 110
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuit_board.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 111
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuit_board.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 112
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuit_board.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 168
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.circuit_board.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 175
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.molds.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 9
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\recipes.molds.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 21
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 220
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 225
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 247
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 259
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 265
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 280
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 285
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 298
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 303
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\machines\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 306
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\mars\\tags.mars.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 271
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\mars\\tags.mars.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 338
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\moon\\tags.moon.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 49
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\moon\\tags.moon.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 77
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\moon\\tags.moon.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 105
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\mv_rework\\material.recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 114
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\mv_rework\\material.recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 133
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\mv_rework\\material.recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 138
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\loot.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 58
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\loot.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 60
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\loot.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 68
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\loot.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 71
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.collapse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 18
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.collapse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 30
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.collapse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 104
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.collapse.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 121
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.dirt.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 202
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.dirt.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 203
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.dirt.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 242
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 408
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 420
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 424
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 501
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 510
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 517
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 548
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.rocks.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 613
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.sand.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 28
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.tfc_stone.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 715
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 716
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 730
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 782
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 834
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 907
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 975
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1057
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\recipes.wood.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1163
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 56
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 74
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 90
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 111
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 129
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 148
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 170
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 250
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 257
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 317
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 369
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\natural_blocks\\tags.stones.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 407
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\loot.ores.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 35
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\loot.ores.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 67
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\loot.ores.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 86
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.alloys.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 181
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.alloys.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 182
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.alloys.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 190
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.gem_slurries.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 52
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.gem_slurries.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 68
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.gem_slurries.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 99
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.gem_slurries.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 141
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.gem_slurries.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 142
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 9
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 33
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 34
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 54
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 55
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 66
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 67
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 85
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 109
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 110
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 133
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 134
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 144
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.pipes_hidden.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 145
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\recipes.quartzes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 43
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\tags.materials.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 27
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\ores_and_materials\\tags.materials.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 33
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\overworld\\tags.overworld.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\overworld\\tags.overworld.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 414
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\overworld\\tags.overworld.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 417
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\powergen\\nuclear\\recipes.nuclear.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 123
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\powergen\\recipes.early_gas.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 239
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\powergen\\recipes.early_gas.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyRecipe(…)",
+      "line": 240
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\medicine\\events.medicine.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 15
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\medicine\\events.medicine.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 66
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\medicine\\events.medicine.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 97
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\medicine\\recipes.medicine.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 585
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\medicine\\recipes.medicine.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 604
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.artisan_table.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 522
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.clay.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 60
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.clay.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 65
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.compost.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 88
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.compost.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 89
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.compost.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 135
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.compost.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 139
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.compost.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 142
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.dyes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.glass.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.leather.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 147
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.paper.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 95
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\recipes.vases.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\tags.primitive.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\tags.primitive.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 116
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\primitive\\tags.primitive.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 169
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\recipes.miscellaneous.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 25
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\recipes.miscellaneous.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 110
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\recipes.miscellaneous.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 139
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\recipes.temporary.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 37
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.railgun.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 11
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 20
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 20
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 26
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 26
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 29
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\space_general\\recipes.space.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 29
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 4
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 8
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 9
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 68
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 73
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 160
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 170
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 183
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 207
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 209
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 210
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 226
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 228
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 241
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 268
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 412
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\utility.recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.findRecipes(…)",
+      "line": 86
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\recipes.biochem.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 47
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\recipes.biochem.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 333
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\recipes.biochem.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 353
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\recipes.biochem.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 462
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\recipes.biochem.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 532
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\recipes.biochem.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 666
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\tags.venus.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 125
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\venus\\tags.venus.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 163
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\worldgen\\tags.general_worldgen.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 38
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfg\\worldgen\\tags.general_worldgen.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 45
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.dyes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 20
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.dyes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 40
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.dyes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 64
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.dyes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 102
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.dyes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 124
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 190
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 282
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 301
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.metals.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 161
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.metals.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 298
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.metals.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 299
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 14
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 105
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 127
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 90
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 153
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 188
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 228
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 234
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 242
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 250
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 354
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 361
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 368
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 376
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 381
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 431
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 435
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 478
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 510
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 511
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 519
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 520
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 561
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 584
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 590
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 591
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 596
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 603
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 727
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 90
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\recipes.recycling.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 45
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 9
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 15
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 20
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 28
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 11
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 13
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 14
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 15
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 17
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 18
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\greate\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 31
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 59
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1258
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1355
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1366
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1397
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1422
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1448
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1599
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1631
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1882
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 2383
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 34
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 41
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 128
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 133
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\advancedperipherals\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 22
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 178
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 256
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 291
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 325
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 40
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 47
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 61
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 82
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 104
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 109
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ad_astra\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 122
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ae2\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 754
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ae2\\tags.facades.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ae2\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ae2\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 38
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 11
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 170
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 8
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 13
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 31
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 37
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 45
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 53
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 118
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\afc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 122
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\alekiroofs\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\alekiships\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 8
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\arthropocolypse\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 8
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\asticor_carts\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\asticor_carts\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\asticor_carts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\asticor_carts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 11
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\asticor_carts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 14
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\asticor_carts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 21
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\beneath\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\beneath\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\beneath\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 46
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\beneath\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 54
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\beneath\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 71
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\chalk\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 8
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\chalk\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 30
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\chalk\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 71
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\comforts\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 30
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\computer_craft\\data.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 8
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\crafting_station\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 29
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 73
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 74
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 132
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 133
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 143
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 191
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 249
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 446
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 510
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 15
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 54
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 58
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 65
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 71
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 78
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\createdeco\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 79
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_additions\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_additions\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 17
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_connected\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_connected\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_connected\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_copycats\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 128
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\create_copycats\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 4
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\deafission\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\diggerhelmet\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 101
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\diggerhelmet\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\domum_ornamentum\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 137
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\domum_ornamentum\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\domum_ornamentum\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 13
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\domum_ornamentum\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 185
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\endermanoverhaul\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 45
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 62
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 79
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 11
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 15
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 19
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\every_compat\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\extended_ae2\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 592
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\extended_ae2\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\extended_ae2\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmaciv\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmaciv\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 18
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 9
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 47
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 252
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 331
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 332
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 426
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 468
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 894
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 39
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 47
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\firmalife\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 70
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\framed_blocks\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\framed_blocks\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ftb_quests\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\ftb_quests\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 204
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 240
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 267
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 288
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 341
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 430
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 461
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 529
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\grapplemod\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gtmoderntuilities\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gtmoderntuilities\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\gtmoderntuilities\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 18
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 47
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 48
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 54
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 55
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 62
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 70
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 112
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\macaws_for_tfc\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 113
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\mega_cells\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\mega_cells\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 541
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 995
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 890
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1242
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\recipes.removes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 1356
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 9
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 14
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\minecraft\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 52
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\modern_markings\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 27
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\modern_markings\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\modern_markings\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 120
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\modern_markings\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 124
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\more_red\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 271
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\more_red\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\more_red\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\primitive_creatures\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 18
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 73
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 203
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 380
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 464
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 600
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 669
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.locometal.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 133
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.locometal.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 265
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.locometal.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 275
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.locometal.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 276
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.locometal.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 278
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\recipes.locometal.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 410
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 12
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 26
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 27
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\railways\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 42
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 63
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 113
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 137
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 181
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 202
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 225
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 305
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 346
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 392
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 449
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 450
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 459
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 487
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 17
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 42
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 65
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 110
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\rnr\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 116
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\sacksnstuff\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 4
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\sacksnstuff\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 301
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\sacksnstuff\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 302
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\sacksnstuff\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\simplylight\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\simplylight\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 23
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\sophisticated_backpacks\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\sophisticated_backpacks\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\soulbound\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\soulbound\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\soulbound\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\species\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\species\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 4
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\species\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 16
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfchotornot\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfchotornot\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 18
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfchotornot\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 22
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfchotornot\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 96
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfctextile\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 10
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc_grooming_station\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\tfc_scraping\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 5
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\toolbelt\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 28
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\toolbelt\\recipes.js",
+      "reason": "Dynamic pattern not statically resolved: event.modifyResult(…)",
+      "line": 48
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 172
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 177
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 193
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 199
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 216
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 220
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 229
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 233
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 243
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 247
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 256
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 261
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 6
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 22
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\vintage_improvements\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 33
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\wan_ancient_beasts\\recipes.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 67
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\wan_ancient_beasts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 4
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\wan_ancient_beasts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 7
+    },
+    {
+      "file": "C:\\Users\\DanilLEDDV\\Documents\\VisualStudioCode\\tfg-planner\\.cache\\modpack\\a664358384b1ca86\\Modpack-Modern-0.12.8\\kubejs\\server_scripts\\wan_ancient_beasts\\tags.js",
+      "reason": "Loop-based recipe generation not statically resolved (.forEach)",
+      "line": 19
+    },
+    {
+      "file": "lang",
+      "reason": "Localized 2212/2961 resources (tags: 100/765, gtceu: 611/653, tfg: 406/417, minecraft: 109/110, malformed: 0; kubejs: 179 files, jars: 178, mc keys ru/en: 8121/6217, keys ru/en: 61332/62579)"
+    }
+  ],
+  "unparsedFiles": [],
+  "smokeResults": [
+    {
+      "id": "copper-centrifuge",
+      "ok": true
+    },
+    {
+      "id": "mv-chemical-bath-shaped",
+      "ok": true
+    },
+    {
+      "id": "magnesium-diboride-cool",
+      "ok": true
+    },
+    {
+      "id": "snow-compressor-fix",
+      "ok": true
+    },
+    {
+      "id": "diluted-hcl",
+      "ok": true
+    }
+  ],
+  "goldenDiff": [],
+  "commitHint": "https://github.com/TerraFirmaGreg-Team/Modpack-Modern/archive/refs/tags/0.12.8.zip"
+}

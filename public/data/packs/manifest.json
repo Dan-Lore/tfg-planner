@@ -1,0 +1,18 @@
+{
+  "format": "tfg-pack-manifest",
+  "formatVersion": 1,
+  "packs": [
+    {
+      "modpackVersion": "0.12.8",
+      "dataVersion": 1,
+      "path": "/data/packs/0.12.8/pack.json",
+      "status": "ready"
+    },
+    {
+      "modpackVersion": "0.12.8-sample",
+      "dataVersion": 1,
+      "path": "/data/packs/0.12.8-sample/pack.json",
+      "status": "deprecated"
+    }
+  ]
+}

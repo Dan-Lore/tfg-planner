@@ -1,0 +1,11 @@
+{
+  "modpackVersion": "0.12.8-sample",
+  "generatedAt": "2026-06-17T07:21:20.043Z",
+  "stats": {
+    "recipes": 3,
+    "machines": 3,
+    "items": 4,
+    "recipesWithEnergy": 1
+  },
+  "warnings": []
+}

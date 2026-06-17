@@ -1,0 +1,34 @@
+---
+description: Контекст проекта TFG Planner — планировщик мнемосхем TerraFirmaGreg
+alwaysApply: true
+---
+
+# TFG Planner
+
+Веб-приложение для производственных мнемосхем модпака TerraFirmaGreg-Modern.
+Репозиторий модпака: https://github.com/TerraFirmaGreg-Team/Modpack-Modern
+
+## Ключевые фичи
+
+- Парсер Modpack-Modern → pack data (tools/parser)
+- Меню версий модпака
+- Холст: механизмы (ручная настройка) + связи
+- Двусторонний расчёт продуктовых потоков, полный пересчёт графа
+- Энергия EU/t поэтапно — только реальные данные
+- i18n: ru + en
+- MVP: `.tfgp` на диске; облако — roadmap v2/v3
+
+## Без заглушек
+
+Незавершённое → docs/kanban.md. Нет fake UI/data в коде.
+
+## Документация
+
+Читать `docs/specification.md` и `AGENTS.md` перед реализацией.
+Вдохновение по расчётам: https://kirkmcdonald.github.io/
+
+## Код
+
+- TypeScript, строгая типизация
+- Calculator — без зависимости от React
+- Не расширять скоуп без обновления спецификации

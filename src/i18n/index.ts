@@ -1,0 +1,134 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  ru: {
+    translation: {
+      appName: 'TFG Planner',
+      nav: {
+        home: 'Главная',
+        editor: 'Редактор',
+        versions: 'Версии',
+      },
+      home: {
+        title: 'Планировщик производственных линий',
+        subtitle:
+          'Мнемосхемы для модпака TerraFirmaGreg-Modern. Собирайте цепочки, масштабируйте производство, сохраняйте схемы в .tfgp.',
+        openEditor: 'Открыть редактор',
+        selectVersion: 'Выбрать версию модпака',
+        modpackLink: 'Репозиторий Modpack-Modern',
+        inspiration: 'Вдохновение: Factorio Calculator',
+      },
+      versions: {
+        title: 'Версии модпака',
+        select: 'Загрузить',
+        active: 'Активна',
+        status: 'Статус',
+        noPacks: 'Нет доступных версий',
+      },
+      editor: {
+        title: 'Редактор схемы',
+        addMachine: 'Добавить машину',
+        multiplyOutputs: 'Умножить выходы',
+        targetRate: 'Целевая скорость',
+        duplicate: 'Дублировать',
+        undo: 'Отменить',
+        redo: 'Повторить',
+        export: 'Сохранить .tfgp',
+        import: 'Загрузить .tfgp',
+        noPack: 'Сначала выберите версию модпака в панели слева.',
+        machineCount: 'Машин',
+        overclock: 'OC',
+        parallel: 'Параллель',
+        multiplier: '× выход',
+        apply: 'Применить',
+        factorPrompt: 'Множитель (например 2 или 1.5)',
+        ratePrompt: 'Скорость в секунду',
+        selectNode: 'Выберите узел на схеме',
+        recipe: 'Рецепт',
+        pickMachine: 'Машина',
+        deleteHint: 'Del — удалить',
+        portMenu: {
+          addDownstream: 'Добавить потребителя',
+          addUpstream: 'Добавить производителя',
+          noRecipes: 'Нет подходящих рецептов',
+        },
+      },
+      theme: {
+        dark: 'Тёмная тема',
+        light: 'Светлая тема',
+        switchToLight: 'Включить светлую тему',
+        switchToDark: 'Включить тёмную тему',
+      },
+    },
+  },
+  en: {
+    translation: {
+      appName: 'TFG Planner',
+      nav: {
+        home: 'Home',
+        editor: 'Editor',
+        versions: 'Versions',
+      },
+      home: {
+        title: 'Production line planner',
+        subtitle:
+          'Flowcharts for TerraFirmaGreg-Modern. Build chains, scale production, save schemes as .tfgp.',
+        openEditor: 'Open editor',
+        selectVersion: 'Select modpack version',
+        modpackLink: 'Modpack-Modern repository',
+        inspiration: 'Inspired by: Factorio Calculator',
+      },
+      versions: {
+        title: 'Modpack versions',
+        select: 'Load',
+        active: 'Active',
+        status: 'Status',
+        noPacks: 'No versions available',
+      },
+      editor: {
+        title: 'Scheme editor',
+        addMachine: 'Add machine',
+        multiplyOutputs: 'Multiply outputs',
+        targetRate: 'Target rate',
+        duplicate: 'Duplicate',
+        undo: 'Undo',
+        redo: 'Redo',
+        export: 'Save .tfgp',
+        import: 'Load .tfgp',
+        noPack: 'Select a modpack version in the sidebar first.',
+        machineCount: 'Machines',
+        overclock: 'OC',
+        parallel: 'Parallel',
+        multiplier: 'Output ×',
+        apply: 'Apply',
+        factorPrompt: 'Factor (e.g. 2 or 1.5)',
+        ratePrompt: 'Rate per second',
+        selectNode: 'Select a node on the canvas',
+        recipe: 'Recipe',
+        pickMachine: 'Machine',
+        deleteHint: 'Del — delete',
+        portMenu: {
+          addDownstream: 'Add consumer',
+          addUpstream: 'Add producer',
+          noRecipes: 'No matching recipes',
+        },
+      },
+      theme: {
+        dark: 'Dark theme',
+        light: 'Light theme',
+        switchToLight: 'Switch to light theme',
+        switchToDark: 'Switch to dark theme',
+      },
+    },
+  },
+};
+
+void i18n.use(initReactI18next).init({
+  resources,
+  lng: 'ru',
+  fallbackLng: 'en',
+  interpolation: { escapeValue: false },
+});
+
+export default i18n;

@@ -1,0 +1,74 @@
+{
+  "format": "tfg-planner-graph",
+  "formatVersion": 1,
+  "meta": {
+    "name": "Медная линия (sample)",
+    "author": "",
+    "createdAt": "2026-06-17T12:00:00Z",
+    "updatedAt": "2026-06-17T12:00:00Z",
+    "description": "Пример для pack 0.12.8-sample"
+  },
+  "modpack": {
+    "version": "0.12.8-sample",
+    "dataVersion": 1
+  },
+  "viewport": { "x": 0, "y": 0, "zoom": 1 },
+  "nodes": [
+    {
+      "id": "crusher",
+      "machineId": "gt:steam_macerator",
+      "recipeId": "tfg:macerate_copper_ore",
+      "position": { "x": 0, "y": 80 },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 1,
+      "outputMultiplier": 1
+    },
+    {
+      "id": "washer",
+      "machineId": "gt:ore_washer",
+      "recipeId": "tfg:wash_crushed_copper",
+      "position": { "x": 280, "y": 80 },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 1,
+      "outputMultiplier": 1
+    },
+    {
+      "id": "furnace",
+      "machineId": "gt:electric_blast_furnace",
+      "recipeId": "tfg:smelt_purified_copper",
+      "position": { "x": 560, "y": 80 },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 1,
+      "outputMultiplier": 1
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "crusher",
+      "sourcePort": "output_0",
+      "target": "washer",
+      "targetPort": "input_0",
+      "itemId": "tfg:crushed_copper_ore"
+    },
+    {
+      "id": "e2",
+      "source": "washer",
+      "sourcePort": "output_0",
+      "target": "furnace",
+      "targetPort": "input_0",
+      "itemId": "tfg:purified_copper_ore"
+    }
+  ],
+  "groups": [],
+  "targets": [
+    {
+      "nodeId": "furnace",
+      "itemId": "tfg:copper_ingot",
+      "ratePerSecond": 1
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "modpackVersion": "0.12.8",
+  "recipes": [
+    {
+      "id": "tfg:magnesium_diboride_cool_down",
+      "machineId": "gtceu:chemical_bath",
+      "durationTicks": 400,
+      "inputs": [
+        { "itemId": "gtceu:hot_magnesium_diboride_ingot", "amount": 1 },
+        { "fluidId": "minecraft:water", "amount": 100 }
+      ],
+      "outputs": [{ "itemId": "gtceu:magnesium_diboride_ingot", "amount": 1 }]
+    },
+    {
+      "id": "tfg:uranium_238_separation",
+      "machineId": "gtceu:centrifuge",
+      "durationTicks": 800
+    },
+    {
+      "id": "gtceu:compressor/snowballs_to_snow_fixed",
+      "machineId": "gtceu:compressor",
+      "durationTicks": 200,
+      "euPerTick": 2
+    },
+    {
+      "id": "tfg:diluted_hcl_acid",
+      "machineId": "gtceu:mixer",
+      "durationTicks": 600
+    }
+  ]
+}

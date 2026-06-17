@@ -1,0 +1,70 @@
+{
+  "format": "tfg-pack-data",
+  "formatVersion": 1,
+  "modpackVersion": "0.12.8-sample",
+  "dataVersion": 1,
+  "generatedAt": "2026-06-17T12:00:00Z",
+  "items": [
+    {
+      "id": "tfg:copper_ore",
+      "names": { "ru": "Медная руда", "en": "Copper Ore" }
+    },
+    {
+      "id": "tfg:crushed_copper_ore",
+      "names": { "ru": "Измельчённая медная руда", "en": "Crushed Copper Ore" }
+    },
+    {
+      "id": "tfg:purified_copper_ore",
+      "names": { "ru": "Очищенная измельчённая медная руда", "en": "Purified Crushed Copper Ore" }
+    },
+    {
+      "id": "tfg:copper_ingot",
+      "names": { "ru": "Медный слиток", "en": "Copper Ingot" }
+    }
+  ],
+  "fluids": [],
+  "machines": [
+    {
+      "id": "gt:steam_macerator",
+      "names": { "ru": "Паровая дробилка", "en": "Steam Macerator" },
+      "category": "processing",
+      "recipeIds": ["tfg:macerate_copper_ore"]
+    },
+    {
+      "id": "gt:ore_washer",
+      "names": { "ru": "Промывочная установка", "en": "Ore Washer" },
+      "category": "processing",
+      "recipeIds": ["tfg:wash_crushed_copper"]
+    },
+    {
+      "id": "gt:electric_blast_furnace",
+      "names": { "ru": "Электропечь", "en": "Electric Blast Furnace" },
+      "category": "smelting",
+      "recipeIds": ["tfg:smelt_purified_copper"]
+    }
+  ],
+  "recipes": [
+    {
+      "id": "tfg:macerate_copper_ore",
+      "machineId": "gt:steam_macerator",
+      "durationTicks": 20,
+      "inputs": [{ "itemId": "tfg:copper_ore", "amount": 1 }],
+      "outputs": [{ "itemId": "tfg:crushed_copper_ore", "amount": 2 }]
+    },
+    {
+      "id": "tfg:wash_crushed_copper",
+      "machineId": "gt:ore_washer",
+      "durationTicks": 20,
+      "inputs": [{ "itemId": "tfg:crushed_copper_ore", "amount": 1 }],
+      "outputs": [{ "itemId": "tfg:purified_copper_ore", "amount": 1 }]
+    },
+    {
+      "id": "tfg:smelt_purified_copper",
+      "machineId": "gt:electric_blast_furnace",
+      "durationTicks": 20,
+      "inputs": [{ "itemId": "tfg:purified_copper_ore", "amount": 1 }],
+      "outputs": [{ "itemId": "tfg:copper_ingot", "amount": 1 }],
+      "energy": { "euPerTick": 120, "voltageTier": "LV" }
+    }
+  ]
+}
