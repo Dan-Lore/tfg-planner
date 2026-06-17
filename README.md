@@ -1,13 +1,11 @@
 # TFG Planner
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-lightgrey)](https://YOUR_GITHUB_USERNAME.github.io/tfg-planner/)
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-lightgrey)](https://dan-lore.github.io/tfg-planner/)
 
 Веб-приложение для планирования производственных мнемосхем модпака [TerraFirmaGreg-Modern](https://github.com/TerraFirmaGreg-Team/Modpack-Modern).
 
-**Демо:** после публикации репозитория сайт будет доступен по адресу  
-`https://<ваш-username>.github.io/tfg-planner/`  
-(имя пути совпадает с именем репозитория на GitHub).
+**Демо:** [https://dan-lore.github.io/tfg-planner/](https://dan-lore.github.io/tfg-planner/)
 
 ## Быстрый старт
 
@@ -34,36 +32,21 @@ npm run dev
 | `npm run build-pack -- --tag 0.12.8` | Сборка pack data из Modpack-Modern |
 | `npm run parser:validate` | Валидация pack JSON |
 
-## Публикация на GitHub
+## Публикация на GitHub Pages
 
-Репозиторий ещё не создан — ниже порядок действий.
+Репозиторий: [github.com/Dan-Lore/tfg-planner](https://github.com/Dan-Lore/tfg-planner)
 
-### 1. Создать репозиторий
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-gh repo create tfg-planner --public --source=. --push
-```
-
-Или создайте пустой репозиторий на GitHub и выполните:
-
-```bash
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/tfg-planner.git
-git branch -M main
-git push -u origin main
-```
-
-### 2. Включить GitHub Pages
+### Включить деплой (обязательно)
 
 1. **Settings → Pages**
-2. **Build and deployment → Source:** `GitHub Actions`
-3. После push в `main` workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) соберёт проект и опубликует `dist/`.
+2. **Build and deployment → Source:** выберите **GitHub Actions** (не «Deploy from a branch»)
+3. Push в `main` или `master` — workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) соберёт `dist/` и опубликует сайт.
 
-URL сайта: `https://YOUR_GITHUB_USERNAME.github.io/tfg-planner/`
+> **Белый экран?** Если в Source выбрана ветка `master` / корень репозитория, GitHub отдаёт исходники (`/src/main.tsx`), а не сборку. Переключите Source на **GitHub Actions** и дождитесь зелёного workflow в **Actions**.
 
-Если имя репозитория **не** `tfg-planner`, обновите `VITE_BASE_PATH` в [`.env.pages`](.env.pages) (локальная проверка) — в CI путь подставляется автоматически из `github.event.repository.name`.
+URL: `https://dan-lore.github.io/tfg-planner/`
+
+Если имя репозитория другое — обновите `VITE_BASE_PATH` в [`.env.pages`](.env.pages); в CI путь берётся из `github.event.repository.name`.
 
 ### 3. Локальная проверка сборки для Pages
 

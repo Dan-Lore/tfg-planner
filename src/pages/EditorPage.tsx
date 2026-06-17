@@ -238,6 +238,8 @@ export function EditorPage() {
     [portMenu, scheme.nodes, attachMachine, setSelectedNodeIds],
   );
 
+  const closePortMenu = useCallback(() => setPortMenu(null), []);
+
   const rfNodes: Node[] = useMemo(() => {
     if (!pack) return [];
     return scheme.nodes.map((n) => {
@@ -513,6 +515,8 @@ export function EditorPage() {
             onConnect={onConnect}
             isValidConnection={isValidConnection}
             onSelectionChange={onSelectionChange}
+            onPaneClick={closePortMenu}
+            onNodeClick={closePortMenu}
             onMoveEnd={(_, vp) =>
               setViewport({ x: vp.x, y: vp.y, zoom: vp.zoom })
             }
@@ -614,7 +618,7 @@ export function EditorPage() {
           direction={portMenu.direction}
           candidates={portMenu.candidates}
           onSelect={handlePortMenuSelect}
-          onClose={() => setPortMenu(null)}
+          onClose={closePortMenu}
         />
       )}
     </div>

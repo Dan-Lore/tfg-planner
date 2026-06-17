@@ -36,6 +36,7 @@ export function PortContextMenu({
 
   useEffect(() => {
     const onDoc = (e: globalThis.MouseEvent) => {
+      if (e.button !== 0) return;
       const target = e.target;
       if (
         rootRef.current &&
@@ -48,10 +49,10 @@ export function PortContextMenu({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('mousedown', onDoc, true);
     document.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('mousedown', onDoc, true);
       document.removeEventListener('keydown', onKey);
     };
   }, [onClose]);
