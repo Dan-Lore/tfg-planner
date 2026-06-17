@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, it, expect } from 'vitest';
@@ -10,8 +10,9 @@ import type { LangBundle } from '../src/lang/types.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cacheRoot = join(__dirname, '..', '..', '..', '.cache');
 
-function findModpackRoot(): string {
+function findModpackRoot(): string | null {
   const modpackDirs = join(cacheRoot, 'modpack');
+  if (!existsSync(modpackDirs)) return null;
   for (const entry of readdirSync(modpackDirs)) {
     const candidate = join(modpackDirs, entry, 'Modpack-Modern-0.12.8');
     try {
@@ -21,13 +22,19 @@ function findModpackRoot(): string {
       /* try next */
     }
   }
-  throw new Error('Modpack-Modern-0.12.8 not found in .cache/modpack');
+  return null;
 }
 
+const modpackRoot = findModpackRoot();
+const hasModpackCache =
+  modpackRoot !== null && existsSync(join(cacheRoot, 'mods', 'gtceu-1.20.1-7.5.3.jar'));
+
 describe('lang resolution', () => {
-  it('resolves TFC and GTCEu names from modpack kubejs + gtceu jar', () => {
-    const modpackRoot = findModpackRoot();
-    const { bundle: kubejs } = loadKubeJsLang(modpackRoot);
+  it.skipIf(!hasModpackCache)(
+    'resolves TFC and GTCEu names from modpack kubejs + gtceu jar',
+    () => {
+    const root = modpackRoot!;
+    const { bundle: kubejs } = loadKubeJsLang(root);
     const zip = new AdmZip(join(cacheRoot, 'mods', 'gtceu-1.20.1-7.5.3.jar'));
     const gtRu = JSON.parse(zip.readAsText('assets/gtceu/lang/ru_ru.json'));
     const gtEn = JSON.parse(zip.readAsText('assets/gtceu/lang/en_us.json'));
@@ -41,7 +48,8 @@ describe('lang resolution', () => {
     expect(resolveResourceName('#forge:dusts/copper', bundle).ru).toBe('Пыль меди');
     expect(resolveMachineName('gtceu:mixer', bundle).ru).toBe('Миксер');
     expect(resolveMachineName('minecraft:smelting', bundle).ru).toBe('Плавка');
-  });
+    },
+  );
 
   it('resolves GTCEu cables via suffix aliases', () => {
     const bundle: LangBundle = {
