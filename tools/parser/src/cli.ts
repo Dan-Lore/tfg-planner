@@ -6,7 +6,8 @@
  *   npm run build-pack -- --tag 0.12.8 --strict-snapshot
  *   npm run parser:validate -- --pack public/data/packs/0.12.8/pack.json
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildPack } from './build-pack.js';
@@ -39,10 +40,28 @@ function parseArgs(argv: string[]): Args {
   return args;
 }
 
+function ensureSnapshotRecipes(tag: string, snapshotDir: string, packPath: string): void {
+  const recipesPath = join(snapshotDir, 'recipes.json');
+  if (existsSync(recipesPath) || !existsSync(packPath)) return;
+
+  console.log(`Snapshot recipes missing; bootstrapping from ${packPath}…`);
+  const script = join(__dirname, '..', 'scripts', 'bootstrap-snapshot-from-pack.mjs');
+  const r = spawnSync(process.execPath, [script, tag, packPath], { stdio: 'inherit' });
+  if (r.status !== 0) {
+    throw new Error(`bootstrap-snapshot failed (exit ${r.status ?? 1})`);
+  }
+}
+
 async function cmdBuildPack(args: Args): Promise<void> {
   const tag = args.tag ?? '0.12.8';
   const cacheDir = resolve(args.cache ?? '.cache');
   const outDir = resolve(args.out ?? `public/data/packs/${tag}`);
+  const snapshotDir = args.snapshotDir
+    ? resolve(args.snapshotDir)
+    : join(__dirname, '..', 'snapshots', tag);
+  const packPath = join(outDir, 'pack.json');
+
+  ensureSnapshotRecipes(tag, snapshotDir, packPath);
 
   console.log(`Building pack for tag ${tag} (snapshot pipeline)…`);
   const result = await buildPack({

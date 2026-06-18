@@ -83,7 +83,7 @@ npm run build-pack -- --tag 0.12.8 --strict-snapshot
 
 ```
 tools/parser/
-  snapshots/<tag>/       # committed или CI artifact
+  snapshots/<tag>/       # snapshot-manifest.json в git; recipes.json — локально/CI
   snapshot/              # KubeJS export script
   scripts/
     generate-tfg-snapshot.*

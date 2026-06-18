@@ -35,6 +35,17 @@ npm run generate-tfg-snapshot -- 0.12.8 --skip-fetch
 npm run resume-tfg-server-export -- 0.12.8
 ```
 
+## Git
+
+**Не коммитить** `recipes.json` — это генерируемый артефакт (~4 MB, дублирует `pack.json` при bootstrap).
+
+В репозитории держать:
+
+- `public/data/packs/<tag>/pack.json` — runtime data для приложения
+- `snapshots/<tag>/snapshot-manifest.json` — метаданные и marker recipes
+
+`recipes.json` создаётся локально или в CI (`generate-tfg-snapshot` / `bootstrap-snapshot`). `build-pack` автоматически запускает bootstrap, если `recipes.json` отсутствует, а `pack.json` уже есть.
+
 ## Bootstrap (interim)
 
 Until a full server export exists, bootstrap from a built `pack.json`:

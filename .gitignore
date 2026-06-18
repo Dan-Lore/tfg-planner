@@ -23,8 +23,20 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Parser cache (modpack snapshots, mod JARs)
+# Parser cache (modpack workdirs, mod JARs)
 .cache/
+
+# Parser generated recipe snapshots (commit pack.json + snapshot-manifest.json only)
+tools/parser/substrate-dumps/
+tools/parser/snapshots/**/recipes.json
+
+# User schemes and debug attachments at repo root
+/*.tfgp
+Untitled*.tfgp
+/*.png
+
+# Local one-off scripts
+_i18n.py
 
 # Test
 coverage/

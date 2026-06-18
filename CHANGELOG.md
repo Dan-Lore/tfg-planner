@@ -17,6 +17,7 @@
 - `build-pack`: snapshot-only production path (без GT substrate / KubeJS recipe simulation).
 - `manifest.json`: `snapshotSha256`, `pakkuLockSha256`.
 - Pack `0.12.8`: **6727** recipes из snapshot, smoke 12/12, golden 6/6.
+- `.gitignore`: `recipes.json`, `substrate-dumps/`, user `.tfgp`/`Untitled*.tfgp`, root `*.png`; `build-pack` auto-bootstraps snapshot из `pack.json`.
 
 ### Removed
 
