@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import traverse from '@babel/traverse';
-import type { ArrayExpression, Node, ObjectExpression } from '@babel/types';
+import type { Node, ObjectExpression } from '@babel/types';
 import { listStartupScripts } from './scanner.js';
 import { parseKubeJs } from './ast/parse.js';
 import { evalNumeric, stringLiteral } from './ast/expr.js';

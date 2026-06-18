@@ -5,6 +5,11 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
+- CI: PR workflow now runs production build with `VITE_BASE_PATH` (same as Pages deploy).
+
 ### Added
 
 - **K-010 rev.3:** TFG-native recipe snapshot pipeline — `generate-tfg-snapshot`, `loadRecipeSnapshot`, `tools/parser/snapshots/<tag>/`.

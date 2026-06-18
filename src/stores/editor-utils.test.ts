@@ -45,14 +45,12 @@ describe('nextId', () => {
   beforeEach(() => resetIdCounter());
 
   it('seeds counter from existing scheme ids after reload', () => {
-    seedIdCounter(
-      [{ id: 'node_19', machineId: 'm', recipeId: 'r', position: { x: 0, y: 0 }, machineCount: 1, overclock: 1, parallel: 1, outputMultiplier: 1 }],
-      [{ id: 'edge_20', source: 'node_19', sourcePort: 'out_0', target: 'node_19', targetPort: 'in_0' }],
-    );
-    expect(allocateNodeId(
-      [{ id: 'node_19', machineId: 'm', recipeId: 'r', position: { x: 0, y: 0 }, machineCount: 1, overclock: 1, parallel: 1, outputMultiplier: 1 }],
-      [{ id: 'edge_20', source: 'node_19', sourcePort: 'out_0', target: 'node_19', targetPort: 'in_0' }],
-    )).toBe('node_21');
+    const nodes: TfgpNode[] = [
+      { ...node, id: 'node_19' },
+    ];
+    const edges = [{ id: 'edge_20', source: 'node_19', sourcePort: 'out_0', target: 'node_19', targetPort: 'in_0' }];
+    seedIdCounter(nodes, edges);
+    expect(allocateNodeId(nodes, edges)).toBe('node_21');
   });
 
   it('skips ids already taken in the scheme', () => {

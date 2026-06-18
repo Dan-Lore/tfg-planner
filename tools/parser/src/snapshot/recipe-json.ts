@@ -9,34 +9,6 @@ interface GtRecipeJson {
   tickOutputs?: Record<string, unknown>;
 }
 
-function pushItemFlow(
-  flows: RecipeOp['inputs'],
-  itemId: string,
-  amount: number,
-): void {
-  if (itemId.startsWith('#')) {
-    flows.push({ itemId, amount });
-  } else if (itemId.includes(':')) {
-    flows.push({ itemId, amount });
-  } else {
-    flows.push({ itemId: `minecraft:${itemId}`, amount });
-  }
-}
-
-function pushFluidFlow(
-  flows: RecipeOp['inputs'],
-  fluidId: string,
-  amount: number,
-): void {
-  if (fluidId.startsWith('#')) {
-    flows.push({ fluidId, amount });
-  } else if (fluidId.includes(':')) {
-    flows.push({ fluidId, amount });
-  } else {
-    flows.push({ fluidId: `minecraft:${fluidId}`, amount });
-  }
-}
-
 function parseContentEntry(
   content: unknown,
   chance: number | undefined,

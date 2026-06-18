@@ -116,7 +116,7 @@ function collectCallsInNode(node: Node, out: CallExpression[]): void {
   }
 
   for (const key of Object.keys(node)) {
-    const child = (node as Record<string, unknown>)[key];
+    const child = (node as unknown as Record<string, unknown>)[key];
     if (!child) continue;
     if (Array.isArray(child)) {
       for (const item of child) {
