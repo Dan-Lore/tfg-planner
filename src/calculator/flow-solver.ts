@@ -301,9 +301,24 @@ export function solveFlows(input: SolverInput): FlowResult {
   }
 
   for (const edge of input.edges) {
-    const key = edge.itemId ?? edge.fluidId ?? '';
-    const srcRates = nodeOutputRates[edge.source];
-    edgeFlows[edge.id] = srcRates?.[key] ?? R.zero;
+    edgeFlows[edge.id] = R.zero;
+  }
+  for (const node of input.nodes) {
+    const byProduct = new Map<string, SchemeEdge[]>();
+    for (const edge of outgoing.get(node.id) ?? []) {
+      const key = edge.itemId ?? edge.fluidId ?? '';
+      if (!key) continue;
+      if (!byProduct.has(key)) byProduct.set(key, []);
+      byProduct.get(key)!.push(edge);
+    }
+    for (const [key, edges] of byProduct) {
+      const total = nodeOutputRates[node.id]?.[key] ?? R.zero;
+      if (edges.length === 0) continue;
+      const share = total.div(R.from(edges.length));
+      for (const edge of edges) {
+        edgeFlows[edge.id] = share;
+      }
+    }
   }
 
   const edgeTargetFlows: Record<string, Rational> = {};

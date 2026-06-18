@@ -334,6 +334,15 @@ a {
   flex: 1;
   min-width: 0;
   height: 100%;
+  --minimap-bg: color-mix(in srgb, var(--surface2) 88%, transparent);
+  --minimap-mask: rgba(15, 20, 25, 0.58);
+  --minimap-node: rgba(148, 163, 184, 0.45);
+  --minimap-viewport-stroke: var(--accent);
+}
+
+[data-theme='light'] .editor-canvas-wrap {
+  --minimap-mask: rgba(241, 245, 249, 0.55);
+  --minimap-node: rgba(100, 116, 139, 0.38);
 }
 
 .editor-sidebar {
@@ -619,6 +628,11 @@ a {
   white-space: nowrap;
 }
 
+.editor-toolbar__clear:not(:disabled):hover {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
 .editor-sidebar__hint {
   color: var(--muted);
   font-size: 0.85rem;
@@ -657,9 +671,7 @@ a {
   flex-direction: column;
   transition:
     box-shadow 0.22s cubic-bezier(0.34, 1.2, 0.64, 1),
-    transform 0.22s cubic-bezier(0.34, 1.2, 0.64, 1),
     border-color 0.18s ease;
-  will-change: transform, box-shadow;
 }
 
 .machine-node__header {
@@ -967,7 +979,6 @@ a {
 
 .machine-node.is-dragging {
   cursor: grabbing;
-  transform: scale(1.05);
   border-color: var(--accent);
   box-shadow:
     var(--shadow-drag),
@@ -976,15 +987,6 @@ a {
 
 .react-flow__node.dragging {
   z-index: 1000 !important;
-  transition: none;
-}
-
-.react-flow__node {
-  transition: transform 0.08s linear;
-}
-
-.react-flow__node.dragging .machine-node {
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .machine-handle {
@@ -1045,6 +1047,12 @@ a {
   background: var(--bg);
 }
 
+.editor-canvas-wrap .react-flow__viewport,
+.editor-canvas-wrap .react-flow__renderer {
+  filter: none;
+  backdrop-filter: none;
+}
+
 .react-flow__controls-button {
   background: var(--surface) !important;
   border-color: var(--border) !important;
@@ -1056,6 +1064,19 @@ a {
   background: var(--surface2) !important;
 }
 
-.react-flow__minimap {
-  background: var(--surface);
+.react-flow__minimap.editor-minimap {
+  margin: 0 0 10px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+  background: var(--minimap-bg) !important;
+  overflow: hidden;
+}
+
+.react-flow__minimap.editor-minimap .react-flow__minimap-mask {
+  fill: var(--minimap-mask);
+}
+
+.react-flow__minimap.editor-minimap .react-flow__minimap-node {
+  fill: var(--minimap-node);
 }

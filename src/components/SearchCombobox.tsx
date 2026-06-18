@@ -96,7 +96,7 @@ export function SearchCombobox({
       : null;
 
   const showRecipeLabel =
-    mode === 'recipe' && !focused && !isSearching && !query && !!displayValue;
+    mode === 'recipe' && !isSearching && !query && !!displayValue;
 
   const inputValue = showRecipeLabel ? displayValue : query;
 
@@ -160,18 +160,20 @@ export function SearchCombobox({
 
   const handleFocus = () => {
     setFocused(true);
-    if (mode === 'recipe' && !isSearching && !query && displayValue) {
-      setQuery('');
-      setIsSearching(true);
-      onQueryChange?.('');
-    }
     setOpenSafe(true);
   };
+
+  const resetRecipeSearch = useCallback(() => {
+    setQuery('');
+    setIsSearching(false);
+    onQueryChange?.('');
+  }, [onQueryChange]);
 
   const handleBlur = () => {
     setFocused(false);
     setHighlightIndex(-1);
     setOpenSafe(false);
+    if (mode === 'recipe') resetRecipeSearch();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -206,6 +208,7 @@ export function SearchCombobox({
     if (e.key === 'Escape') {
       e.preventDefault();
       setOpenSafe(false);
+      if (mode === 'recipe') resetRecipeSearch();
       inputRef.current?.blur();
     }
   };

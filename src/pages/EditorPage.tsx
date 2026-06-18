@@ -80,11 +80,13 @@ export function EditorPage() {
   const flowEdgeData = useEditorStore((s) => s.flowEdgeData);
   const flowResult = useEditorStore((s) => s.flowResult);
   const selectedNodeIds = useEditorStore((s) => s.selectedNodeIds);
+  const selectedEdgeIds = useEditorStore((s) => s.selectedEdgeIds);
   const setNodes = useEditorStore((s) => s.setNodes);
   const setViewport = useEditorStore((s) => s.setViewport);
   const addNode = useEditorStore((s) => s.addNode);
   const updateNode = useEditorStore((s) => s.updateNode);
   const removeNodes = useEditorStore((s) => s.removeNodes);
+  const removeEdges = useEditorStore((s) => s.removeEdges);
   const addEdgeToStore = useEditorStore((s) => s.addEdge);
   const attachMachine = useEditorStore((s) => s.attachMachine);
   const pushHistory = useEditorStore((s) => s.pushHistory);
@@ -94,7 +96,9 @@ export function EditorPage() {
   const setTarget = useEditorStore((s) => s.setTarget);
   const duplicateSelected = useEditorStore((s) => s.duplicateSelected);
   const loadScheme = useEditorStore((s) => s.loadScheme);
+  const clearScheme = useEditorStore((s) => s.clearScheme);
   const setSelectedNodeIds = useEditorStore((s) => s.setSelectedNodeIds);
+  const setSelectedEdgeIds = useEditorStore((s) => s.setSelectedEdgeIds);
   const updateFlows = useEditorStore((s) => s.updateFlows);
   const colorTheme = useThemeStore((s) => s.theme);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -161,16 +165,22 @@ export function EditorPage() {
       }
       if (
         (e.key === 'Delete' || e.key === 'Backspace') &&
-        selectedNodeIds.length > 0 &&
         !isEditableTarget(e.target)
       ) {
-        e.preventDefault();
-        removeNodes(selectedNodeIds);
+        if (selectedEdgeIds.length > 0) {
+          e.preventDefault();
+          removeEdges(selectedEdgeIds);
+          return;
+        }
+        if (selectedNodeIds.length > 0) {
+          e.preventDefault();
+          removeNodes(selectedNodeIds);
+        }
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [undo, redo, removeNodes, selectedNodeIds]);
+  }, [undo, redo, removeNodes, removeEdges, selectedNodeIds, selectedEdgeIds]);
 
   const connectedPorts = useMemo(() => {
     const inPorts = new Map<string, Set<string>>();
@@ -326,8 +336,9 @@ export function EditorPage() {
         type: 'flow',
         data: flowEdgeData[e.id],
         animated: true,
+        selected: selectedEdgeIds.includes(e.id),
       })),
-    [scheme.edges, flowEdgeData],
+    [scheme.edges, flowEdgeData, selectedEdgeIds],
   );
 
   const onNodesChange = useCallback(
@@ -393,10 +404,11 @@ export function EditorPage() {
   );
 
   const onSelectionChange = useCallback(
-    ({ nodes }: OnSelectionChangeParams) => {
+    ({ nodes, edges }: OnSelectionChangeParams) => {
       setSelectedNodeIds(nodes.map((n) => n.id));
+      setSelectedEdgeIds(edges.map((e) => e.id));
     },
-    [setSelectedNodeIds],
+    [setSelectedNodeIds, setSelectedEdgeIds],
   );
 
   const selectedNode = scheme.nodes.find((n) => n.id === selectedNodeIds[0]);
@@ -434,6 +446,11 @@ export function EditorPage() {
     const recipe = pack.recipes.find((r) => r.id === selectedNode.recipeId);
     return recipe ? formatRecipeLabel(pack, recipe, lang) : '';
   }, [pack, selectedNode, lang]);
+
+  const handleClearScheme = () => {
+    if (!window.confirm(t('editor.clearSchemeConfirm'))) return;
+    clearScheme();
+  };
 
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -544,6 +561,14 @@ export function EditorPage() {
         >
           {t('editor.import')}
         </button>
+        <button
+          type="button"
+          className="btn btn-secondary editor-toolbar__clear"
+          onClick={handleClearScheme}
+          disabled={scheme.nodes.length === 0 && scheme.edges.length === 0}
+        >
+          {t('editor.clearScheme')}
+        </button>
         <input
           ref={fileInputRef}
           type="file"
@@ -578,7 +603,17 @@ export function EditorPage() {
           >
             <Background />
             <Controls />
-            <MiniMap />
+            <MiniMap
+              className="editor-minimap"
+              pannable
+              zoomable
+              maskColor="var(--minimap-mask)"
+              maskStrokeColor="var(--minimap-viewport-stroke)"
+              maskStrokeWidth={1.25}
+              nodeColor="var(--minimap-node)"
+              nodeStrokeWidth={0}
+              bgColor="var(--minimap-bg)"
+            />
           </ReactFlow>
         </div>
         <aside className="editor-sidebar">

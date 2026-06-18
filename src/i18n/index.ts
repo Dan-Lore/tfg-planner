@@ -36,6 +36,9 @@ const resources = {
         redo: 'Повторить',
         export: 'Сохранить .tfgp',
         import: 'Загрузить .tfgp',
+        clearScheme: 'Очистить схему',
+        clearSchemeConfirm:
+          'Удалить все узлы, связи и цели? Действие нельзя отменить.',
         noPack: 'Сначала выберите версию модпака в панели слева.',
         machineCount: 'Машин',
         overclock: 'Разгон',
@@ -52,7 +55,7 @@ const resources = {
         searchMachine: 'Поиск машины…',
         searchRecipe: 'Поиск рецепта…',
         noMatches: 'Ничего не найдено',
-        deleteHint: 'Del — удалить',
+        deleteHint: 'Del — удалить узел или связь',
         portMenu: {
           addDownstream: 'Добавить потребителя',
           addUpstream: 'Добавить производителя',
@@ -101,6 +104,9 @@ const resources = {
         redo: 'Redo',
         export: 'Save .tfgp',
         import: 'Load .tfgp',
+        clearScheme: 'Clear scheme',
+        clearSchemeConfirm:
+          'Remove all nodes, edges, and targets? This cannot be undone.',
         noPack: 'Select a modpack version in the sidebar first.',
         machineCount: 'Machines',
         overclock: 'Overclock',
@@ -117,7 +123,7 @@ const resources = {
         searchMachine: 'Search machines…',
         searchRecipe: 'Search recipes…',
         noMatches: 'No matches',
-        deleteHint: 'Del — delete',
+        deleteHint: 'Del — delete node or edge',
         portMenu: {
           addDownstream: 'Add consumer',
           addUpstream: 'Add producer',

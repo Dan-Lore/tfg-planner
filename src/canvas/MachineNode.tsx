@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { PackData } from '@/data/types';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
 import { RecipePicker } from './RecipePicker';
-import { flowKey, flowLabel, inputPortId, outputPortId } from './ports';
+import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
 export interface PortDisplay {
   portId: string;
@@ -239,7 +239,7 @@ export function buildPortDisplays(
   return {
     inputPorts: recipe.inputs.map((flow, i) => {
       const portId = inputPortId(i);
-      const key = flowKey(flow);
+      const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
       const rate = inputRates[key];
       return {
@@ -252,7 +252,7 @@ export function buildPortDisplays(
     }),
     outputPorts: recipe.outputs.map((flow, i) => {
       const portId = outputPortId(i);
-      const key = flowKey(flow);
+      const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
       const rate = outputRates[key];
       return {

@@ -25,12 +25,14 @@ interface EditorState {
   activePackKey: string | null;
   schemesByPack: Record<string, TfgpFile>;
   selectedNodeIds: string[];
+  selectedEdgeIds: string[];
   flowEdgeData: Record<string, FlowEdgeData>;
   flowResult: FlowResult | null;
   past: EditorSnapshot[];
   future: EditorSnapshot[];
   switchToPack: (modpackVersion: string, dataVersion: number) => void;
   loadScheme: (file: TfgpFile) => void;
+  clearScheme: () => void;
   snapshot: () => EditorSnapshot;
   pushHistory: () => void;
   undo: () => void;
@@ -54,7 +56,9 @@ interface EditorState {
     fluidId?: string;
   }) => string;
   removeEdge: (id: string) => void;
+  removeEdges: (ids: string[]) => void;
   setSelectedNodeIds: (ids: string[]) => void;
+  setSelectedEdgeIds: (ids: string[]) => void;
   multiplySelectedOutputs: (factor: number) => void;
   setTarget: (target: TfgpTarget) => void;
   /** Refresh port/edge rates from current node settings; does not change machine counts. */
@@ -80,6 +84,7 @@ export const useEditorStore = create<EditorState>()(
       activePackKey: null,
       schemesByPack: {},
       selectedNodeIds: [],
+      selectedEdgeIds: [],
       flowEdgeData: {},
       flowResult: null,
       past: [],
@@ -100,6 +105,7 @@ export const useEditorStore = create<EditorState>()(
           flowEdgeData: {},
           flowResult: null,
           selectedNodeIds: [],
+          selectedEdgeIds: [],
         });
         get().updateFlows();
       },
@@ -117,8 +123,27 @@ export const useEditorStore = create<EditorState>()(
           past: [],
           future: [],
           selectedNodeIds: [],
+          selectedEdgeIds: [],
         }));
         get().updateFlows();
+      },
+
+      clearScheme: () => {
+        const { scheme, activePackKey, schemesByPack } = get();
+        const cleared = createEmptyTfgp(
+          scheme.modpack.version,
+          scheme.modpack.dataVersion,
+        );
+        set({
+          scheme: cleared,
+          schemesByPack: cacheScheme(schemesByPack, activePackKey, cleared),
+          past: [],
+          future: [],
+          flowEdgeData: {},
+          flowResult: null,
+          selectedNodeIds: [],
+          selectedEdgeIds: [],
+        });
       },
 
       snapshot: () => {
@@ -284,6 +309,9 @@ export const useEditorStore = create<EditorState>()(
             scheme,
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
             selectedNodeIds: s.selectedNodeIds.filter((nid) => !idSet.has(nid)),
+            selectedEdgeIds: s.selectedEdgeIds.filter((eid) =>
+              scheme.edges.some((e) => e.id === eid),
+            ),
           };
         });
         get().updateFlows();
@@ -351,21 +379,30 @@ export const useEditorStore = create<EditorState>()(
       },
 
       removeEdge: (id) => {
+        get().removeEdges([id]);
+      },
+
+      removeEdges: (ids) => {
+        if (ids.length === 0) return;
         get().pushHistory();
+        const idSet = new Set(ids);
         set((s) => {
           const scheme = {
             ...s.scheme,
-            edges: s.scheme.edges.filter((e) => e.id !== id),
+            edges: s.scheme.edges.filter((e) => !idSet.has(e.id)),
           };
           return {
             scheme,
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+            selectedEdgeIds: s.selectedEdgeIds.filter((eid) => !idSet.has(eid)),
           };
         });
         get().updateFlows();
       },
 
       setSelectedNodeIds: (ids) => set({ selectedNodeIds: ids }),
+
+      setSelectedEdgeIds: (ids) => set({ selectedEdgeIds: ids }),
 
       multiplySelectedOutputs: (factor) => {
         if (factor <= 0 || !Number.isFinite(factor)) return;
@@ -410,7 +447,12 @@ export const useEditorStore = create<EditorState>()(
         const { scheme } = get();
         const snap = get().snapshot();
         const result = runSolver(snap, pack, { preserveManualMachineCounts: true });
-        const flowEdgeData = buildEdgeFlowData(scheme.edges, result);
+        const flowEdgeData = buildEdgeFlowData(
+          scheme.edges,
+          scheme.nodes,
+          pack,
+          result,
+        );
         set({
           flowResult: result,
           flowEdgeData,
@@ -430,7 +472,12 @@ export const useEditorStore = create<EditorState>()(
         const result = runSolver(snap, pack, { preserveManualMachineCounts: false });
         const nodes = applyFlowResult(snap.nodes, result, 'full');
         const schemeWithNodes = { ...scheme, nodes };
-        const flowEdgeData = buildEdgeFlowData(schemeWithNodes.edges, result);
+        const flowEdgeData = buildEdgeFlowData(
+          schemeWithNodes.edges,
+          schemeWithNodes.nodes,
+          pack,
+          result,
+        );
         set({
           scheme: schemeWithNodes,
           flowResult: result,

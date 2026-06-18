@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { BaseEdge, EdgeLabelRenderer, getBezierPath, type EdgeProps } from '@xyflow/react';
+import { edgeLabelPosition } from '@/lib/bezier-edge-label';
 
 export interface FlowEdgeData {
-  unified?: string;
   source?: string;
   target?: string;
   [key: string]: unknown;
@@ -18,54 +19,65 @@ export function FlowEdge({
   data,
   markerEnd,
   style,
+  selected,
 }: EdgeProps) {
+  const [hovered, setHovered] = useState(false);
   const d = (data ?? {}) as FlowEdgeData;
-  const [edgePath, labelX, labelY] = getBezierPath({
+  const bezier = {
     sourceX,
     sourceY,
     targetX,
     targetY,
     sourcePosition,
     targetPosition,
-  });
+  };
+  const [edgePath] = getBezierPath(bezier);
 
-  const showDual = Boolean(d.source && d.target && !d.unified);
+  const sourceLabel = edgeLabelPosition(bezier, 'source', d.source);
+  const targetLabel = edgeLabelPosition(bezier, 'target', d.target);
+
+  const emphasized = selected || hovered;
+  const round = (value: number) => Math.round(value);
 
   return (
-    <>
-      <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} />
+    <g
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <BaseEdge
+        id={id}
+        path={edgePath}
+        markerEnd={markerEnd}
+        interactionWidth={18}
+        style={{
+          ...style,
+          strokeWidth: selected ? 2.5 : hovered ? 2 : undefined,
+          stroke: emphasized ? 'var(--accent)' : undefined,
+          transition: 'stroke 0.15s ease, stroke-width 0.15s ease',
+        }}
+      />
       <EdgeLabelRenderer>
-        {d.unified && (
-          <div
-            className="flow-edge-label flow-edge-label--unified"
-            style={{
-              transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
-            }}
-          >
-            {d.unified}
-          </div>
-        )}
-        {showDual && d.source && (
+        {d.source && (
           <div
             className="flow-edge-label flow-edge-label--source"
             style={{
-              transform: `translate(-50%, -50%) translate(${sourceX + (targetX - sourceX) * 0.12}px, ${sourceY + (targetY - sourceY) * 0.12}px)`,
+              transform: `translate(-50%, -50%) translate(${round(sourceLabel.x)}px, ${round(sourceLabel.y)}px)`,
             }}
           >
             {d.source}
           </div>
         )}
-        {showDual && d.target && (
+        {d.target && (
           <div
             className="flow-edge-label flow-edge-label--target"
             style={{
-              transform: `translate(-50%, -50%) translate(${sourceX + (targetX - sourceX) * 0.88}px, ${sourceY + (targetY - sourceY) * 0.88}px)`,
+              transform: `translate(-50%, -50%) translate(${round(targetLabel.x)}px, ${round(targetLabel.y)}px)`,
             }}
           >
             {d.target}
           </div>
         )}
       </EdgeLabelRenderer>
-    </>
+    </g>
   );
 }

@@ -1,9 +1,17 @@
 import type { PackData, Flow, Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
 
+export function productKey(flow: { itemId?: string; fluidId?: string }): string {
+  return flow.itemId ?? flow.fluidId ?? '';
+}
+
 export function flowKey(flow: { itemId?: string; fluidId?: string }): string {
   if (flow.fluidId) return `fluid:${flow.fluidId}`;
   return `item:${flow.itemId ?? ''}`;
+}
+
+export function normalizePortId(port: string): string {
+  return port.replace(/^output_/, 'out_').replace(/^input_/, 'in_');
 }
 
 export function flowLabel(
