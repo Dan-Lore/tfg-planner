@@ -1,7 +1,13 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeEach } from 'vitest';
 import type { FlowResult } from '@/calculator/flow-solver';
 import type { TfgpNode } from '@/schema/tfgp';
-import { applyFlowResult } from './editor-utils';
+import {
+  allocateNodeId,
+  applyFlowResult,
+  dedupeNodeIds,
+  resetIdCounter,
+  seedIdCounter,
+} from './editor-utils';
 
 const node: TfgpNode = {
   id: 'n1',
@@ -32,5 +38,51 @@ describe('applyFlowResult', () => {
   it('full mode applies solver machine counts across scheme', () => {
     const out = applyFlowResult([node], result, 'full');
     expect(out[0]!.machineCount).toBe(9);
+  });
+});
+
+describe('nextId', () => {
+  beforeEach(() => resetIdCounter());
+
+  it('seeds counter from existing scheme ids after reload', () => {
+    seedIdCounter(
+      [{ id: 'node_19', machineId: 'm', recipeId: 'r', position: { x: 0, y: 0 }, machineCount: 1, overclock: 1, parallel: 1, outputMultiplier: 1 }],
+      [{ id: 'edge_20', source: 'node_19', sourcePort: 'out_0', target: 'node_19', targetPort: 'in_0' }],
+    );
+    expect(allocateNodeId(
+      [{ id: 'node_19', machineId: 'm', recipeId: 'r', position: { x: 0, y: 0 }, machineCount: 1, overclock: 1, parallel: 1, outputMultiplier: 1 }],
+      [{ id: 'edge_20', source: 'node_19', sourcePort: 'out_0', target: 'node_19', targetPort: 'in_0' }],
+    )).toBe('node_21');
+  });
+
+  it('skips ids already taken in the scheme', () => {
+    const existing: TfgpNode[] = [
+      { ...node, id: 'node_3' },
+    ];
+    seedIdCounter(existing, []);
+    expect(allocateNodeId(existing, [])).toBe('node_4');
+  });
+});
+
+describe('dedupeNodeIds', () => {
+  beforeEach(() => resetIdCounter());
+
+  it('reassigns duplicate node ids on import', () => {
+    const base = {
+      machineId: 'm',
+      recipeId: 'r',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      parallel: 1,
+      outputMultiplier: 1,
+    };
+    const nodes: TfgpNode[] = [
+      { id: 'node_3', ...base, machineId: 'reactor' },
+      { id: 'node_3', ...base, machineId: 'tower' },
+    ];
+    const out = dedupeNodeIds(nodes, []);
+    expect(out.map((n) => n.id)).toEqual(['node_3', 'node_4']);
+    expect(out[1]!.machineId).toBe('tower');
   });
 });

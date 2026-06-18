@@ -5,9 +5,12 @@ import { normalizeNodeScaling } from '@/lib/node-scaling';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import {
+  allocateEdgeId,
+  allocateNodeId,
   applyFlowResult,
-  nextId,
+  dedupeNodeIds,
   runSolver,
+  seedIdCounter,
   type EditorSnapshot,
 } from './editor-utils';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
@@ -95,11 +98,13 @@ export const useEditorStore = create<EditorState>()(
         const updatedCache = cacheScheme(schemesByPack, activePackKey, scheme);
         const newKey = packKey(modpackVersion, dataVersion);
         const cached = updatedCache[newKey];
+        const nextScheme = cached ?? createEmptyTfgp(modpackVersion, dataVersion);
+        seedIdCounter(nextScheme.nodes, nextScheme.edges);
 
         set({
           schemesByPack: updatedCache,
           activePackKey: newKey,
-          scheme: cached ?? createEmptyTfgp(modpackVersion, dataVersion),
+          scheme: nextScheme,
           past: [],
           future: [],
           flowEdgeData: {},
@@ -111,10 +116,12 @@ export const useEditorStore = create<EditorState>()(
       },
 
       loadScheme: (file) => {
-        const normalized = {
-          ...file,
-          nodes: file.nodes.map(normalizeNodeScaling),
-        };
+        const nodes = dedupeNodeIds(
+          file.nodes.map(normalizeNodeScaling),
+          file.edges,
+        );
+        const normalized = { ...file, nodes };
+        seedIdCounter(normalized.nodes, normalized.edges);
         const key = packKey(normalized.modpack.version, normalized.modpack.dataVersion);
         set((s) => ({
           scheme: normalized,
@@ -134,6 +141,7 @@ export const useEditorStore = create<EditorState>()(
           scheme.modpack.version,
           scheme.modpack.dataVersion,
         );
+        seedIdCounter(cleared.nodes, cleared.edges);
         set({
           scheme: cleared,
           schemesByPack: cacheScheme(schemesByPack, activePackKey, cleared),
@@ -248,7 +256,8 @@ export const useEditorStore = create<EditorState>()(
 
       addNode: (partial) => {
         get().pushHistory();
-        const id = nextId('node');
+        const { scheme } = get();
+        const id = allocateNodeId(scheme.nodes, scheme.edges);
         const node: TfgpNode = {
           ...partial,
           id,
@@ -319,7 +328,11 @@ export const useEditorStore = create<EditorState>()(
 
       addEdge: (partial) => {
         get().pushHistory();
-        const edge: TfgpEdge = { id: nextId('edge'), ...partial };
+        const { scheme } = get();
+        const edge: TfgpEdge = {
+          id: allocateEdgeId(scheme.nodes, scheme.edges),
+          ...partial,
+        };
         set((s) => {
           const scheme = { ...s.scheme, edges: [...s.scheme.edges, edge] };
           return {
@@ -332,7 +345,9 @@ export const useEditorStore = create<EditorState>()(
 
       attachMachine: (params) => {
         get().pushHistory();
-        const nodeId = nextId('node');
+        const { scheme } = get();
+        const nodeId = allocateNodeId(scheme.nodes, scheme.edges);
+        const edgeId = allocateEdgeId(scheme.nodes, scheme.edges);
         const node: TfgpNode = {
           id: nodeId,
           machineId: params.machineId,
@@ -346,7 +361,7 @@ export const useEditorStore = create<EditorState>()(
         const edge: TfgpEdge =
           params.direction === 'downstream'
             ? {
-                id: nextId('edge'),
+                id: edgeId,
                 source: params.anchorNodeId,
                 sourcePort: params.anchorPort,
                 target: nodeId,
@@ -355,7 +370,7 @@ export const useEditorStore = create<EditorState>()(
                 fluidId: params.fluidId,
               }
             : {
-                id: nextId('edge'),
+                id: edgeId,
                 source: nodeId,
                 sourcePort: params.newPort,
                 target: params.anchorNodeId,
@@ -495,12 +510,17 @@ export const useEditorStore = create<EditorState>()(
         if (ids.length === 0) return;
         get().pushHistory();
         const idSet = new Set(ids);
-        const toCopy = get().scheme.nodes.filter((n) => idSet.has(n.id));
-        const newNodes: TfgpNode[] = toCopy.map((n) => ({
-          ...n,
-          id: nextId('node'),
-          position: { x: n.position.x + 40, y: n.position.y + 40 },
-        }));
+        const { scheme } = get();
+        const toCopy = scheme.nodes.filter((n) => idSet.has(n.id));
+        const newNodes: TfgpNode[] = [];
+        for (const n of toCopy) {
+          const id = allocateNodeId([...scheme.nodes, ...newNodes], scheme.edges);
+          newNodes.push({
+            ...n,
+            id,
+            position: { x: n.position.x + 40, y: n.position.y + 40 },
+          });
+        }
         set((s) => {
           const scheme = {
             ...s.scheme,
@@ -524,7 +544,10 @@ export const useEditorStore = create<EditorState>()(
       onRehydrateStorage: () => (state) => {
         if (!state?.activePackKey) return;
         const cached = state.schemesByPack[state.activePackKey];
-        if (cached) state.scheme = cached;
+        if (cached) {
+          state.scheme = cached;
+          seedIdCounter(cached.nodes, cached.edges);
+        }
       },
     },
   ),

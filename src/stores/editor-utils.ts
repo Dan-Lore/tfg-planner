@@ -65,8 +65,65 @@ export function applyFlowResult(
   }));
 }
 
+const ID_NUMERIC_SUFFIX = /^(?:node|edge)_(\d+)$/;
+
 let idCounter = 0;
-export function nextId(prefix: string): string {
-  idCounter += 1;
-  return `${prefix}_${idCounter}`;
+
+/** @internal Test helper */
+export function resetIdCounter(): void {
+  idCounter = 0;
+}
+
+/** Align the counter with ids already present in a scheme (e.g. after import or reload). */
+export function seedIdCounter(
+  nodes: { id: string }[],
+  edges: { id: string }[],
+): void {
+  let max = 0;
+  for (const { id } of [...nodes, ...edges]) {
+    const match = ID_NUMERIC_SUFFIX.exec(id);
+    if (match) max = Math.max(max, Number(match[1]));
+  }
+  idCounter = Math.max(idCounter, max);
+}
+
+export function nextId(prefix: string, taken?: ReadonlySet<string>): string {
+  for (;;) {
+    idCounter += 1;
+    const id = `${prefix}_${idCounter}`;
+    if (!taken?.has(id)) return id;
+  }
+}
+
+export function allocateNodeId(
+  nodes: { id: string }[],
+  edges: { id: string }[],
+): string {
+  seedIdCounter(nodes, edges);
+  const taken = new Set(nodes.map((n) => n.id));
+  return nextId('node', taken);
+}
+
+export function allocateEdgeId(
+  nodes: { id: string }[],
+  edges: { id: string }[],
+): string {
+  seedIdCounter(nodes, edges);
+  const taken = new Set(edges.map((e) => e.id));
+  return nextId('edge', taken);
+}
+
+/** Reassign ids for duplicate nodes so each entry is unique. */
+export function dedupeNodeIds(nodes: TfgpNode[], edges: TfgpEdge[]): TfgpNode[] {
+  seedIdCounter(nodes, edges);
+  const taken = new Set<string>();
+  return nodes.map((node) => {
+    if (!taken.has(node.id)) {
+      taken.add(node.id);
+      return node;
+    }
+    const id = nextId('node', taken);
+    taken.add(id);
+    return { ...node, id };
+  });
 }
