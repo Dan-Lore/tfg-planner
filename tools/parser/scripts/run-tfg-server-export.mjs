@@ -56,15 +56,48 @@ function findServerPackZip() {
   return zips.length > 0 ? join(serverPackDir, zips[0]) : null;
 }
 
+function countZipMods(zipPath) {
+  if (process.platform === 'win32') {
+    const ps = `$z=[IO.Compression.ZipFile]::OpenRead('${zipPath.replace(/'/g, "''")}'); ($z.Entries | Where-Object { $_.FullName -like 'mods/*.jar' }).Count`;
+    const r = spawnSync(
+      'powershell',
+      ['-NoProfile', '-Command', `Add-Type -AssemblyName System.IO.Compression.FileSystem; ${ps}; $z.Dispose()`],
+      { encoding: 'utf-8' },
+    );
+    const n = Number.parseInt((r.stdout ?? '').trim(), 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+  const r = spawnSync('unzip', ['-l', zipPath], { encoding: 'utf-8' });
+  return (r.stdout?.match(/mods\/.*\.jar/g) ?? []).length;
+}
+
+function countJarMods(dir) {
+  const modsDir = join(dir, 'mods');
+  if (!existsSync(modsDir)) return 0;
+  return readdirSync(modsDir).filter((n) => n.endsWith('.jar')).length;
+}
+
 function ensureServerRun() {
+  const zip = findServerPackZip();
+  const zipMods = zip ? countZipMods(zip) : 0;
+  const localMods = countJarMods(serverRunDir);
   const starterJar = join(serverRunDir, 'minecraft_server.jar');
-  const modsDir = join(serverRunDir, 'mods');
-  if (existsSync(starterJar) && existsSync(modsDir)) {
-    console.log(`Reusing ${serverRunDir}`);
+
+  if (existsSync(starterJar) && localMods >= Math.min(150, zipMods * 0.8)) {
+    console.log(`Reusing ${serverRunDir} (${localMods} mods)`);
     return;
   }
 
-  const zip = findServerPackZip();
+  if (localMods > 0 && localMods < zipMods * 0.8) {
+    console.log(`server-run incomplete (${localMods}/${zipMods} mods) — re-extracting serverpack`);
+    spawnSync('powershell', [
+      '-NoProfile',
+      '-Command',
+      `Remove-Item -Recurse -Force '${serverRunDir.replace(/'/g, "''")}' -ErrorAction SilentlyContinue`,
+    ]);
+  }
+
+  if (!zip) {
   if (!zip) {
     throw new Error(
       `No serverpack zip in ${join(workDir, 'build', 'serverpack')} — run generate-tfg-snapshot first`,
