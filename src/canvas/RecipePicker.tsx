@@ -2,7 +2,7 @@ import { useEffect, useMemo, type MouseEvent as ReactMouseEvent, type WheelEvent
 import { useTranslation } from 'react-i18next';
 import type { PackData, Recipe } from '@/data/types';
 import { formatRecipeLabel } from '@/lib/recipe-label';
-import { buildRecipeIngredientSearchText } from '@/lib/search-combobox';
+import { buildRecipeIngredientSearchText, sortRecipesForPicker } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
 
 interface RecipePickerProps {
@@ -29,20 +29,25 @@ export function RecipePicker({
   onOpenChange,
 }: RecipePickerProps) {
   const { t } = useTranslation();
+  const sortedRecipes = useMemo(
+    () => sortRecipesForPicker(pack, recipes, lang),
+    [pack, recipes, lang],
+  );
+
   const items = useMemo(
     () =>
-      recipes.map((r) => ({
+      sortedRecipes.map((r) => ({
         id: r.id,
         label: formatRecipeLabel(pack, r, lang),
         searchText: buildRecipeIngredientSearchText(pack, r, lang),
       })),
-    [pack, recipes, lang],
+    [pack, sortedRecipes, lang],
   );
 
   const displayValue = useMemo(() => {
-    const recipe = recipes.find((r) => r.id === value);
+    const recipe = sortedRecipes.find((r) => r.id === value);
     return recipe ? formatRecipeLabel(pack, recipe, lang) : '';
-  }, [pack, recipes, value, lang]);
+  }, [pack, sortedRecipes, value, lang]);
 
   useEffect(() => {
     if (dragging) onOpenChange?.(false);

@@ -571,6 +571,10 @@ a {
   z-index: 40;
 }
 
+.search-combobox--recipe .search-combobox__menu {
+  max-height: 16rem;
+}
+
 .search-combobox__menu::-webkit-scrollbar {
   width: 6px;
 }

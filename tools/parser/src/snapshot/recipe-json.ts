@@ -1,0 +1,187 @@
+import type { RecipeOp } from '../types.js';
+
+interface GtRecipeJson {
+  type?: string;
+  duration?: number;
+  inputs?: Record<string, unknown>;
+  outputs?: Record<string, unknown>;
+  tickInputs?: Record<string, unknown>;
+  tickOutputs?: Record<string, unknown>;
+}
+
+function pushItemFlow(
+  flows: RecipeOp['inputs'],
+  itemId: string,
+  amount: number,
+): void {
+  if (itemId.startsWith('#')) {
+    flows.push({ itemId, amount });
+  } else if (itemId.includes(':')) {
+    flows.push({ itemId, amount });
+  } else {
+    flows.push({ itemId: `minecraft:${itemId}`, amount });
+  }
+}
+
+function pushFluidFlow(
+  flows: RecipeOp['inputs'],
+  fluidId: string,
+  amount: number,
+): void {
+  if (fluidId.startsWith('#')) {
+    flows.push({ fluidId, amount });
+  } else if (fluidId.includes(':')) {
+    flows.push({ fluidId, amount });
+  } else {
+    flows.push({ fluidId: `minecraft:${fluidId}`, amount });
+  }
+}
+
+function parseContentEntry(
+  content: unknown,
+  chance: number | undefined,
+): RecipeOp['inputs'][number] | null {
+  if (!content || typeof content !== 'object') return null;
+  if (chance !== undefined && chance > 0) return null;
+
+  const c = content as Record<string, unknown>;
+
+  if (c.type === 'gtceu:circuit') {
+    const cfg = (c.configuration as number | undefined) ?? 1;
+    return { itemId: 'gtceu:programmed_circuit', amount: cfg };
+  }
+
+  if (c.type === 'gtceu:sized' && c.ingredient && typeof c.ingredient === 'object') {
+    const ing = c.ingredient as { item?: string; tag?: string };
+    const amount = (c.count as number | undefined) ?? 1;
+    if (ing.tag) return { itemId: `#${ing.tag.replace(/^#/, '')}`, amount };
+    if (ing.item) return { itemId: ing.item, amount };
+  }
+
+  if (typeof c.item === 'string') {
+    return { itemId: c.item, amount: (c.amount as number | undefined) ?? 1 };
+  }
+
+  if (typeof c.fluid === 'string') {
+    return { fluidId: c.fluid, amount: (c.amount as number | undefined) ?? 1 };
+  }
+
+  if (c.value && Array.isArray(c.value)) {
+    const amount = (c.amount as number | undefined) ?? 1;
+    for (const v of c.value) {
+      if (!v || typeof v !== 'object') continue;
+      const entry = v as { fluid?: string; tag?: string };
+      if (entry.fluid) return { fluidId: entry.fluid, amount };
+      if (entry.tag) return { fluidId: `#${entry.tag.replace(/^#/, '')}`, amount };
+    }
+  }
+
+  return null;
+}
+
+function flowsFromJsonSide(side: unknown): RecipeOp['inputs'] {
+  const flows: RecipeOp['inputs'] = [];
+  if (!side || typeof side !== 'object') return flows;
+  const obj = side as Record<string, unknown>;
+
+  for (const key of ['item', 'fluid'] as const) {
+    const arr = obj[key];
+    if (!Array.isArray(arr)) continue;
+    for (const entry of arr) {
+      if (!entry || typeof entry !== 'object') continue;
+      const e = entry as { content?: unknown; chance?: number };
+      const flow = parseContentEntry(e.content, e.chance);
+      if (flow) flows.push(flow);
+    }
+  }
+
+  return flows;
+}
+
+function euFromTickInputs(tickInputs: unknown): number | undefined {
+  if (!tickInputs || typeof tickInputs !== 'object') return undefined;
+  const eu = (tickInputs as Record<string, unknown>).eu;
+  if (!Array.isArray(eu) || eu.length === 0) return undefined;
+  const first = eu[0] as { content?: number } | undefined;
+  if (first?.content != null) return first.content;
+  return undefined;
+}
+
+export function machineIdFromRecipeType(type: string): string {
+  if (type.startsWith('gtceu:')) {
+    const m = type.match(/^gtceu:([^/]+)/);
+    if (m) return `gtceu:${m[1]}`;
+  }
+  if (type.startsWith('minecraft:')) return type;
+  if (type.includes(':')) return type;
+  return `minecraft:${type}`;
+}
+
+export function recipeIdFromDumpPath(relativePath: string): string {
+  const normalized = relativePath.replace(/\\/g, '/');
+  const noExt = normalized.replace(/\.json$/i, '');
+  if (noExt.includes(':')) return noExt;
+  if (noExt.includes('/')) return `gtceu:${noExt}`;
+  return `gtceu:${noExt}`;
+}
+
+/** Parse GT runtime dump JSON or flat RecipeOp export entry. */
+export function recipeFromSnapshotJson(
+  id: string,
+  data: Record<string, unknown>,
+  source: string,
+): { recipe: RecipeOp | null; skipReason?: string } {
+  if (data.id && data.machineId && Array.isArray(data.inputs) && Array.isArray(data.outputs)) {
+    const flat = data as {
+      id: string;
+      machineId: string;
+      inputs: RecipeOp['inputs'];
+      outputs: RecipeOp['outputs'];
+      durationTicks: number;
+      energy?: RecipeOp['energy'];
+    };
+    if (flat.inputs.length === 0 && flat.outputs.length === 0) {
+      return { recipe: null, skipReason: 'empty_io' };
+    }
+    return {
+      recipe: {
+        id: flat.id,
+        machineId: flat.machineId,
+        inputs: flat.inputs.map((f) => ({ ...f })),
+        outputs: flat.outputs.map((f) => ({ ...f })),
+        durationTicks: flat.durationTicks,
+        ...(flat.energy ? { energy: { ...flat.energy } } : {}),
+        source,
+      },
+    };
+  }
+
+  const typed = data as GtRecipeJson;
+  const type = typed.type ?? '';
+  const machineId = machineIdFromRecipeType(type);
+
+  const inputs = [
+    ...flowsFromJsonSide(typed.inputs),
+    ...flowsFromJsonSide(typed.tickInputs),
+  ];
+  const outputs = [
+    ...flowsFromJsonSide(typed.outputs),
+    ...flowsFromJsonSide(typed.tickOutputs),
+  ];
+
+  if (inputs.length === 0 && outputs.length === 0) {
+    return { recipe: null, skipReason: 'empty_io' };
+  }
+
+  const eu = euFromTickInputs(typed.tickInputs);
+  const recipe: RecipeOp = {
+    id: id.includes(':') ? id : `gtceu:${id}`,
+    machineId,
+    inputs,
+    outputs,
+    durationTicks: typed.duration ?? 20,
+    source,
+  };
+  if (eu != null) recipe.energy = { euPerTick: eu };
+  return { recipe };
+}

@@ -1,7 +1,9 @@
 import { flowKey, inputPortId, outputPortId } from '@/canvas/ports';
 import { getMachineName } from '@/data/pack-registry';
 import type { Flow, PackData, Recipe } from '@/data/types';
+import { flowLookupKeys } from '@/lib/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
+import type { TagIndex } from '@/lib/tag-index';
 
 export interface RecipePortRef {
   recipe: Recipe;
@@ -62,8 +64,18 @@ export function findDownstreamCandidates(
   index: RecipeFlowIndex,
   flow: Flow,
   lang: 'ru' | 'en',
+  tags: TagIndex,
 ): AttachCandidate[] {
-  const refs = index.byInputKey.get(flowKey(flow)) ?? [];
+  const seen = new Set<string>();
+  const refs: RecipePortRef[] = [];
+  for (const key of flowLookupKeys(flow, tags)) {
+    for (const ref of index.byInputKey.get(key) ?? []) {
+      const dedupe = `${ref.recipe.id}:${ref.portIndex}`;
+      if (seen.has(dedupe)) continue;
+      seen.add(dedupe);
+      refs.push(ref);
+    }
+  }
   const candidates = refs.map(({ recipe, portIndex }) => ({
     machineId: recipe.machineId,
     recipeId: recipe.id,
@@ -79,8 +91,18 @@ export function findUpstreamCandidates(
   index: RecipeFlowIndex,
   flow: Flow,
   lang: 'ru' | 'en',
+  tags: TagIndex,
 ): AttachCandidate[] {
-  const refs = index.byOutputKey.get(flowKey(flow)) ?? [];
+  const seen = new Set<string>();
+  const refs: RecipePortRef[] = [];
+  for (const key of flowLookupKeys(flow, tags)) {
+    for (const ref of index.byOutputKey.get(key) ?? []) {
+      const dedupe = `${ref.recipe.id}:${ref.portIndex}`;
+      if (seen.has(dedupe)) continue;
+      seen.add(dedupe);
+      refs.push(ref);
+    }
+  }
   const candidates = refs.map(({ recipe, portIndex }) => ({
     machineId: recipe.machineId,
     recipeId: recipe.id,

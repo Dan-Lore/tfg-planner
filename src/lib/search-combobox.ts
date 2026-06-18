@@ -1,5 +1,6 @@
 import { getItemName } from '@/data/pack-registry';
 import type { PackData, Recipe } from '@/data/types';
+import { formatRecipeLabel } from '@/lib/recipe-label';
 
 export interface SearchComboboxItem {
   id: string;
@@ -8,7 +9,27 @@ export interface SearchComboboxItem {
 }
 
 export function normalizeSearchQuery(query: string): string {
-  return query.trim().toLocaleLowerCase();
+  return query.trim().toLocaleLowerCase().replace(/ё/g, 'е');
+}
+
+function tagSearchAliases(tagId: string, lang: 'ru' | 'en'): string[] {
+  const aliases: Record<string, string[]> = {
+    '#minecraft:logs_that_burn': [
+      'бревна',
+      'брёвна',
+      'logs',
+      'log',
+      'wood',
+      'дерево',
+      'burnable logs',
+      'горящие бревна',
+    ],
+    '#minecraft:logs': ['бревна', 'брёвна', 'logs', 'log', 'wood', 'дерево'],
+    '#forge:dusts/copper': ['copper dust', 'медная пыль', 'медь'],
+  };
+  const list = aliases[tagId] ?? [];
+  if (lang === 'en') return list;
+  return list;
 }
 
 export function filterItemsByQuery(
@@ -50,13 +71,32 @@ export function buildRecipeIngredientSearchText(
   const names = new Set<string>();
   for (const flow of [...recipe.inputs, ...recipe.outputs]) {
     const id = flow.itemId ?? flow.fluidId;
-    if (id) names.add(getItemName(pack, id, lang));
+    if (!id) continue;
+    names.add(getItemName(pack, id, lang));
+    if (id.startsWith('#')) {
+      for (const alias of tagSearchAliases(id, lang)) {
+        names.add(alias);
+      }
+    }
   }
-  if (names.size === 0) {
-    const tail = recipe.id.includes(':') ? recipe.id.split(':').pop()! : recipe.id;
-    return tail;
-  }
+  const tail = recipe.id.includes(':') ? recipe.id.split(':').pop()! : recipe.id;
+  names.add(tail);
+  names.add(recipe.id);
+  names.add(formatRecipeLabel(pack, recipe, lang));
   return [...names].join(' ');
+}
+
+export function sortRecipesForPicker(
+  pack: PackData,
+  recipes: Recipe[],
+  lang: 'ru' | 'en',
+): Recipe[] {
+  return [...recipes].sort((a, b) =>
+    formatRecipeLabel(pack, a, lang).localeCompare(
+      formatRecipeLabel(pack, b, lang),
+      lang,
+    ),
+  );
 }
 
 export function resolveMachineId(

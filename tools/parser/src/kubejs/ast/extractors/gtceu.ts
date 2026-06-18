@@ -164,11 +164,19 @@ export function extractGtceuChain(start: CallExpression): GtceuRecipeDraft | nul
         if (d !== undefined) draft.durationTicks = d;
         break;
       }
-      case 'chancedOutput': {
-        const s = stringLiteral(args[0]);
-        if (s) draft.outputs.push(itemStringToFlow(s));
+      case 'chancedOutput':
+        for (const a of args.slice(0, 1)) draft.outputs.push(...parseItemArg(a));
         break;
-      }      case 'EUt': {
+      case 'chancedInput':
+        for (const a of args.slice(0, 1)) draft.inputs.push(...parseItemArg(a));
+        break;
+      case 'chancedFluidInput':
+        for (const a of args.slice(0, 1)) draft.inputs.push(...parseFluidArg(a));
+        break;
+      case 'chancedFluidOutput':
+        for (const a of args.slice(0, 1)) draft.outputs.push(...parseFluidArg(a));
+        break;
+      case 'EUt': {
         const e = parseEnergyArg(args[0]);
         if (e) draft.energy = e;
         break;

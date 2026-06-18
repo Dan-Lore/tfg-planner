@@ -1,5 +1,23 @@
 import type { PackData } from '../../../../src/data/types.js';
-import type { BuildReport } from '../types.js';
+import type { BuildReport, ParseWarning, WarningKind } from '../types.js';
+
+export function summarizeWarningsByKind(
+  warnings: ParseWarning[],
+): Partial<Record<WarningKind, number>> {
+  const out: Partial<Record<WarningKind, number>> = {};
+  for (const w of warnings) {
+    let kind: WarningKind = w.kind ?? 'other';
+    if (!w.kind) {
+      if (w.reason.includes('.forEach')) kind = 'forEach';
+      else if (w.reason.includes('findRecipes')) kind = 'findRecipes';
+      else if (w.reason.includes('modifyResult')) kind = 'modifyResult';
+      else if (w.reason.includes('modifyRecipe')) kind = 'modifyRecipe';
+      else if (w.file.includes('substrate')) kind = 'substrate';
+    }
+    out[kind] = (out[kind] ?? 0) + 1;
+  }
+  return out;
+}
 
 export function validatePackSchema(pack: PackData): string[] {
   const errors: string[] = [];
@@ -31,23 +49,22 @@ export function buildReportFromPack(
     tag,
     generatedAt: new Date().toISOString(),
     stats: {
-      substrateRecipes: extra.substrateRecipes ?? 0,
-      datapackRecipes: extra.datapackRecipes ?? 0,
-      kubejsRecipes: extra.kubejsRecipes ?? 0,
-      removes: extra.removes ?? 0,
-      replaces: extra.replaces ?? 0,
+      snapshotRecipes: extra.snapshotRecipes ?? pack.recipes.length,
+      snapshotFiles: extra.snapshotFiles ?? 0,
+      snapshotParsed: extra.snapshotParsed ?? pack.recipes.length,
+      snapshotSkipped: extra.snapshotSkipped ?? 0,
+      snapshotSha256: extra.snapshotSha256,
       finalRecipes: pack.recipes.length,
       machines: pack.machines.length,
       items: pack.items.length,
       fluids: pack.fluids.length,
       recipesWithEnergy: pack.recipes.filter((r) => r.energy != null).length,
-      filesScanned: extra.filesScanned ?? 0,
-      filesUnparsed: extra.filesUnparsed ?? unparsedFiles.length,
       goldenMatched: extra.goldenMatched,
       goldenMismatched: extra.goldenMismatched,
       goldenMissing: extra.goldenMissing,
     },
     warnings,
+    warningsByKind: summarizeWarningsByKind(warnings),
     unparsedFiles,
   };
 }

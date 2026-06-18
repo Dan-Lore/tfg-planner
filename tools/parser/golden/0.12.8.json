@@ -26,6 +26,26 @@
       "id": "tfg:diluted_hcl_acid",
       "machineId": "gtceu:mixer",
       "durationTicks": 600
+    },
+    {
+      "id": "tfg:reformed_aromatic_feedstock",
+      "machineId": "gtceu:chemical_reactor",
+      "durationTicks": 360,
+      "inputs": [
+        { "itemId": "gtceu:tiny_rhenium_dust", "amount": 1 },
+        { "fluidId": "tfg:aromatic_feedstock", "amount": 2000 }
+      ],
+      "outputs": [{ "fluidId": "tfg:reformed_aromatic_feedstock", "amount": 2000 }]
+    },
+    {
+      "id": "tfg:cracker_off_gas_recycling",
+      "machineId": "gtceu:electrolyzer",
+      "durationTicks": 90,
+      "outputs": [
+        { "fluidId": "gtceu:carbon_dioxide", "amount": 500 },
+        { "fluidId": "gtceu:hydrogen", "amount": 500 },
+        { "itemId": "gtceu:tiny_rhenium_dust", "amount": 1 }
+      ]
     }
   ]
 }

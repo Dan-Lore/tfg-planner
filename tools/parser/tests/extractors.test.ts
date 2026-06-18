@@ -48,4 +48,53 @@ describe('KubeJS extractors', () => {
     expect(mixer?.durationTicks).toBe(40);
     expect(mixer?.energy?.euPerTick).toBe(16);
   });
+
+  it('extracts chancedInput and chancedOutput with Item.of', () => {
+    const result = parseKubeJsFile(join(fixtures, 'early-gas-rhenium.js'));
+    const reformed = result.recipes.find((r) => r.id === 'tfg:reformed_aromatic_feedstock');
+    expect(reformed?.inputs).toEqual(
+      expect.arrayContaining([
+        { itemId: 'gtceu:tiny_rhenium_dust', amount: 1 },
+        { fluidId: 'tfg:aromatic_feedstock', amount: 2000 },
+      ]),
+    );
+    const recycling = result.recipes.find((r) => r.id === 'tfg:cracker_off_gas_recycling');
+    expect(recycling?.outputs).toEqual(
+      expect.arrayContaining([
+        { fluidId: 'gtceu:carbon_dioxide', amount: 500 },
+        { fluidId: 'gtceu:hydrogen', amount: 500 },
+        { itemId: 'gtceu:tiny_rhenium_dust', amount: 1 },
+      ]),
+    );
+  });
+
+  it('extracts global.modifyRecipe and modifyRecipes helper patches', () => {
+    const result = parseKubeJsFile(join(fixtures, 'modify-recipe.js'));
+    expect(result.patches.length).toBeGreaterThanOrEqual(3);
+    const creosote = result.patches.find(
+      (p) => p.recipeId === 'gtceu:pyrolyse_oven/log_to_creosote',
+    );
+    expect(creosote?.newId).toBe('tfg:pyrolyse_oven/log_to_creosote');
+    expect(creosote?.durationTicks).toBe(1280);
+    const redAlloy = result.patches.find((p) => p.recipeId === 'gtceu:alloy_blast_smelter/red_alloy');
+    expect(redAlloy?.newId).toBe('tfg:red_alloy');
+    expect(redAlloy?.fluidOutputAmounts).toEqual({ 'gtceu:red_alloy': 720 });
+  });
+
+  it('expands generateGreenHouseRecipe and crop/tree helpers', () => {
+    const result = parseKubeJsFile(join(fixtures, 'greenhouse-helper.js'));
+    const bamboo = result.recipes.find(
+      (r) => r.id === 'tfg:minecraft_bamboo/1' && r.machineId === 'gtceu:greenhouse',
+    );
+    expect(bamboo).toBeDefined();
+    expect(bamboo?.durationTicks).toBe(12000);
+    expect(bamboo?.inputs).toEqual(
+      expect.arrayContaining([{ itemId: 'minecraft:bamboo', amount: 8 }]),
+    );
+    const wheat = result.recipes.find(
+      (r) => r.id === 'tfg:tfc_plant_wheat/1' && r.machineId === 'gtceu:greenhouse',
+    );
+    expect(wheat).toBeDefined();
+    expect(result.recipes.some((r) => r.machineId === 'gtceu:greenhouse')).toBe(true);
+  });
 });

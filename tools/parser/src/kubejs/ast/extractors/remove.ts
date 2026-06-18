@@ -1,12 +1,14 @@
 import traverse from '@babel/traverse';
 import type { File, ObjectExpression } from '@babel/types';
 import { stringLiteral } from '../expr.js';
+import type { RecipeOp } from '../../../types.js';
 
 export interface RemoveSelector {
   id?: string;
   mod?: string;
   type?: string;
   output?: string;
+  input?: string;
 }
 
 function parseRemoveObject(obj: ObjectExpression): RemoveSelector | null {
@@ -26,9 +28,10 @@ function parseRemoveObject(obj: ObjectExpression): RemoveSelector | null {
       if (key === 'mod') sel.mod = val;
       if (key === 'type') sel.type = val;
       if (key === 'output') sel.output = val;
+      if (key === 'input') sel.input = val;
     }
   }
-  if (!sel.id && !sel.mod && !sel.type && !sel.output) return null;
+  if (!sel.id && !sel.mod && !sel.type && !sel.output && !sel.input) return null;
   return sel;
 }
 
@@ -53,11 +56,47 @@ export function findRemoves(ast: File): RemoveSelector[] {
   return removes;
 }
 
+function flowMatchesNeedle(
+  flow: { itemId?: string; fluidId?: string },
+  needle: string,
+): boolean {
+  return flow.itemId === needle || flow.fluidId === needle;
+}
+
+/** Match a remove selector against a full recipe (not id-only). */
+export function removeMatchesRecipe(sel: RemoveSelector, recipe: RecipeOp): boolean {
+  if (sel.id) return sel.id === recipe.id;
+
+  const hasExtra = sel.type != null || sel.output != null || sel.input != null;
+
+  if (sel.mod != null && !recipe.id.startsWith(`${sel.mod}:`)) {
+    return false;
+  }
+
+  if (!hasExtra) {
+    return sel.mod != null;
+  }
+
+  if (sel.type != null && recipe.machineId !== sel.type) {
+    return false;
+  }
+
+  if (sel.input != null && !recipe.inputs.some((f) => flowMatchesNeedle(f, sel.input!))) {
+    return false;
+  }
+
+  if (sel.output != null && !recipe.outputs.some((f) => flowMatchesNeedle(f, sel.output!))) {
+    return false;
+  }
+
+  return sel.mod != null || sel.type != null || sel.input != null || sel.output != null;
+}
+
+/** @deprecated Prefer removeMatchesRecipe — kept for explicit id checks. */
 export function removeMatchesId(sel: RemoveSelector, recipeId: string): boolean {
   if (sel.id) return sel.id === recipeId;
-  if (sel.mod) {
-    const prefix = sel.mod + ':';
-    return recipeId.startsWith(prefix);
+  if (sel.mod && !sel.type && !sel.output && !sel.input) {
+    return recipeId.startsWith(`${sel.mod}:`);
   }
   return false;
 }

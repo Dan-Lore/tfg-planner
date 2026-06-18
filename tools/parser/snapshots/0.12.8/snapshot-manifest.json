@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "modpackTag": "0.12.8",
+  "pakkuLockSha256": "bootstrap",
+  "recipeCount": 6727,
+  "exportedAt": "2026-06-18T16:11:34.904Z",
+  "markerRecipeIds": [
+    "gtceu:pyrolyse_oven/log_to_charcoal_byproducts",
+    "gtceu:distill_charcoal_byproducts",
+    "gtceu:distill_wood_tar"
+  ],
+  "snapshotSha256": "7f18dd12ad21ba6fa721821546d2086a94d1415a4f9e0add0479bb042809d459",
+  "source": "bootstrap-from-pack"
+}

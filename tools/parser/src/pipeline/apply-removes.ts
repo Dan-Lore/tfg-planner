@@ -1,5 +1,5 @@
 import type { RecipeStore } from './recipe-store.js';
-import { removeMatchesId, type RemoveSelector } from '../kubejs/ast/extractors/remove.js';
+import { removeMatchesRecipe, removeMatchesId, type RemoveSelector } from '../kubejs/ast/extractors/remove.js';
 
 export function applyRemoves(store: RecipeStore, removes: RemoveSelector[]): number {
   let count = 0;
@@ -8,10 +8,9 @@ export function applyRemoves(store: RecipeStore, removes: RemoveSelector[]): num
       if (store.delete(sel.id)) count++;
       continue;
     }
-    if (sel.mod) {
-      for (const id of store.ids()) {
-        if (removeMatchesId(sel, id) && store.delete(id)) count++;
-      }
+    for (const id of store.ids()) {
+      const recipe = store.get(id);
+      if (recipe && removeMatchesRecipe(sel, recipe) && store.delete(id)) count++;
     }
   }
   return count;

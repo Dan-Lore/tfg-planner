@@ -107,6 +107,59 @@
 
 ---
 
+### K-010 · TFG-native recipe snapshot pipeline
+
+| Поле | Значение |
+|------|----------|
+| Статус | `done` |
+| Приоритет | P0 |
+| Закрыт | 2026-06-18 |
+
+**Scope (rev. 3):**
+
+- [x] `generate-tfg-snapshot`: pakku + runServer + KubeJS export → `snapshots/<tag>/`
+- [x] `loadRecipeSnapshot()` — flat RecipeOp + GT 7.5 JSON adapters
+- [x] `build-pack`: snapshot → lang → normalize (без substrate/KubeJS simulation)
+- [x] `snapshot-manifest.json` + pack `manifest.json` с `snapshotSha256`
+- [x] Удалены `substrate-dumps`, `generate-gt-dump`, `gt-vanilla-substrate`, GT JAR pipeline
+- [x] Smoke: aromatic chain + pyrolyse + distillation markers; `--strict-snapshot`
+- [x] Pack `0.12.8`: **6727** recipes из bootstrap snapshot, smoke 12/12, golden 6/6
+
+**Метрики:** `snapshotRecipes: 6727`, `snapshotManifestOk: true`, warnings 1 (lang coverage).
+
+**Следующий шаг для 100% in-game:** заменить bootstrap snapshot на `npm run generate-tfg-snapshot -- 0.12.8` (CI K-009).
+
+---
+
+### K-009 · Автообновление pack data и мониторинг версий модпака
+
+| Поле | Значение |
+|------|----------|
+| Статус | `backlog` |
+| Приоритет | P2 |
+| Зависит от | K-001 (парсер), деплой на GitHub Pages |
+| См. также | [roadmap.md](roadmap.md) § «Деплой и обновление данных» |
+
+**Контекст:** GitHub Pages — только статика (HTML/JS/CSS). Сайт **не может** сам запускать `build-pack`, Java datagen или клонировать Modpack-Modern. Рецепты обновляются **вне** Pages: dev или CI → commit `pack.json` → push → redeploy.
+
+**Рекомендуемая модель (MVP):** `generate-tfg-snapshot` для нового тега → commit `snapshots/<tag>/` + `npm run build-pack` → commit `pack.json` → Pages.
+
+**Scope (фазы):**
+
+- [ ] **CI (scheduled):** workflow по cron / `workflow_dispatch` — проверка нового тега [Modpack-Modern](https://github.com/TerraFirmaGreg-Team/Modpack-Modern), `build-pack`, commit или PR с обновлённым pack + `build-report.json`
+- [ ] **CI:** кэш `snapshots/<tag>/` и modpack archive между прогонами (укладываться в лимиты Actions)
+- [ ] **UI (лёгкий):** периодическая проверка `manifest.json` / `checksum` (например при открытии вкладки или раз в сутки) — уведомление «доступна новая версия данных», без пересборки в браузере
+- [ ] **Документация:** `docs/versions.md` — кто и когда пересобирает pack при новом релизе TFG
+
+**Вне scope (не делать на Pages):**
+
+- Парсинг KubeJS / скачивание модпака в браузере (сотни MB трафика, минуты CPU/RAM у пользователя).
+- Фоновый «живой» rebuild рецептов на клиенте.
+
+**Критерий закрытия:** при публикации нового тега TFG maintainer получает автоматический PR или issue; после merge пользователь на Pages видит новую версию в меню или toast о свежем `checksum`; деплой не требует Java на машине пользователя.
+
+---
+
 ## Заблокировано / ждёт решения
 
 | ID | Вопрос | Статус |
@@ -122,6 +175,7 @@
 | ID | Закрыто | Итог |
 |----|---------|------|
 | K-001 | 2026-06-17 | Парсер `tools/parser/`: fetch tag, pakku-lock, KubeJS AST, pipeline, pack `0.12.8` (2436 recipes), smoke/golden tests |
+| K-007 | 2026-06-18 | Полнота рецептов: chanced I/O, `global.modifyRecipe`, greenhouse helpers, GT vanilla substrate, LCR mirror; pack `0.12.8` → 2781 recipes, smoke 9/9 |
 
 ---
 

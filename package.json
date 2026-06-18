@@ -12,6 +12,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build-pack": "tsx tools/parser/src/cli.ts build-pack",
+    "bootstrap-snapshot": "node tools/parser/scripts/bootstrap-snapshot-from-pack.mjs",
+    "generate-tfg-snapshot": "node tools/parser/scripts/generate-tfg-snapshot.mjs",
+    "resume-tfg-server-export": "node tools/parser/scripts/run-tfg-server-export.mjs",
     "parser:validate": "tsx tools/parser/src/cli.ts validate"
   },
   "dependencies": {

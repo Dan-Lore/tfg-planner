@@ -37,9 +37,10 @@
 
 См. [parser.md](parser.md).
 
-- Вход: git tag Modpack-Modern.
-- Выход: `data/packs/<version>/pack.json` + `build-report.json`.
-- Непокрытые скрипты → warnings в отчёте + [kanban.md](kanban.md), **не** fake recipes.
+- Вход: git tag Modpack-Modern + recipe snapshot (`tools/parser/snapshots/<tag>/`).
+- Snapshot: runtime export `RecipeManager` после полной загрузки модпака (mods + KubeJS).
+- Выход: `data/packs/<version>/pack.json` + `build-report.json` + `manifest.json` (`snapshotSha256`).
+- `generate-tfg-snapshot` — тяжёлый one-time export; `build-pack` — лёгкая пересборка из snapshot + lang.
 
 ### 2.2. Version Manager
 
@@ -128,7 +129,8 @@
 ### Сборка pack data (CI / dev)
 
 ```
-git tag → tools/parser → validate → data/packs/<ver>/ → manifest bump
+git tag → generate-tfg-snapshot → snapshots/<ver>/
+       → build-pack (lang + normalize) → validate → data/packs/<ver>/ → manifest bump
 ```
 
 ### Runtime

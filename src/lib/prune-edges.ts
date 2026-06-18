@@ -1,6 +1,7 @@
 import type { PackData } from '@/data/types';
 import type { TfgpEdge } from '@/schema/tfgp';
 import { portFlow, portsMatch } from '@/canvas/ports';
+import { buildTagIndex } from '@/lib/tag-index';
 
 export function pruneInvalidEdges(
   edges: TfgpEdge[],
@@ -8,6 +9,7 @@ export function pruneInvalidEdges(
   pack: PackData,
 ): TfgpEdge[] {
   const nodeById = new Map(nodes.map((n) => [n.id, n]));
+  const tags = buildTagIndex(pack);
   return edges.filter((edge) => {
     const src = nodeById.get(edge.source);
     const tgt = nodeById.get(edge.target);
@@ -16,6 +18,6 @@ export function pruneInvalidEdges(
     const tgtRecipe = pack.recipes.find((r) => r.id === tgt.recipeId);
     const srcFlow = portFlow(srcRecipe, edge.sourcePort);
     const tgtFlow = portFlow(tgtRecipe, edge.targetPort);
-    return portsMatch(srcFlow, tgtFlow);
+    return portsMatch(srcFlow, tgtFlow, tags);
   });
 }

@@ -3,6 +3,7 @@
  *
  * Usage:
  *   npm run build-pack -- --tag 0.12.8
+ *   npm run build-pack -- --tag 0.12.8 --strict-snapshot
  *   npm run parser:validate -- --pack public/data/packs/0.12.8/pack.json
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -20,7 +21,8 @@ interface Args {
   cache?: string;
   out?: string;
   pack?: string;
-  skipSubstrate?: boolean;
+  snapshotDir?: string;
+  strictSnapshot?: boolean;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -31,7 +33,8 @@ function parseArgs(argv: string[]): Args {
     else if (a === '--cache') args.cache = argv[++i];
     else if (a === '--out') args.out = argv[++i];
     else if (a === '--pack') args.pack = argv[++i];
-    else if (a === '--skip-substrate') args.skipSubstrate = true;
+    else if (a === '--snapshot-dir') args.snapshotDir = argv[++i];
+    else if (a === '--strict-snapshot') args.strictSnapshot = true;
   }
   return args;
 }
@@ -41,12 +44,13 @@ async function cmdBuildPack(args: Args): Promise<void> {
   const cacheDir = resolve(args.cache ?? '.cache');
   const outDir = resolve(args.out ?? `public/data/packs/${tag}`);
 
-  console.log(`Building pack for tag ${tag}…`);
+  console.log(`Building pack for tag ${tag} (snapshot pipeline)…`);
   const result = await buildPack({
     tag,
     cacheDir,
     outDir,
-    skipSubstrate: args.skipSubstrate,
+    snapshotDir: args.snapshotDir ? resolve(args.snapshotDir) : undefined,
+    strictSnapshot: args.strictSnapshot,
     goldenPath: join(__dirname, '..', 'golden', `${tag}.json`),
   });
 
@@ -75,15 +79,16 @@ function printHelp(): void {
   console.log(`TFG-Modern parser CLI
 
 Commands:
-  build-pack   Fetch modpack tag and build pack.json
+  build-pack   Build pack.json from recipe snapshot + lang bundle
   validate     Validate existing pack.json and write build-report.json
 
 Options:
-  --tag <ver>       Modpack release tag (default: 0.12.8)
-  --cache <dir>     Cache directory (default: .cache)
-  --out <dir>       Output directory (default: public/data/packs/<tag>)
-  --pack <path>     Pack file for validate
-  --skip-substrate  Skip GTCEu JAR substrate download
+  --tag <ver>           Modpack release tag (default: 0.12.8)
+  --cache <dir>         Cache directory (default: .cache)
+  --out <dir>           Output directory (default: public/data/packs/<tag>)
+  --pack <path>         Pack file for validate
+  --snapshot-dir <dir>  Override tools/parser/snapshots/<tag>
+  --strict-snapshot     Fail if snapshot manifest or smoke chains invalid
 `);
 }
 

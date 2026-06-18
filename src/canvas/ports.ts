@@ -1,5 +1,7 @@
 import type { PackData, Flow, Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
+import type { TagIndex } from '@/lib/tag-index';
+import { flowsCompatible } from '@/lib/flow-match';
 
 export function productKey(flow: { itemId?: string; fluidId?: string }): string {
   return flow.itemId ?? flow.fluidId ?? '';
@@ -51,7 +53,9 @@ export function portFlow(recipe: Recipe | undefined, port: string): Flow | null 
 export function portsMatch(
   sourceFlow: Flow | null,
   targetFlow: Flow | null,
+  tags?: TagIndex,
 ): boolean {
   if (!sourceFlow || !targetFlow) return false;
+  if (tags) return flowsCompatible(sourceFlow, targetFlow, tags);
   return flowKey(sourceFlow) === flowKey(targetFlow);
 }

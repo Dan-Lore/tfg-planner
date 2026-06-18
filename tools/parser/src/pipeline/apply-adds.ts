@@ -1,7 +1,7 @@
 import type { RecipeStore } from './recipe-store.js';
 import type { RecipeOp } from '../types.js';
 import { isExplicitlyRemoved } from './apply-removes.js';
-import type { RemoveSelector } from '../kubejs/ast/extractors/remove.js';
+import { removeMatchesId, type RemoveSelector } from '../kubejs/ast/extractors/remove.js';
 
 export function applyAdds(
   store: RecipeStore,

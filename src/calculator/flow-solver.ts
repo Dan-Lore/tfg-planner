@@ -1,6 +1,8 @@
 import type { PackData, Recipe } from '@/data/types';
 import { Rational, R } from './rational';
 import { ceilMachineCount, idealMachineCount } from './rounding';
+import { buildTagIndex } from '@/lib/tag-index';
+import { recipeInputMatchesProduct } from '@/lib/flow-match';
 
 export const TICKS_PER_SECOND = 20;
 
@@ -137,6 +139,7 @@ function topologicalOrder(
 export function solveFlows(input: SolverInput): FlowResult {
   const preserveCounts = input.preserveManualMachineCounts !== false;
   const recipes = recipeMap(input.pack);
+  const tags = buildTagIndex(input.pack);
   const nodeById = new Map(input.nodes.map((n) => [n.id, n]));
   const { incoming, outgoing } = buildAdjacency(input.edges);
 
@@ -218,7 +221,7 @@ export function solveFlows(input: SolverInput): FlowResult {
       const inRate = nodeOutRate.mul(R.from(inp.amount)).div(R.from(outAmount));
       for (const edge of incoming.get(nodeId) ?? []) {
         const edgeKey = edge.itemId ?? edge.fluidId ?? '';
-        if (edgeKey !== inKey) continue;
+        if (!recipeInputMatchesProduct(inKey, edgeKey, tags)) continue;
         const up = nodeById.get(edge.source);
         if (!up) continue;
         const upRecipe = recipes.get(up.recipeId);

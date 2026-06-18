@@ -28,10 +28,35 @@ export interface ReplaceOp {
   source: string;
 }
 
+/** Patch applied via global.modifyRecipe(event, id, { ... }). */
+export interface RecipePatch {
+  recipeId: string;
+  newId?: string;
+  durationTicks?: number;
+  replaceItemInputs?: FlowOp[];
+  replaceItemOutputs?: FlowOp[];
+  replaceInputFluids?: FlowOp[];
+  replaceOutputFluids?: FlowOp[];
+  fluidOutputAmounts?: Record<string, number>;
+  /** Adds or updates integrated circuit configuration on machine recipes. */
+  circuitConfiguration?: number;
+  source: string;
+  line?: number;
+}
+
+export type WarningKind =
+  | 'forEach'
+  | 'findRecipes'
+  | 'modifyResult'
+  | 'modifyRecipe'
+  | 'substrate'
+  | 'other';
+
 export interface ParseWarning {
   file: string;
   reason: string;
   line?: number;
+  kind?: WarningKind;
 }
 
 export interface FileParseStats {
@@ -61,24 +86,24 @@ export interface BuildReport {
   tag: string;
   commitHint?: string;
   generatedAt: string;
+  snapshotManifestOk?: boolean;
   stats: {
-    substrateRecipes: number;
-    datapackRecipes: number;
-    kubejsRecipes: number;
-    removes: number;
-    replaces: number;
+    snapshotRecipes: number;
+    snapshotFiles: number;
+    snapshotParsed: number;
+    snapshotSkipped: number;
+    snapshotSha256?: string;
     finalRecipes: number;
     machines: number;
     items: number;
     fluids: number;
     recipesWithEnergy: number;
-    filesScanned: number;
-    filesUnparsed: number;
     goldenMatched?: number;
     goldenMismatched?: number;
     goldenMissing?: number;
   };
   warnings: ParseWarning[];
+  warningsByKind?: Partial<Record<WarningKind, number>>;
   unparsedFiles: string[];
   smokeResults?: { id: string; ok: boolean; reason?: string }[];
   goldenDiff?: { id: string; field: string; expected: unknown; actual: unknown }[];

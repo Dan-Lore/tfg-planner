@@ -35,6 +35,7 @@ import {
   buildRecipeIngredientSearchText,
   filterItemsByQuery,
   resolveMachineId,
+  sortRecipesForPicker,
 } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
 import { WheelNumberInput } from '@/components/WheelNumberInput';
@@ -45,6 +46,7 @@ import {
   findUpstreamCandidates,
   type AttachCandidate,
 } from '@/lib/recipe-index';
+import { buildTagIndex } from '@/lib/tag-index';
 import type { Flow } from '@/data/types';
 import { parsePortId, portFlow, portsMatch } from '@/canvas/ports';
 
@@ -147,6 +149,11 @@ export function EditorPage() {
     [pack],
   );
 
+  const tagIndex = useMemo(
+    () => (pack ? buildTagIndex(pack) : null),
+    [pack],
+  );
+
   useEffect(() => {
     if (pack) updateFlows();
   }, [pack, updateFlows]);
@@ -209,7 +216,7 @@ export function EditorPage() {
       clientX: number,
       clientY: number,
     ) => {
-      if (!pack || !recipeIndex) return;
+      if (!pack || !recipeIndex || !tagIndex) return;
       const node = scheme.nodes.find((n) => n.id === nodeId);
       if (!node) return;
       const recipe = pack.recipes.find((r) => r.id === node.recipeId);
@@ -219,8 +226,8 @@ export function EditorPage() {
       const direction: PortAttachDirection = side === 'out' ? 'downstream' : 'upstream';
       const candidates =
         direction === 'downstream'
-          ? findDownstreamCandidates(pack, recipeIndex, flow, lang)
-          : findUpstreamCandidates(pack, recipeIndex, flow, lang);
+          ? findDownstreamCandidates(pack, recipeIndex, flow, lang, tagIndex)
+          : findUpstreamCandidates(pack, recipeIndex, flow, lang, tagIndex);
 
       setPortMenu({
         x: clientX,
@@ -232,7 +239,7 @@ export function EditorPage() {
         flow,
       });
     },
-    [pack, recipeIndex, scheme.nodes, lang],
+    [pack, recipeIndex, tagIndex, scheme.nodes, lang],
   );
 
   const handlePortMenuSelect = useCallback(
@@ -376,9 +383,9 @@ export function EditorPage() {
       const tgtRecipe = pack.recipes.find((r) => r.id === tgtNode?.recipeId);
       const srcFlow = portFlow(srcRecipe, conn.sourceHandle);
       const tgtFlow = portFlow(tgtRecipe, conn.targetHandle);
-      return portsMatch(srcFlow, tgtFlow);
+      return portsMatch(srcFlow, tgtFlow, tagIndex ?? undefined);
     },
-    [pack, scheme.nodes],
+    [pack, scheme.nodes, tagIndex],
   );
 
   const onConnect = useCallback(
@@ -434,11 +441,13 @@ export function EditorPage() {
 
   const selectedRecipeItems = useMemo(() => {
     if (!pack || !selectedNode) return [];
-    return getRecipesForMachine(pack, selectedNode.machineId).map((r) => ({
+    return sortRecipesForPicker(pack, getRecipesForMachine(pack, selectedNode.machineId), lang).map(
+      (r) => ({
       id: r.id,
       label: formatRecipeLabel(pack, r, lang),
       searchText: buildRecipeIngredientSearchText(pack, r, lang),
-    }));
+    }),
+    );
   }, [pack, selectedNode, lang]);
 
   const selectedRecipeDisplay = useMemo(() => {

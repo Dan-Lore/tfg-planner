@@ -20,6 +20,8 @@ const machineItems = [
 describe('search-combobox', () => {
   it('normalizes query', () => {
     expect(normalizeSearchQuery('  Экст ')).toBe('экст');
+    expect(normalizeSearchQuery('бревна')).toBe('бревна');
+    expect(normalizeSearchQuery('брёвна')).toBe('бревна');
   });
 
   it('returns all items for empty query', () => {
@@ -118,5 +120,53 @@ describe('search-combobox', () => {
     ];
     expect(filterItemsByQuery(items, 'слиток')).toHaveLength(1);
     expect(filterItemsByQuery(items, 'миксер')).toHaveLength(0);
+  });
+
+  it('finds pyrolyse log recipe by бревна without ё and by уголь', () => {
+    const recipe: Recipe = {
+      id: 'tfg:pyrolyse_oven/log_to_creosote',
+      machineId: 'gtceu:pyrolyse_oven',
+      inputs: [{ itemId: '#minecraft:logs_that_burn', amount: 16 }],
+      outputs: [
+        { itemId: 'minecraft:charcoal', amount: 20 },
+        { fluidId: 'gtceu:creosote', amount: 4000 },
+      ],
+      durationTicks: 1280,
+    };
+    const pack: PackData = {
+      format: 'tfg-pack-data',
+      formatVersion: 1,
+      modpackVersion: 'test',
+      dataVersion: 1,
+      generatedAt: '',
+      machines: [],
+      recipes: [recipe],
+      items: [
+        {
+          id: '#minecraft:logs_that_burn',
+          names: { ru: 'Горящие брёвна', en: 'Burnable Logs' },
+        },
+        {
+          id: 'minecraft:charcoal',
+          names: { ru: 'Древесный уголь', en: 'Charcoal' },
+        },
+      ],
+      fluids: [
+        {
+          id: 'gtceu:creosote',
+          names: { ru: 'Креозот', en: 'Creosote' },
+        },
+      ],
+    };
+    const items = [
+      {
+        id: recipe.id,
+        label: '16× Горящие брёвна → 20× Древесный уголь, 4000× Креозот',
+        searchText: buildRecipeIngredientSearchText(pack, recipe, 'ru'),
+      },
+    ];
+    expect(filterItemsByQuery(items, 'бревна')).toHaveLength(1);
+    expect(filterItemsByQuery(items, 'уголь')).toHaveLength(1);
+    expect(filterItemsByQuery(items, 'creosote')).toHaveLength(1);
   });
 });
