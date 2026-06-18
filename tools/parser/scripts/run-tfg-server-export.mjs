@@ -98,7 +98,6 @@ function ensureServerRun() {
   }
 
   if (!zip) {
-  if (!zip) {
     throw new Error(
       `No serverpack zip in ${join(workDir, 'build', 'serverpack')} — run generate-tfg-snapshot first`,
     );
