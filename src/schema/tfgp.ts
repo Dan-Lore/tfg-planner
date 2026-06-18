@@ -1,3 +1,5 @@
+import { normalizeNodeScaling } from '@/lib/node-scaling';
+
 export interface TfgpMeta {
   name: string;
   author: string;
@@ -82,7 +84,10 @@ export function parseTfgp(json: string): TfgpFile {
   if (data.format !== 'tfg-planner-graph' || data.formatVersion !== 1) {
     throw new Error('Unsupported .tfgp format');
   }
-  return data;
+  return {
+    ...data,
+    nodes: data.nodes.map(normalizeNodeScaling),
+  };
 }
 
 export function serializeTfgp(file: TfgpFile): string {

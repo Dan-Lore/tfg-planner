@@ -31,6 +31,13 @@ import { buildNodeSurplusLines, rateMapToStrings } from '@/canvas/flow-display';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
+import {
+  buildRecipeIngredientSearchText,
+  filterItemsByQuery,
+  resolveMachineId,
+} from '@/lib/search-combobox';
+import { SearchCombobox } from '@/components/SearchCombobox';
+import { WheelNumberInput } from '@/components/WheelNumberInput';
 import { mergeFlowNodes } from '@/lib/merge-flow-nodes';
 import {
   buildRecipeFlowIndex,
@@ -88,7 +95,7 @@ export function EditorPage() {
   const duplicateSelected = useEditorStore((s) => s.duplicateSelected);
   const loadScheme = useEditorStore((s) => s.loadScheme);
   const setSelectedNodeIds = useEditorStore((s) => s.setSelectedNodeIds);
-  const recalculate = useEditorStore((s) => s.recalculate);
+  const updateFlows = useEditorStore((s) => s.updateFlows);
   const colorTheme = useThemeStore((s) => s.theme);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -107,8 +114,29 @@ export function EditorPage() {
       );
   }, [pack, lang]);
 
-  const [machineToAdd, setMachineToAdd] = useState('');
+  const [machineExplicitId, setMachineExplicitId] = useState<string | null>(null);
+  const [machineQuery, setMachineQuery] = useState('');
+  const [machineResetKey, setMachineResetKey] = useState(0);
   const [portMenu, setPortMenu] = useState<PortMenuState | null>(null);
+
+  const machineItems = useMemo(() => {
+    if (!pack) return [];
+    return machines.map((m) => ({
+      id: m.id,
+      label: getMachineName(pack, m.id, lang),
+      searchText: getMachineName(pack, m.id, lang),
+    }));
+  }, [machines, pack, lang]);
+
+  const filteredMachineItems = useMemo(
+    () => filterItemsByQuery(machineItems, machineQuery),
+    [machineItems, machineQuery],
+  );
+
+  const resolvedMachineId = useMemo(
+    () => resolveMachineId(machineExplicitId, filteredMachineItems),
+    [machineExplicitId, filteredMachineItems],
+  );
 
   const recipeIndex = useMemo(
     () => (pack ? buildRecipeFlowIndex(pack) : null),
@@ -116,14 +144,8 @@ export function EditorPage() {
   );
 
   useEffect(() => {
-    if (machines.length > 0 && !machineToAdd) {
-      setMachineToAdd(machines[0]!.id);
-    }
-  }, [machines, machineToAdd]);
-
-  useEffect(() => {
-    if (pack) recalculate();
-  }, [pack, recalculate]);
+    if (pack) updateFlows();
+  }, [pack, updateFlows]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -269,6 +291,10 @@ export function EditorPage() {
           outputMultiplier: n.outputMultiplier,
           pack,
           onRecipeChange: (recipeId: string) => handleRecipeChange(n.id, recipeId),
+          onMachineCountChange: (machineCount: number) =>
+            updateNode(n.id, { machineCount }),
+          onOverclockChange: (overclock: number) =>
+            updateNode(n.id, { overclock }),
           onPortContextMenu: (
             portId: string,
             side: 'in' | 'out',
@@ -281,7 +307,7 @@ export function EditorPage() {
         },
       };
     });
-  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, handleRecipeChange, handlePortContextMenu]);
+  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, handleRecipeChange, handlePortContextMenu, updateNode]);
 
   const [flowNodes, setFlowNodes] = useState<Node[]>([]);
 
@@ -376,11 +402,11 @@ export function EditorPage() {
   const selectedNode = scheme.nodes.find((n) => n.id === selectedNodeIds[0]);
 
   const handleAddMachine = () => {
-    if (!pack || !machineToAdd) return;
-    const recipes = getRecipesForMachine(pack, machineToAdd);
+    if (!pack || !resolvedMachineId) return;
+    const recipes = getRecipesForMachine(pack, resolvedMachineId);
     if (recipes.length === 0) return;
     const newId = addNode({
-      machineId: machineToAdd,
+      machineId: resolvedMachineId,
       recipeId: recipes[0]!.id,
       position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
       overclock: 1,
@@ -389,7 +415,25 @@ export function EditorPage() {
       outputMultiplier: 1,
     });
     setSelectedNodeIds([newId]);
+    setMachineExplicitId(null);
+    setMachineQuery('');
+    setMachineResetKey((k) => k + 1);
   };
+
+  const selectedRecipeItems = useMemo(() => {
+    if (!pack || !selectedNode) return [];
+    return getRecipesForMachine(pack, selectedNode.machineId).map((r) => ({
+      id: r.id,
+      label: formatRecipeLabel(pack, r, lang),
+      searchText: buildRecipeIngredientSearchText(pack, r, lang),
+    }));
+  }, [pack, selectedNode, lang]);
+
+  const selectedRecipeDisplay = useMemo(() => {
+    if (!pack || !selectedNode) return '';
+    const recipe = pack.recipes.find((r) => r.id === selectedNode.recipeId);
+    return recipe ? formatRecipeLabel(pack, recipe, lang) : '';
+  }, [pack, selectedNode, lang]);
 
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -419,18 +463,24 @@ export function EditorPage() {
     <div className="editor-page">
       <div className="editor-toolbar">
         <div className="editor-toolbar__add">
-          <select
-            className="editor-toolbar__select"
-            value={machineToAdd}
-            onChange={(e) => setMachineToAdd(e.target.value)}
+          <SearchCombobox
+            mode="machine"
+            className="editor-toolbar__machine-search"
+            items={machineItems}
+            value={resolvedMachineId ?? ''}
+            explicitId={machineExplicitId}
+            placeholder={t('editor.searchMachine')}
+            onExplicitPick={setMachineExplicitId}
+            onQueryChange={setMachineQuery}
+            resetKey={machineResetKey}
+            onChange={() => {}}
+          />
+          <button
+            type="button"
+            className="btn"
+            onClick={handleAddMachine}
+            disabled={!resolvedMachineId}
           >
-            {machines.map((m) => (
-              <option key={m.id} value={m.id}>
-                {getMachineName(pack, m.id, lang)}
-              </option>
-            ))}
-          </select>
-          <button type="button" className="btn" onClick={handleAddMachine}>
             {t('editor.addMachine')}
           </button>
         </div>
@@ -543,54 +593,35 @@ export function EditorPage() {
                 </strong>
               </p>
               <label>{t('editor.recipe')}</label>
-              <select
+              <SearchCombobox
+                mode="recipe"
+                items={selectedRecipeItems}
                 value={selectedNode.recipeId}
-                onChange={(e) =>
-                  updateNode(selectedNode.id, { recipeId: e.target.value })
+                displayValue={selectedRecipeDisplay}
+                placeholder={t('editor.searchRecipe')}
+                resetKey={selectedNode.recipeId}
+                onChange={(recipeId) =>
+                  updateNode(selectedNode.id, { recipeId })
                 }
-              >
-                {getRecipesForMachine(pack, selectedNode.machineId).map(
-                  (r) => (
-                    <option key={r.id} value={r.id}>
-                      {formatRecipeLabel(pack, r, lang)}
-                    </option>
-                  ),
-                )}
-              </select>
+              />
               <label>{t('editor.machineCount')}</label>
-              <input
-                type="number"
+              <WheelNumberInput
                 min={1}
                 step={1}
                 value={selectedNode.machineCount}
-                onChange={(e) =>
+                onChange={(machineCount) =>
                   updateNode(selectedNode.id, {
-                    machineCount: Math.max(1, Number(e.target.value)),
+                    machineCount: Math.max(1, machineCount),
                   })
                 }
               />
               <label>{t('editor.overclock')}</label>
-              <input
-                type="number"
+              <WheelNumberInput
                 min={0.1}
                 step={0.1}
                 value={selectedNode.overclock}
-                onChange={(e) =>
-                  updateNode(selectedNode.id, {
-                    overclock: Number(e.target.value),
-                  })
-                }
-              />
-              <label>{t('editor.parallel')}</label>
-              <input
-                type="number"
-                min={1}
-                step={1}
-                value={selectedNode.parallel}
-                onChange={(e) =>
-                  updateNode(selectedNode.id, {
-                    parallel: Math.max(1, Number(e.target.value)),
-                  })
+                onChange={(overclock) =>
+                  updateNode(selectedNode.id, { overclock })
                 }
               />
               <label>{t('editor.multiplier')}</label>

@@ -43,6 +43,8 @@ export interface SolverInput {
   edges: SchemeEdge[];
   targets: SchemeTarget[];
   pack: PackData;
+  /** When true (default), user-set machine counts are kept for rate display. */
+  preserveManualMachineCounts?: boolean;
 }
 
 function recipeMap(pack: PackData): Map<string, Recipe> {
@@ -53,8 +55,17 @@ function productKey(flow: { itemId?: string; fluidId?: string }): string {
   return flow.itemId ?? flow.fluidId ?? '';
 }
 
+function freezeManualMachineCounts(
+  nodes: SchemeNode[],
+  nodeMachineCounts: Record<string, number>,
+): void {
+  for (const node of nodes) {
+    nodeMachineCounts[node.id] = Math.max(1, node.machineCount);
+  }
+}
+
 function nodeSpeedFactor(node: SchemeNode): Rational {
-  return R.from(node.overclock * node.parallel * node.outputMultiplier);
+  return R.from(node.overclock * node.outputMultiplier);
 }
 
 function perMachineOutputRate(
@@ -124,6 +135,7 @@ function topologicalOrder(
  * Пересчёт потоков: целевые скорости → ceil(machineCount) → потоки по DAG.
  */
 export function solveFlows(input: SolverInput): FlowResult {
+  const preserveCounts = input.preserveManualMachineCounts !== false;
   const recipes = recipeMap(input.pack);
   const nodeById = new Map(input.nodes.map((n) => [n.id, n]));
   const { incoming, outgoing } = buildAdjacency(input.edges);
@@ -147,10 +159,12 @@ export function solveFlows(input: SolverInput): FlowResult {
     const rate = R.from(target.ratePerSecond);
     requiredOutput[node.id][key] = rate;
 
-    const perMachine = perMachineOutputRate(recipe, key).mul(nodeSpeedFactor(node));
-    const ideal = idealMachineCount(rate, perMachine);
-    nodeMachineCounts[node.id] = ceilMachineCount(ideal);
-    node.machineCount = nodeMachineCounts[node.id];
+    if (!preserveCounts) {
+      const perMachine = perMachineOutputRate(recipe, key).mul(nodeSpeedFactor(node));
+      const ideal = idealMachineCount(rate, perMachine);
+      nodeMachineCounts[node.id] = ceilMachineCount(ideal);
+      node.machineCount = nodeMachineCounts[node.id];
+    }
   }
 
   const order =
@@ -177,7 +191,7 @@ export function solveFlows(input: SolverInput): FlowResult {
       }
     }
 
-    if (maxKey && maxRate.compare(R.zero) > 0) {
+    if (!preserveCounts && maxKey && maxRate.compare(R.zero) > 0) {
       const perMachine = perMachineOutputRate(recipe, maxKey).mul(nodeSpeedFactor(node));
       const ideal = idealMachineCount(maxRate, perMachine);
       const count = ceilMachineCount(ideal);
@@ -245,28 +259,34 @@ export function solveFlows(input: SolverInput): FlowResult {
     }
   }
 
-  for (const nodeId of order) {
-    for (const edge of outgoing.get(nodeId) ?? []) {
-      const key = edge.itemId ?? edge.fluidId ?? '';
-      const rate = edgeFlows[edge.id];
-      if (!rate || rate.compare(R.zero) <= 0) continue;
-      const down = nodeById.get(edge.target);
-      if (!down) continue;
-      const recipe = recipes.get(down.recipeId);
-      if (!recipe) continue;
-      if (!requiredOutput[edge.target][key]) {
-        requiredOutput[edge.target][key] = rate;
-      }
-      const perMachine = perMachineOutputRate(recipe, key).mul(nodeSpeedFactor(down));
-      if (perMachine.compare(R.zero) > 0) {
-        const ideal = idealMachineCount(rate, perMachine);
-        const count = ceilMachineCount(ideal);
-        if (count > nodeMachineCounts[edge.target]) {
-          nodeMachineCounts[edge.target] = count;
-          down.machineCount = count;
+  if (!preserveCounts) {
+    for (const nodeId of order) {
+      for (const edge of outgoing.get(nodeId) ?? []) {
+        const key = edge.itemId ?? edge.fluidId ?? '';
+        const rate = edgeFlows[edge.id];
+        if (!rate || rate.compare(R.zero) <= 0) continue;
+        const down = nodeById.get(edge.target);
+        if (!down) continue;
+        const recipe = recipes.get(down.recipeId);
+        if (!recipe) continue;
+        if (!requiredOutput[edge.target][key]) {
+          requiredOutput[edge.target][key] = rate;
+        }
+        const perMachine = perMachineOutputRate(recipe, key).mul(nodeSpeedFactor(down));
+        if (perMachine.compare(R.zero) > 0) {
+          const ideal = idealMachineCount(rate, perMachine);
+          const count = ceilMachineCount(ideal);
+          if (count > nodeMachineCounts[edge.target]) {
+            nodeMachineCounts[edge.target] = count;
+            down.machineCount = count;
+          }
         }
       }
     }
+  }
+
+  if (preserveCounts) {
+    freezeManualMachineCounts(input.nodes, nodeMachineCounts);
   }
 
   for (const node of input.nodes) {

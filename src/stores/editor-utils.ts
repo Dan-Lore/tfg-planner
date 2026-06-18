@@ -10,12 +10,20 @@ export interface EditorSnapshot {
   viewport: TfgpFile['viewport'];
 }
 
+export type FlowApplyMode = 'preserve' | 'full';
+
+export interface RunSolverOptions {
+  preserveManualMachineCounts?: boolean;
+}
+
 export function runSolver(
   snapshot: EditorSnapshot,
   pack: PackData,
+  options: RunSolverOptions = {},
 ): FlowResult {
   return solveFlows({
     pack,
+    preserveManualMachineCounts: options.preserveManualMachineCounts,
     nodes: snapshot.nodes.map((n) => ({
       id: n.id,
       machineId: n.machineId,
@@ -46,7 +54,11 @@ export function runSolver(
 export function applyFlowResult(
   nodes: TfgpNode[],
   result: FlowResult,
+  mode: FlowApplyMode,
 ): TfgpNode[] {
+  if (mode === 'preserve') {
+    return nodes;
+  }
   return nodes.map((n) => ({
     ...n,
     machineCount: result.nodeMachineCounts[n.id] ?? n.machineCount,

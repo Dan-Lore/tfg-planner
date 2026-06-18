@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { TfgpFile, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
+import { normalizeNodeScaling } from '@/lib/node-scaling';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import {
@@ -56,7 +57,10 @@ interface EditorState {
   setSelectedNodeIds: (ids: string[]) => void;
   multiplySelectedOutputs: (factor: number) => void;
   setTarget: (target: TfgpTarget) => void;
-  recalculate: () => void;
+  /** Refresh port/edge rates from current node settings; does not change machine counts. */
+  updateFlows: () => void;
+  /** Full scheme solve from targets; updates machine counts across the graph. */
+  recalculateScheme: () => void;
   duplicateSelected: () => void;
 }
 
@@ -97,20 +101,24 @@ export const useEditorStore = create<EditorState>()(
           flowResult: null,
           selectedNodeIds: [],
         });
-        get().recalculate();
+        get().updateFlows();
       },
 
       loadScheme: (file) => {
-        const key = packKey(file.modpack.version, file.modpack.dataVersion);
+        const normalized = {
+          ...file,
+          nodes: file.nodes.map(normalizeNodeScaling),
+        };
+        const key = packKey(normalized.modpack.version, normalized.modpack.dataVersion);
         set((s) => ({
-          scheme: file,
+          scheme: normalized,
           activePackKey: key,
-          schemesByPack: cacheScheme(s.schemesByPack, key, file),
+          schemesByPack: cacheScheme(s.schemesByPack, key, normalized),
           past: [],
           future: [],
           selectedNodeIds: [],
         }));
-        get().recalculate();
+        get().updateFlows();
       },
 
       snapshot: () => {
@@ -154,7 +162,7 @@ export const useEditorStore = create<EditorState>()(
           past: past.slice(0, -1),
           future: [current, ...future],
         }));
-        get().recalculate();
+        get().updateFlows();
       },
 
       redo: () => {
@@ -180,7 +188,7 @@ export const useEditorStore = create<EditorState>()(
           past: [...past, current],
           future: future.slice(1),
         }));
-        get().recalculate();
+        get().updateFlows();
       },
 
       setNodes: (nodes) => {
@@ -231,7 +239,7 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().updateFlows();
         return id;
       },
 
@@ -258,7 +266,7 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().updateFlows();
       },
 
       removeNodes: (ids) => {
@@ -278,7 +286,7 @@ export const useEditorStore = create<EditorState>()(
             selectedNodeIds: s.selectedNodeIds.filter((nid) => !idSet.has(nid)),
           };
         });
-        get().recalculate();
+        get().updateFlows();
       },
 
       addEdge: (partial) => {
@@ -291,7 +299,7 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().updateFlows();
       },
 
       attachMachine: (params) => {
@@ -338,7 +346,7 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().updateFlows();
         return nodeId;
       },
 
@@ -354,7 +362,7 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().updateFlows();
       },
 
       setSelectedNodeIds: (ids) => set({ selectedNodeIds: ids }),
@@ -377,7 +385,7 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().recalculateScheme();
       },
 
       setTarget: (target) => {
@@ -393,18 +401,36 @@ export const useEditorStore = create<EditorState>()(
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
           };
         });
-        get().recalculate();
+        get().recalculateScheme();
       },
 
-      recalculate: () => {
+      updateFlows: () => {
         const pack = usePackStore.getState().activePack;
         if (!pack) return;
         const { scheme } = get();
         const snap = get().snapshot();
-        const result = runSolver(snap, pack);
-        const nodes = applyFlowResult(snap.nodes, result);
-        const schemeWithNodes = { ...scheme, nodes };
+        const result = runSolver(snap, pack, { preserveManualMachineCounts: true });
         const flowEdgeData = buildEdgeFlowData(scheme.edges, result);
+        set({
+          flowResult: result,
+          flowEdgeData,
+          schemesByPack: cacheScheme(
+            get().schemesByPack,
+            get().activePackKey,
+            scheme,
+          ),
+        });
+      },
+
+      recalculateScheme: () => {
+        const pack = usePackStore.getState().activePack;
+        if (!pack) return;
+        const { scheme } = get();
+        const snap = get().snapshot();
+        const result = runSolver(snap, pack, { preserveManualMachineCounts: false });
+        const nodes = applyFlowResult(snap.nodes, result, 'full');
+        const schemeWithNodes = { ...scheme, nodes };
+        const flowEdgeData = buildEdgeFlowData(schemeWithNodes.edges, result);
         set({
           scheme: schemeWithNodes,
           flowResult: result,
@@ -439,7 +465,7 @@ export const useEditorStore = create<EditorState>()(
             selectedNodeIds: newNodes.map((n) => n.id),
           };
         });
-        get().recalculate();
+        get().updateFlows();
       },
     }),
     {

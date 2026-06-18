@@ -1,10 +1,11 @@
-import { memo, useMemo, useState, type MouseEvent as ReactMouseEvent } from 'react';
+import { memo, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackData } from '@/data/types';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
 import { RecipePicker } from './RecipePicker';
 import { flowKey, flowLabel, inputPortId, outputPortId } from './ports';
+import { adjustByWheel } from '@/lib/wheel-adjust';
 export interface PortDisplay {
   portId: string;
   label: string;
@@ -22,6 +23,8 @@ export interface MachineNodeData {
   outputMultiplier: number;
   pack: PackData;
   onRecipeChange: (recipeId: string) => void;
+  onMachineCountChange: (count: number) => void;
+  onOverclockChange: (overclock: number) => void;
   onPortContextMenu: (
     portId: string,
     side: 'in' | 'out',
@@ -32,6 +35,29 @@ export interface MachineNodeData {
   outputPorts: PortDisplay[];
   surplusLines: string[];
   [key: string]: unknown;
+}
+
+
+function formatOverclock(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function MetaWheelChip({
+  label,
+  onWheel,
+}: {
+  label: string;
+  onWheel: (e: ReactWheelEvent) => void;
+}) {
+  return (
+    <span
+      className="machine-node__meta-chip nodrag nowheel"
+      onWheel={onWheel}
+      onMouseDown={(e) => e.stopPropagation()}
+    >
+      {label}
+    </span>
+  );
 }
 
 function PortRow({
@@ -74,7 +100,7 @@ function PortRow({
 }
 
 function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
   const [recipeMenuOpen, setRecipeMenuOpen] = useState(false);
@@ -111,9 +137,45 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
             onOpenChange={setRecipeMenuOpen}
           />
         )}
-        <div className="meta">
-          ×{d.machineCount} · OC {d.overclock} · P {d.parallel}
-          {d.outputMultiplier !== 1 && ` · out×${d.outputMultiplier}`}
+        <div
+          className="meta machine-node__meta-row nodrag nowheel"
+          onWheel={(e) => e.stopPropagation()}
+        >
+          <MetaWheelChip
+            label={t('editor.machinesMeta', { count: d.machineCount })}
+            onWheel={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              d.onMachineCountChange(
+                adjustByWheel(d.machineCount, e.deltaY, 1, 1),
+              );
+            }}
+          />
+          <span className="machine-node__meta-sep" aria-hidden>
+            ·
+          </span>
+          <MetaWheelChip
+            label={t('editor.overclockMeta', {
+              value: formatOverclock(d.overclock),
+            })}
+            onWheel={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              d.onOverclockChange(
+                adjustByWheel(d.overclock, e.deltaY, 0.1, 0.1),
+              );
+            }}
+          />
+          {d.outputMultiplier !== 1 && (
+            <>
+              <span className="machine-node__meta-sep" aria-hidden>
+                ·
+              </span>
+              <span className="machine-node__meta-static">
+                {t('editor.multiplier')} {d.outputMultiplier}
+              </span>
+            </>
+          )}
         </div>
         {recipe?.energy && (
           <div className="meta">{recipe.energy.euPerTick} EU/t</div>

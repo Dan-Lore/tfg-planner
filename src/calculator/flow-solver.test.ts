@@ -77,9 +77,96 @@ describe('solveFlows', () => {
         },
       ],
       targets: [{ nodeId: 'b', itemId: 'ingot', ratePerSecond: 2.5 }],
+      preserveManualMachineCounts: false,
     });
 
     expect(result.nodeMachineCounts['b']).toBeGreaterThanOrEqual(3);
     expect(result.edgeFlows['e1'].toNumber()).toBeGreaterThan(0);
+  });
+
+  it('preserve mode scales input and output rates with manual machine count', () => {
+    const mixerRecipe = {
+      id: 'mix',
+      machineId: 'mixer',
+      durationTicks: 100,
+      inputs: [
+        { itemId: 'a', amount: 2 },
+        { itemId: 'b', amount: 1 },
+      ],
+      outputs: [{ itemId: 'out', amount: 3 }],
+    };
+    const pack: PackData = { ...samplePack, recipes: [mixerRecipe] };
+    const node = {
+      id: 'n1',
+      machineId: 'mixer',
+      recipeId: 'mix',
+      machineCount: 1,
+      overclock: 1,
+      parallel: 1,
+      outputMultiplier: 1,
+    };
+
+    const one = solveFlows({
+      pack,
+      nodes: [node],
+      edges: [],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+    const three = solveFlows({
+      pack,
+      nodes: [{ ...node, machineCount: 3 }],
+      edges: [],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    const out1 = one.nodeOutputRates.n1!.out!.toNumber();
+    const out3 = three.nodeOutputRates.n1!.out!.toNumber();
+    const in1 = one.nodeInputRates.n1!.a!.toNumber();
+    const in3 = three.nodeInputRates.n1!.a!.toNumber();
+
+    expect(out3 / out1).toBeCloseTo(3, 5);
+    expect(in3 / in1).toBeCloseTo(3, 5);
+    expect(three.nodeMachineCounts.n1).toBe(3);
+  });
+
+  it('preserve mode keeps manual machine count on target nodes', () => {
+    const mixerRecipe = {
+      id: 'mix',
+      machineId: 'mixer',
+      durationTicks: 100,
+      inputs: [{ itemId: 'a', amount: 1 }],
+      outputs: [{ itemId: 'out', amount: 1 }],
+    };
+    const pack: PackData = { ...samplePack, recipes: [mixerRecipe] };
+    const node = {
+      id: 'n1',
+      machineId: 'mixer',
+      recipeId: 'mix',
+      machineCount: 4,
+      overclock: 1,
+      parallel: 1,
+      outputMultiplier: 1,
+    };
+
+    const preserved = solveFlows({
+      pack,
+      nodes: [node],
+      edges: [],
+      targets: [{ nodeId: 'n1', itemId: 'out', ratePerSecond: 0.5 }],
+      preserveManualMachineCounts: true,
+    });
+    const full = solveFlows({
+      pack,
+      nodes: [node],
+      edges: [],
+      targets: [{ nodeId: 'n1', itemId: 'out', ratePerSecond: 0.5 }],
+      preserveManualMachineCounts: false,
+    });
+
+    expect(preserved.nodeMachineCounts.n1).toBe(4);
+    expect(preserved.nodeOutputRates.n1!.out!.toNumber()).toBeGreaterThan(0.5);
+    expect(full.nodeMachineCounts.n1).toBeLessThan(4);
   });
 });
