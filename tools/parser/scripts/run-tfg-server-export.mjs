@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Run TFG server from full pakku fetch workdir and export recipes.
+ * Run TFG dedicated server from pakku serverpack and export recipes.
  * Usage: node tools/parser/scripts/run-tfg-server-export.mjs 0.12.8
  */
 import { createHash } from 'node:crypto';
@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url';
 const tag = process.argv[2] ?? '0.12.8';
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const workDir = join(repoRoot, '.cache', 'tfg-snapshot', tag);
+const serverRunDir = join(workDir, 'server-run');
 const outDir = join(repoRoot, 'tools', 'parser', 'snapshots', tag);
 const exportScript = join(repoRoot, 'tools', 'parser', 'snapshot', 'kubejs-export-recipes.js');
 const serverTimeoutMin = 120;
@@ -48,120 +49,92 @@ function resolveJava() {
   throw new Error('JDK 17+ not found. Install Temurin 21 and set JAVA_HOME.');
 }
 
-function copyServerStarterFiles() {
-  const src = join(workDir, '.pakku', 'server-overrides');
-  for (const name of [
-    'minecraft_server.jar',
-    'forge-auto-install.txt',
-    'server_starter.conf',
-    'server.properties',
-    'start_server.bat',
-    'start_server.sh',
-  ]) {
-    const from = join(src, name);
-    if (existsSync(from)) copyFileSync(from, join(workDir, name));
-  }
+function findServerPackZip() {
+  const serverPackDir = join(workDir, 'build', 'serverpack');
+  if (!existsSync(serverPackDir)) return null;
+  const zips = readdirSync(serverPackDir).filter((n) => n.endsWith('.zip'));
+  return zips.length > 0 ? join(serverPackDir, zips[0]) : null;
 }
 
-function patchForgeAutoInstall() {
-  const lock = JSON.parse(readFileSync(join(workDir, 'pakku-lock.json'), 'utf-8'));
-  const mc = lock.mc_versions?.[0] ?? '1.20.1';
-  const loaders = lock.loaders ?? {};
-  const key = loaders.forge ? 'forge' : loaders.neoforge ? 'neoforge' : Object.keys(loaders)[0];
-  const version = loaders[key];
-  const type = key === 'neoforge' ? 'NeoForge' : 'Forge';
-  const path = join(workDir, 'forge-auto-install.txt');
-  let text = readFileSync(path, 'utf-8');
-  text = text
-    .replace(/^minecraftVersion=.*$/m, `minecraftVersion=${mc}`)
-    .replace(/^loaderType=.*$/m, `loaderType=${type}`)
-    .replace(/^loaderVersion=.*$/m, `loaderVersion=${version}`);
-  writeFileSync(path, text);
-  console.log(`forge-auto-install: ${type} ${version}`);
-}
-
-function runAndWait(java, args, cwd, label, successCheck) {
-  return new Promise((resolve, reject) => {
-    console.log(`> ${label}`);
-    const proc = spawn(java, args, { cwd, stdio: 'inherit' });
-    proc.on('exit', (code) => {
-      if (successCheck?.()) resolve();
-      else if (code === 0) resolve();
-      else reject(new Error(`${label} exited with code ${code}`));
-    });
-    proc.on('error', reject);
-  });
-}
-
-async function waitForExport(java) {
-  const exportFile = join(workDir, 'logs', 'tfg-planner-recipe-snapshot', 'recipes.json');
-  const runBat = join(workDir, 'run.bat');
-  const starterJar = join(workDir, 'minecraft_server.jar');
-
-  if (!existsSync(runBat)) {
-    const altRun = join(workDir, 'server-run', 'run.bat');
-    if (existsSync(altRun)) {
-      console.log('Reusing Forge install from server-run/');
-      for (const name of ['run.bat', 'run.sh', 'user_jvm_args.txt']) {
-        const from = join(workDir, 'server-run', name);
-        if (existsSync(from)) copyFileSync(from, join(workDir, name));
-      }
-      const libsFrom = join(workDir, 'server-run', 'libraries');
-      const libsTo = join(workDir, 'libraries');
-      if (existsSync(libsFrom) && !existsSync(libsTo)) {
-        spawnSync('xcopy', [libsFrom, libsTo, '/E', '/I', '/Y'], { stdio: 'inherit', shell: true });
-      }
-    }
+function ensureServerRun() {
+  const starterJar = join(serverRunDir, 'minecraft_server.jar');
+  const modsDir = join(serverRunDir, 'mods');
+  if (existsSync(starterJar) && existsSync(modsDir)) {
+    console.log(`Reusing ${serverRunDir}`);
+    return;
   }
 
-  if (!existsSync(runBat)) {
-    if (!existsSync(starterJar)) throw new Error('minecraft_server.jar missing');
-    await runAndWait(
-      java,
-      ['-jar', starterJar, '-Xmx6024M', '-Xms1024M', 'nogui'],
-      workDir,
-      'F-S-S install',
-      () => existsSync(runBat),
+  const zip = findServerPackZip();
+  if (!zip) {
+    throw new Error(
+      `No serverpack zip in ${join(workDir, 'build', 'serverpack')} — run generate-tfg-snapshot first`,
     );
   }
 
-  if (!existsSync(runBat)) throw new Error('run.bat not created after Forge install');
+  console.log(`Extracting serverpack ${zip}…`);
+  mkdirSync(serverRunDir, { recursive: true });
+  if (process.platform === 'win32') {
+    const ps = `Expand-Archive -Path '${zip.replace(/'/g, "''")}' -DestinationPath '${serverRunDir.replace(/'/g, "''")}' -Force`;
+    const r = spawnSync('powershell', ['-NoProfile', '-Command', ps], { stdio: 'inherit' });
+    if (r.status !== 0) throw new Error('Expand-Archive failed');
+  } else {
+    const r = spawnSync('unzip', ['-o', zip, '-d', serverRunDir], { stdio: 'inherit' });
+    if (r.status !== 0) throw new Error('unzip failed');
+  }
 
-  console.log(`Starting Forge server (timeout ${serverTimeoutMin}m)...`);
-  const proc = spawn('cmd.exe', ['/c', 'run.bat', 'nogui'], {
-    cwd: workDir,
-    stdio: 'inherit',
-  });
+  if (!existsSync(starterJar)) {
+    throw new Error(`minecraft_server.jar missing after extracting serverpack to ${serverRunDir}`);
+  }
+}
+
+function injectExportScript() {
+  const kubeDir = join(serverRunDir, 'kubejs', 'server_scripts');
+  mkdirSync(kubeDir, { recursive: true });
+  copyFileSync(exportScript, join(kubeDir, '_tfg_planner_export.js'));
+  writeFileSync(join(serverRunDir, 'eula.txt'), 'eula=true\n');
+}
+
+async function waitForExport(java) {
+  const exportFile = join(serverRunDir, 'logs', 'tfg-planner-recipe-snapshot', 'recipes.json');
+  const starterJar = join(serverRunDir, 'minecraft_server.jar');
+  if (!existsSync(starterJar)) {
+    throw new Error(`minecraft_server.jar missing in ${serverRunDir}`);
+  }
+
+  console.log(`Starting dedicated server from serverpack (timeout ${serverTimeoutMin}m)…`);
+  const proc = spawn(
+    java,
+    ['-jar', starterJar, '-Xmx6024M', '-Xms1024M', 'nogui'],
+    { cwd: serverRunDir, stdio: 'inherit' },
+  );
 
   const deadline = Date.now() + serverTimeoutMin * 60 * 1000;
   while (Date.now() < deadline) {
     await new Promise((r) => setTimeout(r, 20000));
     if (existsSync(exportFile)) {
-      proc.kill();
+      if (!proc.killed) proc.kill();
       return exportFile;
     }
     if (proc.exitCode != null && !existsSync(exportFile)) {
-      throw new Error(`Forge server exited (code ${proc.exitCode}) before export`);
+      const latest = join(serverRunDir, 'logs', 'latest.log');
+      if (existsSync(latest)) {
+        console.log('--- latest.log tail ---');
+        const lines = readFileSync(latest, 'utf-8').split('\n').slice(-30);
+        console.log(lines.join('\n'));
+      }
+      throw new Error(`Server exited (code ${proc.exitCode}) before export`);
     }
   }
-  proc.kill();
+  if (!proc.killed) proc.kill();
   throw new Error(`Export timeout: ${exportFile}`);
 }
 
-if (!existsSync(join(workDir, 'mods'))) {
-  throw new Error(`Missing ${join(workDir, 'mods')} — run generate-tfg-snapshot without --skip-fetch first`);
+if (!existsSync(workDir)) {
+  throw new Error(`Missing ${workDir} — run generate-tfg-snapshot without --skip-fetch first`);
 }
 
-spawnSync('node', [join(repoRoot, 'tools/parser/scripts/prepare-server-overrides.mjs'), workDir], {
-  stdio: 'inherit',
-});
-copyServerStarterFiles();
-patchForgeAutoInstall();
-
-const kubeDir = join(workDir, 'kubejs', 'server_scripts');
-mkdirSync(kubeDir, { recursive: true });
-copyFileSync(exportScript, join(kubeDir, '_tfg_planner_export.js'));
-writeFileSync(join(workDir, 'eula.txt'), 'eula=true\n');
+ensureServerRun();
+injectExportScript();
 
 const java = resolveJava();
 const exportFile = await waitForExport(java);
