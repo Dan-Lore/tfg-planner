@@ -1,7 +1,7 @@
 {
   "modpackVersion": "0.12.8",
   "tag": "0.12.8",
-  "generatedAt": "2026-06-18T16:12:51.795Z",
+  "generatedAt": "2026-06-20T02:08:53.244Z",
   "stats": {
     "snapshotRecipes": 6727,
     "snapshotFiles": 1,
@@ -20,7 +20,7 @@
   "warnings": [
     {
       "file": "lang",
-      "reason": "Localized 2619/3416 resources (tags: 100/765, gtceu: 679/769, tfg: 445/456, minecraft: 121/122, malformed: 0; kubejs: 179 files, jars: 179, mc keys ru/en: 8121/6217, keys ru/en: 61353/62607)"
+      "reason": "Localized 2704/3416 resources (tags: 100/765, gtceu: 757/769, tfg: 452/456, minecraft: 121/122, malformed: 0; kubejs: 179 files, jars: 179, mc keys ru/en: 8121/6217, keys ru/en: 61353/62607)"
     }
   ],
   "warningsByKind": {

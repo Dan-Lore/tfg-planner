@@ -51,6 +51,39 @@ describe('lang resolution', () => {
     },
   );
 
+  it('resolves GTCEu prefix dust sizes and gems', () => {
+    const bundle: LangBundle = {
+      ru: {
+        'material.gtceu.rhenium': 'Рений',
+        'material.gtceu.amethyst': 'Аметист',
+        'material.gtceu.magnesium_diboride': 'Диборид магния',
+        'tagprefix.tiny_dust': '%s (Крохотная кучка пыли)',
+        'tagprefix.pure_dust': '%s (Чистая кучка пыли)',
+        'tagprefix.chipped_gem': '%s (Осколок)',
+        'tagprefix.hot_ingot': '%s (Горячий слиток)',
+      },
+      en: {
+        'material.gtceu.rhenium': 'Rhenium',
+        'material.gtceu.amethyst': 'Amethyst',
+        'material.gtceu.magnesium_diboride': 'Magnesium Diboride',
+        'tagprefix.tiny_dust': 'Tiny Pile of %s Dust',
+        'tagprefix.pure_dust': 'Pure Pile of %s Dust',
+        'tagprefix.chipped_gem': '%s Gem Chip',
+        'tagprefix.hot_ingot': 'Hot %s Ingot',
+      },
+    };
+    expect(resolveResourceName('gtceu:tiny_rhenium_dust', bundle).ru).toBe(
+      'Рений (Крохотная кучка пыли)',
+    );
+    expect(resolveResourceName('gtceu:pure_amethyst_dust', bundle).ru).toBe(
+      'Аметист (Чистая кучка пыли)',
+    );
+    expect(resolveResourceName('gtceu:chipped_amethyst_gem', bundle).ru).toBe('Аметист (Осколок)');
+    expect(resolveResourceName('gtceu:hot_magnesium_diboride_ingot', bundle).ru).toBe(
+      'Диборид магния (Горячий слиток)',
+    );
+  });
+
   it('resolves GTCEu cables via suffix aliases', () => {
     const bundle: LangBundle = {
       ru: {

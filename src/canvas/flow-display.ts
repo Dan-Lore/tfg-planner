@@ -1,34 +1,28 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { formatRate } from '@/calculator/flow-solver';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
-import type { PackData, Recipe } from '@/data/types';
+import type { PackData } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
 import { normalizePortId, parsePortId, productKey } from '@/canvas/ports';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
+import {
+  MACHINE_NODE_WIDTH,
+  PORT_ROW_HEIGHT,
+  estimateHeaderHeight,
+} from '@/canvas/node-bounds';
 
-const MACHINE_NODE_WIDTH = 200;
-const PORT_ROW_HEIGHT = 28;
-const NODE_HEADER_MIN = 48;
-
-function recipeForNode(pack: PackData, node: TfgpNode): Recipe | undefined {
-  return pack.recipes.find((r) => r.id === node.recipeId);
-}
-
-/** Estimate handle center from node layout (matches MachineNode min-height model). */
+/** Estimate handle center from node layout (matches MachineNode content box). */
 function estimatePortCenter(
+  pack: PackData,
   node: TfgpNode,
   port: string,
-  recipe: Recipe | undefined,
 ): { x: number; y: number } {
   const parsed = parsePortId(normalizePortId(port));
   if (!parsed) {
     return { x: node.position.x, y: node.position.y };
   }
-  const inCount = recipe?.inputs.length ?? 1;
-  const outCount = recipe?.outputs.length ?? 1;
-  const portCount = Math.max(inCount, outCount, 1);
-  const bodyMinHeight = NODE_HEADER_MIN + portCount * PORT_ROW_HEIGHT;
-  const portsTopY = node.position.y + bodyMinHeight - portCount * PORT_ROW_HEIGHT;
+  const portsTopY =
+    estimateHeaderHeight(pack, node.machineId, node.recipeId) + node.position.y;
   const y = portsTopY + parsed.index * PORT_ROW_HEIGHT + PORT_ROW_HEIGHT / 2;
   const x =
     parsed.kind === 'in'
@@ -113,13 +107,10 @@ function buildLabelWinners(
 
   for (const [groupKey, group] of incoming) {
     if (group.length <= 1) continue;
-    const nodeId = group[0]!.target;
-    const node = nodeById.get(nodeId);
-    const recipe = node ? recipeForNode(pack, node) : undefined;
     const winner = pickCentralEdge(group, (edge) => {
       const n = nodeById.get(edge.target);
       return n
-        ? estimatePortCenter(n, edge.targetPort, recipe)
+        ? estimatePortCenter(pack, n, edge.targetPort)
         : { x: 0, y: 0 };
     });
     if (winner) targetLabelEdge.set(groupKey, winner);
@@ -127,12 +118,10 @@ function buildLabelWinners(
 
   for (const [nodeId, group] of outgoing) {
     if (group.length <= 1) continue;
-    const node = nodeById.get(nodeId);
-    const recipe = node ? recipeForNode(pack, node) : undefined;
     const winner = pickCentralEdge(group, (edge) => {
       const n = nodeById.get(edge.source);
       return n
-        ? estimatePortCenter(n, edge.sourcePort, recipe)
+        ? estimatePortCenter(pack, n, edge.sourcePort)
         : { x: 0, y: 0 };
     });
     if (winner) sourceLabelEdge.set(nodeId, winner);

@@ -7,16 +7,9 @@ import {
   type ChangeEvent,
 } from 'react';
 import {
-  ReactFlow,
-  Background,
-  Controls,
-  MiniMap,
-  applyNodeChanges,
-  ConnectionMode,
   type Connection,
   type Edge,
   type Node,
-  type NodeChange,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -25,6 +18,7 @@ import { usePackStore } from '@/stores/pack-store';
 import { useEditorStore } from '@/stores/editor-store';
 import { useThemeStore } from '@/stores/theme-store';
 import { buildPortDisplays, useNodeTypes } from '@/canvas/MachineNode';
+import { EditorCanvas } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
 import { PortContextMenu, type PortAttachDirection } from '@/canvas/PortContextMenu';
 import { buildNodeSurplusLines, rateMapToStrings } from '@/canvas/flow-display';
@@ -39,7 +33,6 @@ import {
 } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
 import { WheelNumberInput } from '@/components/WheelNumberInput';
-import { mergeFlowNodes } from '@/lib/merge-flow-nodes';
 import {
   buildRecipeFlowIndex,
   findDownstreamCandidates,
@@ -50,8 +43,9 @@ import { buildTagIndex } from '@/lib/tag-index';
 import type { Flow } from '@/data/types';
 import { parsePortId, portFlow, portsMatch } from '@/canvas/ports';
 
+import { PORT_ROW_HEIGHT, estimateHeaderHeight } from '@/canvas/node-bounds';
+
 const NODE_ATTACH_OFFSET_X = 280;
-const PORT_ROW_HEIGHT = 28;
 
 interface PortMenuState {
   x: number;
@@ -249,15 +243,18 @@ export function EditorPage() {
       if (!anchor) return;
 
       const portIndex = parsePortId(portMenu.anchorPort)?.index ?? 0;
+      const portsTop =
+        anchor.position.y +
+        estimateHeaderHeight(pack!, anchor.machineId, anchor.recipeId);
       const position =
         portMenu.direction === 'downstream'
           ? {
               x: anchor.position.x + NODE_ATTACH_OFFSET_X,
-              y: anchor.position.y + portIndex * PORT_ROW_HEIGHT,
+              y: portsTop + portIndex * PORT_ROW_HEIGHT,
             }
           : {
               x: anchor.position.x - NODE_ATTACH_OFFSET_X,
-              y: anchor.position.y + portIndex * PORT_ROW_HEIGHT,
+              y: portsTop + portIndex * PORT_ROW_HEIGHT,
             };
 
       const newId = attachMachine({
@@ -326,12 +323,6 @@ export function EditorPage() {
     });
   }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, handleRecipeChange, handlePortContextMenu, updateNode]);
 
-  const [flowNodes, setFlowNodes] = useState<Node[]>([]);
-
-  useEffect(() => {
-    setFlowNodes((prev) => mergeFlowNodes(prev, rfNodes));
-  }, [rfNodes]);
-
   const rfEdges: Edge[] = useMemo(
     () =>
       scheme.edges.map((e) => ({
@@ -348,26 +339,16 @@ export function EditorPage() {
     [scheme.edges, flowEdgeData, selectedEdgeIds],
   );
 
-  const onNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      setFlowNodes((current) => applyNodeChanges(changes, current));
-
-      const dragEnded = changes.some(
-        (c) => c.type === 'position' && c.dragging === false,
-      );
-      if (!dragEnded) return;
-
+  const onPersistNodePositions = useCallback(
+    (current: Node[]) => {
       pushHistory();
-      setFlowNodes((current) => {
-        const schemeNodes = useEditorStore.getState().scheme.nodes;
-        setNodes(
-          schemeNodes.map((n) => {
-            const rf = current.find((u) => u.id === n.id);
-            return rf ? { ...n, position: rf.position } : n;
-          }),
-        );
-        return current;
-      });
+      const schemeNodes = useEditorStore.getState().scheme.nodes;
+      setNodes(
+        schemeNodes.map((n) => {
+          const rf = current.find((u) => u.id === n.id);
+          return rf ? { ...n, position: rf.position } : n;
+        }),
+      );
     },
     [setNodes, pushHistory],
   );
@@ -588,42 +569,21 @@ export function EditorPage() {
       </div>
       <div className="editor-body">
         <div className="editor-canvas-wrap">
-          <ReactFlow
-            nodes={flowNodes}
-            edges={rfEdges}
+          <EditorCanvas
+            rfNodes={rfNodes}
+            rfEdges={rfEdges}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
-            colorMode={colorTheme}
-            onNodesChange={onNodesChange}
-            onEdgesChange={() => {}}
+            colorTheme={colorTheme}
+            defaultViewport={scheme.viewport}
+            onPersistNodePositions={onPersistNodePositions}
             onConnect={onConnect}
             isValidConnection={isValidConnection}
             onSelectionChange={onSelectionChange}
             onPaneClick={closePortMenu}
             onNodeClick={closePortMenu}
-            onMoveEnd={(_, vp) =>
-              setViewport({ x: vp.x, y: vp.y, zoom: vp.zoom })
-            }
-            defaultViewport={scheme.viewport}
-            nodesDraggable
-            nodeDragThreshold={1}
-            elevateNodesOnSelect
-            connectionMode={ConnectionMode.Loose}
-          >
-            <Background />
-            <Controls />
-            <MiniMap
-              className="editor-minimap"
-              pannable
-              zoomable
-              maskColor="var(--minimap-mask)"
-              maskStrokeColor="var(--minimap-viewport-stroke)"
-              maskStrokeWidth={1.25}
-              nodeColor="var(--minimap-node)"
-              nodeStrokeWidth={0}
-              bgColor="var(--minimap-bg)"
-            />
-          </ReactFlow>
+            onMoveEnd={(vp) => setViewport(vp)}
+          />
         </div>
         <aside className="editor-sidebar">
           <h3>{t('editor.title')}</h3>

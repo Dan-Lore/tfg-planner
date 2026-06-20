@@ -715,6 +715,16 @@ a {
     background 0.15s ease;
 }
 
+.recipe-picker__trigger--static {
+  cursor: inherit;
+  pointer-events: none;
+}
+
+.recipe-picker__trigger--static:hover {
+  border-color: var(--border);
+  box-shadow: none;
+}
+
 .recipe-picker__trigger:hover {
   border-color: var(--hover-border);
   background: var(--bg);
@@ -896,7 +906,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  flex: 1;
+  flex: 0 0 auto;
 }
 
 .machine-node__ports-col--in {

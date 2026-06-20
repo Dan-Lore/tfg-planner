@@ -55,6 +55,49 @@ interface SuffixEntry {
   prefix: string;
 }
 
+interface PrefixEntry {
+  lead: string;
+  tail: string;
+  prefix: string;
+}
+
+function isSuffixOnlyTagPrefix(prefix: string): boolean {
+  if (prefix.startsWith('cable_gt_') || prefix.startsWith('wire_gt_') || prefix.startsWith('pipe_')) {
+    return true;
+  }
+  return !prefix.includes('_') && !prefix.includes('.');
+}
+
+/** GTCEu ids like `tiny_rhenium_dust` use `{lead}{material}{tail}`, not `{material}{suffix}`. */
+function prefixPatternsForTagPrefix(prefix: string): { lead: string; tail: string }[] {
+  if (isSuffixOnlyTagPrefix(prefix)) return [];
+
+  const segments = prefix.split('.');
+  const lastSeg = segments[segments.length - 1]!;
+  const lastUnderscore = lastSeg.lastIndexOf('_');
+  if (lastUnderscore <= 0) return [];
+
+  const tailWord = lastSeg.slice(lastUnderscore + 1);
+  const leadWords =
+    segments.length === 1
+      ? [lastSeg.slice(0, lastUnderscore)]
+      : [...segments.slice(0, -1), lastSeg.slice(0, lastUnderscore)];
+
+  return [{ lead: `${leadWords.join('_')}_`, tail: `_${tailWord}` }];
+}
+
+function buildPrefixIndex(lang: Record<string, string>): PrefixEntry[] {
+  const entries: PrefixEntry[] = [];
+  for (const key of Object.keys(lang)) {
+    if (!key.startsWith('tagprefix.')) continue;
+    const prefix = key.slice('tagprefix.'.length);
+    for (const { lead, tail } of prefixPatternsForTagPrefix(prefix)) {
+      entries.push({ lead, tail, prefix });
+    }
+  }
+  return entries.sort((a, b) => b.lead.length - a.lead.length);
+}
+
 function suffixesForTagPrefix(prefix: string): string[] {
   const cable = prefix.match(/^cable_gt_(.+)$/);
   if (cable) return [`_${cable[1]}_cable`];
@@ -105,12 +148,22 @@ function resolveMaterialPrefixItem(
   path: string,
   lang: Record<string, string>,
   suffixIndex: SuffixEntry[],
+  prefixIndex: PrefixEntry[],
 ): string | undefined {
   const dot = path.replace(/\//g, '.');
   if (lang[`item.${ns}.${dot}`]) return lang[`item.${ns}.${dot}`];
   if (lang[`fluid.${ns}.${dot}`]) return lang[`fluid.${ns}.${dot}`];
   const directMat = materialName(lang, ns, path);
   if (directMat) return directMat;
+
+  for (const { lead, tail, prefix } of prefixIndex) {
+    if (!path.startsWith(lead) || !path.endsWith(tail)) continue;
+    const materialId = path.slice(lead.length, path.length - tail.length);
+    if (!materialId) continue;
+    const matName = materialName(lang, ns, materialId);
+    const fmtStr = lang[`tagprefix.${prefix}`];
+    if (matName && fmtStr) return fmtStr.replace('%s', matName);
+  }
 
   for (const { suffix, prefix } of suffixIndex) {
     if (!path.endsWith(suffix)) continue;
@@ -142,16 +195,18 @@ function resolveNamespacedMaterial(
 
   const ruSuffix = buildSuffixIndex(bundle.ru);
   const enSuffix = buildSuffixIndex(bundle.en);
-  const ruResolved = resolveMaterialPrefixItem(ns, path, bundle.ru, ruSuffix);
-  const enResolved = resolveMaterialPrefixItem(ns, path, bundle.en, enSuffix);
+  const ruPrefix = buildPrefixIndex(bundle.ru);
+  const enPrefix = buildPrefixIndex(bundle.en);
+  const ruResolved = resolveMaterialPrefixItem(ns, path, bundle.ru, ruSuffix, ruPrefix);
+  const enResolved = resolveMaterialPrefixItem(ns, path, bundle.en, enSuffix, enPrefix);
 
   if (ruResolved || enResolved) {
     return { ru: ruResolved, en: enResolved };
   }
 
   if (ns === 'tfg') {
-    const ruGt = resolveMaterialPrefixItem('gtceu', path, bundle.ru, ruSuffix);
-    const enGt = resolveMaterialPrefixItem('gtceu', path, bundle.en, enSuffix);
+    const ruGt = resolveMaterialPrefixItem('gtceu', path, bundle.ru, ruSuffix, ruPrefix);
+    const enGt = resolveMaterialPrefixItem('gtceu', path, bundle.en, enSuffix, enPrefix);
     if (ruGt || enGt) return { ru: ruGt, en: enGt };
   }
 

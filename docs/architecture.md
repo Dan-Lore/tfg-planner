@@ -62,7 +62,8 @@
 
 - Узлы: машина + рецепт + **ручные** overclock / parallel.
 - Рёбра: `item` | `fluid` (energy edge — когда K-003 готов).
-- React Flow.
+- React Flow; drag-позиции живут в `EditorCanvas`, в store пишутся на `dragEnd`.
+- **Маршрутизация рёбер:** obstacle routing (`edge-routing.ts`); `FlowEdge` + `memo` — перерисовываются только рёбра с изменившимися координатами портов. Остаточный jank drag — [kanban K-011](kanban.md).
 - **History stack** (undo/redo): снимки графа + параметров расчёта; Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Shift+Z на macOS).
 - **Масштабирование UI:**
   - A — clipboard duplicate (топология);

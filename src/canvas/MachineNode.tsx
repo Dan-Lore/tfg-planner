@@ -2,7 +2,8 @@ import { memo, useMemo, useState, type MouseEvent as ReactMouseEvent, type Wheel
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackData } from '@/data/types';
-import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
+import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
+import { formatRecipeLabel } from '@/lib/recipe-label';
 import { RecipePicker } from './RecipePicker';
 import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
@@ -104,11 +105,15 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
   const [recipeMenuOpen, setRecipeMenuOpen] = useState(false);
+  const recipeCount = getMachineRecipeCount(d.pack, d.machineId);
+  const hasRecipePicker = recipeCount > 1;
   const recipe = d.pack.recipes.find((r) => r.id === d.recipeId);
   const title = getMachineName(d.pack, d.machineId, lang);
-  const recipes = getRecipesForMachine(d.pack, d.machineId);
-  const portCount = Math.max(d.inputPorts.length, d.outputPorts.length, 1);
-  const bodyMinHeight = 48 + portCount * 28;
+  const recipeLabel = useMemo(
+    () => (recipe ? formatRecipeLabel(d.pack, recipe, lang) : ''),
+    [d.pack, recipe, lang],
+  );
+  const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
 
   return (
     <div
@@ -120,22 +125,28 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
       ]
         .filter(Boolean)
         .join(' ')}
-      style={{ minHeight: bodyMinHeight }}
     >
       <div className="machine-node__drag-handle machine-node__header">
         <div className="title" title={title}>
           {title}
         </div>
-        {recipes.length > 1 && (
+        {hasRecipePicker && !dragging && (
           <RecipePicker
             pack={d.pack}
-            recipes={recipes}
+            recipes={getRecipesForMachine(d.pack, d.machineId)}
             value={d.recipeId}
             lang={lang}
             dragging={dragging}
             onChange={d.onRecipeChange}
             onOpenChange={setRecipeMenuOpen}
           />
+        )}
+        {useStaticRecipeDuringDrag && (
+          <div className="recipe-picker nodrag" title={recipeLabel}>
+            <div className="recipe-picker__trigger recipe-picker__trigger--static">
+              <span className="recipe-picker__label">{recipeLabel}</span>
+            </div>
+          </div>
         )}
         <div
           className="meta machine-node__meta-row nodrag nowheel"

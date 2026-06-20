@@ -1,4 +1,4 @@
-import type { PackData, PackManifest } from './types';
+import type { PackData, PackManifest, Recipe } from './types';
 import { publicPath } from '@/lib/public-path';
 
 export async function loadManifest(): Promise<PackManifest> {
@@ -34,6 +34,26 @@ export function getMachineName(
   return m ? (m.names[lang] ?? m.names.en) : machineId;
 }
 
-export function getRecipesForMachine(pack: PackData, machineId: string) {
-  return pack.recipes.filter((r) => r.machineId === machineId);
+const recipesByMachineCache = new WeakMap<PackData, Map<string, Recipe[]>>();
+
+function recipesByMachineIndex(pack: PackData): Map<string, Recipe[]> {
+  let index = recipesByMachineCache.get(pack);
+  if (!index) {
+    index = new Map<string, Recipe[]>();
+    for (const recipe of pack.recipes) {
+      const list = index.get(recipe.machineId);
+      if (list) list.push(recipe);
+      else index.set(recipe.machineId, [recipe]);
+    }
+    recipesByMachineCache.set(pack, index);
+  }
+  return index;
+}
+
+export function getMachineRecipeCount(pack: PackData, machineId: string): number {
+  return recipesByMachineIndex(pack).get(machineId)?.length ?? 0;
+}
+
+export function getRecipesForMachine(pack: PackData, machineId: string): Recipe[] {
+  return recipesByMachineIndex(pack).get(machineId) ?? [];
 }

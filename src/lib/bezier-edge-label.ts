@@ -1,5 +1,6 @@
-import { Position } from '@xyflow/react';
+import { Position, type XYPosition } from '@xyflow/react';
 import { flowEdgeLabelCenterOffset } from '@/lib/flow-edge-label-metrics';
+import { pointOnPolyline } from '@/lib/edge-routing';
 
 interface BezierEndpoints {
   sourceX: number;
@@ -150,6 +151,43 @@ export function edgeLabelPosition(
   }
 
   const onEdge = pointOnBezierEdge(params, t);
+  const pull = EDGE_LABEL_HORIZONTAL_PULL * (1 - shortFactor * 0.85);
+  let x = onEdge.x + (handleX - onEdge.x) * pull;
+  const y = onEdge.y;
+
+  const outward = outwardHorizontalSign(params, end);
+  if (labelText) {
+    const centerOffset = flowEdgeLabelCenterOffset(labelText);
+    x = clampLabelClearOfNode(x, handleX, outward, centerOffset);
+  }
+
+  return { x, y };
+}
+
+/** Labels on a routed polyline edge, close to the corresponding handle. */
+export function edgeLabelPositionOnWaypoints(
+  waypoints: XYPosition[],
+  params: BezierEndpoints,
+  end: 'source' | 'target',
+  labelText?: string,
+): { x: number; y: number } {
+  const handleX = end === 'source' ? params.sourceX : params.targetX;
+  const span = Math.hypot(
+    params.targetX - params.sourceX,
+    params.targetY - params.sourceY,
+  );
+  const shortFactor =
+    span < EDGE_LABEL_SHORT_SPAN
+      ? 1 - span / EDGE_LABEL_SHORT_SPAN
+      : 0;
+
+  let t = end === 'source' ? EDGE_LABEL_NEAR_SOURCE : EDGE_LABEL_NEAR_TARGET;
+  if (shortFactor > 0) {
+    const push = shortFactor * 0.22;
+    t = end === 'source' ? t + push : t - push;
+  }
+
+  const onEdge = pointOnPolyline(waypoints, t);
   const pull = EDGE_LABEL_HORIZONTAL_PULL * (1 - shortFactor * 0.85);
   let x = onEdge.x + (handleX - onEdge.x) * pull;
   const y = onEdge.y;

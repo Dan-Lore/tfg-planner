@@ -9,6 +9,9 @@ export function mergeFlowNodes(prev: Node[], next: Node[]): Node[] {
     return {
       ...rf,
       position: existing.position,
+      measured: existing.measured ?? rf.measured,
+      width: existing.width ?? rf.width,
+      height: existing.height ?? rf.height,
     };
   });
 }
