@@ -80,21 +80,43 @@
 
 | Поле | Значение |
 |------|----------|
-| Статус | `backlog` |
+| Статус | `in_progress` |
 | Приоритет | P1 |
 | Зависит от | K-001, K-002 |
 
 **Scope (фазы):**
 
-- [ ] Поле `energyPerTick` в pack data для рецептов, где известно
-- [ ] Отображение EU/t на узле при известных данных
+- [x] `Recipe.energy` как EnergyStack (`minVoltageTier`, `voltage`, `amperage`) в pack data
+- [x] Отображение EU/t, duration, total EU на узле при известных данных
+- [x] Tier picker на узле (≥ min tier)
+- [ ] ~~multiblock — `energyHatchCount`~~ → см. K-012
+- [x] Парсер: snapshot + KubeJS enrich-energy + GTValues.VA в AST + sanitize legacy `euPerTick`
+- [x] `calculator/energy.ts` + effective duration в flow-solver (overclock → duration, не EU/t)
 - [ ] Суммарное потребление линии / группы
-- [ ] Overclock-множители к энергии (GT-правила)
-- [ ] Парсер: извлечение энергии из всех релевантных источников
 
 **Правило:** пока подпункт не закрыт — в UI **нет** соответствующего поля/цифры (не показывать «0 EU» или «—» как будто всё ок).
 
-**Критерий закрытия:** энергия отображается только для рецептов с валидными данными; остальное остаётся в этой карточке.
+**Критерий закрытия:** энергия отображается только для рецептов с валидными данными; line/group totals; полное покрытие snapshot или явный backlog по источникам.
+
+---
+
+### K-012 · Multiblock energy input / parallel hatches
+
+| Поле | Значение |
+|------|----------|
+| Статус | `backlog` |
+| Приоритет | P2 |
+| Зависит от | K-003 |
+
+**Scope:**
+
+- [ ] Модель energy hatch count / parallel для multiblock (не `ceil(amperage)` из pack)
+- [ ] UI для настройки люков / parallel на multiblock-узлах
+- [ ] Связь с суммарным EU/t линии (K-003)
+
+**Правило:** `Recipe.energy.amperage` в pack — статичная характеристика рецепта на min tier; не выводить число люков из amperage.
+
+**Критерий закрытия:** отдельная модель hatch/parallel согласована с GT; UI без ложной семантики «Люки ×N = amperage».
 
 ---
 

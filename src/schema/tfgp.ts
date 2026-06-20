@@ -1,4 +1,5 @@
 import { normalizeNodeScaling } from '@/lib/node-scaling';
+import type { VoltageTier } from '@/data/types';
 
 export interface TfgpMeta {
   name: string;
@@ -13,9 +14,12 @@ export interface TfgpNode {
   machineId: string;
   recipeId: string;
   position: { x: number; y: number };
+  voltageTier: VoltageTier;
   overclock: number;
   parallel: number;
   machineCount: number;
+  /** Multiblock: number of energy hatches (≥ ceil(recipe amperage)). */
+  energyHatchCount?: number;
   label?: string;
 }
 

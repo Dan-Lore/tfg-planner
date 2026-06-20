@@ -5,6 +5,7 @@ import {
   allocateNodeId,
   applyFlowResult,
   dedupeNodeIds,
+  normalizeSchemeNodes,
   resetIdCounter,
   seedIdCounter,
 } from './editor-utils';
@@ -16,6 +17,7 @@ const node: TfgpNode = {
   position: { x: 0, y: 0 },
   machineCount: 4,
   overclock: 1,
+  voltageTier: 'LV',
   parallel: 1,
 };
 
@@ -72,6 +74,7 @@ describe('dedupeNodeIds', () => {
       position: { x: 0, y: 0 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV' as const,
       parallel: 1,
     };
     const nodes: TfgpNode[] = [
@@ -81,5 +84,21 @@ describe('dedupeNodeIds', () => {
     const out = dedupeNodeIds(nodes, []);
     expect(out.map((n) => n.id)).toEqual(['node_3', 'node_4']);
     expect(out[1]!.machineId).toBe('tower');
+  });
+});
+
+describe('normalizeSchemeNodes', () => {
+  it('fills missing voltageTier with LV', () => {
+    const legacy = {
+      id: 'node_1',
+      machineId: 'gtceu:assembler',
+      recipeId: 'test:recipe',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      parallel: 1,
+    } as TfgpNode;
+    const [normalized] = normalizeSchemeNodes([legacy]);
+    expect(normalized.voltageTier).toBe('LV');
   });
 });

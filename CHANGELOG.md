@@ -7,6 +7,7 @@
 
 ### Fixed
 
+- **Energy model:** removed erroneous `energyHatchCount` UI (amperage ≠ hatch count); parser infer uses machine kind + `nativeTier` (singleblock A≤1, multiblock prefers native tier).
 - CI/Pages: edge-routing tests no longer depend on gitignored `Untitled*.tfgp`; committed fixture `benzene-distillation-lcr-gap.tfgp` + consolidated integration tests.
 - **build-pack:** recipe output/input `chance` weights restored — KubeJS enrichment pass after snapshot load, greenhouse expander chanced outputs, `sanitizeFlow` preserves `chance`.
 - **Холст:** подвисание при drag — селективная перерисовка рёбер (`FlowEdge` + `memo`), изоляция drag в `EditorCanvas`; статичная метка рецепта у машин с большим числом рецептов (теплица) во время drag.
@@ -14,6 +15,18 @@
 - CI: PR workflow now runs production build with `VITE_BASE_PATH` (same as Pages deploy).
 
 ### Added
+
+- **K-003 (phase 1):** EnergyStack — `Recipe.energy { minVoltageTier, voltage, amperage }`, `calculator/energy.ts`, `calculator/gt-voltage.ts`.
+- Node field `voltageTier`; tier picker + EU/t/duration/total EU on machine card. `Machine.nativeTier` in pack for multiblock infer.
+- Parser: `enrich-energy`, `sanitize-energy`, `gt-machine-tiers.ts`, GTValues.VA in KubeJS AST, export script energy serialization.
+- Kanban **K-012:** multiblock energy hatch / parallel (backlog).
+
+### Changed
+
+- **flow-solver:** effective duration from tier OC + overclock; overclock no longer double-applied as speed factor.
+- Pack `0.12.8`: **1707** recipes with EnergyStack (KubeJS enrich + snapshot normalize).
+
+### Added (earlier)
 
 - **K-010 rev.3:** TFG-native recipe snapshot pipeline — `generate-tfg-snapshot`, `loadRecipeSnapshot`, `tools/parser/snapshots/<tag>/`.
 - CLI: `npm run bootstrap-snapshot`, `--strict-snapshot` gate.

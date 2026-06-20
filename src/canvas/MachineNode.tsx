@@ -6,6 +6,14 @@ import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/d
 import type { NodeBalanceLine } from '@/canvas/flow-display';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
+import type { VoltageTier } from '@/calculator/gt-voltage';
+import {
+  allowedTiersForRecipe,
+  effectiveDurationTicks,
+  effectiveEuPerTick,
+  effectiveTotalEu,
+  formatEuPerTick,
+} from '@/calculator/energy';
 import { RecipePicker } from './RecipePicker';
 import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
@@ -26,10 +34,12 @@ export interface MachineNodeData {
   machineCount: number;
   overclock: number;
   parallel: number;
+  voltageTier: VoltageTier;
   pack: PackData;
   onRecipeChange: (recipeId: string) => void;
   onMachineCountChange: (count: number) => void;
   onOverclockChange: (overclock: number) => void;
+  onVoltageTierChange: (tier: VoltageTier) => void;
   onPortContextMenu: (
     portId: string,
     side: 'in' | 'out',
@@ -45,6 +55,25 @@ export interface MachineNodeData {
 
 function formatOverclock(value: number): string {
   return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function adjustVoltageTier(
+  current: VoltageTier,
+  allowed: VoltageTier[],
+  deltaY: number,
+): VoltageTier {
+  if (allowed.length === 0) return current;
+  const idx = allowed.indexOf(current);
+  const base = idx >= 0 ? idx : 0;
+  const step = deltaY > 0 ? -1 : 1;
+  const next = Math.max(0, Math.min(allowed.length - 1, base + step));
+  return allowed[next] ?? current;
+}
+
+function formatTotalEu(value: number): string {
+  if (value >= 1000) return `${Math.round(value)} EU`;
+  if (Number.isInteger(value)) return `${value} EU`;
+  return `${Math.round(value * 10) / 10} EU`;
 }
 
 function MetaWheelChip({
@@ -117,10 +146,23 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
     () => (recipe ? formatRecipeLabel(d.pack, recipe, lang) : ''),
     [d.pack, recipe, lang],
   );
-  const recipeDuration = useMemo(
-    () => (recipe ? formatRecipeDuration(recipe.durationTicks, lang) : ''),
-    [recipe, lang],
+  const recipeDuration = useMemo(() => {
+    if (!recipe) return '';
+    const ticks = effectiveDurationTicks(recipe, d.voltageTier, d.overclock);
+    return formatRecipeDuration(ticks, lang);
+  }, [recipe, d.voltageTier, d.overclock, lang]);
+  const allowedTiers = useMemo(
+    () => (recipe ? allowedTiersForRecipe(recipe) : []),
+    [recipe],
   );
+  const euPerTick = useMemo(() => {
+    if (!recipe) return undefined;
+    return effectiveEuPerTick(recipe, d.voltageTier);
+  }, [recipe, d.voltageTier]);
+  const totalEu = useMemo(() => {
+    if (!recipe) return undefined;
+    return effectiveTotalEu(recipe, d.voltageTier, d.overclock);
+  }, [recipe, d.voltageTier, d.overclock]);
   const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
 
   return (
@@ -185,6 +227,23 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
               );
             }}
           />
+          {allowedTiers.length > 0 && (
+            <>
+              <span className="machine-node__meta-sep" aria-hidden>
+                ·
+              </span>
+              <MetaWheelChip
+                label={t('editor.tierMeta', { value: d.voltageTier })}
+                onWheel={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  d.onVoltageTierChange(
+                    adjustVoltageTier(d.voltageTier, allowedTiers, e.deltaY),
+                  );
+                }}
+              />
+            </>
+          )}
           {recipeDuration && (
             <>
               <span className="machine-node__meta-sep" aria-hidden>
@@ -196,8 +255,16 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
             </>
           )}
         </div>
-        {recipe?.energy && (
-          <div className="meta">{recipe.energy.euPerTick} EU/t</div>
+        {euPerTick != null && (
+          <div className="meta">
+            {t('editor.energyMeta', { value: formatEuPerTick(euPerTick) })}
+            {totalEu != null && (
+              <>
+                {' · '}
+                {t('editor.totalEuMeta', { value: formatTotalEu(totalEu) })}
+              </>
+            )}
+          </div>
         )}
         {d.balanceLines.map((line) => (
           <div

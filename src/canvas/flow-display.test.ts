@@ -35,6 +35,7 @@ const mixer: TfgpNode = {
   position: { x: 300, y: 0 },
   machineCount: 2,
   overclock: 1,
+  voltageTier: 'LV',
   parallel: 1,
 };
 
@@ -169,6 +170,7 @@ describe('buildEdgeFlowData', () => {
       position: { x: 0, y: 0 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
     };
 
@@ -217,6 +219,7 @@ describe('buildEdgeFlowData', () => {
       position: { x: 600, y: 0 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
     };
     const mixer1: TfgpNode = {
@@ -226,6 +229,7 @@ describe('buildEdgeFlowData', () => {
       position: { x: 0, y: -40 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
     };
     const mixer2: TfgpNode = {
@@ -235,6 +239,7 @@ describe('buildEdgeFlowData', () => {
       position: { x: 0, y: 40 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
     };
 
@@ -330,6 +335,7 @@ describe('buildEdgeFlowData', () => {
       position: { x: 0, y: 0 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
     };
     const pyro: TfgpNode = {
@@ -339,6 +345,7 @@ describe('buildEdgeFlowData', () => {
       position: { x: 400, y: 0 },
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
     };
 

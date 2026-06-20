@@ -2,6 +2,20 @@ import type { TfgpFile, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
 import type { FlowResult } from '@/calculator/flow-solver';
 import { solveFlows } from '@/calculator/flow-solver';
 import type { PackData } from '@/data/types';
+import { normalizeNodeScaling, type RawTfgpNode } from '@/lib/node-scaling';
+import { normalizeNodeVoltage } from '@/lib/node-voltage';
+
+/** Normalize legacy/missing node fields (voltage tier, scaling) after load or rehydrate. */
+export function normalizeSchemeNodes(
+  nodes: readonly (TfgpNode | RawTfgpNode)[],
+  pack?: PackData | null,
+): TfgpNode[] {
+  return nodes.map(normalizeNodeScaling).map((n) => {
+    if (!pack) return n;
+    const recipe = pack.recipes.find((r) => r.id === n.recipeId);
+    return normalizeNodeVoltage(n, recipe);
+  });
+}
 
 export interface EditorSnapshot {
   nodes: TfgpNode[];
@@ -24,14 +38,19 @@ export function runSolver(
   return solveFlows({
     pack,
     preserveManualMachineCounts: options.preserveManualMachineCounts,
-    nodes: snapshot.nodes.map((n) => ({
-      id: n.id,
-      machineId: n.machineId,
-      recipeId: n.recipeId,
-      machineCount: n.machineCount,
-      overclock: n.overclock,
-      parallel: n.parallel,
-    })),
+    nodes: snapshot.nodes.map((n) => {
+      const recipe = pack.recipes.find((r) => r.id === n.recipeId);
+      const normalized = normalizeNodeVoltage(n, recipe);
+      return {
+        id: normalized.id,
+        machineId: normalized.machineId,
+        recipeId: normalized.recipeId,
+        machineCount: normalized.machineCount,
+        overclock: normalized.overclock,
+        parallel: normalized.parallel,
+        voltageTier: normalized.voltageTier,
+      };
+    }),
     edges: snapshot.edges.map((e) => ({
       id: e.id,
       source: e.source,

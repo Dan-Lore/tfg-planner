@@ -55,6 +55,7 @@ describe('solveFlows', () => {
           recipeId: 'r1',
           machineCount: 1,
           overclock: 1,
+          voltageTier: 'LV' as const,
           parallel: 1,
         },
         {
@@ -63,6 +64,7 @@ describe('solveFlows', () => {
           recipeId: 'r2',
           machineCount: 1,
           overclock: 1,
+          voltageTier: 'LV' as const,
           parallel: 1,
         },
       ],
@@ -100,6 +102,7 @@ describe('solveFlows', () => {
       recipeId: 'mix',
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV' as const,
       parallel: 1,
     };
 
@@ -143,6 +146,7 @@ describe('solveFlows', () => {
       recipeId: 'mix',
       machineCount: 4,
       overclock: 1,
+      voltageTier: 'LV' as const,
       parallel: 1,
     };
 
@@ -200,6 +204,7 @@ describe('solveFlows', () => {
           recipeId: 'gh_pine',
           machineCount: 1,
           overclock: 1,
+          voltageTier: 'LV' as const,
           parallel: 1,
         },
         {
@@ -208,6 +213,7 @@ describe('solveFlows', () => {
           recipeId: 'pyro',
           machineCount: 1,
           overclock: 1,
+          voltageTier: 'LV' as const,
           parallel: 1,
         },
       ],
@@ -271,6 +277,7 @@ describe('solveFlows', () => {
           recipeId: 'chanced',
           machineCount: 1,
           overclock: 1,
+          voltageTier: 'LV' as const,
           parallel: 1,
         },
       ],

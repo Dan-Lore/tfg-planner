@@ -89,15 +89,20 @@ function flowsFromJsonSide(side: unknown): RecipeOp['inputs'] {
   return flows;
 }
 
-function euFromTickInputs(tickInputs: unknown): number | undefined {
+import { normalizeRecipeEnergy } from '../pipeline/sanitize-energy.js';
+
+function energyFromTickInputs(
+  tickInputs: unknown,
+  machineId: string,
+): RecipeOp['energy'] | undefined {
   if (!tickInputs || typeof tickInputs !== 'object') return undefined;
   const eu = (tickInputs as Record<string, unknown>).eu;
   if (!Array.isArray(eu) || eu.length === 0) return undefined;
   const first = eu[0] as { content?: number } | undefined;
-  if (first?.content != null) return first.content;
-  return undefined;
+  if (first?.content == null) return undefined;
+  const normalized = normalizeRecipeEnergy({ euPerTick: first.content }, machineId);
+  return normalized?.energy;
 }
-
 export function machineIdFromRecipeType(type: string): string {
   if (type.startsWith('gtceu:')) {
     const m = type.match(/^gtceu:([^/]+)/);
@@ -141,7 +146,15 @@ export function recipeFromSnapshotJson(
         inputs: flat.inputs.map((f) => ({ ...f })),
         outputs: flat.outputs.map((f) => ({ ...f })),
         durationTicks: flat.durationTicks,
-        ...(flat.energy ? { energy: { ...flat.energy } } : {}),
+        ...(flat.energy
+          ? (() => {
+              const normalized = normalizeRecipeEnergy(
+                flat.energy as import('../types.js').EnergyOp | { euPerTick: number },
+                flat.machineId,
+              );
+              return normalized ? { energy: normalized.energy } : {};
+            })()
+          : {}),
         source,
       },
     };
@@ -164,7 +177,7 @@ export function recipeFromSnapshotJson(
     return { recipe: null, skipReason: 'empty_io' };
   }
 
-  const eu = euFromTickInputs(typed.tickInputs);
+  const energy = energyFromTickInputs(typed.tickInputs, machineId);
   const recipe: RecipeOp = {
     id: id.includes(':') ? id : `gtceu:${id}`,
     machineId,
@@ -173,6 +186,6 @@ export function recipeFromSnapshotJson(
     durationTicks: typed.duration ?? 20,
     source,
   };
-  if (eu != null) recipe.energy = { euPerTick: eu };
+  if (energy) recipe.energy = energy;
   return { recipe };
 }

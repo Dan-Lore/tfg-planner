@@ -41,7 +41,15 @@ export function RecipeComboboxOption({ detail }: RecipeComboboxOptionProps) {
   return (
     <div className="recipe-combobox-option">
       <div className="recipe-combobox-option__header">
-        <span className="recipe-combobox-option__duration">{detail.durationLabel}</span>
+        <div className="recipe-combobox-option__meta">
+          {detail.tierLabel && (
+            <span className="recipe-combobox-option__tier">{detail.tierLabel}</span>
+          )}
+          <span className="recipe-combobox-option__duration">{detail.durationLabel}</span>
+          {detail.energyLabel && (
+            <span className="recipe-combobox-option__energy">{detail.energyLabel}</span>
+          )}
+        </div>
         <span className="recipe-combobox-option__id">{detail.idHint}</span>
       </div>
       <div className="recipe-combobox-option__row recipe-combobox-option__row--in">

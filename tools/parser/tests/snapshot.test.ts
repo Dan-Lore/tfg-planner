@@ -13,7 +13,7 @@ describe('recipeFromSnapshotJson', () => {
       inputs: [{ fluidId: 'gtceu:wood_gas', amount: 1000 }],
       outputs: [{ fluidId: 'gtceu:methane', amount: 100 }],
       durationTicks: 100,
-      energy: { euPerTick: 30 },
+      energy: { minVoltageTier: 'LV', voltage: 32, amperage: 30 / 32 },
     }, 'test');
     expect(recipe?.machineId).toBe('gtceu:mixer');
     expect(recipe?.inputs[0].fluidId).toBe('gtceu:wood_gas');
@@ -55,7 +55,11 @@ describe('recipeFromSnapshotJson', () => {
         { fluidId: 'gtceu:nitrogen', amount: 1000 },
       ]),
     );
-    expect(recipe?.energy?.euPerTick).toBe(96);
+    expect(recipe?.energy).toEqual({
+      minVoltageTier: 'MV',
+      voltage: 128,
+      amperage: 0.75,
+    });
   });
 
   it('parses chanced GT JSON outputs with chance weight', () => {

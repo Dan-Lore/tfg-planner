@@ -10,6 +10,8 @@ import {
   type Connection,
   type Edge,
   type Node,
+  type OnEdgesDelete,
+  type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -32,6 +34,10 @@ import {
 } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
 import { WheelNumberInput } from '@/components/WheelNumberInput';
+import type { VoltageTier } from '@/calculator/gt-voltage';
+import {
+  allowedTiersForRecipe,
+} from '@/calculator/energy';
 import {
   buildRecipeFlowIndex,
   findDownstreamCandidates,
@@ -56,13 +62,6 @@ interface PortMenuState {
   flow: Flow;
 }
 
-function isEditableTarget(target: EventTarget | null): boolean {
-  if (!(target instanceof HTMLElement)) return false;
-  const tag = target.tagName;
-  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return true;
-  return target.isContentEditable;
-}
-
 function useEdgeTypes() {
   return useMemo(() => ({ flow: FlowEdge }), []);
 }
@@ -75,7 +74,6 @@ export function EditorPage() {
   const flowEdgeData = useEditorStore((s) => s.flowEdgeData);
   const flowResult = useEditorStore((s) => s.flowResult);
   const selectedNodeIds = useEditorStore((s) => s.selectedNodeIds);
-  const selectedEdgeIds = useEditorStore((s) => s.selectedEdgeIds);
   const setNodes = useEditorStore((s) => s.setNodes);
   const setViewport = useEditorStore((s) => s.setViewport);
   const addNode = useEditorStore((s) => s.addNode);
@@ -162,24 +160,10 @@ export function EditorPage() {
         }
         return;
       }
-      if (
-        (e.key === 'Delete' || e.key === 'Backspace') &&
-        !isEditableTarget(e.target)
-      ) {
-        if (selectedEdgeIds.length > 0) {
-          e.preventDefault();
-          removeEdges(selectedEdgeIds);
-          return;
-        }
-        if (selectedNodeIds.length > 0) {
-          e.preventDefault();
-          removeNodes(selectedNodeIds);
-        }
-      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [undo, redo, removeNodes, removeEdges, selectedNodeIds, selectedEdgeIds]);
+  }, [undo, redo]);
 
   const connectedPorts = useMemo(() => {
     const inPorts = new Map<string, Set<string>>();
@@ -302,12 +286,15 @@ export function EditorPage() {
           machineCount: n.machineCount,
           overclock: n.overclock,
           parallel: n.parallel,
+          voltageTier: n.voltageTier,
           pack,
           onRecipeChange: (recipeId: string) => handleRecipeChange(n.id, recipeId),
           onMachineCountChange: (machineCount: number) =>
             updateNode(n.id, { machineCount }),
           onOverclockChange: (overclock: number) =>
             updateNode(n.id, { overclock }),
+          onVoltageTierChange: (voltageTier: VoltageTier) =>
+            updateNode(n.id, { voltageTier }),
           onPortContextMenu: (
             portId: string,
             side: 'in' | 'out',
@@ -342,9 +329,8 @@ export function EditorPage() {
         type: 'flow',
         data: flowEdgeData[e.id],
         animated: true,
-        selected: selectedEdgeIds.includes(e.id),
       })),
-    [scheme.edges, flowEdgeData, selectedEdgeIds],
+    [scheme.edges, flowEdgeData],
   );
 
   const onPersistNodePositions = useCallback(
@@ -407,19 +393,41 @@ export function EditorPage() {
     [setSelectedNodeIds, setSelectedEdgeIds],
   );
 
+  const onNodesDelete = useCallback<OnNodesDelete>(
+    (nodes) => {
+      removeNodes(nodes.map((n) => n.id));
+    },
+    [removeNodes],
+  );
+
+  const onEdgesDelete = useCallback<OnEdgesDelete>(
+    (edges) => {
+      removeEdges(edges.map((e) => e.id));
+    },
+    [removeEdges],
+  );
+
   const selectedNode = scheme.nodes.find((n) => n.id === selectedNodeIds[0]);
+  const selectedRecipe = selectedNode
+    ? pack?.recipes.find((r) => r.id === selectedNode.recipeId)
+    : undefined;
+  const selectedAllowedTiers = selectedRecipe
+    ? allowedTiersForRecipe(selectedRecipe)
+    : [];
 
   const handleAddMachine = () => {
     if (!pack || !resolvedMachineId) return;
     const recipes = getRecipesForMachine(pack, resolvedMachineId);
     if (recipes.length === 0) return;
+    const firstRecipe = recipes[0]!;
     const newId = addNode({
       machineId: resolvedMachineId,
-      recipeId: recipes[0]!.id,
+      recipeId: firstRecipe.id,
       position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
       overclock: 1,
       parallel: 1,
       machineCount: 1,
+      voltageTier: firstRecipe.energy?.minVoltageTier ?? 'LV',
     });
     setSelectedNodeIds([newId]);
     setMachineExplicitId(null);
@@ -574,6 +582,8 @@ export function EditorPage() {
             onConnect={onConnect}
             isValidConnection={isValidConnection}
             onSelectionChange={onSelectionChange}
+            onNodesDelete={onNodesDelete}
+            onEdgesDelete={onEdgesDelete}
             onPaneClick={closePortMenu}
             onNodeClick={closePortMenu}
             onMoveEnd={(vp) => setViewport(vp)}
@@ -622,6 +632,26 @@ export function EditorPage() {
                   updateNode(selectedNode.id, { overclock })
                 }
               />
+              {selectedAllowedTiers.length > 0 && (
+                <>
+                  <label>{t('editor.voltageTier')}</label>
+                  <select
+                    className="editor-sidebar__select"
+                    value={selectedNode.voltageTier}
+                    onChange={(e) =>
+                      updateNode(selectedNode.id, {
+                        voltageTier: e.target.value as VoltageTier,
+                      })
+                    }
+                  >
+                    {selectedAllowedTiers.map((tier) => (
+                      <option key={tier} value={tier}>
+                        {tier}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
             </>
           )}
         </aside>

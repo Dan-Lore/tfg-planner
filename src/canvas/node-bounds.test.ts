@@ -33,6 +33,7 @@ function nodeData(portCount: number, withPicker = true): MachineNodeData {
     recipeId: 'r1',
     machineCount: 1,
     overclock: 1,
+    voltageTier: 'LV',
     parallel: 1,
     pack: withPicker
       ? ({
@@ -46,6 +47,8 @@ function nodeData(portCount: number, withPicker = true): MachineNodeData {
     onRecipeChange: () => {},
     onMachineCountChange: () => {},
     onOverclockChange: () => {},
+    onVoltageTierChange: () => {},
+    onEnergyHatchCountChange: () => {},
     onPortContextMenu: () => {},
     inputPorts: inputs,
     outputPorts: outputs,

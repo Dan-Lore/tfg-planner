@@ -12,7 +12,11 @@ describe('KubeJS extractors', () => {
     expect(cool).toBeDefined();
     expect(cool?.machineId).toBe('gtceu:chemical_bath');
     expect(cool?.durationTicks).toBe(400);
-    expect(cool?.energy?.euPerTick).toBe(120);
+    expect(cool?.energy).toEqual({
+      minVoltageTier: 'ULV',
+      voltage: 8,
+      amperage: 15,
+    });
     expect(cool?.inputs).toEqual(
       expect.arrayContaining([
         { itemId: 'gtceu:hot_magnesium_diboride_ingot', amount: 1 },
@@ -46,7 +50,11 @@ describe('KubeJS extractors', () => {
     const mixer = result.recipes.find((r) => r.id === 'gtceu:drilling_fluid');
     expect(mixer?.machineId).toBe('gtceu:mixer');
     expect(mixer?.durationTicks).toBe(40);
-    expect(mixer?.energy?.euPerTick).toBe(16);
+    expect(mixer?.energy).toEqual({
+      minVoltageTier: 'LV',
+      voltage: 32,
+      amperage: 0.5,
+    });
   });
 
   it('extracts chancedInput and chancedOutput with Item.of', () => {

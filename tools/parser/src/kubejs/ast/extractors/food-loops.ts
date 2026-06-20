@@ -2,6 +2,7 @@ import traverse from '@babel/traverse';
 import type { File, Node } from '@babel/types';
 import type { RecipeOp } from '../../../types.js';
 import type { StartupGlobals } from '../../parse-globals.js';
+import { inferEnergyFromFlatEUt } from '../../../energy-parse.js';
 import { globalObjectList } from '../../parse-globals.js';
 
 function globalForEachKey(node: Node): string | undefined {
@@ -75,13 +76,14 @@ export function expandFoodAndRepairForEach(
           const output = row.output;
           const name = row.name;
           if (typeof input !== 'string' || typeof output !== 'string' || typeof name !== 'string') continue;
+          const eutEnergy = inferEnergyFromFlatEUt(eut);
           recipes.push({
             id: `tfg:smelting/${name}`,
             machineId: 'gtceu:smelting',
             inputs: [{ itemId: input, amount: 1 }],
             outputs: [{ itemId: output, amount: 1 }],
             durationTicks: duration,
-            energy: { euPerTick: eut },
+            ...(eutEnergy ? { energy: eutEnergy } : {}),
             source,
           });
         }

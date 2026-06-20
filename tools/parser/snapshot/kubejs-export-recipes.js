@@ -2,18 +2,44 @@
 // Copied into kubejs/server_scripts/_tfg_planner_export.js during generate-tfg-snapshot only.
 
 const EXPORT_FLAG = 'tfg_planner_snapshot_exported';
-const EXPORT_REL = 'tfg-planner-recipe-snapshot/recipes.json';
 
-function flowFromIngredient(ingredient, amount) {
-  if (!ingredient) return null;
-  const id = ingredient.id ?? ingredient.item ?? ingredient.fluid;
-  if (!id) return null;
-  const str = String(id);
-  if (str.includes(':fluid') || ingredient.fluid) {
-    return { fluidId: str.replace(/:fluid$/, ''), amount: amount ?? 1 };
+const GT_TIER_NAMES = [
+  'ULV', 'LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UXV', 'OpV', 'MAX',
+];
+
+const GT_VOLTAGE = [8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288, 2097152, 8388608, 33554432, 134217728, 536870912, 2147483647];
+
+function inferEnergyFromFlatEUt(euPerTick) {
+  if (euPerTick <= 0) return undefined;
+  for (let i = 0; i < GT_VOLTAGE.length; i++) {
+    const voltage = GT_VOLTAGE[i];
+    const amperage = euPerTick / voltage;
+    const doubled = amperage * 2;
+    if (amperage > 0 && amperage <= 64 && Math.abs(doubled - Math.round(doubled)) < 1e-6) {
+      return {
+        minVoltageTier: GT_TIER_NAMES[i],
+        voltage,
+        amperage,
+      };
+    }
   }
-  if (str.startsWith('#')) return { itemId: str, amount: amount ?? 1 };
-  return { itemId: str, amount: amount ?? 1 };
+  return {
+    minVoltageTier: 'LV',
+    voltage: 32,
+    amperage: euPerTick / 32,
+  };
+}
+
+function serializeEnergy(recipe) {
+  try {
+    const eu = recipe.tickInputs?.eu?.[0]?.content;
+    if (eu != null) return inferEnergyFromFlatEUt(Number(eu));
+    const eut = recipe.getEUt?.();
+    if (eut != null) return inferEnergyFromFlatEUt(Number(eut));
+  } catch (_) {
+    /* optional */
+  }
+  return undefined;
 }
 
 function serializeRecipe(recipe) {
@@ -53,8 +79,9 @@ function serializeRecipe(recipe) {
   }
 
   const durationTicks = recipe.cookingTime ?? recipe.processingTime ?? 20;
+  const energy = serializeEnergy(recipe);
 
-  return {
+  const flat = {
     id,
     machineId,
     inputs,
@@ -62,6 +89,8 @@ function serializeRecipe(recipe) {
     durationTicks,
     source: 'kubejs-export',
   };
+  if (energy) flat.energy = energy;
+  return flat;
 }
 
 ServerEvents.loaded((event) => {

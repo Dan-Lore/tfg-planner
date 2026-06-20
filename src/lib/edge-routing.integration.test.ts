@@ -111,6 +111,7 @@ function makeNode(
       balanceLines: [],
       machineCount: 1,
       overclock: 1,
+      voltageTier: 'LV',
       parallel: 1,
       onRecipeChange: () => {},
       onMachineCountChange: () => {},

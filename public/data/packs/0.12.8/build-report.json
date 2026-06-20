@@ -1,7 +1,7 @@
 {
   "modpackVersion": "0.12.8",
   "tag": "0.12.8",
-  "generatedAt": "2026-06-20T11:16:17.509Z",
+  "generatedAt": "2026-06-20T14:52:27.344Z",
   "stats": {
     "snapshotRecipes": 6727,
     "snapshotFiles": 1,
@@ -12,10 +12,10 @@
     "machines": 72,
     "items": 3091,
     "fluids": 325,
-    "recipesWithEnergy": 696,
+    "recipesWithEnergy": 1698,
     "recipesWithChance": 1956,
-    "goldenMatched": 6,
-    "goldenMismatched": 0,
+    "goldenMatched": 5,
+    "goldenMismatched": 1,
     "goldenMissing": 0
   },
   "warnings": [
@@ -24,12 +24,20 @@
       "reason": "Enriched 1956 recipes (5754 flows) from 1965 KubeJS recipes with chance data"
     },
     {
+      "file": "kubejs-energy",
+      "reason": "Enriched 1011 recipes from 1685 KubeJS recipes with energy data"
+    },
+    {
       "file": "lang",
       "reason": "Localized 2704/3416 resources (tags: 100/765, gtceu: 757/769, tfg: 452/456, minecraft: 121/122, malformed: 0; kubejs: 179 files, jars: 179, mc keys ru/en: 8121/6217, keys ru/en: 61353/62607)"
+    },
+    {
+      "file": "golden-diff",
+      "reason": "tfg:magnesium_diboride_cool_down.energy.amperage: expected 0.9375, got 1"
     }
   ],
   "warningsByKind": {
-    "other": 2
+    "other": 4
   },
   "unparsedFiles": [],
   "smokeResults": [
@@ -82,7 +90,14 @@
       "ok": true
     }
   ],
-  "goldenDiff": [],
+  "goldenDiff": [
+    {
+      "id": "tfg:magnesium_diboride_cool_down",
+      "field": "energy.amperage",
+      "expected": 0.9375,
+      "actual": 1
+    }
+  ],
   "commitHint": "https://github.com/TerraFirmaGreg-Team/Modpack-Modern/archive/refs/tags/0.12.8.zip",
   "snapshotManifestOk": true
 }

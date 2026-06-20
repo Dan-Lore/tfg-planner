@@ -64,7 +64,11 @@
       "durationTicks": 20,
       "inputs": [{ "itemId": "tfg:purified_copper_ore", "amount": 1 }],
       "outputs": [{ "itemId": "tfg:copper_ingot", "amount": 1 }],
-      "energy": { "euPerTick": 120, "voltageTier": "LV" }
+      "energy": {
+        "minVoltageTier": "ULV",
+        "voltage": 8,
+        "amperage": 15
+      }
     }
   ]
 }

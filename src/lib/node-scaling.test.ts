@@ -11,6 +11,7 @@ describe('node-scaling', () => {
       machineCount: 2,
       parallel: 3,
       overclock: 1,
+      voltageTier: 'LV',
     });
     expect(normalized.machineCount).toBe(6);
     expect(normalized.parallel).toBe(1);
@@ -26,6 +27,7 @@ describe('node-scaling', () => {
       machineCount: 2,
       parallel: 1,
       overclock: 1,
+      voltageTier: 'LV',
       outputMultiplier: 1.5,
     });
     expect(normalized.machineCount).toBe(3);
@@ -41,6 +43,7 @@ describe('node-scaling', () => {
       machineCount: 4,
       parallel: 1,
       overclock: 1,
+      voltageTier: 'LV',
       outputMultiplier: 1,
     });
     expect(normalized.machineCount).toBe(4);

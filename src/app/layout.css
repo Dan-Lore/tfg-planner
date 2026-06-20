@@ -634,6 +634,33 @@ a {
   gap: 0.5rem;
 }
 
+.recipe-combobox-option__meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.recipe-combobox-option__tier {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.05rem 0.3rem;
+  white-space: nowrap;
+}
+
+.recipe-combobox-option__energy {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
 .recipe-combobox-option__duration {
   font-size: 0.72rem;
   font-weight: 600;

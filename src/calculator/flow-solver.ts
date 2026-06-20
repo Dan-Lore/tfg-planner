@@ -1,4 +1,6 @@
 import type { PackData, Recipe } from '@/data/types';
+import type { VoltageTier } from '@/calculator/gt-voltage';
+import { effectiveDurationTicks } from '@/calculator/energy';
 import { Rational, R } from './rational';
 import { ceilMachineCount, idealMachineCount } from './rounding';
 import { buildTagIndex } from '@/lib/tag-index';
@@ -15,6 +17,7 @@ export interface SchemeNode {
   machineCount: number;
   overclock: number;
   parallel: number;
+  voltageTier: VoltageTier;
 }
 
 export interface SchemeEdge {
@@ -72,37 +75,41 @@ function freezeManualMachineCounts(
   }
 }
 
-function nodeSpeedFactor(node: SchemeNode): Rational {
-  return R.from(node.overclock);
+function recipeDurationSec(recipe: Recipe, node: SchemeNode): Rational {
+  return R.from(effectiveDurationTicks(recipe, node.voltageTier, node.overclock)).div(
+    R.from(TICKS_PER_SECOND),
+  );
 }
 
-function recipeDurationSec(recipe: Recipe): Rational {
-  return R.from(recipe.durationTicks).div(R.from(TICKS_PER_SECOND));
-}
-
-function perMachineOutputRateAtIndex(recipe: Recipe, index: number): Rational {
+function perMachineOutputRateAtIndex(
+  recipe: Recipe,
+  index: number,
+  node: SchemeNode,
+): Rational {
   const output = recipe.outputs[index];
   if (!output) return R.zero;
-  const base = R.from(output.amount).div(recipeDurationSec(recipe));
+  const base = R.from(output.amount).div(recipeDurationSec(recipe, node));
   return base.mul(chanceRateMultiplier(output.chance));
 }
 
 function perMachineOutputRate(
   recipe: Recipe,
   outputKey: string,
+  node: SchemeNode,
 ): Rational {
   const index = recipe.outputs.findIndex((o) => productKey(o) === outputKey);
   if (index < 0) return R.zero;
-  return perMachineOutputRateAtIndex(recipe, index);
+  return perMachineOutputRateAtIndex(recipe, index, node);
 }
 
 function buildNodePortOutputRates(
   recipe: Recipe,
-  factor: Rational,
+  node: SchemeNode,
+  machineCount: Rational,
 ): Record<string, Rational> {
   const rates: Record<string, Rational> = {};
   for (let i = 0; i < recipe.outputs.length; i++) {
-    rates[`out_${i}`] = perMachineOutputRateAtIndex(recipe, i).mul(factor);
+    rates[`out_${i}`] = perMachineOutputRateAtIndex(recipe, i, node).mul(machineCount);
   }
   return rates;
 }
@@ -263,7 +270,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     requiredOutput[node.id][key] = rate;
 
     if (!preserveCounts) {
-      const perMachine = perMachineOutputRate(recipe, key).mul(nodeSpeedFactor(node));
+      const perMachine = perMachineOutputRate(recipe, key, node);
       const ideal = idealMachineCount(rate, perMachine);
       nodeMachineCounts[node.id] = ceilMachineCount(ideal);
       node.machineCount = nodeMachineCounts[node.id];
@@ -295,7 +302,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     }
 
     if (!preserveCounts && maxKey && maxRate.compare(R.zero) > 0) {
-      const perMachine = perMachineOutputRate(recipe, maxKey).mul(nodeSpeedFactor(node));
+      const perMachine = perMachineOutputRate(recipe, maxKey, node);
       const ideal = idealMachineCount(maxRate, perMachine);
       const count = ceilMachineCount(ideal);
       nodeMachineCounts[nodeId] = count;
@@ -307,9 +314,9 @@ export function solveFlows(input: SolverInput): FlowResult {
     const primaryKey = productKey(primaryOut);
     const nodeOutRate =
       outReq[primaryKey] ??
-      perMachineOutputRate(recipe, primaryKey)
-        .mul(nodeSpeedFactor(node))
-        .mul(R.from(nodeMachineCounts[nodeId]));
+      perMachineOutputRate(recipe, primaryKey, node).mul(
+        R.from(nodeMachineCounts[nodeId]),
+      );
 
     if (!outReq[primaryKey]) {
       requiredOutput[nodeId][primaryKey] = nodeOutRate;
@@ -343,8 +350,8 @@ export function solveFlows(input: SolverInput): FlowResult {
   for (const node of input.nodes) {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
-    const factor = nodeSpeedFactor(node).mul(R.from(nodeMachineCounts[node.id]));
-    const portRates = buildNodePortOutputRates(recipe, factor);
+    const factor = R.from(nodeMachineCounts[node.id]);
+    const portRates = buildNodePortOutputRates(recipe, node, factor);
     nodePortOutputRates[node.id] = portRates;
     nodeOutputRates[node.id] = sumPortRatesByProduct(recipe, portRates);
   }
@@ -371,7 +378,7 @@ export function solveFlows(input: SolverInput): FlowResult {
         if (!requiredOutput[edge.target][key]) {
           requiredOutput[edge.target][key] = rate;
         }
-        const perMachine = perMachineOutputRate(recipe, key).mul(nodeSpeedFactor(down));
+        const perMachine = perMachineOutputRate(recipe, key, down);
         if (perMachine.compare(R.zero) > 0) {
           const ideal = idealMachineCount(rate, perMachine);
           const count = ceilMachineCount(ideal);
@@ -391,8 +398,8 @@ export function solveFlows(input: SolverInput): FlowResult {
   for (const node of input.nodes) {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
-    const factor = nodeSpeedFactor(node).mul(R.from(nodeMachineCounts[node.id]));
-    const portRates = buildNodePortOutputRates(recipe, factor);
+    const factor = R.from(nodeMachineCounts[node.id]);
+    const portRates = buildNodePortOutputRates(recipe, node, factor);
     nodePortOutputRates[node.id] = portRates;
     nodeOutputRates[node.id] = sumPortRatesByProduct(recipe, portRates);
   }

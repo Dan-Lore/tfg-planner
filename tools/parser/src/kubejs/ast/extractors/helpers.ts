@@ -2,6 +2,7 @@ import traverse from '@babel/traverse';
 import type { File, Node } from '@babel/types';
 import type { RecipeOp } from '../../../types.js';
 import { evalNumeric, stringLiteral } from '../expr.js';
+import { inferEnergyFromFlatEUt } from '../../../energy-parse.js';
 import { fluidStringToFlow, itemStringToFlow } from '../flow-parse.js';
 
 function parseFluidArg(node: import('@babel/types').Node): RecipeOp['inputs'] {
@@ -47,7 +48,10 @@ export function findMixerHelperCalls(ast: File, source: string): RecipeOp[] {
         source,
       };
 
-      if (eu !== undefined) recipe.energy = { euPerTick: eu };
+      if (eu !== undefined) {
+        const energy = inferEnergyFromFlatEUt(eu);
+        if (energy) recipe.energy = energy;
+      }
 
       const parseItemList = (node: Node | undefined) => {
         if (!node) return;

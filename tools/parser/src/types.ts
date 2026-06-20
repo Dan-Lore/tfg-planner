@@ -8,10 +8,9 @@ export interface FlowOp {
   chance?: number;
 }
 
-export interface EnergyOp {
-  euPerTick: number;
-  voltageTier?: string;
-}
+import type { EnergyStack } from './energy-parse.js';
+
+export type EnergyOp = EnergyStack;
 
 export interface RecipeOp {
   id: string;

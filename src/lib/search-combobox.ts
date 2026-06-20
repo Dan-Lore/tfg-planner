@@ -85,6 +85,9 @@ export function buildRecipeIngredientSearchText(
   names.add(tail);
   names.add(recipe.id);
   names.add(formatRecipeLabel(pack, recipe, lang));
+  if (recipe.energy?.minVoltageTier) {
+    names.add(recipe.energy.minVoltageTier);
+  }
   return [...names].join(' ');
 }
 

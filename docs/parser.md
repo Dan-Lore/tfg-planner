@@ -76,7 +76,8 @@ npm run build-pack -- --tag 0.12.8 --strict-snapshot
 
 См. [specification.md](specification.md). Кратко:
 
-- `Recipe.energy` — только если есть в snapshot; иначе поле **отсутствует**
+- `Recipe.energy` — optional `EnergyStack`: `{ minVoltageTier, voltage, amperage }` на min tier рецепта; legacy `euPerTick` нормализуется при сборке. Поле **отсутствует**, если парсер не извлёк.
+- `Machine.kind` — optional `singleblock` | `multiblock` (для UI energy hatches).
 - Chanced I/O — optional `chance` на потоке (вес GT, 10000 = 100%); в UI — `80% × 16× …`, скорость ≈ `amount/duration × chance/10000` с префиксом `~`
 
 ## Структура `tools/parser/`

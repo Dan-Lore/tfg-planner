@@ -2,7 +2,7 @@ import traverse from '@babel/traverse';
 import type { Node, CallExpression, File } from '@babel/types';
 import type { NodePath } from '@babel/traverse';
 import type { FlowOp, EnergyOp } from '../../../types.js';
-import { evalNumeric, stringLiteral } from '../expr.js';
+import { evalGtEnergyEUtArgs, evalNumeric, stringLiteral } from '../expr.js';
 import { fluidStringToFlow, itemStringToFlow } from '../flow-parse.js';
 
 const GT_CHANCE_BASE = 10_000;
@@ -72,10 +72,8 @@ function parseFluidArg(node: Node): FlowOp[] {
   return [];
 }
 
-function parseEnergyArg(node: Node): EnergyOp | undefined {
-  const n = evalNumeric(node);
-  if (n !== undefined) return { euPerTick: n };
-  return undefined;
+function parseEnergyArg(args: Node[]): EnergyOp | undefined {
+  return evalGtEnergyEUtArgs(args);
 }
 
 function isGtceuRecipesCall(node: CallExpression): { machineType: string; recipeId: string } | null {
@@ -187,7 +185,7 @@ export function extractGtceuChain(start: CallExpression): GtceuRecipeDraft | nul
         if (args[0]) draft.outputs.push(...withGtChance(parseFluidArg(args[0]), args));
         break;
       case 'EUt': {
-        const e = parseEnergyArg(args[0]);
+        const e = parseEnergyArg(args);
         if (e) draft.energy = e;
         break;
       }

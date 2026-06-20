@@ -5,15 +5,20 @@ import {
   Controls,
   MiniMap,
   applyNodeChanges,
+  applyEdgeChanges,
   ConnectionMode,
   type Connection,
   type Edge,
+  type EdgeChange,
   type EdgeTypes,
   type Node,
   type NodeChange,
   type NodeTypes,
+  type OnEdgesDelete,
+  type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
+import { mergeFlowEdges } from '@/lib/merge-flow-edges';
 import { mergeFlowNodes } from '@/lib/merge-flow-nodes';
 
 export type EditorCanvasProps = {
@@ -27,6 +32,8 @@ export type EditorCanvasProps = {
   onConnect: (conn: Connection) => void;
   isValidConnection: (conn: Connection | Edge) => boolean;
   onSelectionChange: (params: OnSelectionChangeParams) => void;
+  onNodesDelete: OnNodesDelete;
+  onEdgesDelete: OnEdgesDelete;
   onPaneClick: () => void;
   onNodeClick: () => void;
   onMoveEnd: (viewport: { x: number; y: number; zoom: number }) => void;
@@ -43,15 +50,22 @@ function EditorCanvasComponent({
   onConnect,
   isValidConnection,
   onSelectionChange,
+  onNodesDelete,
+  onEdgesDelete,
   onPaneClick,
   onNodeClick,
   onMoveEnd,
 }: EditorCanvasProps) {
   const [flowNodes, setFlowNodes] = useState<Node[]>([]);
+  const [flowEdges, setFlowEdges] = useState<Edge[]>([]);
 
   useEffect(() => {
     setFlowNodes((prev) => mergeFlowNodes(prev, rfNodes));
   }, [rfNodes]);
+
+  useEffect(() => {
+    setFlowEdges((prev) => mergeFlowEdges(prev, rfEdges));
+  }, [rfEdges]);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => {
@@ -70,18 +84,25 @@ function EditorCanvasComponent({
     [onPersistNodePositions],
   );
 
+  const onEdgesChange = useCallback((changes: EdgeChange[]) => {
+    setFlowEdges((current) => applyEdgeChanges(changes, current));
+  }, []);
+
   return (
     <ReactFlow
       nodes={flowNodes}
-      edges={rfEdges}
+      edges={flowEdges}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       colorMode={colorTheme}
       onNodesChange={onNodesChange}
-      onEdgesChange={() => {}}
+      onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       isValidConnection={isValidConnection}
       onSelectionChange={onSelectionChange}
+      onNodesDelete={onNodesDelete}
+      onEdgesDelete={onEdgesDelete}
+      deleteKeyCode={['Delete', 'Backspace']}
       onPaneClick={onPaneClick}
       onNodeClick={onNodeClick}
       onMoveEnd={(_, vp) => onMoveEnd(vp)}

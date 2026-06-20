@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { TfgpFile, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
-import { normalizeNodeScaling } from '@/lib/node-scaling';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import {
@@ -9,6 +8,7 @@ import {
   allocateNodeId,
   applyFlowResult,
   dedupeNodeIds,
+  normalizeSchemeNodes,
   runSolver,
   seedIdCounter,
   type EditorSnapshot,
@@ -18,6 +18,8 @@ import {
   buildEdgeFlowData,
 } from '@/canvas/flow-display';
 import { pruneInvalidEdges } from '@/lib/prune-edges';
+import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
+import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import type { FlowResult } from '@/calculator/flow-solver';
 import { usePackStore } from './pack-store';
 
@@ -97,7 +99,10 @@ export const useEditorStore = create<EditorState>()(
         const updatedCache = cacheScheme(schemesByPack, activePackKey, scheme);
         const newKey = packKey(modpackVersion, dataVersion);
         const cached = updatedCache[newKey];
-        const nextScheme = cached ?? createEmptyTfgp(modpackVersion, dataVersion);
+        const pack = usePackStore.getState().activePack;
+        const nextScheme = cached
+          ? { ...cached, nodes: normalizeSchemeNodes(cached.nodes, pack) }
+          : createEmptyTfgp(modpackVersion, dataVersion);
         seedIdCounter(nextScheme.nodes, nextScheme.edges);
 
         set({
@@ -115,10 +120,8 @@ export const useEditorStore = create<EditorState>()(
       },
 
       loadScheme: (file) => {
-        const nodes = dedupeNodeIds(
-          file.nodes.map(normalizeNodeScaling),
-          file.edges,
-        );
+        const pack = usePackStore.getState().activePack;
+        const nodes = dedupeNodeIds(normalizeSchemeNodes(file.nodes, pack), file.edges);
         const normalized = { ...file, nodes };
         seedIdCounter(normalized.nodes, normalized.edges);
         const key = packKey(normalized.modpack.version, normalized.modpack.dataVersion);
@@ -256,14 +259,22 @@ export const useEditorStore = create<EditorState>()(
       addNode: (partial) => {
         get().pushHistory();
         const { scheme } = get();
+        const pack = usePackStore.getState().activePack;
+        const recipe = pack?.recipes.find((r) => r.id === partial.recipeId);
         const id = allocateNodeId(scheme.nodes, scheme.edges);
-        const node: TfgpNode = {
-          ...partial,
-          id,
-          machineCount: partial.machineCount ?? 1,
-          overclock: partial.overclock ?? 1,
-          parallel: partial.parallel ?? 1,
-        };
+        const node: TfgpNode = normalizeNodeVoltage(
+          {
+            ...partial,
+            id,
+            machineCount: partial.machineCount ?? 1,
+            overclock: partial.overclock ?? 1,
+            parallel: partial.parallel ?? 1,
+            voltageTier:
+              partial.voltageTier ??
+              (recipe ? defaultVoltageTierForRecipe(recipe) : 'LV'),
+          },
+          recipe,
+        );
         set((s) => {
           const scheme = { ...s.scheme, nodes: [...s.scheme.nodes, node] };
           return {
@@ -278,11 +289,21 @@ export const useEditorStore = create<EditorState>()(
       updateNode: (id, patch) => {
         get().pushHistory();
         set((s) => {
+          const pack = usePackStore.getState().activePack;
           let scheme = {
             ...s.scheme,
-            nodes: s.scheme.nodes.map((n) =>
-              n.id === id ? { ...n, ...patch } : n,
-            ),
+            nodes: s.scheme.nodes.map((n) => {
+              if (n.id !== id) return n;
+              let next = { ...n, ...patch };
+              if (patch.recipeId && pack) {
+                const recipe = pack.recipes.find((r) => r.id === patch.recipeId);
+                next = { ...next, ...patchForRecipeChange(recipe, n) };
+              } else if (patch.voltageTier || patch.recipeId === undefined) {
+                const recipe = pack?.recipes.find((r) => r.id === next.recipeId);
+                next = normalizeNodeVoltage(next, recipe);
+              }
+              return next;
+            }),
           };
           if (patch.recipeId) {
             const pack = usePackStore.getState().activePack;
@@ -346,15 +367,21 @@ export const useEditorStore = create<EditorState>()(
         const { scheme } = get();
         const nodeId = allocateNodeId(scheme.nodes, scheme.edges);
         const edgeId = allocateEdgeId(scheme.nodes, scheme.edges);
-        const node: TfgpNode = {
-          id: nodeId,
-          machineId: params.machineId,
-          recipeId: params.recipeId,
-          position: params.position,
-          machineCount: 1,
-          overclock: 1,
-          parallel: 1,
-        };
+        const node: TfgpNode = normalizeNodeVoltage(
+          {
+            id: nodeId,
+            machineId: params.machineId,
+            recipeId: params.recipeId,
+            position: params.position,
+            machineCount: 1,
+            overclock: 1,
+            parallel: 1,
+            voltageTier: 'LV',
+          },
+          usePackStore.getState().activePack?.recipes.find(
+            (r) => r.id === params.recipeId,
+          ),
+        );
         const edge: TfgpEdge =
           params.direction === 'downstream'
             ? {
@@ -518,8 +545,17 @@ export const useEditorStore = create<EditorState>()(
         activePackKey: s.activePackKey,
       }),
       onRehydrateStorage: () => (state) => {
-        if (!state?.activePackKey) return;
-        const cached = state.schemesByPack[state.activePackKey];
+        if (!state) return;
+        const normalizedCache: Record<string, TfgpFile> = {};
+        for (const [key, file] of Object.entries(state.schemesByPack)) {
+          normalizedCache[key] = {
+            ...file,
+            nodes: normalizeSchemeNodes(file.nodes),
+          };
+        }
+        state.schemesByPack = normalizedCache;
+        if (!state.activePackKey) return;
+        const cached = normalizedCache[state.activePackKey];
         if (cached) {
           state.scheme = cached;
           seedIdCounter(cached.nodes, cached.edges);

@@ -1,4 +1,6 @@
 import type { TfgpNode } from '@/schema/tfgp';
+import type { VoltageTier } from '@/calculator/gt-voltage';
+import { normalizeNodeVoltage } from '@/lib/node-voltage';
 
 /** Raw node from `.tfgp` JSON; may include legacy fields stripped on import. */
 export type RawTfgpNode = TfgpNode & {
@@ -16,9 +18,14 @@ export function normalizeNodeScaling(node: RawTfgpNode): TfgpNode {
     machineCount = Math.max(1, Math.ceil(machineCount * outputMultiplier));
   }
   const { outputMultiplier: _om, ...rest } = node;
-  return {
-    ...rest,
-    machineCount,
-    parallel: 1,
-  };
+  const voltageTier: VoltageTier = rest.voltageTier ?? 'LV';
+  return normalizeNodeVoltage(
+    {
+      ...rest,
+      machineCount,
+      parallel: 1,
+      voltageTier,
+    },
+    undefined,
+  );
 }

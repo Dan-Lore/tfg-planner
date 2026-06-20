@@ -11,9 +11,28 @@ export interface Flow {
   chance?: number;
 }
 
-export interface EnergyCost {
-  euPerTick: number;
-  voltageTier?: string;
+export type VoltageTier =
+  | 'ULV'
+  | 'LV'
+  | 'MV'
+  | 'HV'
+  | 'EV'
+  | 'IV'
+  | 'LuV'
+  | 'ZPM'
+  | 'UV'
+  | 'UHV'
+  | 'UEV'
+  | 'UIV'
+  | 'UXV'
+  | 'OpV'
+  | 'MAX';
+
+/** Base energy at recipe minimum voltage tier: EU/t = voltage × amperage. */
+export interface RecipeEnergy {
+  minVoltageTier: VoltageTier;
+  voltage: number;
+  amperage: number;
 }
 
 export interface Recipe {
@@ -22,7 +41,7 @@ export interface Recipe {
   inputs: Flow[];
   outputs: Flow[];
   durationTicks: number;
-  energy?: EnergyCost;
+  energy?: RecipeEnergy;
 }
 
 export interface Machine {
@@ -30,6 +49,10 @@ export interface Machine {
   names: LocalizedName;
   category: string;
   recipeIds: string[];
+  /** Omitted for singleblock GT machines. */
+  kind?: 'singleblock' | 'multiblock';
+  /** GT native voltage tier of the machine structure (multiblock baseline). */
+  nativeTier?: VoltageTier;
 }
 
 export interface ItemDef {

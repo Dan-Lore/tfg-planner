@@ -6,6 +6,7 @@ import { fetchModpackTag } from './fetch/modpack-fetch.js';
 import { buildModIndex } from './lockfile/parse-pakku.js';
 import { normalizePack } from './pipeline/normalize.js';
 import { sanitizeAllFlows } from './pipeline/sanitize-flows.js';
+import { sanitizeRecipeEnergy } from './pipeline/sanitize-energy.js';
 import { buildLangBundle } from './lang/build-lang-bundle.js';
 import { countResolved, resolveResourceName } from './lang/resolve-name.js';
 import { loadTfgExcludes } from './datapack/excludes.js';
@@ -13,6 +14,7 @@ import { validatePackSchema, buildReportFromPack } from './validate/schema.js';
 import { runSmokeChains } from './validate/smoke-chains.js';
 import { loadGolden, diffAgainstGolden } from './validate/golden-diff.js';
 import { enrichRecipeChances } from './pipeline/enrich-chances.js';
+import { enrichRecipeEnergy } from './pipeline/enrich-energy.js';
 import { loadRecipeSnapshot } from './snapshot/load-recipe-snapshot.js';
 import { defaultSnapshotDir } from './snapshot/manifest.js';
 import type { BuildReport, ParseWarning } from './types.js';
@@ -81,7 +83,28 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
     reason: `Enriched ${chanceEnrich.stats.enrichedRecipes} recipes (${chanceEnrich.stats.enrichedFlows} flows) from ${chanceEnrich.stats.kubejsRecipesWithChance} KubeJS recipes with chance data`,
   });
 
+  const energyEnrich = enrichRecipeEnergy(recipes, modpackRoot);
+  recipes = energyEnrich.recipes;
+  warnings.push({
+    file: 'kubejs-energy',
+    reason: `Enriched ${energyEnrich.stats.enrichedRecipes} recipes from ${energyEnrich.stats.kubejsRecipesWithEnergy} KubeJS recipes with energy data`,
+  });
+
   recipes = sanitizeAllFlows(recipes);
+  const energySanitize = sanitizeRecipeEnergy(recipes);
+  recipes = energySanitize.recipes;
+  if (energySanitize.stats.singleblockAmperageOver1 > 0) {
+    warnings.push({
+      file: 'sanitize-energy',
+      reason: `${energySanitize.stats.singleblockAmperageOver1} singleblock recipes with amperage > 1`,
+    });
+  }
+  if (energySanitize.stats.energyInferAmbiguous > 0) {
+    warnings.push({
+      file: 'sanitize-energy',
+      reason: `${energySanitize.stats.energyInferAmbiguous} recipes with ambiguous energy infer (LV fallback or non-standard amperage)`,
+    });
+  }
 
   const { bundle: langBundle, stats: langStats } = await buildLangBundle(
     modpackRoot,

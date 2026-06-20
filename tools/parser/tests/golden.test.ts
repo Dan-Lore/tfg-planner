@@ -19,6 +19,11 @@ describe('golden diff', () => {
         ],
         outputs: [{ itemId: 'gtceu:magnesium_diboride_ingot', amount: 1 }],
         durationTicks: 400,
+        energy: {
+          minVoltageTier: 'MV',
+          voltage: 128,
+          amperage: 0.9375,
+        },
         source: 'test',
       },
     ];
