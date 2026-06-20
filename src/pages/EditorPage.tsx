@@ -282,6 +282,7 @@ export function EditorPage() {
       const recipe = pack.recipes.find((r) => r.id === n.recipeId);
       const inputRates = rateMapToStrings(flowResult?.nodeInputRates[n.id]);
       const outputRates = rateMapToStrings(flowResult?.nodeOutputRates[n.id]);
+      const outputPortRates = rateMapToStrings(flowResult?.nodePortOutputRates[n.id]);
       const { inputPorts, outputPorts } = buildPortDisplays(
         recipe,
         pack,
@@ -290,6 +291,7 @@ export function EditorPage() {
         connectedPorts.outPorts.get(n.id) ?? new Set(),
         inputRates,
         outputRates,
+        outputPortRates,
       );
       return {
         id: n.id,

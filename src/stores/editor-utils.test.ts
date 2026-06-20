@@ -24,6 +24,7 @@ const result: FlowResult = {
   edgeFlows: {},
   edgeTargetFlows: {},
   nodeOutputRates: {},
+  nodePortOutputRates: {},
   nodeInputRates: {},
   nodeSurplus: {},
   nodeMachineCounts: { n1: 9 },

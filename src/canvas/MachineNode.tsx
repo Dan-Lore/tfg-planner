@@ -243,6 +243,7 @@ export function buildPortDisplays(
   connectedOut: Set<string>,
   inputRates: Record<string, string>,
   outputRates: Record<string, string>,
+  outputPortRates: Record<string, string>,
 ): { inputPorts: PortDisplay[]; outputPorts: PortDisplay[] } {
   if (!recipe) {
     return { inputPorts: [], outputPorts: [] };
@@ -265,7 +266,7 @@ export function buildPortDisplays(
       const portId = outputPortId(i);
       const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
-      const rate = outputRates[key];
+      const rate = outputPortRates[portId] ?? outputRates[key];
       return {
         portId,
         label,

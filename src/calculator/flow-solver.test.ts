@@ -169,4 +169,93 @@ describe('solveFlows', () => {
     expect(preserved.nodeOutputRates.n1!.out!.toNumber()).toBeGreaterThan(0.5);
     expect(full.nodeMachineCounts.n1).toBeLessThan(4);
   });
+
+  it('assigns per-port output rates and edge flows for duplicate products on separate ports', () => {
+    const greenhouseRecipe = {
+      id: 'gh_pine',
+      machineId: 'greenhouse',
+      durationTicks: 12000,
+      inputs: [{ itemId: 'tfc:wood/sapling/pine', amount: 8 }],
+      outputs: [
+        { itemId: 'tfc:wood/log/pine', amount: 64 },
+        { itemId: 'tfc:wood/sapling/pine', amount: 4 },
+        { itemId: 'tfc:wood/log/pine', amount: 16 },
+        { itemId: 'tfc:wood/log/pine', amount: 16 },
+      ],
+    };
+    const pyroRecipe = {
+      id: 'pyro',
+      machineId: 'pyro',
+      durationTicks: 100,
+      inputs: [{ itemId: 'tfc:wood/log/pine', amount: 1 }],
+      outputs: [{ itemId: 'charcoal', amount: 1 }],
+    };
+    const pack: PackData = {
+      ...samplePack,
+      recipes: [greenhouseRecipe, pyroRecipe],
+    };
+
+    const result = solveFlows({
+      pack,
+      nodes: [
+        {
+          id: 'gh',
+          machineId: 'greenhouse',
+          recipeId: 'gh_pine',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          outputMultiplier: 1,
+        },
+        {
+          id: 'pyro',
+          machineId: 'pyro',
+          recipeId: 'pyro',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          outputMultiplier: 1,
+        },
+      ],
+      edges: [
+        {
+          id: 'e0',
+          source: 'gh',
+          target: 'pyro',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'tfc:wood/log/pine',
+        },
+        {
+          id: 'e2',
+          source: 'gh',
+          target: 'pyro',
+          sourcePort: 'out_2',
+          targetPort: 'in_0',
+          itemId: 'tfc:wood/log/pine',
+        },
+        {
+          id: 'e3',
+          source: 'gh',
+          target: 'pyro',
+          sourcePort: 'out_3',
+          targetPort: 'in_0',
+          itemId: 'tfc:wood/log/pine',
+        },
+      ],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    expect(result.nodePortOutputRates.gh!.out_0!.toNumber()).toBeCloseTo(64 / 600, 5);
+    expect(result.nodePortOutputRates.gh!.out_2!.toNumber()).toBeCloseTo(16 / 600, 5);
+    expect(result.nodePortOutputRates.gh!.out_3!.toNumber()).toBeCloseTo(16 / 600, 5);
+    expect(result.nodeOutputRates.gh!['tfc:wood/log/pine']!.toNumber()).toBeCloseTo(
+      96 / 600,
+      5,
+    );
+    expect(result.edgeFlows.e0!.toNumber()).toBeCloseTo(64 / 600, 5);
+    expect(result.edgeFlows.e2!.toNumber()).toBeCloseTo(16 / 600, 5);
+    expect(result.edgeFlows.e3!.toNumber()).toBeCloseTo(16 / 600, 5);
+  });
 });

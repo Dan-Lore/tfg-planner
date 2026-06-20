@@ -37,6 +37,8 @@ export function runSolver(
       id: e.id,
       source: e.source,
       target: e.target,
+      sourcePort: e.sourcePort,
+      targetPort: e.targetPort,
       itemId: e.itemId,
       fluidId: e.fluidId,
     })),

@@ -1,5 +1,6 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { formatRate } from '@/calculator/flow-solver';
+import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { PackData } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
@@ -73,6 +74,13 @@ function targetFlowGroupKey(edge: TfgpEdge): string {
   return key ? `${edge.target}\0${key}` : edge.target;
 }
 
+/** Same physical output handle fanning out — dedupe one source label with total rate. */
+function sourceFlowGroupKey(edge: TfgpEdge): string {
+  const key = productKey(edge);
+  const port = normalizePortId(edge.sourcePort);
+  return key ? `${edge.source}\0${key}\0${port}` : `${edge.source}\0${port}`;
+}
+
 function buildLabelWinners(
   edges: TfgpEdge[],
   nodes: TfgpNode[],
@@ -97,8 +105,9 @@ function buildLabelWinners(
       incoming.get(groupKey)!.push(edge);
     }
     if (hasSource) {
-      if (!outgoing.has(edge.source)) outgoing.set(edge.source, []);
-      outgoing.get(edge.source)!.push(edge);
+      const groupKey = sourceFlowGroupKey(edge);
+      if (!outgoing.has(groupKey)) outgoing.set(groupKey, []);
+      outgoing.get(groupKey)!.push(edge);
     }
   }
 
@@ -116,7 +125,7 @@ function buildLabelWinners(
     if (winner) targetLabelEdge.set(groupKey, winner);
   }
 
-  for (const [nodeId, group] of outgoing) {
+  for (const [groupKey, group] of outgoing) {
     if (group.length <= 1) continue;
     const winner = pickCentralEdge(group, (edge) => {
       const n = nodeById.get(edge.source);
@@ -124,7 +133,7 @@ function buildLabelWinners(
         ? estimatePortCenter(pack, n, edge.sourcePort)
         : { x: 0, y: 0 };
     });
-    if (winner) sourceLabelEdge.set(nodeId, winner);
+    if (winner) sourceLabelEdge.set(groupKey, winner);
   }
 
   return { targetLabelEdge, sourceLabelEdge };
@@ -135,22 +144,38 @@ function applyLabelDedup(
   edges: TfgpEdge[],
   targetLabelEdge: Map<string, string>,
   sourceLabelEdge: Map<string, string>,
+  result: FlowResult,
 ): void {
   for (const edge of edges) {
     const entry = data[edge.id];
     if (!entry) continue;
 
     const targetGroupKey = targetFlowGroupKey(edge);
+    const sourceGroupKey = sourceFlowGroupKey(edge);
     const dedupeTarget = targetLabelEdge.has(targetGroupKey);
-    const dedupeSource = sourceLabelEdge.has(edge.source);
+    const dedupeSource = sourceLabelEdge.has(sourceGroupKey);
     const showTarget =
       !dedupeTarget || targetLabelEdge.get(targetGroupKey) === edge.id;
     const showSource =
-      !dedupeSource || sourceLabelEdge.get(edge.source) === edge.id;
+      !dedupeSource || sourceLabelEdge.get(sourceGroupKey) === edge.id;
 
     if (!showSource) delete entry.source;
     if (!showTarget) delete entry.target;
     if (!entry.source && !entry.target) delete data[edge.id];
+  }
+
+  for (const winnerId of sourceLabelEdge.values()) {
+    const entry = data[winnerId];
+    const edge = edges.find((e) => e.id === winnerId);
+    if (!entry?.source || !edge) continue;
+    const portId = normalizePortId(edge.sourcePort);
+    const portRate = result.nodePortOutputRates?.[edge.source]?.[portId];
+    const key = productKey(edge);
+    const total = result.nodeOutputRates[edge.source]?.[key];
+    const rate = portRate && portRate.compare(R.zero) > 0 ? portRate : total;
+    if (rate && rate.compare(R.zero) > 0) {
+      entry.source = `${formatRate(rate)}/s`;
+    }
   }
 }
 
@@ -166,12 +191,21 @@ export function buildEdgeFlowData(
     const key = productKey(edge);
     if (!key) continue;
 
-    const srcRate = result.nodeOutputRates[edge.source]?.[key];
+    const edgeSrc = result.edgeFlows[edge.id];
+    const totalSrc = result.nodeOutputRates[edge.source]?.[key];
     const tgtRate = result.nodeInputRates[edge.target]?.[key];
+    const srcRate =
+      edgeSrc && edgeSrc.compare(R.zero) > 0 ? edgeSrc : totalSrc;
     if (!srcRate && !tgtRate) continue;
 
-    const srcText = srcRate ? `${formatRate(srcRate)}/s` : undefined;
-    const tgtText = tgtRate ? `${formatRate(tgtRate)}/s` : undefined;
+    const srcText =
+      srcRate && srcRate.compare(R.zero) > 0
+        ? `${formatRate(srcRate)}/s`
+        : undefined;
+    const tgtText =
+      tgtRate && tgtRate.compare(R.zero) > 0
+        ? `${formatRate(tgtRate)}/s`
+        : undefined;
 
     data[edge.id] = {
       ...(srcText ? { source: srcText } : {}),
@@ -185,7 +219,7 @@ export function buildEdgeFlowData(
     pack,
     data,
   );
-  applyLabelDedup(data, edges, targetLabelEdge, sourceLabelEdge);
+  applyLabelDedup(data, edges, targetLabelEdge, sourceLabelEdge, result);
 
   return data;
 }

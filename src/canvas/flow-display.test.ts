@@ -76,6 +76,7 @@ describe('buildEdgeFlowData', () => {
         srcB: { b: R.from(2) },
         srcC: { c: R.from(1) },
       },
+      nodePortOutputRates: {},
       nodeInputRates: {
         mixer1: { a: R.from(12), b: R.from(6), c: R.from(6) },
       },
@@ -120,6 +121,7 @@ describe('buildEdgeFlowData', () => {
         srcA: { a: R.from(4) },
         srcB: { a: R.from(2) },
       },
+      nodePortOutputRates: {},
       nodeInputRates: {
         mixer1: { a: R.from(12) },
       },
@@ -150,6 +152,7 @@ describe('buildEdgeFlowData', () => {
       edgeFlows: {},
       edgeTargetFlows: {},
       nodeOutputRates: { srcA: { a: R.from(4) } },
+      nodePortOutputRates: {},
       nodeInputRates: { mixer1: { a: R.from(12) } },
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
@@ -194,6 +197,9 @@ describe('buildEdgeFlowData', () => {
       edgeFlows: {},
       edgeTargetFlows: {},
       nodeOutputRates: { src: { out: R.from(8) } },
+      nodePortOutputRates: {
+        src: { out_0: R.from(8) },
+      },
       nodeInputRates: { t1: { out: R.from(8) }, t2: { out: R.from(8) } },
       nodeSurplus: {},
       nodeMachineCounts: { src: 1 },
@@ -263,6 +269,7 @@ describe('buildEdgeFlowData', () => {
         mixer1: { a: R.from(6) },
         mixer2: { b: R.from(4) },
       },
+      nodePortOutputRates: {},
       nodeInputRates: {
         auto: { a: R.from(6), b: R.from(4) },
       },
@@ -305,6 +312,7 @@ describe('buildEdgeFlowData', () => {
         mixer1: { out: R.from(8) },
         mixer2: { out: R.from(8) },
       },
+      nodePortOutputRates: {},
       nodeInputRates: {
         auto: { out: R.from(8) },
       },
@@ -316,6 +324,89 @@ describe('buildEdgeFlowData', () => {
 
     expect(data.m1a?.source).toBe('8.00/s');
     expect(data.m2a?.source).toBe('8.00/s');
+    expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(1);
+  });
+
+  it('keeps source on each parallel output port when the same product leaves on separate handles', () => {
+    const greenhouse: TfgpNode = {
+      id: 'gh',
+      machineId: 'gtceu:greenhouse',
+      recipeId: 'tfg:tfc_wood_sapling_pine/1',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      parallel: 1,
+      outputMultiplier: 1,
+    };
+    const pyro: TfgpNode = {
+      id: 'pyro',
+      machineId: 'gtceu:pyrolyse_oven',
+      recipeId: 'mix',
+      position: { x: 400, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      parallel: 1,
+      outputMultiplier: 1,
+    };
+
+    const edges: TfgpEdge[] = [
+      {
+        id: 'e0',
+        source: 'gh',
+        target: 'pyro',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'tfc:wood/log/pine',
+      },
+      {
+        id: 'e2',
+        source: 'gh',
+        target: 'pyro',
+        sourcePort: 'out_2',
+        targetPort: 'in_0',
+        itemId: 'tfc:wood/log/pine',
+      },
+      {
+        id: 'e3',
+        source: 'gh',
+        target: 'pyro',
+        sourcePort: 'out_3',
+        targetPort: 'in_0',
+        itemId: 'tfc:wood/log/pine',
+      },
+    ];
+
+    const result = {
+      edgeFlows: {
+        e0: R.from(64 / 600),
+        e2: R.from(16 / 600),
+        e3: R.from(16 / 600),
+      },
+      edgeTargetFlows: {},
+      nodeOutputRates: {
+        gh: { 'tfc:wood/log/pine': R.from(96 / 600) },
+      },
+      nodePortOutputRates: {
+        gh: {
+          out_0: R.from(64 / 600),
+          out_1: R.from(4 / 600),
+          out_2: R.from(16 / 600),
+          out_3: R.from(16 / 600),
+        },
+      },
+      nodeInputRates: {
+        pyro: { 'tfc:wood/log/pine': R.from(96 / 600) },
+      },
+      nodeSurplus: {},
+      nodeMachineCounts: { gh: 1, pyro: 1 },
+    };
+
+    const data = buildEdgeFlowData(edges, [greenhouse, pyro], pack, result);
+
+    expect(data.e0?.source).toBe('0.1067/s');
+    expect(data.e2?.source).toBe('0.0267/s');
+    expect(data.e3?.source).toBe('0.0267/s');
+    expect(edges.filter((e) => data[e.id]?.source)).toHaveLength(3);
     expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(1);
   });
 });

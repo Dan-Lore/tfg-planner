@@ -3,6 +3,7 @@ import { Rational, R } from './rational';
 import { ceilMachineCount, idealMachineCount } from './rounding';
 import { buildTagIndex } from '@/lib/tag-index';
 import { recipeInputMatchesProduct } from '@/lib/flow-match';
+import { normalizePortId, parsePortId } from '@/canvas/ports';
 
 export const TICKS_PER_SECOND = 20;
 
@@ -20,6 +21,8 @@ export interface SchemeEdge {
   id: string;
   source: string;
   target: string;
+  sourcePort?: string;
+  targetPort?: string;
   itemId?: string;
   fluidId?: string;
 }
@@ -34,7 +37,10 @@ export interface SchemeTarget {
 export interface FlowResult {
   edgeFlows: Record<string, Rational>;
   edgeTargetFlows: Record<string, Rational>;
+  /** Total output rate per product key (sum across output ports). */
   nodeOutputRates: Record<string, Record<string, Rational>>;
+  /** Output rate per physical port (`out_0`, `out_1`, …). */
+  nodePortOutputRates: Record<string, Record<string, Rational>>;
   nodeInputRates: Record<string, Record<string, Rational>>;
   nodeSurplus: Record<string, Record<string, Rational>>;
   nodeMachineCounts: Record<string, number>;
@@ -70,14 +76,95 @@ function nodeSpeedFactor(node: SchemeNode): Rational {
   return R.from(node.overclock * node.outputMultiplier);
 }
 
+function recipeDurationSec(recipe: Recipe): Rational {
+  return R.from(recipe.durationTicks).div(R.from(TICKS_PER_SECOND));
+}
+
+function perMachineOutputRateAtIndex(recipe: Recipe, index: number): Rational {
+  const output = recipe.outputs[index];
+  if (!output) return R.zero;
+  return R.from(output.amount).div(recipeDurationSec(recipe));
+}
+
 function perMachineOutputRate(
   recipe: Recipe,
   outputKey: string,
 ): Rational {
-  const output = recipe.outputs.find((o) => productKey(o) === outputKey);
-  if (!output) return R.zero;
-  const durationSec = R.from(recipe.durationTicks).div(R.from(TICKS_PER_SECOND));
-  return R.from(output.amount).div(durationSec);
+  const index = recipe.outputs.findIndex((o) => productKey(o) === outputKey);
+  if (index < 0) return R.zero;
+  return perMachineOutputRateAtIndex(recipe, index);
+}
+
+function buildNodePortOutputRates(
+  recipe: Recipe,
+  factor: Rational,
+): Record<string, Rational> {
+  const rates: Record<string, Rational> = {};
+  for (let i = 0; i < recipe.outputs.length; i++) {
+    rates[`out_${i}`] = perMachineOutputRateAtIndex(recipe, i).mul(factor);
+  }
+  return rates;
+}
+
+function sumPortRatesByProduct(
+  recipe: Recipe,
+  portRates: Record<string, Rational>,
+): Record<string, Rational> {
+  const totals: Record<string, Rational> = {};
+  for (let i = 0; i < recipe.outputs.length; i++) {
+    const key = productKey(recipe.outputs[i]!);
+    const rate = portRates[`out_${i}`] ?? R.zero;
+    totals[key] = (totals[key] ?? R.zero).add(rate);
+  }
+  return totals;
+}
+
+function resolveSourceOutputPort(
+  edge: SchemeEdge,
+  recipe: Recipe,
+): string | null {
+  if (edge.sourcePort) {
+    const portId = normalizePortId(edge.sourcePort);
+    const parsed = parsePortId(portId);
+    if (parsed?.kind === 'out') return portId;
+  }
+  const key = edge.itemId ?? edge.fluidId ?? '';
+  if (!key) return null;
+  const index = recipe.outputs.findIndex((o) => productKey(o) === key);
+  return index >= 0 ? `out_${index}` : null;
+}
+
+function assignEdgeFlowsFromPorts(
+  edges: SchemeEdge[],
+  outgoing: Map<string, SchemeEdge[]>,
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  nodeById: Map<string, SchemeNode>,
+  recipes: Map<string, Recipe>,
+  edgeFlows: Record<string, Rational>,
+): void {
+  for (const edge of edges) {
+    edgeFlows[edge.id] = R.zero;
+  }
+  for (const [nodeId, nodeEdges] of outgoing) {
+    const node = nodeById.get(nodeId);
+    const recipe = node ? recipes.get(node.recipeId) : undefined;
+    if (!recipe) continue;
+    const byPort = new Map<string, SchemeEdge[]>();
+    for (const edge of nodeEdges) {
+      const portId = resolveSourceOutputPort(edge, recipe);
+      if (!portId) continue;
+      if (!byPort.has(portId)) byPort.set(portId, []);
+      byPort.get(portId)!.push(edge);
+    }
+    for (const [portId, portEdges] of byPort) {
+      const portRate = nodePortOutputRates[nodeId]?.[portId] ?? R.zero;
+      if (portEdges.length === 0) continue;
+      const share = portRate.div(R.from(portEdges.length));
+      for (const edge of portEdges) {
+        edgeFlows[edge.id] = share;
+      }
+    }
+  }
 }
 
 function inputDemandRate(
@@ -238,29 +325,25 @@ export function solveFlows(input: SolverInput): FlowResult {
 
   const edgeFlows: Record<string, Rational> = {};
   const nodeOutputRates: Record<string, Record<string, Rational>> = {};
+  const nodePortOutputRates: Record<string, Record<string, Rational>> = {};
 
   for (const node of input.nodes) {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
-    nodeOutputRates[node.id] = {};
     const factor = nodeSpeedFactor(node).mul(R.from(nodeMachineCounts[node.id]));
-
-    for (const out of recipe.outputs) {
-      const k = productKey(out);
-      const rate = perMachineOutputRate(recipe, k).mul(factor);
-      nodeOutputRates[node.id][k] = rate;
-    }
+    const portRates = buildNodePortOutputRates(recipe, factor);
+    nodePortOutputRates[node.id] = portRates;
+    nodeOutputRates[node.id] = sumPortRatesByProduct(recipe, portRates);
   }
 
-  for (const edge of input.edges) {
-    const key = edge.itemId ?? edge.fluidId ?? '';
-    const srcRates = nodeOutputRates[edge.source];
-    if (srcRates?.[key]) {
-      edgeFlows[edge.id] = srcRates[key];
-    } else {
-      edgeFlows[edge.id] = R.zero;
-    }
-  }
+  assignEdgeFlowsFromPorts(
+    input.edges,
+    outgoing,
+    nodePortOutputRates,
+    nodeById,
+    recipes,
+    edgeFlows,
+  );
 
   if (!preserveCounts) {
     for (const nodeId of order) {
@@ -295,34 +378,20 @@ export function solveFlows(input: SolverInput): FlowResult {
   for (const node of input.nodes) {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
-    nodeOutputRates[node.id] = {};
     const factor = nodeSpeedFactor(node).mul(R.from(nodeMachineCounts[node.id]));
-    for (const out of recipe.outputs) {
-      const k = productKey(out);
-      nodeOutputRates[node.id][k] = perMachineOutputRate(recipe, k).mul(factor);
-    }
+    const portRates = buildNodePortOutputRates(recipe, factor);
+    nodePortOutputRates[node.id] = portRates;
+    nodeOutputRates[node.id] = sumPortRatesByProduct(recipe, portRates);
   }
 
-  for (const edge of input.edges) {
-    edgeFlows[edge.id] = R.zero;
-  }
-  for (const node of input.nodes) {
-    const byProduct = new Map<string, SchemeEdge[]>();
-    for (const edge of outgoing.get(node.id) ?? []) {
-      const key = edge.itemId ?? edge.fluidId ?? '';
-      if (!key) continue;
-      if (!byProduct.has(key)) byProduct.set(key, []);
-      byProduct.get(key)!.push(edge);
-    }
-    for (const [key, edges] of byProduct) {
-      const total = nodeOutputRates[node.id]?.[key] ?? R.zero;
-      if (edges.length === 0) continue;
-      const share = total.div(R.from(edges.length));
-      for (const edge of edges) {
-        edgeFlows[edge.id] = share;
-      }
-    }
-  }
+  assignEdgeFlowsFromPorts(
+    input.edges,
+    outgoing,
+    nodePortOutputRates,
+    nodeById,
+    recipes,
+    edgeFlows,
+  );
 
   const edgeTargetFlows: Record<string, Rational> = {};
   const nodeInputRates: Record<string, Record<string, Rational>> = {};
@@ -336,8 +405,8 @@ export function solveFlows(input: SolverInput): FlowResult {
 
     const primaryOut = recipe.outputs[0];
     const primaryKey = primaryOut ? productKey(primaryOut) : '';
-    const primaryOutRate = primaryKey
-      ? (nodeOutputRates[node.id]?.[primaryKey] ?? R.zero)
+    const primaryOutRate = primaryOut
+      ? (nodePortOutputRates[node.id]?.['out_0'] ?? R.zero)
       : R.zero;
 
     for (const inp of recipe.inputs) {
@@ -358,8 +427,8 @@ export function solveFlows(input: SolverInput): FlowResult {
     if (targetRecipe && key) {
       const primaryOut = targetRecipe.outputs[0];
       const primaryKey = primaryOut ? productKey(primaryOut) : '';
-      const targetOutRate = primaryKey
-        ? (nodeOutputRates[edge.target]?.[primaryKey] ?? R.zero)
+      const targetOutRate = primaryOut
+        ? (nodePortOutputRates[edge.target]?.['out_0'] ?? R.zero)
         : R.zero;
       edgeTargetFlows[edge.id] = primaryKey
         ? inputDemandRate(targetRecipe, key, targetOutRate, primaryKey)
@@ -373,17 +442,19 @@ export function solveFlows(input: SolverInput): FlowResult {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
 
-    for (const out of recipe.outputs) {
-      const k = productKey(out);
-      const produced = nodeOutputRates[node.id]?.[k] ?? R.zero;
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      const k = productKey(recipe.outputs[i]!);
+      const portId = `out_${i}`;
+      const produced = nodePortOutputRates[node.id]?.[portId] ?? R.zero;
       let sent = R.zero;
       for (const edge of outgoing.get(node.id) ?? []) {
-        const ek = edge.itemId ?? edge.fluidId ?? '';
-        if (ek === k) sent = sent.add(edgeFlows[edge.id] ?? R.zero);
+        const edgePort = resolveSourceOutputPort(edge, recipe);
+        if (edgePort !== portId) continue;
+        sent = sent.add(edgeFlows[edge.id] ?? R.zero);
       }
       const surplus = produced.sub(sent);
       if (surplus.compare(R.zero) > 0) {
-        nodeSurplus[node.id][k] = surplus;
+        nodeSurplus[node.id][k] = (nodeSurplus[node.id][k] ?? R.zero).add(surplus);
       }
     }
   }
@@ -392,6 +463,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     edgeFlows,
     edgeTargetFlows,
     nodeOutputRates,
+    nodePortOutputRates,
     nodeInputRates,
     nodeSurplus,
     nodeMachineCounts,
