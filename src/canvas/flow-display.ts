@@ -1,10 +1,10 @@
 import type { FlowResult } from '@/calculator/flow-solver';
-import { formatRate } from '@/calculator/flow-solver';
+import { formatRate, portInputDemandRate } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
-import type { PackData } from '@/data/types';
+import type { PackData, Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
-import { normalizePortId, parsePortId, portFlow, productKey } from '@/canvas/ports';
+import { normalizePortId, parsePortId, portFlow, productKey, inputPortId } from '@/canvas/ports';
 import {
   formatFlowRateLabel,
   isChancedFlow,
@@ -249,19 +249,53 @@ export function buildEdgeFlowData(
   return data;
 }
 
-export function buildNodeSurplusLines(
+export interface NodeBalanceLine {
+  kind: 'in' | 'out';
+  text: string;
+}
+
+function isInputPortConnected(connectedInPorts: Set<string>, portId: string): boolean {
+  return (
+    connectedInPorts.has(portId) ||
+    connectedInPorts.has(normalizePortId(portId)) ||
+    connectedInPorts.has(portId.replace(/^in_/, 'input_'))
+  );
+}
+
+export function buildNodeBalanceLines(
   nodeId: string,
+  recipe: Recipe | undefined,
+  connectedInPorts: Set<string>,
   result: FlowResult,
   pack: PackData,
   lang: 'ru' | 'en',
-): string[] {
+): NodeBalanceLine[] {
+  const lines: NodeBalanceLine[] = [];
+  if (!recipe) return lines;
+
+  const primaryRate = result.nodePortOutputRates[nodeId]?.['out_0'] ?? R.zero;
+  if (primaryRate.compare(R.zero) > 0) {
+    for (let i = 0; i < recipe.inputs.length; i++) {
+      const portId = inputPortId(i);
+      if (isInputPortConnected(connectedInPorts, portId)) continue;
+      const inp = recipe.inputs[i]!;
+      const demand = portInputDemandRate(recipe, i, primaryRate);
+      if (demand.compare(R.zero) <= 0) continue;
+      const name = getItemName(pack, inp.itemId ?? inp.fluidId ?? '?', lang);
+      lines.push({ kind: 'in', text: `-${formatRate(demand)}/s ${name}` });
+    }
+  }
+
   const surplus = result.nodeSurplus[nodeId];
-  if (!surplus) return [];
-  return Object.entries(surplus).map(([key, rate]) => {
-    const resourceId = key.replace(/^(item|fluid):/, '');
-    const name = getItemName(pack, resourceId, lang);
-    return `+${formatRate(rate)}/s ${name}`;
-  });
+  if (surplus) {
+    for (const [key, rate] of Object.entries(surplus)) {
+      const resourceId = key.replace(/^(item|fluid):/, '');
+      const name = getItemName(pack, resourceId, lang);
+      lines.push({ kind: 'out', text: `+${formatRate(rate)}/s ${name}` });
+    }
+  }
+
+  return lines;
 }
 
 export function rateMapToStrings(

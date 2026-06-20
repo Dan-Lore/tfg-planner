@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { R } from '@/calculator/rational';
-import { buildEdgeFlowData } from '@/canvas/flow-display';
+import { buildEdgeFlowData, buildNodeBalanceLines } from '@/canvas/flow-display';
 import type { PackData } from '@/data/types';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 
@@ -401,5 +401,35 @@ describe('buildEdgeFlowData', () => {
     expect(data.e3?.source).toBe('0.0267/s');
     expect(edges.filter((e) => data[e.id]?.source)).toHaveLength(3);
     expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(1);
+  });
+});
+
+describe('buildNodeBalanceLines', () => {
+  it('shows deficit for unconnected inputs and surplus for unused outputs', () => {
+    const recipe = pack.recipes[0]!;
+    const result = {
+      edgeFlows: {},
+      edgeTargetFlows: {},
+      nodeOutputRates: { mixer1: { out: R.from(2) } },
+      nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
+      nodeInputRates: { mixer1: { a: R.from(4), b: R.from(2), c: R.from(2) } },
+      nodeSurplus: { mixer1: { out: R.from(0.5) } },
+      nodeMachineCounts: { mixer1: 2 },
+    };
+    const connectedIn = new Set(['in_0']);
+
+    const lines = buildNodeBalanceLines(
+      'mixer1',
+      recipe,
+      connectedIn,
+      result,
+      pack,
+      'en',
+    );
+
+    expect(lines).toContainEqual({ kind: 'in', text: '-2.00/s b' });
+    expect(lines).toContainEqual({ kind: 'in', text: '-2.00/s c' });
+    expect(lines).toContainEqual({ kind: 'out', text: '+0.5000/s out' });
+    expect(lines.some((l) => l.text.includes(' a'))).toBe(false);
   });
 });

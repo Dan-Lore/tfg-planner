@@ -21,15 +21,14 @@ import { buildPortDisplays, useNodeTypes } from '@/canvas/MachineNode';
 import { EditorCanvas } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
 import { PortContextMenu, type PortAttachDirection } from '@/canvas/PortContextMenu';
-import { buildNodeSurplusLines, rateMapToStrings } from '@/canvas/flow-display';
+import { buildNodeBalanceLines, rateMapToStrings } from '@/canvas/flow-display';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import {
-  buildRecipeIngredientSearchText,
+  buildRecipeComboboxItems,
   filterItemsByQuery,
   resolveMachineId,
-  sortRecipesForPicker,
 } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
 import { WheelNumberInput } from '@/components/WheelNumberInput';
@@ -317,7 +316,16 @@ export function EditorPage() {
           ) => handlePortContextMenu(n.id, portId, side, clientX, clientY),
           inputPorts,
           outputPorts,
-          surplusLines: flowResult ? buildNodeSurplusLines(n.id, flowResult, pack, lang) : [],
+          balanceLines: flowResult
+            ? buildNodeBalanceLines(
+                n.id,
+                recipe,
+                connectedPorts.inPorts.get(n.id) ?? new Set(),
+                flowResult,
+                pack,
+                lang,
+              )
+            : [],
         },
       };
     });
@@ -421,12 +429,10 @@ export function EditorPage() {
 
   const selectedRecipeItems = useMemo(() => {
     if (!pack || !selectedNode) return [];
-    return sortRecipesForPicker(pack, getRecipesForMachine(pack, selectedNode.machineId), lang).map(
-      (r) => ({
-      id: r.id,
-      label: formatRecipeLabel(pack, r, lang),
-      searchText: buildRecipeIngredientSearchText(pack, r, lang),
-    }),
+    return buildRecipeComboboxItems(
+      pack,
+      getRecipesForMachine(pack, selectedNode.machineId),
+      lang,
     );
   }, [pack, selectedNode, lang]);
 

@@ -10,6 +10,7 @@ import {
   type WheelEvent as ReactWheelEvent,
 } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RecipeComboboxOption } from '@/components/RecipeComboboxOption';
 import {
   filterItemsByQuery,
   findActiveItemIndex,
@@ -38,6 +39,14 @@ export interface SearchComboboxProps {
 
 function stopFlow(e: ReactMouseEvent | ReactWheelEvent) {
   e.stopPropagation();
+}
+
+function scrollOptionIntoView(refs: Map<string, HTMLButtonElement>, itemId: string) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      refs.get(itemId)?.scrollIntoView({ block: 'nearest' });
+    });
+  });
 }
 
 export function SearchCombobox({
@@ -79,8 +88,12 @@ export function SearchCombobox({
   );
 
   useEffect(() => {
-    setHighlightIndex(-1);
-  }, [query, filtered.length]);
+    if (!open) return;
+    const index = activeIndex >= 0 ? activeIndex : 0;
+    setHighlightIndex(index);
+    const item = filtered[index];
+    if (item) scrollOptionIntoView(optionRefs.current, item.id);
+  }, [open, query, filtered, activeIndex]);
 
   const machineDisplayLabel = useMemo(() => {
     if (mode !== 'machine') return undefined;
@@ -135,13 +148,6 @@ export function SearchCombobox({
     return () => document.removeEventListener('mousedown', onDoc);
   }, [open, setOpenSafe]);
 
-  useEffect(() => {
-    if (highlightIndex < 0) return;
-    const item = filtered[highlightIndex];
-    if (!item) return;
-    optionRefs.current.get(item.id)?.scrollIntoView({ block: 'nearest' });
-  }, [highlightIndex, filtered]);
-
   const resolvePickId = useCallback(() => {
     if (filtered.length === 0) return null;
     const anchor = activeIndex >= 0 ? activeIndex : 0;
@@ -181,15 +187,18 @@ export function SearchCombobox({
       if (filtered.length === 0) return;
       e.preventDefault();
       setOpenSafe(true);
-      setHighlightIndex((prev) => {
-        const anchor = activeIndex >= 0 ? activeIndex : 0;
-        if (e.key === 'ArrowDown') {
-          if (prev < 0) return Math.min(anchor + 1, filtered.length - 1);
-          return Math.min(prev + 1, filtered.length - 1);
-        }
-        if (prev < 0) return Math.max(anchor - 1, 0);
-        return Math.max(prev - 1, 0);
-      });
+      const anchor = activeIndex >= 0 ? activeIndex : 0;
+      const next =
+        e.key === 'ArrowDown'
+          ? highlightIndex < 0
+            ? anchor
+            : Math.min(highlightIndex + 1, filtered.length - 1)
+          : highlightIndex < 0
+            ? anchor
+            : Math.max(highlightIndex - 1, 0);
+      setHighlightIndex(next);
+      const item = filtered[next];
+      if (item) scrollOptionIntoView(optionRefs.current, item.id);
       return;
     }
 
@@ -334,7 +343,11 @@ export function SearchCombobox({
                     onMouseEnter={() => setHighlightIndex(index)}
                     onClick={() => handleSelect(item.id)}
                   >
-                    {item.label}
+                    {mode === 'recipe' && item.recipeDetail ? (
+                      <RecipeComboboxOption detail={item.recipeDetail} />
+                    ) : (
+                      item.label
+                    )}
                   </button>
                 </li>
               );

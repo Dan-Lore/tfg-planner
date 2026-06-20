@@ -3,7 +3,9 @@ import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackData, Flow } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
+import type { NodeBalanceLine } from '@/canvas/flow-display';
 import { formatRecipeLabel } from '@/lib/recipe-label';
+import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { RecipePicker } from './RecipePicker';
 import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
@@ -36,7 +38,7 @@ export interface MachineNodeData {
   ) => void;
   inputPorts: PortDisplay[];
   outputPorts: PortDisplay[];
-  surplusLines: string[];
+  balanceLines: NodeBalanceLine[];
   [key: string]: unknown;
 }
 
@@ -115,6 +117,10 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
     () => (recipe ? formatRecipeLabel(d.pack, recipe, lang) : ''),
     [d.pack, recipe, lang],
   );
+  const recipeDuration = useMemo(
+    () => (recipe ? formatRecipeDuration(recipe.durationTicks, lang) : ''),
+    [recipe, lang],
+  );
   const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
 
   return (
@@ -179,13 +185,27 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
               );
             }}
           />
+          {recipeDuration && (
+            <>
+              <span className="machine-node__meta-sep" aria-hidden>
+                ·
+              </span>
+              <span className="machine-node__meta-static machine-node__duration">
+                {recipeDuration}
+              </span>
+            </>
+          )}
         </div>
         {recipe?.energy && (
           <div className="meta">{recipe.energy.euPerTick} EU/t</div>
         )}
-        {d.surplusLines.map((line) => (
-          <div key={line} className="machine-node__surplus" title={line}>
-            {line}
+        {d.balanceLines.map((line) => (
+          <div
+            key={line.text}
+            className={`machine-node__balance machine-node__balance--${line.kind}`}
+            title={line.text}
+          >
+            {line.text}
           </div>
         ))}
       </div>

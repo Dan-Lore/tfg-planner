@@ -180,6 +180,18 @@ function inputDemandRate(
   return outputRate.mul(R.from(inp.amount)).div(R.from(primaryOut.amount));
 }
 
+/** Demand at a specific input port from primary output rate (per-port, not aggregated by item). */
+export function portInputDemandRate(
+  recipe: Recipe,
+  inputIndex: number,
+  primaryOutputRate: Rational,
+): Rational {
+  const inp = recipe.inputs[inputIndex];
+  const primaryOut = recipe.outputs[0];
+  if (!inp || !primaryOut) return R.zero;
+  return primaryOutputRate.mul(R.from(inp.amount)).div(R.from(primaryOut.amount));
+}
+
 function buildAdjacency(edges: SchemeEdge[]) {
   const incoming = new Map<string, SchemeEdge[]>();
   const outgoing = new Map<string, SchemeEdge[]>();

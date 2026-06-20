@@ -21,7 +21,7 @@ export function estimateHeaderHeight(
   pack: PackData,
   machineId: string,
   recipeId: string,
-  surplusLineCount = 0,
+  balanceLineCount = 0,
 ): number {
   const recipeCount = getMachineRecipeCount(pack, machineId);
   const recipe = pack.recipes.find((r) => r.id === recipeId);
@@ -30,7 +30,7 @@ export function estimateHeaderHeight(
   if (recipeCount > 1) header += 32;
   header += 24;
   if (recipe?.energy) header += 16;
-  header += surplusLineCount * 16;
+  header += balanceLineCount * 16;
   return header;
 }
 
@@ -39,7 +39,7 @@ export function estimateHeaderHeightFromData(data: MachineNodeData): number {
     data.pack,
     data.machineId,
     data.recipeId,
-    data.surplusLines?.length ?? 0,
+    data.balanceLines?.length ?? 0,
   );
 }
 
@@ -52,9 +52,9 @@ export function estimateMachineNodeHeightFromPorts(
   machineId: string,
   recipeId: string,
   portCount: number,
-  surplusLineCount = 0,
+  balanceLineCount = 0,
 ): number {
-  const header = estimateHeaderHeight(pack, machineId, recipeId, surplusLineCount);
+  const header = estimateHeaderHeight(pack, machineId, recipeId, balanceLineCount);
   return header + portCount * PORT_ROW_HEIGHT + PORT_SECTION_PADDING;
 }
 
@@ -65,7 +65,7 @@ export function estimateMachineNodeHeight(data: MachineNodeData): number {
     data.machineId,
     data.recipeId,
     portCount,
-    data.surplusLines?.length ?? 0,
+    data.balanceLines?.length ?? 0,
   );
 }
 

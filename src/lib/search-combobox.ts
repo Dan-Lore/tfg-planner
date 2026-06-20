@@ -1,11 +1,13 @@
 import { getItemName } from '@/data/pack-registry';
 import type { PackData, Recipe } from '@/data/types';
 import { formatRecipeLabel } from '@/lib/recipe-label';
+import { buildRecipePickerDetail, type RecipePickerDetail } from '@/lib/recipe-picker-detail';
 
 export interface SearchComboboxItem {
   id: string;
   label: string;
   searchText: string;
+  recipeDetail?: RecipePickerDetail;
 }
 
 export function normalizeSearchQuery(query: string): string {
@@ -84,6 +86,19 @@ export function buildRecipeIngredientSearchText(
   names.add(recipe.id);
   names.add(formatRecipeLabel(pack, recipe, lang));
   return [...names].join(' ');
+}
+
+export function buildRecipeComboboxItems(
+  pack: PackData,
+  recipes: Recipe[],
+  lang: 'ru' | 'en',
+): SearchComboboxItem[] {
+  return sortRecipesForPicker(pack, recipes, lang).map((r) => ({
+    id: r.id,
+    label: formatRecipeLabel(pack, r, lang),
+    searchText: buildRecipeIngredientSearchText(pack, r, lang),
+    recipeDetail: buildRecipePickerDetail(pack, r, lang),
+  }));
 }
 
 export function sortRecipesForPicker(

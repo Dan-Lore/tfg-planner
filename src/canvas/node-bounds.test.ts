@@ -49,7 +49,7 @@ function nodeData(portCount: number, withPicker = true): MachineNodeData {
     onPortContextMenu: () => {},
     inputPorts: inputs,
     outputPorts: outputs,
-    surplusLines: [],
+    balanceLines: [],
   };
 }
 

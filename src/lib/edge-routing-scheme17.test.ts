@@ -105,7 +105,7 @@ function makeNode(
         label: '',
         connected: true,
       })),
-      surplusLines: [],
+      balanceLines: [],
       machineCount: 1,
       overclock: 1,
       parallel: 1,
