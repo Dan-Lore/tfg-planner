@@ -21,7 +21,6 @@ export interface MachineNodeData {
   machineCount: number;
   overclock: number;
   parallel: number;
-  outputMultiplier: number;
   pack: PackData;
   onRecipeChange: (recipeId: string) => void;
   onMachineCountChange: (count: number) => void;
@@ -177,16 +176,6 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
               );
             }}
           />
-          {d.outputMultiplier !== 1 && (
-            <>
-              <span className="machine-node__meta-sep" aria-hidden>
-                ·
-              </span>
-              <span className="machine-node__meta-static">
-                {t('editor.multiplier')} {d.outputMultiplier}
-              </span>
-            </>
-          )}
         </div>
         {recipe?.energy && (
           <div className="meta">{recipe.energy.euPerTick} EU/t</div>

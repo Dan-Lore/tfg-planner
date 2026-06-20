@@ -21,8 +21,7 @@
       "position": { "x": 0, "y": 80 },
       "overclock": 1,
       "parallel": 1,
-      "machineCount": 1,
-      "outputMultiplier": 1
+      "machineCount": 1
     },
     {
       "id": "washer",
@@ -31,8 +30,7 @@
       "position": { "x": 280, "y": 80 },
       "overclock": 1,
       "parallel": 1,
-      "machineCount": 1,
-      "outputMultiplier": 1
+      "machineCount": 1
     },
     {
       "id": "furnace",
@@ -41,8 +39,7 @@
       "position": { "x": 560, "y": 80 },
       "overclock": 1,
       "parallel": 1,
-      "machineCount": 1,
-      "outputMultiplier": 1
+      "machineCount": 1
     }
   ],
   "edges": [

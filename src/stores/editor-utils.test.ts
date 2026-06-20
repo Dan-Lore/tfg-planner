@@ -17,7 +17,6 @@ const node: TfgpNode = {
   machineCount: 4,
   overclock: 1,
   parallel: 1,
-  outputMultiplier: 1,
 };
 
 const result: FlowResult = {
@@ -74,7 +73,6 @@ describe('dedupeNodeIds', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
     const nodes: TfgpNode[] = [
       { id: 'node_3', ...base, machineId: 'reactor' },

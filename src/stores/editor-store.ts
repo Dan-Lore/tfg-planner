@@ -62,7 +62,6 @@ interface EditorState {
   removeEdges: (ids: string[]) => void;
   setSelectedNodeIds: (ids: string[]) => void;
   setSelectedEdgeIds: (ids: string[]) => void;
-  multiplySelectedOutputs: (factor: number) => void;
   setTarget: (target: TfgpTarget) => void;
   /** Refresh port/edge rates from current node settings; does not change machine counts. */
   updateFlows: () => void;
@@ -264,7 +263,6 @@ export const useEditorStore = create<EditorState>()(
           machineCount: partial.machineCount ?? 1,
           overclock: partial.overclock ?? 1,
           parallel: partial.parallel ?? 1,
-          outputMultiplier: partial.outputMultiplier ?? 1,
         };
         set((s) => {
           const scheme = { ...s.scheme, nodes: [...s.scheme.nodes, node] };
@@ -356,7 +354,6 @@ export const useEditorStore = create<EditorState>()(
           machineCount: 1,
           overclock: 1,
           parallel: 1,
-          outputMultiplier: 1,
         };
         const edge: TfgpEdge =
           params.direction === 'downstream'
@@ -418,27 +415,6 @@ export const useEditorStore = create<EditorState>()(
       setSelectedNodeIds: (ids) => set({ selectedNodeIds: ids }),
 
       setSelectedEdgeIds: (ids) => set({ selectedEdgeIds: ids }),
-
-      multiplySelectedOutputs: (factor) => {
-        if (factor <= 0 || !Number.isFinite(factor)) return;
-        get().pushHistory();
-        const ids = new Set(get().selectedNodeIds);
-        set((s) => {
-          const scheme = {
-            ...s.scheme,
-            nodes: s.scheme.nodes.map((n) =>
-              ids.has(n.id)
-                ? { ...n, outputMultiplier: n.outputMultiplier * factor }
-                : n,
-            ),
-          };
-          return {
-            scheme,
-            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
-          };
-        });
-        get().recalculateScheme();
-      },
 
       setTarget: (target) => {
         get().pushHistory();

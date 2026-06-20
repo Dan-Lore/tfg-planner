@@ -31,7 +31,6 @@ export function runSolver(
       machineCount: n.machineCount,
       overclock: n.overclock,
       parallel: n.parallel,
-      outputMultiplier: n.outputMultiplier,
     })),
     edges: snapshot.edges.map((e) => ({
       id: e.id,

@@ -56,7 +56,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           parallel: 1,
-          outputMultiplier: 1,
         },
         {
           id: 'b',
@@ -65,7 +64,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           parallel: 1,
-          outputMultiplier: 1,
         },
       ],
       edges: [
@@ -103,7 +101,6 @@ describe('solveFlows', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
 
     const one = solveFlows({
@@ -147,7 +144,6 @@ describe('solveFlows', () => {
       machineCount: 4,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
 
     const preserved = solveFlows({
@@ -205,7 +201,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           parallel: 1,
-          outputMultiplier: 1,
         },
         {
           id: 'pyro',
@@ -214,7 +209,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           parallel: 1,
-          outputMultiplier: 1,
         },
       ],
       edges: [

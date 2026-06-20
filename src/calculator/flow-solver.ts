@@ -14,7 +14,6 @@ export interface SchemeNode {
   machineCount: number;
   overclock: number;
   parallel: number;
-  outputMultiplier: number;
 }
 
 export interface SchemeEdge {
@@ -73,7 +72,7 @@ function freezeManualMachineCounts(
 }
 
 function nodeSpeedFactor(node: SchemeNode): Rational {
-  return R.from(node.overclock * node.outputMultiplier);
+  return R.from(node.overclock);
 }
 
 function recipeDurationSec(recipe: Recipe): Rational {

@@ -36,7 +36,6 @@ const mixer: TfgpNode = {
   machineCount: 2,
   overclock: 1,
   parallel: 1,
-  outputMultiplier: 1,
 };
 
 describe('buildEdgeFlowData', () => {
@@ -171,7 +170,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
 
     const edges: TfgpEdge[] = [
@@ -220,7 +218,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
     const mixer1: TfgpNode = {
       id: 'mixer1',
@@ -230,7 +227,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
     const mixer2: TfgpNode = {
       id: 'mixer2',
@@ -240,7 +236,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
 
     const edges: TfgpEdge[] = [
@@ -336,7 +331,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
     const pyro: TfgpNode = {
       id: 'pyro',
@@ -346,7 +340,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
     };
 
     const edges: TfgpEdge[] = [

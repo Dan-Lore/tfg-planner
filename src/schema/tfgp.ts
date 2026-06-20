@@ -16,7 +16,6 @@ export interface TfgpNode {
   overclock: number;
   parallel: number;
   machineCount: number;
-  outputMultiplier: number;
   label?: string;
 }
 

@@ -88,7 +88,6 @@ export function EditorPage() {
   const pushHistory = useEditorStore((s) => s.pushHistory);
   const undo = useEditorStore((s) => s.undo);
   const redo = useEditorStore((s) => s.redo);
-  const multiplySelectedOutputs = useEditorStore((s) => s.multiplySelectedOutputs);
   const setTarget = useEditorStore((s) => s.setTarget);
   const duplicateSelected = useEditorStore((s) => s.duplicateSelected);
   const loadScheme = useEditorStore((s) => s.loadScheme);
@@ -304,7 +303,6 @@ export function EditorPage() {
           machineCount: n.machineCount,
           overclock: n.overclock,
           parallel: n.parallel,
-          outputMultiplier: n.outputMultiplier,
           pack,
           onRecipeChange: (recipeId: string) => handleRecipeChange(n.id, recipeId),
           onMachineCountChange: (machineCount: number) =>
@@ -414,7 +412,6 @@ export function EditorPage() {
       overclock: 1,
       parallel: 1,
       machineCount: 1,
-      outputMultiplier: 1,
     });
     setSelectedNodeIds([newId]);
     setMachineExplicitId(null);
@@ -493,17 +490,6 @@ export function EditorPage() {
             {t('editor.addMachine')}
           </button>
         </div>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => {
-            const v = prompt(t('editor.factorPrompt'), '2');
-            if (v) multiplySelectedOutputs(Number(v));
-          }}
-          disabled={selectedNodeIds.length === 0}
-        >
-          {t('editor.multiplyOutputs')}
-        </button>
         <button
           type="button"
           className="btn btn-secondary"
@@ -628,18 +614,6 @@ export function EditorPage() {
                 value={selectedNode.overclock}
                 onChange={(overclock) =>
                   updateNode(selectedNode.id, { overclock })
-                }
-              />
-              <label>{t('editor.multiplier')}</label>
-              <input
-                type="number"
-                min={0.01}
-                step={0.1}
-                value={selectedNode.outputMultiplier}
-                onChange={(e) =>
-                  updateNode(selectedNode.id, {
-                    outputMultiplier: Number(e.target.value),
-                  })
                 }
               />
             </>

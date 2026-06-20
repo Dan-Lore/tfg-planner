@@ -34,7 +34,6 @@ function nodeData(portCount: number, withPicker = true): MachineNodeData {
     machineCount: 1,
     overclock: 1,
     parallel: 1,
-    outputMultiplier: 1,
     pack: withPicker
       ? ({
           ...pack,

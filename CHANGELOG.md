@@ -20,6 +20,7 @@
 
 ### Changed
 
+- Удалён режим масштабирования B (`outputMultiplier` / «× выход»): параллельные машины задаются только через `machineCount`. При импорте legacy `.tfgp` множитель сворачивается в `machineCount`.
 - `build-pack`: snapshot-only production path (без GT substrate / KubeJS recipe simulation).
 - `manifest.json`: `snapshotSha256`, `pakkuLockSha256`.
 - Pack `0.12.8`: **6727** recipes из snapshot, smoke 12/12, golden 6/6.
@@ -27,6 +28,7 @@
 
 ### Removed
 
+- Поле `outputMultiplier` в схеме и UI; кнопка «Умножить выходы»; `multiplySelectedOutputs` в store.
 - `substrate-dumps/`, `generate-gt-dump`, `gt-vanilla-substrate`, GT JAR recipe pipeline.
 - Тесты симуляции: `early-gas-patch.test.ts`, `gt-vanilla-substrate.test.ts`.
 

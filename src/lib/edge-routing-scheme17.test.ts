@@ -109,7 +109,6 @@ function makeNode(
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-      outputMultiplier: 1,
       onRecipeChange: () => {},
       onMachineCountChange: () => {},
       onOverclockChange: () => {},
