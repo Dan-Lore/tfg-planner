@@ -80,8 +80,11 @@ export function findGreenhouseHelperCalls(ast: File, source: string): RecipeOp[]
         const circuitRaw = args[5];
         const circuit =
           circuitRaw?.type === 'NullLiteral' ? null : (evalNumeric(circuitRaw) ?? null);
+        const chanceMultiplier = evalNumeric(args[4]) ?? 1;
         if (!input || !outputs) return;
-        pushAll(expandGreenhouseCall({ dimension, input, outputs, circuit }, source));
+        pushAll(
+          expandGreenhouseCall({ dimension, input, outputs, circuit, chanceMultiplier }, source),
+        );
         return;
       }
 

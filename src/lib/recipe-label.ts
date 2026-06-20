@@ -1,5 +1,6 @@
 import { getItemName } from '@/data/pack-registry';
 import type { PackData, Recipe, Flow } from '@/data/types';
+import { formatFlowQuantityLabel } from '@/lib/flow-chance';
 
 function flowName(pack: PackData, flow: Flow, lang: 'ru' | 'en'): string {
   const id = flow.itemId ?? flow.fluidId ?? '?';
@@ -13,7 +14,9 @@ function formatSide(
   maxItems = 2,
 ): string {
   if (flows.length === 0) return '—';
-  const parts = flows.slice(0, maxItems).map((f) => `${f.amount}× ${flowName(pack, f, lang)}`);
+  const parts = flows
+    .slice(0, maxItems)
+    .map((f) => formatFlowQuantityLabel(f, flowName(pack, f, lang)));
   const rest = flows.length - maxItems;
   if (rest > 0) parts.push(`+${rest}`);
   return parts.join(', ');

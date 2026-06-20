@@ -252,4 +252,32 @@ describe('solveFlows', () => {
     expect(result.edgeFlows.e2!.toNumber()).toBeCloseTo(16 / 600, 5);
     expect(result.edgeFlows.e3!.toNumber()).toBeCloseTo(16 / 600, 5);
   });
+
+  it('applies expected output rate for chanced ports', () => {
+    const recipe = {
+      id: 'chanced',
+      machineId: 'm',
+      durationTicks: 100,
+      inputs: [],
+      outputs: [{ itemId: 'dust', amount: 10, chance: 2000 }],
+    };
+    const pack: PackData = { ...samplePack, recipes: [recipe] };
+    const result = solveFlows({
+      pack,
+      nodes: [
+        {
+          id: 'n1',
+          machineId: 'm',
+          recipeId: 'chanced',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+        },
+      ],
+      edges: [],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+    expect(result.nodePortOutputRates.n1!.out_0!.toNumber()).toBeCloseTo(0.4, 5);
+  });
 });

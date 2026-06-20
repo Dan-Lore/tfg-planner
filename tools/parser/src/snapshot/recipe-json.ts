@@ -14,7 +14,6 @@ function parseContentEntry(
   chance: number | undefined,
 ): RecipeOp['inputs'][number] | null {
   if (!content || typeof content !== 'object') return null;
-  if (chance !== undefined && chance > 0) return null;
 
   const c = content as Record<string, unknown>;
 
@@ -26,16 +25,22 @@ function parseContentEntry(
   if (c.type === 'gtceu:sized' && c.ingredient && typeof c.ingredient === 'object') {
     const ing = c.ingredient as { item?: string; tag?: string };
     const amount = (c.count as number | undefined) ?? 1;
-    if (ing.tag) return { itemId: `#${ing.tag.replace(/^#/, '')}`, amount };
-    if (ing.item) return { itemId: ing.item, amount };
+    if (ing.tag) return withChance({ itemId: `#${ing.tag.replace(/^#/, '')}`, amount }, chance);
+    if (ing.item) return withChance({ itemId: ing.item, amount }, chance);
   }
 
   if (typeof c.item === 'string') {
-    return { itemId: c.item, amount: (c.amount as number | undefined) ?? 1 };
+    return withChance(
+      { itemId: c.item, amount: (c.amount as number | undefined) ?? 1 },
+      chance,
+    );
   }
 
   if (typeof c.fluid === 'string') {
-    return { fluidId: c.fluid, amount: (c.amount as number | undefined) ?? 1 };
+    return withChance(
+      { fluidId: c.fluid, amount: (c.amount as number | undefined) ?? 1 },
+      chance,
+    );
   }
 
   if (c.value && Array.isArray(c.value)) {
@@ -43,12 +48,26 @@ function parseContentEntry(
     for (const v of c.value) {
       if (!v || typeof v !== 'object') continue;
       const entry = v as { fluid?: string; tag?: string };
-      if (entry.fluid) return { fluidId: entry.fluid, amount };
-      if (entry.tag) return { fluidId: `#${entry.tag.replace(/^#/, '')}`, amount };
+      if (entry.fluid) {
+        return withChance({ fluidId: entry.fluid, amount }, chance);
+      }
+      if (entry.tag) {
+        return withChance({ fluidId: `#${entry.tag.replace(/^#/, '')}`, amount }, chance);
+      }
     }
   }
 
   return null;
+}
+
+function withChance(
+  flow: RecipeOp['inputs'][number],
+  chance: number | undefined,
+): RecipeOp['inputs'][number] {
+  if (chance !== undefined && chance > 0 && chance < 10_000) {
+    return { ...flow, chance };
+  }
+  return flow;
 }
 
 function flowsFromJsonSide(side: unknown): RecipeOp['inputs'] {

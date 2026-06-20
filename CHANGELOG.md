@@ -7,6 +7,7 @@
 
 ### Fixed
 
+- **build-pack:** recipe output/input `chance` weights restored — KubeJS enrichment pass after snapshot load, greenhouse expander chanced outputs, `sanitizeFlow` preserves `chance`.
 - **Холст:** подвисание при drag — селективная перерисовка рёбер (`FlowEdge` + `memo`), изоляция drag в `EditorCanvas`; статичная метка рецепта у машин с большим числом рецептов (теплица) во время drag.
 - CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
 - CI: PR workflow now runs production build with `VITE_BASE_PATH` (same as Pages deploy).
@@ -20,8 +21,9 @@
 
 ### Changed
 
+- Chanced recipe outputs: optional `chance` in pack data; port labels `80% × 16× …`, expected rates prefixed with `~`.
 - Удалён режим масштабирования B (`outputMultiplier` / «× выход»): параллельные машины задаются только через `machineCount`. При импорте legacy `.tfgp` множитель сворачивается в `machineCount`.
-- `build-pack`: snapshot-only production path (без GT substrate / KubeJS recipe simulation).
+- `build-pack`: snapshot + KubeJS chance enrichment (greenhouse, chancedOutput); `recipesWithChance` in build-report.
 - `manifest.json`: `snapshotSha256`, `pakkuLockSha256`.
 - Pack `0.12.8`: **6727** recipes из snapshot, smoke 12/12, golden 6/6.
 - `.gitignore`: `recipes.json`, `substrate-dumps/`, user `.tfgp`/`Untitled*.tfgp`, root `*.png`; `build-pack` auto-bootstraps snapshot из `pack.json`.

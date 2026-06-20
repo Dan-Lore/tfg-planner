@@ -26,18 +26,23 @@ export function itemStringToFlow(s: string): FlowOp {
 }
 
 export function sanitizeFlow(flow: FlowOp): FlowOp {
+  const chance = flow.chance;
   if (flow.itemId) {
     const { amount, id } = parseAmountPrefix(flow.itemId);
-    return { itemId: id, amount: flow.amount * amount };
+    const out: FlowOp = { itemId: id, amount: flow.amount * amount };
+    if (chance !== undefined) out.chance = chance;
+    return out;
   }
   if (flow.fluidId) {
     const trimmed = flow.fluidId.trim();
     const m = trimmed.match(COUNT_PREFIX);
     if (m) {
-      return {
+      const out: FlowOp = {
         fluidId: trimmed.slice(m[0].length).trim(),
         amount: flow.amount * Number(m[1]),
       };
+      if (chance !== undefined) out.chance = chance;
+      return out;
     }
   }
   return flow;

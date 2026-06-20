@@ -1,5 +1,6 @@
 import type { PackData, Flow, Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
+import { formatFlowQuantityLabel } from '@/lib/flow-chance';
 import type { TagIndex } from '@/lib/tag-index';
 import { flowsCompatible } from '@/lib/flow-match';
 
@@ -17,14 +18,17 @@ export function normalizePortId(port: string): string {
 }
 
 export function flowLabel(
-  flow: { itemId?: string; fluidId?: string },
+  flow: Flow,
   pack: PackData,
   lang: 'ru' | 'en',
   amount?: number,
 ): string {
   const id = flow.itemId ?? flow.fluidId ?? '?';
   const name = getItemName(pack, id, lang);
-  if (amount !== undefined) return `${amount}× ${name}`;
+  const qty = amount ?? flow.amount;
+  if (qty !== undefined) {
+    return formatFlowQuantityLabel(flow, name, qty);
+  }
   return name;
 }
 

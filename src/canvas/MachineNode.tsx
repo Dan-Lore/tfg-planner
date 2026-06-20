@@ -1,12 +1,15 @@
 import { memo, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
-import type { PackData } from '@/data/types';
+import type { PackData, Flow } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { RecipePicker } from './RecipePicker';
 import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
+import type { Rational } from '@/calculator/rational';
+import { R } from '@/calculator/rational';
+import { formatFlowRateLabel, isChancedFlow } from '@/lib/flow-chance';
 export interface PortDisplay {
   portId: string;
   label: string;
@@ -225,14 +228,19 @@ export function useNodeTypes() {
 }
 
 export function buildPortDisplays(
-  recipe: { inputs: { itemId?: string; fluidId?: string; amount: number }[]; outputs: { itemId?: string; fluidId?: string; amount: number }[] } | undefined,
+  recipe:
+    | {
+        inputs: Flow[];
+        outputs: Flow[];
+      }
+    | undefined,
   pack: PackData,
   lang: 'ru' | 'en',
   connectedIn: Set<string>,
   connectedOut: Set<string>,
   inputRates: Record<string, string>,
   outputRates: Record<string, string>,
-  outputPortRates: Record<string, string>,
+  outputPortRateRationals?: Record<string, Rational>,
 ): { inputPorts: PortDisplay[]; outputPorts: PortDisplay[] } {
   if (!recipe) {
     return { inputPorts: [], outputPorts: [] };
@@ -255,7 +263,11 @@ export function buildPortDisplays(
       const portId = outputPortId(i);
       const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
-      const rate = outputPortRates[portId] ?? outputRates[key];
+      const portRate = outputPortRateRationals?.[portId];
+      const rate =
+        portRate && portRate.compare(R.zero) > 0
+          ? formatFlowRateLabel(portRate, isChancedFlow(flow))
+          : outputRates[key];
       return {
         portId,
         label,

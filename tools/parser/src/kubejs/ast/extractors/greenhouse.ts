@@ -5,6 +5,11 @@ const GREENHOUSE_BASE_DURATION = 10 * 60 * 20;
 const GREENHOUSE_DURATION_FERTILIZED = 0.75;
 const GREENHOUSE_DURATION_AQUAPONICS = 0.5;
 
+/** GT chance weights (10000 = guaranteed); match recipes.greenhouse.js defaults. */
+export const GREENHOUSE_CHANCE_BASE = 750;
+export const GREENHOUSE_CHANCE_FERTILIZED = 4000;
+export const GREENHOUSE_CHANCE_AQUAPONIC = 8000;
+
 interface DimMods {
   id: string;
   fluid: string;
@@ -68,6 +73,10 @@ function parseOutputList(outputs: string[]): FlowOp[] {
   return flows;
 }
 
+function withChancedOutputs(base: FlowOp[], chance: number): FlowOp[] {
+  return base.map((flow, i) => (i >= 1 && i <= 3 ? { ...flow, chance } : flow));
+}
+
 function dimModsFor(dimension: string | null): {
   fertilizer: string | null;
   canFertilize: boolean;
@@ -88,12 +97,34 @@ export interface GreenhouseCall {
   input: string;
   outputs: string[];
   circuit: number | null;
+  chanceMultiplier?: number;
+}
+
+function scaledChances(multiplier: number): {
+  base: number;
+  fertilized: number;
+  aquaponic: number;
+  hydroBase: number;
+  hydroFertilized: number;
+  hydroAquaponic: number;
+} {
+  const m = Math.max(1, Math.round(multiplier * 100));
+  const clamp = (v: number) => Math.min(10_000, Math.max(1, Math.round(v)));
+  return {
+    base: clamp(7.5 * m),
+    fertilized: clamp(40 * m),
+    aquaponic: clamp(80 * m),
+    hydroBase: clamp(7.5 * m),
+    hydroFertilized: clamp(40 * m * 1.25),
+    hydroAquaponic: clamp(80 * m * 1.25),
+  };
 }
 
 export function expandGreenhouseCall(call: GreenhouseCall, source: string): RecipeOp[] {
   const { dimension, input, outputs, circuit } = call;
   const mods = dimModsFor(dimension);
   const inputFlow = parseItemFlow(input);
+  const chances = scaledChances(call.chanceMultiplier ?? 1);
   const outputFlows = parseOutputList(outputs);
   const baseId = linuxUnfucker(input);
   const cSuffix = circuitSuffix(circuit);
@@ -107,30 +138,38 @@ export function expandGreenhouseCall(call: GreenhouseCall, source: string): Reci
     id: string,
     machineId: string,
     duration: number,
+    chancedOutputs: FlowOp[],
     extraInputs: FlowOp[] = [],
     extraOutputs: FlowOp[] = [],
   ): RecipeOp => ({
     id,
     machineId,
     inputs: [inputFlow, ...extraInputs],
-    outputs: [outputFlows[0], ...outputFlows.slice(1), ...extraOutputs],
+    outputs: [...chancedOutputs, ...extraOutputs],
     durationTicks: duration,
     source,
   });
 
   if (mods.canFertilize) {
     recipes.push(
-      makeRecipe(`tfg:${baseId}${cSuffix}`, 'gtceu:greenhouse', baseDuration),
+      makeRecipe(
+        `tfg:${baseId}${cSuffix}`,
+        'gtceu:greenhouse',
+        baseDuration,
+        withChancedOutputs(outputFlows, chances.base),
+      ),
       makeRecipe(
         `tfg:${baseId}_fertilized${cSuffix}`,
         'gtceu:greenhouse',
         fertDuration,
+        withChancedOutputs(outputFlows, chances.fertilized),
         [{ itemId: mods.fertilizer!, amount: 8 }],
       ),
       makeRecipe(
         `tfg:${baseId}_aquaponic${cSuffix}`,
         'gtceu:greenhouse',
         aquaDuration,
+        withChancedOutputs(outputFlows, chances.aquaponic),
         [],
         [{ itemId: 'tfg:flora_pellets', amount: 1 }],
       ),
@@ -138,28 +177,37 @@ export function expandGreenhouseCall(call: GreenhouseCall, source: string): Reci
         `tfg:${baseId}${cSuffix}@hydroponics`,
         'gtceu:hydroponics_facility',
         baseDuration,
+        withChancedOutputs(outputFlows, chances.hydroBase),
       ),
       makeRecipe(
         `tfg:${baseId}_fertilized${cSuffix}@hydroponics`,
         'gtceu:hydroponics_facility',
         fertDuration,
+        withChancedOutputs(outputFlows, chances.hydroFertilized),
         [{ itemId: mods.fertilizer!, amount: 8 }],
       ),
       makeRecipe(
         `tfg:${baseId}_aquaponic${cSuffix}@hydroponics`,
         'gtceu:hydroponics_facility',
         aquaDuration,
+        withChancedOutputs(outputFlows, chances.hydroAquaponic),
         [],
         [{ itemId: 'tfg:flora_pellets', amount: 1 }],
       ),
     );
   } else {
     recipes.push(
-      makeRecipe(`tfg:${baseId}${cSuffix}`, 'gtceu:greenhouse', fertDuration),
+      makeRecipe(
+        `tfg:${baseId}${cSuffix}`,
+        'gtceu:greenhouse',
+        fertDuration,
+        withChancedOutputs(outputFlows, chances.fertilized),
+      ),
       makeRecipe(
         `tfg:${baseId}${cSuffix}@hydroponics`,
         'gtceu:hydroponics_facility',
         fertDuration,
+        withChancedOutputs(outputFlows, chances.hydroFertilized),
       ),
     );
   }

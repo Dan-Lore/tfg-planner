@@ -59,6 +59,11 @@ export function buildReportFromPack(
       items: pack.items.length,
       fluids: pack.fluids.length,
       recipesWithEnergy: pack.recipes.filter((r) => r.energy != null).length,
+      recipesWithChance: pack.recipes.filter((r) =>
+        [...r.inputs, ...r.outputs].some(
+          (f) => f.chance !== undefined && f.chance > 0 && f.chance < 10_000,
+        ),
+      ).length,
       goldenMatched: extra.goldenMatched,
       goldenMismatched: extra.goldenMismatched,
       goldenMissing: extra.goldenMissing,

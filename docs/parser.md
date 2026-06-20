@@ -77,7 +77,7 @@ npm run build-pack -- --tag 0.12.8 --strict-snapshot
 См. [specification.md](specification.md). Кратко:
 
 - `Recipe.energy` — только если есть в snapshot; иначе поле **отсутствует**
-- Chanced I/O — не в pack (AGENTS.md)
+- Chanced I/O — optional `chance` на потоке (вес GT, 10000 = 100%); в UI — `80% × 16× …`, скорость ≈ `amount/duration × chance/10000` с префиксом `~`
 
 ## Структура `tools/parser/`
 

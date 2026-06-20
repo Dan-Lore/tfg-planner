@@ -54,7 +54,7 @@ describe('KubeJS extractors', () => {
     const reformed = result.recipes.find((r) => r.id === 'tfg:reformed_aromatic_feedstock');
     expect(reformed?.inputs).toEqual(
       expect.arrayContaining([
-        { itemId: 'gtceu:tiny_rhenium_dust', amount: 1 },
+        { itemId: 'gtceu:tiny_rhenium_dust', amount: 1, chance: 1000 },
         { fluidId: 'tfg:aromatic_feedstock', amount: 2000 },
       ]),
     );
@@ -63,7 +63,7 @@ describe('KubeJS extractors', () => {
       expect.arrayContaining([
         { fluidId: 'gtceu:carbon_dioxide', amount: 500 },
         { fluidId: 'gtceu:hydrogen', amount: 500 },
-        { itemId: 'gtceu:tiny_rhenium_dust', amount: 1 },
+        { itemId: 'gtceu:tiny_rhenium_dust', amount: 1, chance: 1000 },
       ]),
     );
   });
@@ -88,6 +88,7 @@ describe('KubeJS extractors', () => {
     );
     expect(bamboo).toBeDefined();
     expect(bamboo?.durationTicks).toBe(12000);
+    expect(bamboo?.outputs[1]?.chance).toBe(750);
     expect(bamboo?.inputs).toEqual(
       expect.arrayContaining([{ itemId: 'minecraft:bamboo', amount: 8 }]),
     );

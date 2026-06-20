@@ -4,6 +4,7 @@ import { ceilMachineCount, idealMachineCount } from './rounding';
 import { buildTagIndex } from '@/lib/tag-index';
 import { recipeInputMatchesProduct } from '@/lib/flow-match';
 import { normalizePortId, parsePortId } from '@/canvas/ports';
+import { chanceRateMultiplier } from '@/lib/flow-chance';
 
 export const TICKS_PER_SECOND = 20;
 
@@ -82,7 +83,8 @@ function recipeDurationSec(recipe: Recipe): Rational {
 function perMachineOutputRateAtIndex(recipe: Recipe, index: number): Rational {
   const output = recipe.outputs[index];
   if (!output) return R.zero;
-  return R.from(output.amount).div(recipeDurationSec(recipe));
+  const base = R.from(output.amount).div(recipeDurationSec(recipe));
+  return base.mul(chanceRateMultiplier(output.chance));
 }
 
 function perMachineOutputRate(

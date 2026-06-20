@@ -36,6 +36,21 @@ describe('recipe pipeline', () => {
     expect(store.get('tfg:uranium_238_separation')).toBeDefined();
   });
 
+  it('sanitizeFlows preserves chance on normalized flows', () => {
+    const recipes: RecipeOp[] = [
+      {
+        id: 'test:chanced',
+        machineId: 'gtceu:greenhouse',
+        inputs: [],
+        outputs: [{ itemId: '2x tfc:wood/log/pine', amount: 1, chance: 750 }],
+        durationTicks: 20,
+        source: 'test',
+      },
+    ];
+    const [fixed] = sanitizeAllFlows(recipes);
+    expect(fixed?.outputs).toEqual([{ itemId: 'tfc:wood/log/pine', amount: 2, chance: 750 }]);
+  });
+
   it('sanitizeFlows normalizes malformed itemId prefixes', () => {
     const recipes: RecipeOp[] = [
       {

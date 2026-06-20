@@ -4,7 +4,11 @@ import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { PackData } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
-import { normalizePortId, parsePortId, productKey } from '@/canvas/ports';
+import { normalizePortId, parsePortId, portFlow, productKey } from '@/canvas/ports';
+import {
+  formatFlowRateLabel,
+  isChancedFlow,
+} from '@/lib/flow-chance';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 import {
   MACHINE_NODE_WIDTH,
@@ -142,6 +146,8 @@ function buildLabelWinners(
 function applyLabelDedup(
   data: Record<string, FlowEdgeData>,
   edges: TfgpEdge[],
+  nodes: TfgpNode[],
+  pack: PackData,
   targetLabelEdge: Map<string, string>,
   sourceLabelEdge: Map<string, string>,
   result: FlowResult,
@@ -173,9 +179,13 @@ function applyLabelDedup(
     const key = productKey(edge);
     const total = result.nodeOutputRates[edge.source]?.[key];
     const rate = portRate && portRate.compare(R.zero) > 0 ? portRate : total;
-    if (rate && rate.compare(R.zero) > 0) {
-      entry.source = `${formatRate(rate)}/s`;
-    }
+    if (!rate || rate.compare(R.zero) <= 0) continue;
+    const node = nodes.find((n) => n.id === edge.source);
+    const recipe = node
+      ? pack.recipes.find((r) => r.id === node.recipeId)
+      : undefined;
+    const flow = portFlow(recipe, edge.sourcePort);
+    entry.source = formatFlowRateLabel(rate, flow ? isChancedFlow(flow) : false);
   }
 }
 
@@ -198,9 +208,16 @@ export function buildEdgeFlowData(
       edgeSrc && edgeSrc.compare(R.zero) > 0 ? edgeSrc : totalSrc;
     if (!srcRate && !tgtRate) continue;
 
+    const node = nodes.find((n) => n.id === edge.source);
+    const recipe = node
+      ? pack.recipes.find((r) => r.id === node.recipeId)
+      : undefined;
+    const sourceFlow = portFlow(recipe, edge.sourcePort);
+    const srcApprox = sourceFlow ? isChancedFlow(sourceFlow) : false;
+
     const srcText =
       srcRate && srcRate.compare(R.zero) > 0
-        ? `${formatRate(srcRate)}/s`
+        ? formatFlowRateLabel(srcRate, srcApprox)
         : undefined;
     const tgtText =
       tgtRate && tgtRate.compare(R.zero) > 0
@@ -219,7 +236,15 @@ export function buildEdgeFlowData(
     pack,
     data,
   );
-  applyLabelDedup(data, edges, targetLabelEdge, sourceLabelEdge, result);
+  applyLabelDedup(
+    data,
+    edges,
+    nodes,
+    pack,
+    targetLabelEdge,
+    sourceLabelEdge,
+    result,
+  );
 
   return data;
 }

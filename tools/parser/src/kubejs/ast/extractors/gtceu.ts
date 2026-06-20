@@ -4,6 +4,16 @@ import type { NodePath } from '@babel/traverse';
 import type { FlowOp, EnergyOp } from '../../../types.js';
 import { evalNumeric, stringLiteral } from '../expr.js';
 import { fluidStringToFlow, itemStringToFlow } from '../flow-parse.js';
+
+const GT_CHANCE_BASE = 10_000;
+
+function withGtChance(flows: FlowOp[], args: Node[]): FlowOp[] {
+  const chance = args[1] ? evalNumeric(args[1]) : undefined;
+  if (chance === undefined || chance <= 0 || chance >= GT_CHANCE_BASE) {
+    return flows;
+  }
+  return flows.map((flow) => ({ ...flow, chance }));
+}
 function parseItemArg(node: Node): FlowOp[] {
   const s = stringLiteral(node);
   if (s) return [itemStringToFlow(s)];
@@ -165,16 +175,16 @@ export function extractGtceuChain(start: CallExpression): GtceuRecipeDraft | nul
         break;
       }
       case 'chancedOutput':
-        for (const a of args.slice(0, 1)) draft.outputs.push(...parseItemArg(a));
+        if (args[0]) draft.outputs.push(...withGtChance(parseItemArg(args[0]), args));
         break;
       case 'chancedInput':
-        for (const a of args.slice(0, 1)) draft.inputs.push(...parseItemArg(a));
+        if (args[0]) draft.inputs.push(...withGtChance(parseItemArg(args[0]), args));
         break;
       case 'chancedFluidInput':
-        for (const a of args.slice(0, 1)) draft.inputs.push(...parseFluidArg(a));
+        if (args[0]) draft.inputs.push(...withGtChance(parseFluidArg(args[0]), args));
         break;
       case 'chancedFluidOutput':
-        for (const a of args.slice(0, 1)) draft.outputs.push(...parseFluidArg(a));
+        if (args[0]) draft.outputs.push(...withGtChance(parseFluidArg(args[0]), args));
         break;
       case 'EUt': {
         const e = parseEnergyArg(args[0]);

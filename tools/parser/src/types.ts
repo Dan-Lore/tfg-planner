@@ -4,6 +4,8 @@ export interface FlowOp {
   itemId?: string;
   fluidId?: string;
   amount: number;
+  /** GT chanced I/O weight (10000 = guaranteed). */
+  chance?: number;
 }
 
 export interface EnergyOp {
@@ -98,6 +100,7 @@ export interface BuildReport {
     items: number;
     fluids: number;
     recipesWithEnergy: number;
+    recipesWithChance?: number;
     goldenMatched?: number;
     goldenMismatched?: number;
     goldenMissing?: number;

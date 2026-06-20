@@ -7,6 +7,8 @@ export interface Flow {
   itemId?: string;
   fluidId?: string;
   amount: number;
+  /** GT chanced I/O weight; 10000 = guaranteed. Omitted when 100%. */
+  chance?: number;
 }
 
 export interface EnergyCost {

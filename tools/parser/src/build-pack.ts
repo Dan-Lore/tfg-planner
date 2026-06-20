@@ -12,6 +12,7 @@ import { loadTfgExcludes } from './datapack/excludes.js';
 import { validatePackSchema, buildReportFromPack } from './validate/schema.js';
 import { runSmokeChains } from './validate/smoke-chains.js';
 import { loadGolden, diffAgainstGolden } from './validate/golden-diff.js';
+import { enrichRecipeChances } from './pipeline/enrich-chances.js';
 import { loadRecipeSnapshot } from './snapshot/load-recipe-snapshot.js';
 import { defaultSnapshotDir } from './snapshot/manifest.js';
 import type { BuildReport, ParseWarning } from './types.js';
@@ -72,6 +73,14 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   warnings.push(...snapshotLoad.warnings);
 
   let recipes = snapshotLoad.recipes.filter((r) => !excluded.has(r.id));
+
+  const chanceEnrich = enrichRecipeChances(recipes, modpackRoot);
+  recipes = chanceEnrich.recipes;
+  warnings.push({
+    file: 'kubejs-chances',
+    reason: `Enriched ${chanceEnrich.stats.enrichedRecipes} recipes (${chanceEnrich.stats.enrichedFlows} flows) from ${chanceEnrich.stats.kubejsRecipesWithChance} KubeJS recipes with chance data`,
+  });
+
   recipes = sanitizeAllFlows(recipes);
 
   const { bundle: langBundle, stats: langStats } = await buildLangBundle(
@@ -154,6 +163,11 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
       goldenMatched,
       goldenMismatched,
       goldenMissing,
+      recipesWithChance: pack.recipes.filter((r) =>
+        [...r.inputs, ...r.outputs].some(
+          (f) => f.chance !== undefined && f.chance > 0 && f.chance < 10_000,
+        ),
+      ).length,
     },
     warnings,
     [],

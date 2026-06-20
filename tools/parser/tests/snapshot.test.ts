@@ -57,6 +57,35 @@ describe('recipeFromSnapshotJson', () => {
     );
     expect(recipe?.energy?.euPerTick).toBe(96);
   });
+
+  it('parses chanced GT JSON outputs with chance weight', () => {
+    const { recipe } = recipeFromSnapshotJson(
+      'gtceu:greenhouse/test',
+      {
+        type: 'gtceu:greenhouse',
+        duration: 12000,
+        inputs: {
+          item: [{ content: { item: 'tfc:wood/sapling/pine', amount: 8 } }],
+        },
+        outputs: {
+          item: [
+            { content: { item: 'tfc:wood/log/pine', amount: 64 } },
+            { content: { item: 'tfc:wood/log/pine', amount: 16 }, chance: 8000 },
+          ],
+        },
+      },
+      'fixture',
+    );
+    expect(recipe?.outputs[0]).toEqual({
+      itemId: 'tfc:wood/log/pine',
+      amount: 64,
+    });
+    expect(recipe?.outputs[1]).toEqual({
+      itemId: 'tfc:wood/log/pine',
+      amount: 16,
+      chance: 8000,
+    });
+  });
 });
 
 describe('loadRecipeSnapshot', () => {
