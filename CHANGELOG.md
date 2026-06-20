@@ -7,6 +7,7 @@
 
 ### Fixed
 
+- CI/Pages: edge-routing tests no longer depend on gitignored `Untitled*.tfgp`; committed fixture `benzene-distillation-lcr-gap.tfgp` + consolidated integration tests.
 - **build-pack:** recipe output/input `chance` weights restored — KubeJS enrichment pass after snapshot load, greenhouse expander chanced outputs, `sanitizeFlow` preserves `chance`.
 - **Холст:** подвисание при drag — селективная перерисовка рёбер (`FlowEdge` + `memo`), изоляция drag в `EditorCanvas`; статичная метка рецепта у машин с большим числом рецептов (теплица) во время drag.
 - CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
