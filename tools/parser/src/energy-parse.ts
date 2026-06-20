@@ -101,9 +101,10 @@ export function inferEnergyFromFlatEUtDetailed(
   }
 
   if (kind === 'multiblock') {
-    if (options.nativeTier) {
+    const nativeTier = options?.nativeTier;
+    if (nativeTier) {
       const preferred = cleanMatches.find(
-        (m) => m.minVoltageTier === options.nativeTier,
+        (m) => m.minVoltageTier === nativeTier,
       );
       if (preferred) return { stack: preferred, ambiguous: false };
     }

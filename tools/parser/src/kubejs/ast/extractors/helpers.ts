@@ -49,7 +49,7 @@ export function findMixerHelperCalls(ast: File, source: string): RecipeOp[] {
       };
 
       if (eu !== undefined) {
-        const energy = inferEnergyFromFlatEUt(eu);
+        const energy = inferEnergyFromFlatEUt(eu, { kind: 'singleblock' });
         if (energy) recipe.energy = energy;
       }
 

@@ -37,7 +37,7 @@ describe('energy-parse', () => {
   });
 
   it('marks ambiguous when LV fallback is required', () => {
-    const result = inferEnergyFromFlatEUtDetailed(999_999, { kind: 'singleblock' });
+    const result = inferEnergyFromFlatEUtDetailed(3_000_000_000, { kind: 'singleblock' });
     expect(result?.ambiguous).toBe(true);
     expect(result?.stack.minVoltageTier).toBe('LV');
   });
