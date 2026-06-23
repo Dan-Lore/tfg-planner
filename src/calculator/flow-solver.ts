@@ -44,10 +44,16 @@ export interface FlowResult {
   nodeOutputRates: Record<string, Record<string, Rational>>;
   /** Output rate per physical port (`out_0`, `out_1`, …). */
   nodePortOutputRates: Record<string, Record<string, Rational>>;
+  /** Theoretical input demand per product key (port labels). */
   nodeInputRates: Record<string, Record<string, Rational>>;
+  /** Shortfall per input port (`in_0`, …) after converged flow. */
+  nodePortDeficit: Record<string, Record<string, Rational>>;
   nodeSurplus: Record<string, Record<string, Rational>>;
   nodeMachineCounts: Record<string, number>;
 }
+
+const CONVERGENCE_EPS = 1e-9;
+const MAX_FLOW_ITERATIONS = 50;
 
 export interface SolverInput {
   nodes: SchemeNode[];
@@ -127,6 +133,27 @@ function sumPortRatesByProduct(
   return totals;
 }
 
+function resolveTargetInputPort(
+  edge: SchemeEdge,
+  recipe: Recipe,
+  tags: ReturnType<typeof buildTagIndex>,
+): string | null {
+  if (edge.targetPort) {
+    const portId = normalizePortId(edge.targetPort);
+    const parsed = parsePortId(portId);
+    if (parsed?.kind === 'in') return portId;
+  }
+  const key = edge.itemId ?? edge.fluidId ?? '';
+  if (!key) return null;
+  for (let i = 0; i < recipe.inputs.length; i++) {
+    const inKey = productKey(recipe.inputs[i]!);
+    if (inKey === key || recipeInputMatchesProduct(inKey, key, tags)) {
+      return `in_${i}`;
+    }
+  }
+  return null;
+}
+
 function resolveSourceOutputPort(
   edge: SchemeEdge,
   recipe: Recipe,
@@ -175,17 +202,368 @@ function assignEdgeFlowsFromPorts(
   }
 }
 
-function inputDemandRate(
+function collectInflowsByPort(
+  nodeId: string,
   recipe: Recipe,
-  inputKey: string,
-  outputRate: Rational,
-  primaryOutKey: string,
-): Rational {
-  const inp = recipe.inputs.find((i) => productKey(i) === inputKey);
-  const primaryOut = recipe.outputs.find((o) => productKey(o) === primaryOutKey);
-  if (!inp || !primaryOut) return R.zero;
-  return outputRate.mul(R.from(inp.amount)).div(R.from(primaryOut.amount));
+  nodeIncoming: SchemeEdge[],
+  edgeFlows: Record<string, Rational>,
+  tags: ReturnType<typeof buildTagIndex>,
+): Record<string, Rational> {
+  const inflows: Record<string, Rational> = {};
+  for (let i = 0; i < recipe.inputs.length; i++) {
+    inflows[`in_${i}`] = R.zero;
+  }
+  for (const edge of nodeIncoming) {
+    const portId = resolveTargetInputPort(edge, recipe, tags);
+    if (!portId) continue;
+    const flow = edgeFlows[edge.id] ?? R.zero;
+    inflows[portId] = (inflows[portId] ?? R.zero).add(flow);
+  }
+  return inflows;
 }
+
+function computeEffectivePortRates(
+  recipe: Recipe,
+  theoreticalPortRates: Record<string, Rational>,
+  inflowsByPort: Record<string, Rational>,
+  connectedInPorts: Set<string>,
+): Record<string, Rational> {
+  const effective: Record<string, Rational> = {};
+  const theoreticalPrimary = theoreticalPortRates['out_0'] ?? R.zero;
+
+  if (recipe.inputs.length === 0) {
+    for (const [portId, rate] of Object.entries(theoreticalPortRates)) {
+      effective[portId] = rate;
+    }
+    return effective;
+  }
+
+  if (theoreticalPrimary.compare(R.zero) <= 0) {
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      effective[`out_${i}`] = R.zero;
+    }
+    return effective;
+  }
+
+  const primaryOut = recipe.outputs[0]!;
+  let effectivePrimary = theoreticalPrimary;
+
+  for (let i = 0; i < recipe.inputs.length; i++) {
+    const portId = `in_${i}`;
+    const inp = recipe.inputs[i]!;
+    const demandAtTheoretical = portInputDemandRate(recipe, i, theoreticalPrimary);
+    const connected = connectedInPorts.has(portId);
+    const inflow = connected
+      ? (inflowsByPort[portId] ?? R.zero)
+      : demandAtTheoretical;
+    const maxPrimary = inflow
+      .mul(R.from(primaryOut.amount))
+      .div(R.from(inp.amount));
+    if (maxPrimary.compare(effectivePrimary) < 0) {
+      effectivePrimary = maxPrimary;
+    }
+  }
+
+  if (effectivePrimary.compare(R.zero) < 0) {
+    effectivePrimary = R.zero;
+  }
+
+  const scale =
+    theoreticalPrimary.compare(R.zero) > 0
+      ? effectivePrimary.div(theoreticalPrimary)
+      : R.zero;
+
+  for (let i = 0; i < recipe.outputs.length; i++) {
+    const portId = `out_${i}`;
+    const theoretical = theoreticalPortRates[portId] ?? R.zero;
+    effective[portId] = theoretical.mul(scale);
+  }
+
+  return effective;
+}
+
+function assignOutgoingFromEffectiveRates(
+  nodeId: string,
+  nodeEdges: SchemeEdge[],
+  allEdges: SchemeEdge[],
+  recipe: Recipe,
+  effectivePortRates: Record<string, Rational>,
+  edgeFlows: Record<string, Rational>,
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  nodeById: Map<string, SchemeNode>,
+  recipes: Map<string, Recipe>,
+  tags: ReturnType<typeof buildTagIndex>,
+): number {
+  let maxDelta = 0;
+  const edgeShares = new Map<string, Rational>();
+  const byPort = new Map<string, SchemeEdge[]>();
+  for (const edge of nodeEdges) {
+    const portId = resolveSourceOutputPort(edge, recipe);
+    if (!portId) continue;
+    if (!byPort.has(portId)) byPort.set(portId, []);
+    byPort.get(portId)!.push(edge);
+  }
+  for (const [portId, portEdges] of byPort) {
+    const portRate = effectivePortRates[portId] ?? R.zero;
+    const shareBase =
+      portEdges.length > 0 ? portRate.div(R.from(portEdges.length)) : R.zero;
+    for (const edge of portEdges) {
+      edgeShares.set(edge.id, shareBase);
+    }
+  }
+
+  const byTargetPort = new Map<string, SchemeEdge[]>();
+  for (const edge of nodeEdges) {
+    const targetNode = nodeById.get(edge.target);
+    const targetRecipe = targetNode ? recipes.get(targetNode.recipeId) : undefined;
+    if (!targetNode || !targetRecipe) continue;
+    const targetPort = resolveTargetInputPort(edge, targetRecipe, tags);
+    if (!targetPort) continue;
+    const key = `${edge.target}\0${targetPort}`;
+    if (!byTargetPort.has(key)) byTargetPort.set(key, []);
+    byTargetPort.get(key)!.push(edge);
+  }
+
+  for (const [key, groupEdges] of byTargetPort) {
+    const sep = key.indexOf('\0');
+    const targetId = key.slice(0, sep);
+    const targetPort = key.slice(sep + 1);
+    const targetNode = nodeById.get(targetId);
+    const targetRecipe = targetNode ? recipes.get(targetNode.recipeId) : undefined;
+    if (!targetNode || !targetRecipe) continue;
+
+    const externalEdges = groupEdges.filter((edge) => edge.source !== edge.target);
+    if (externalEdges.length === 0) continue;
+
+    const portIndex = Number.parseInt(targetPort.slice(3), 10);
+    const targetTheoretical = nodePortOutputRates[targetId]?.['out_0'] ?? R.zero;
+    const targetDemand = portInputDemandRate(
+      targetRecipe,
+      portIndex,
+      targetTheoretical,
+    );
+
+    let totalShare = R.zero;
+    for (const edge of externalEdges) {
+      totalShare = totalShare.add(edgeShares.get(edge.id) ?? R.zero);
+    }
+
+    let otherFlow = R.zero;
+    for (const edge of allEdges) {
+      if (edge.target !== targetId) continue;
+      const edgeTargetPort = resolveTargetInputPort(
+        edge,
+        targetRecipe,
+        tags,
+      );
+      if (edgeTargetPort !== targetPort || edge.source === nodeId) continue;
+      otherFlow = otherFlow.add(edgeFlows[edge.id] ?? R.zero);
+    }
+
+    let remainingDemand = targetDemand.sub(otherFlow);
+    if (remainingDemand.compare(R.zero) < 0) {
+      remainingDemand = R.zero;
+    }
+
+    if (
+      totalShare.compare(remainingDemand) > 0 &&
+      totalShare.compare(R.zero) > 0
+    ) {
+      const scale = remainingDemand.div(totalShare);
+      for (const edge of externalEdges) {
+        const prev = edgeShares.get(edge.id) ?? R.zero;
+        edgeShares.set(edge.id, prev.mul(scale));
+      }
+    }
+  }
+
+  for (const [edgeId, share] of edgeShares) {
+    const prev = edgeFlows[edgeId] ?? R.zero;
+    const delta = Math.abs(share.sub(prev).toNumber());
+    if (delta > maxDelta) maxDelta = delta;
+    edgeFlows[edgeId] = share;
+  }
+
+  return maxDelta;
+}
+
+function computeConvergedFlows(
+  nodes: SchemeNode[],
+  edges: SchemeEdge[],
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  incoming: Map<string, SchemeEdge[]>,
+  outgoing: Map<string, SchemeEdge[]>,
+  nodeById: Map<string, SchemeNode>,
+  recipes: Map<string, Recipe>,
+  tags: ReturnType<typeof buildTagIndex>,
+  nodeOrder: string[],
+  connectedInPortsByNode: Record<string, Set<string>>,
+): Record<string, Rational> {
+  const edgeFlows: Record<string, Rational> = {};
+  for (const edge of edges) {
+    edgeFlows[edge.id] = R.zero;
+  }
+
+  for (const nodeId of nodeOrder) {
+    const node = nodeById.get(nodeId);
+    const recipe = node ? recipes.get(node.recipeId) : undefined;
+    if (!node || !recipe) continue;
+    const theoretical = nodePortOutputRates[nodeId] ?? {};
+    assignOutgoingFromEffectiveRates(
+      nodeId,
+      outgoing.get(nodeId) ?? [],
+      edges,
+      recipe,
+      theoretical,
+      edgeFlows,
+      nodePortOutputRates,
+      nodeById,
+      recipes,
+      tags,
+    );
+  }
+
+  for (let iter = 0; iter < MAX_FLOW_ITERATIONS; iter++) {
+    let maxDelta = 0;
+    for (const nodeId of nodeOrder) {
+      const node = nodeById.get(nodeId);
+      const recipe = node ? recipes.get(node.recipeId) : undefined;
+      if (!node || !recipe) continue;
+
+      const theoretical = nodePortOutputRates[nodeId] ?? {};
+      const inflows = collectInflowsByPort(
+        nodeId,
+        recipe,
+        incoming.get(nodeId) ?? [],
+        edgeFlows,
+        tags,
+      );
+      const effective = computeEffectivePortRates(
+        recipe,
+        theoretical,
+        inflows,
+        connectedInPortsByNode[nodeId] ?? new Set(),
+      );
+      const delta = assignOutgoingFromEffectiveRates(
+        nodeId,
+        outgoing.get(nodeId) ?? [],
+        edges,
+        recipe,
+        effective,
+        edgeFlows,
+        nodePortOutputRates,
+        nodeById,
+        recipes,
+        tags,
+      );
+      if (delta > maxDelta) maxDelta = delta;
+    }
+    if (maxDelta < CONVERGENCE_EPS) break;
+  }
+
+  return edgeFlows;
+}
+
+function computeNodePortDeficit(
+  nodes: SchemeNode[],
+  incoming: Map<string, SchemeEdge[]>,
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  effectivePortRatesByNode: Record<string, Record<string, Rational>>,
+  inflowsByNode: Record<string, Record<string, Rational>>,
+  connectedInPortsByNode: Record<string, Set<string>>,
+  recipes: Map<string, Recipe>,
+): Record<string, Record<string, Rational>> {
+  const nodePortDeficit: Record<string, Record<string, Rational>> = {};
+
+  for (const node of nodes) {
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe) continue;
+    nodePortDeficit[node.id] = {};
+
+    const theoreticalPrimary = nodePortOutputRates[node.id]?.['out_0'] ?? R.zero;
+    const effectivePrimary = effectivePortRatesByNode[node.id]?.['out_0'] ?? R.zero;
+
+    for (let i = 0; i < recipe.inputs.length; i++) {
+      const portId = `in_${i}`;
+      const connected = connectedInPortsByNode[node.id]?.has(portId) ?? false;
+      const demand = connected
+        ? portInputDemandRate(recipe, i, theoreticalPrimary)
+        : portInputDemandRate(
+            recipe,
+            i,
+            effectivePrimary.compare(R.zero) > 0
+              ? effectivePrimary
+              : theoreticalPrimary,
+          );
+      if (demand.compare(R.zero) <= 0) continue;
+
+      const inflow = connected
+        ? (inflowsByNode[node.id]?.[portId] ?? R.zero)
+        : R.zero;
+      const deficit = connected ? demand.sub(inflow) : demand;
+
+      if (deficit.compare(R.zero) > 0) {
+        nodePortDeficit[node.id][portId] = deficit;
+      }
+    }
+  }
+
+  return nodePortDeficit;
+}
+
+function computeSurplusFromEffective(
+  nodes: SchemeNode[],
+  outgoing: Map<string, SchemeEdge[]>,
+  effectivePortRatesByNode: Record<string, Record<string, Rational>>,
+  edgeFlows: Record<string, Rational>,
+  recipes: Map<string, Recipe>,
+): Record<string, Record<string, Rational>> {
+  const nodeSurplus: Record<string, Record<string, Rational>> = {};
+
+  for (const node of nodes) {
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe) continue;
+    nodeSurplus[node.id] = {};
+
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      const k = productKey(recipe.outputs[i]!);
+      const portId = `out_${i}`;
+      const produced = effectivePortRatesByNode[node.id]?.[portId] ?? R.zero;
+      let sent = R.zero;
+      for (const edge of outgoing.get(node.id) ?? []) {
+        const edgePort = resolveSourceOutputPort(edge, recipe);
+        if (edgePort !== portId) continue;
+        sent = sent.add(edgeFlows[edge.id] ?? R.zero);
+      }
+      const surplus = produced.sub(sent);
+      if (surplus.compare(R.zero) > 0) {
+        nodeSurplus[node.id][k] = (nodeSurplus[node.id][k] ?? R.zero).add(surplus);
+      }
+    }
+  }
+
+  return nodeSurplus;
+}
+
+function buildConnectedInPorts(
+  nodes: SchemeNode[],
+  incoming: Map<string, SchemeEdge[]>,
+  recipes: Map<string, Recipe>,
+  tags: ReturnType<typeof buildTagIndex>,
+): Record<string, Set<string>> {
+  const connected: Record<string, Set<string>> = {};
+  for (const node of nodes) {
+    connected[node.id] = new Set();
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe) continue;
+    for (const edge of incoming.get(node.id) ?? []) {
+      const portId = resolveTargetInputPort(edge, recipe, tags);
+      if (portId) connected[node.id]!.add(portId);
+    }
+  }
+  return connected;
+}
+
 
 /** Demand at a specific input port from primary output rate (per-port, not aggregated by item). */
 export function portInputDemandRate(
@@ -413,15 +791,71 @@ export function solveFlows(input: SolverInput): FlowResult {
     edgeFlows,
   );
 
+  const connectedInPortsByNode = buildConnectedInPorts(
+    input.nodes,
+    incoming,
+    recipes,
+    tags,
+  );
+
+  const convergedEdgeFlows = computeConvergedFlows(
+    input.nodes,
+    input.edges,
+    nodePortOutputRates,
+    incoming,
+    outgoing,
+    nodeById,
+    recipes,
+    tags,
+    order,
+    connectedInPortsByNode,
+  );
+
+  const effectivePortRatesByNode: Record<string, Record<string, Rational>> = {};
+  const inflowsByNode: Record<string, Record<string, Rational>> = {};
+  for (const node of input.nodes) {
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe) continue;
+    const theoretical = nodePortOutputRates[node.id] ?? {};
+    const inflows = collectInflowsByPort(
+      node.id,
+      recipe,
+      incoming.get(node.id) ?? [],
+      convergedEdgeFlows,
+      tags,
+    );
+    inflowsByNode[node.id] = inflows;
+    effectivePortRatesByNode[node.id] = computeEffectivePortRates(
+      recipe,
+      theoretical,
+      inflows,
+      connectedInPortsByNode[node.id] ?? new Set(),
+    );
+  }
+
   const edgeTargetFlows: Record<string, Rational> = {};
   const nodeInputRates: Record<string, Record<string, Rational>> = {};
-  const nodeSurplus: Record<string, Record<string, Rational>> = {};
+  const nodePortDeficit = computeNodePortDeficit(
+    input.nodes,
+    incoming,
+    nodePortOutputRates,
+    effectivePortRatesByNode,
+    inflowsByNode,
+    connectedInPortsByNode,
+    recipes,
+  );
+  const nodeSurplus = computeSurplusFromEffective(
+    input.nodes,
+    outgoing,
+    effectivePortRatesByNode,
+    convergedEdgeFlows,
+    recipes,
+  );
 
   for (const node of input.nodes) {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     nodeInputRates[node.id] = {};
-    nodeSurplus[node.id] = {};
 
     const primaryOut = recipe.outputs[0];
     const primaryKey = primaryOut ? productKey(primaryOut) : '';
@@ -439,52 +873,16 @@ export function solveFlows(input: SolverInput): FlowResult {
   }
 
   for (const edge of input.edges) {
-    const key = edge.itemId ?? edge.fluidId ?? '';
-    const targetNode = nodeById.get(edge.target);
-    const targetRecipe = targetNode ? recipes.get(targetNode.recipeId) : undefined;
-    const sourceRate = edgeFlows[edge.id] ?? R.zero;
-
-    if (targetRecipe && key) {
-      const primaryOut = targetRecipe.outputs[0];
-      const primaryKey = primaryOut ? productKey(primaryOut) : '';
-      const targetOutRate = primaryOut
-        ? (nodePortOutputRates[edge.target]?.['out_0'] ?? R.zero)
-        : R.zero;
-      edgeTargetFlows[edge.id] = primaryKey
-        ? inputDemandRate(targetRecipe, key, targetOutRate, primaryKey)
-        : sourceRate;
-    } else {
-      edgeTargetFlows[edge.id] = sourceRate;
-    }
-  }
-
-  for (const node of input.nodes) {
-    const recipe = recipes.get(node.recipeId);
-    if (!recipe) continue;
-
-    for (let i = 0; i < recipe.outputs.length; i++) {
-      const k = productKey(recipe.outputs[i]!);
-      const portId = `out_${i}`;
-      const produced = nodePortOutputRates[node.id]?.[portId] ?? R.zero;
-      let sent = R.zero;
-      for (const edge of outgoing.get(node.id) ?? []) {
-        const edgePort = resolveSourceOutputPort(edge, recipe);
-        if (edgePort !== portId) continue;
-        sent = sent.add(edgeFlows[edge.id] ?? R.zero);
-      }
-      const surplus = produced.sub(sent);
-      if (surplus.compare(R.zero) > 0) {
-        nodeSurplus[node.id][k] = (nodeSurplus[node.id][k] ?? R.zero).add(surplus);
-      }
-    }
+    edgeTargetFlows[edge.id] = convergedEdgeFlows[edge.id] ?? R.zero;
   }
 
   return {
-    edgeFlows,
+    edgeFlows: convergedEdgeFlows,
     edgeTargetFlows,
     nodeOutputRates,
     nodePortOutputRates,
     nodeInputRates,
+    nodePortDeficit,
     nodeSurplus,
     nodeMachineCounts,
   };

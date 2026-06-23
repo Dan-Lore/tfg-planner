@@ -80,11 +80,11 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 
 Обратный проход пишет demand upstream в ключ **первого** выхода рецепта. Цепочки с non-primary output считаются неверно.
 
-### 12. `nodeInputRates` — теоретический спрос, не сходимость по графу
+### 12. ~~`nodeInputRates` — теоретический спрос, не сходимость по графу~~ **Исправлено (2026-06-17)**
 
-**Файл:** `src/calculator/flow-solver.ts`, `src/canvas/flow-display.ts`
+**Файлы:** `src/calculator/flow-solver.ts`, `src/canvas/flow-display.ts`
 
-Target-подписи на рёбрах берут aggregate `nodeInputRates[target][product]`, а не per-edge flow. При fan-in одного продукта подпись показывает **суммарный** спрос узла, не поток конкретного ребра.
+Подписи на рёбрах берут `edgeFlows` (сходящиеся потоки). `nodeInputRates` остаётся для теоретических подписей портов узла.
 
 ---
 
@@ -108,9 +108,9 @@ Target-подписи на рёбрах берут aggregate `nodeInputRates[tar
 | # | Недостаток | Где |
 |---|-----------|-----|
 | 21 | Циклы в графе → произвольный порядок узлов | `topologicalOrder` → fallback |
-| 22 | `buildNodeBalanceLines` показывает deficit только на **незакрытых** входах; нехватка от upstream на подключённых портах не видна | `src/canvas/flow-display.ts` |
+| 22 | ~~`buildNodeBalanceLines` показывает deficit только на **незакрытых** входах~~ **Исправлено (2026-06-17):** deficit через `nodePortDeficit` (подключённые и нет) | `src/canvas/flow-display.ts` |
 | 23 | Target rate prompt только для `outputs[0]` | `src/pages/EditorPage.tsx` |
-| 24 | Edge flows делятся поровну между рёбрами одного порта, без учёта реального спроса downstream | `src/calculator/flow-solver.ts` |
+| 24 | ~~Edge flows делятся поровну между рёбрами одного порта, без учёта реального спроса downstream~~ **Исправлено (2026-06-17):** `computeConvergedFlows` с итерацией, cap по downstream demand | `src/calculator/flow-solver.ts` |
 
 ### UI / UX / a11y
 
@@ -182,6 +182,7 @@ Target-подписи на рёбрах берут aggregate `nodeInputRates[tar
 |------|------------------|
 | Target dedup по `(target, product)` | **Задумано:** разные ингредиенты → отдельные подписи; один продукт с нескольких рёбер → одна |
 | Source dedup по `(source, product, port)` | **Задумано** для fan-out с одного порта |
+| Converged edge flows + balance | **Исправлено** (2026-06-17): `computeConvergedFlows`, `nodePortDeficit`, подписи рёбер из `edgeFlows` |
 | Recipe picker сброс при blur без выбора | **Исправлено** (2026-06-17) |
 | Отсутствие `unified` в FlowEdge | **Исправлено** (2026-06-17) |
 | `gt-multiblock.ts` «мёртвый модуль» | используется **парсером**, не app |

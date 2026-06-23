@@ -1,5 +1,5 @@
 import type { FlowResult } from '@/calculator/flow-solver';
-import { formatRate, portInputDemandRate } from '@/calculator/flow-solver';
+import { formatRate } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { PackData, Recipe } from '@/data/types';
@@ -174,18 +174,25 @@ function applyLabelDedup(
     const entry = data[winnerId];
     const edge = edges.find((e) => e.id === winnerId);
     if (!entry?.source || !edge) continue;
-    const portId = normalizePortId(edge.sourcePort);
-    const portRate = result.nodePortOutputRates?.[edge.source]?.[portId];
-    const key = productKey(edge);
-    const total = result.nodeOutputRates[edge.source]?.[key];
-    const rate = portRate && portRate.compare(R.zero) > 0 ? portRate : total;
-    if (!rate || rate.compare(R.zero) <= 0) continue;
+
+    const sourceGroupKey = sourceFlowGroupKey(edge);
+    let totalFlow = R.zero;
+    for (const e of edges) {
+      if (sourceFlowGroupKey(e) !== sourceGroupKey) continue;
+      const flow = result.edgeFlows[e.id];
+      if (flow) totalFlow = totalFlow.add(flow);
+    }
+    if (totalFlow.compare(R.zero) <= 0) continue;
+
     const node = nodes.find((n) => n.id === edge.source);
     const recipe = node
       ? pack.recipes.find((r) => r.id === node.recipeId)
       : undefined;
     const flow = portFlow(recipe, edge.sourcePort);
-    entry.source = formatFlowRateLabel(rate, flow ? isChancedFlow(flow) : false);
+    entry.source = formatFlowRateLabel(
+      totalFlow,
+      flow ? isChancedFlow(flow) : false,
+    );
   }
 }
 
@@ -201,12 +208,8 @@ export function buildEdgeFlowData(
     const key = productKey(edge);
     if (!key) continue;
 
-    const edgeSrc = result.edgeFlows[edge.id];
-    const totalSrc = result.nodeOutputRates[edge.source]?.[key];
-    const tgtRate = result.nodeInputRates[edge.target]?.[key];
-    const srcRate =
-      edgeSrc && edgeSrc.compare(R.zero) > 0 ? edgeSrc : totalSrc;
-    if (!srcRate && !tgtRate) continue;
+    const flow = result.edgeFlows[edge.id];
+    if (!flow || flow.compare(R.zero) <= 0) continue;
 
     const node = nodes.find((n) => n.id === edge.source);
     const recipe = node
@@ -214,19 +217,11 @@ export function buildEdgeFlowData(
       : undefined;
     const sourceFlow = portFlow(recipe, edge.sourcePort);
     const srcApprox = sourceFlow ? isChancedFlow(sourceFlow) : false;
-
-    const srcText =
-      srcRate && srcRate.compare(R.zero) > 0
-        ? formatFlowRateLabel(srcRate, srcApprox)
-        : undefined;
-    const tgtText =
-      tgtRate && tgtRate.compare(R.zero) > 0
-        ? `${formatRate(tgtRate)}/s`
-        : undefined;
+    const label = formatFlowRateLabel(flow, srcApprox);
 
     data[edge.id] = {
-      ...(srcText ? { source: srcText } : {}),
-      ...(tgtText ? { target: tgtText } : {}),
+      source: label,
+      target: `${formatRate(flow)}/s`,
     };
   }
 
@@ -254,18 +249,10 @@ export interface NodeBalanceLine {
   text: string;
 }
 
-function isInputPortConnected(connectedInPorts: Set<string>, portId: string): boolean {
-  return (
-    connectedInPorts.has(portId) ||
-    connectedInPorts.has(normalizePortId(portId)) ||
-    connectedInPorts.has(portId.replace(/^in_/, 'input_'))
-  );
-}
-
 export function buildNodeBalanceLines(
   nodeId: string,
   recipe: Recipe | undefined,
-  connectedInPorts: Set<string>,
+  _connectedInPorts: Set<string>,
   result: FlowResult,
   pack: PackData,
   lang: 'ru' | 'en',
@@ -273,16 +260,15 @@ export function buildNodeBalanceLines(
   const lines: NodeBalanceLine[] = [];
   if (!recipe) return lines;
 
-  const primaryRate = result.nodePortOutputRates[nodeId]?.['out_0'] ?? R.zero;
-  if (primaryRate.compare(R.zero) > 0) {
+  const portDeficit = result.nodePortDeficit[nodeId];
+  if (portDeficit) {
     for (let i = 0; i < recipe.inputs.length; i++) {
       const portId = inputPortId(i);
-      if (isInputPortConnected(connectedInPorts, portId)) continue;
+      const deficit = portDeficit[portId];
+      if (!deficit || deficit.compare(R.zero) <= 0) continue;
       const inp = recipe.inputs[i]!;
-      const demand = portInputDemandRate(recipe, i, primaryRate);
-      if (demand.compare(R.zero) <= 0) continue;
       const name = getItemName(pack, inp.itemId ?? inp.fluidId ?? '?', lang);
-      lines.push({ kind: 'in', text: `-${formatRate(demand)}/s ${name}` });
+      lines.push({ kind: 'in', text: `-${formatRate(deficit)}/s ${name}` });
     }
   }
 

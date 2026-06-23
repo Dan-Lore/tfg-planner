@@ -287,4 +287,225 @@ describe('solveFlows', () => {
     });
     expect(result.nodePortOutputRates.n1!.out_0!.toNumber()).toBeCloseTo(0.4, 5);
   });
+
+  it('limits edge flow when downstream has more capacity than upstream', () => {
+    const result = solveFlows({
+      pack: samplePack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+        {
+          id: 'b',
+          machineId: 'm2',
+          recipeId: 'r2',
+          machineCount: 3,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'a',
+          target: 'b',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+      ],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    const upstreamOut = result.nodePortOutputRates.a!.out_0!.toNumber();
+    const edgeFlow = result.edgeFlows.e1!.toNumber();
+    expect(edgeFlow).toBeCloseTo(upstreamOut, 5);
+    expect(edgeFlow).toBeLessThan(
+      result.nodePortOutputRates.b!.out_0!.toNumber(),
+    );
+    expect(result.nodePortDeficit.b!.in_0!.toNumber()).toBeGreaterThan(0);
+  });
+
+  it('reduces effective output when a multi-input recipe lacks one ingredient', () => {
+    const mixerRecipe = {
+      id: 'mix',
+      machineId: 'mixer',
+      durationTicks: 100,
+      inputs: [
+        { itemId: 'a', amount: 1 },
+        { itemId: 'b', amount: 1 },
+      ],
+      outputs: [{ itemId: 'out', amount: 1 }],
+    };
+    const feederRecipe = {
+      id: 'feed',
+      machineId: 'feed',
+      durationTicks: 100,
+      inputs: [],
+      outputs: [{ itemId: 'a', amount: 1 }],
+    };
+    const pack: PackData = {
+      ...samplePack,
+      recipes: [mixerRecipe, feederRecipe],
+    };
+
+    const result = solveFlows({
+      pack,
+      nodes: [
+        {
+          id: 'feed',
+          machineId: 'feed',
+          recipeId: 'feed',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+        {
+          id: 'mix',
+          machineId: 'mixer',
+          recipeId: 'mix',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+      ],
+      edges: [
+        {
+          id: 'ea',
+          source: 'feed',
+          target: 'mix',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'a',
+        },
+      ],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    expect(result.edgeFlows.ea!.toNumber()).toBeGreaterThan(0);
+    expect(result.nodePortOutputRates.mix!.out_0!.toNumber()).toBeGreaterThan(0);
+    expect(result.nodePortDeficit.mix!.in_1!.toNumber()).toBeGreaterThan(0);
+  });
+
+  it('reports surplus when production exceeds downstream consumption', () => {
+    const result = solveFlows({
+      pack: samplePack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 2,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+        {
+          id: 'b',
+          machineId: 'm2',
+          recipeId: 'r2',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'a',
+          target: 'b',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+      ],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    const sent = result.edgeFlows.e1!.toNumber();
+    const produced = result.nodePortOutputRates.a!.out_0!.toNumber();
+    expect(produced).toBeGreaterThan(sent);
+    expect(result.nodeSurplus.a!.crushed!.toNumber()).toBeCloseTo(produced - sent, 5);
+  });
+
+  it('converges flows on a cyclic graph with an external source', () => {
+    const sourceRecipe = {
+      id: 'src',
+      machineId: 'm',
+      durationTicks: 20,
+      inputs: [],
+      outputs: [{ itemId: 'x', amount: 2 }],
+    };
+    const passRecipe = {
+      id: 'pass',
+      machineId: 'm',
+      durationTicks: 20,
+      inputs: [{ itemId: 'x', amount: 1 }],
+      outputs: [{ itemId: 'x', amount: 1 }],
+    };
+    const pack: PackData = { ...samplePack, recipes: [sourceRecipe, passRecipe] };
+
+    const result = solveFlows({
+      pack,
+      nodes: [
+        {
+          id: 'src',
+          machineId: 'm',
+          recipeId: 'src',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+        {
+          id: 'loop',
+          machineId: 'm',
+          recipeId: 'pass',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'src',
+          target: 'loop',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'x',
+        },
+        {
+          id: 'e2',
+          source: 'loop',
+          target: 'loop',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'x',
+        },
+      ],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    expect(result.edgeFlows.e2!.toNumber()).toBeGreaterThan(0);
+    expect(result.edgeFlows.e1!.toNumber()).toBeGreaterThanOrEqual(0);
+    expect(
+      result.edgeFlows.e1!.add(result.edgeFlows.e2!).toNumber(),
+    ).toBeGreaterThan(0);
+  });
 });
