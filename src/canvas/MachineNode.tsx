@@ -397,6 +397,7 @@ export function buildPortDisplays(
   outputRates: Record<string, string>,
   outputPortRateRationals?: Record<string, Rational>,
   inputPortLoadMeta?: Record<string, { loadPercent: number; title: string }>,
+  outputPortLoadMeta?: Record<string, { loadPercent: number; title: string }>,
 ): { inputPorts: PortDisplay[]; outputPorts: PortDisplay[] } {
   if (!recipe) {
     return { inputPorts: [], outputPorts: [] };
@@ -427,6 +428,7 @@ export function buildPortDisplays(
       const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
       const portRate = outputPortRateRationals?.[portId];
+      const loadMeta = outputPortLoadMeta?.[portId];
       const rate =
         portRate && portRate.compare(R.zero) > 0
           ? formatFlowRateLabel(portRate, isChancedFlow(flow))
@@ -434,8 +436,14 @@ export function buildPortDisplays(
       return {
         portId,
         label,
-        tooltip: rate ? `${label} · ${rate}` : label,
+        tooltip: [rate ? `${label} · ${rate}` : label, loadMeta?.title]
+          .filter(Boolean)
+          .join('\n'),
         rate,
+        loadPercent: loadMeta?.loadPercent,
+        loadLabel: loadMeta
+          ? formatLoadPercentDisplay(loadMeta.loadPercent)
+          : undefined,
         connected: connectedOut.has(portId),
       };
     }),

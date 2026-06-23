@@ -23,7 +23,7 @@ import { buildPortDisplays, useNodeTypes } from '@/canvas/MachineNode';
 import { EditorCanvas } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
 import { PortContextMenu, type PortAttachDirection } from '@/canvas/PortContextMenu';
-import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
+import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
@@ -280,8 +280,12 @@ export function EditorPage() {
       const outputRates = rateMapToStrings(flowResult?.nodeOutputRates[n.id]);
       const outputPortRateRationals = flowResult?.nodePortOutputRates[n.id];
       const connectedIn = connectedPorts.inPorts.get(n.id) ?? new Set();
+      const connectedOut = connectedPorts.outPorts.get(n.id) ?? new Set();
       const inputPortLoadMeta = flowResult
         ? buildInputPortLoadMeta(n.id, recipe, connectedIn, flowResult, t)
+        : undefined;
+      const outputPortLoadMeta = flowResult
+        ? buildOutputPortLoadMeta(n.id, recipe, connectedOut, flowResult, t)
         : undefined;
       const nodeLoadMeta = flowResult
         ? buildNodeLoadMeta(n.id, recipe, flowResult, t)
@@ -291,11 +295,12 @@ export function EditorPage() {
         pack,
         lang,
         connectedIn,
-        connectedPorts.outPorts.get(n.id) ?? new Set(),
+        connectedOut,
         inputRates,
         outputRates,
         outputPortRateRationals,
         inputPortLoadMeta,
+        outputPortLoadMeta,
       );
       return {
         id: n.id,

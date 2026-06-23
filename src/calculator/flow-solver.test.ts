@@ -442,6 +442,72 @@ describe('solveFlows', () => {
     expect(produced).toBeGreaterThan(sent);
     expect(result.nodeSurplus.a!.crushed!.toNumber()).toBeCloseTo(produced - sent, 5);
     expect(result.nodeLoad.a!.toNumber()).toBeCloseTo(sent / produced, 5);
+    expect(result.nodePortOutLoad.a!.out_0!.toNumber()).toBeCloseTo(
+      sent / produced,
+      5,
+    );
+  });
+
+  it('can report different output port loads for competing producers', () => {
+    const result = solveFlows({
+      pack: samplePack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 2,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+        {
+          id: 'b',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 2,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+        {
+          id: 'c',
+          machineId: 'm2',
+          recipeId: 'r2',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          parallel: 1,
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'a',
+          target: 'c',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+        {
+          id: 'e2',
+          source: 'b',
+          target: 'c',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+      ],
+      targets: [],
+      preserveManualMachineCounts: true,
+    });
+
+    const inA = result.nodePortInLoad.a!.in_0!.toNumber();
+    const inB = result.nodePortInLoad.b!.in_0!.toNumber();
+    const outA = result.nodePortOutLoad.a!.out_0!.toNumber();
+    const outB = result.nodePortOutLoad.b!.out_0!.toNumber();
+    expect(inA).toBeCloseTo(inB, 5);
+    expect(outA).not.toBeCloseTo(outB, 3);
   });
 
   it('converges flows on a cyclic graph with an external source', () => {

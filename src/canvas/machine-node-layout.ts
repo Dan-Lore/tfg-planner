@@ -9,7 +9,7 @@ import {
 } from '@/calculator/energy';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { buildPortDisplays, type MachineNodeData, type PortDisplay } from '@/canvas/MachineNode';
-import { buildNodeBalanceLines, rateMapToStrings } from '@/canvas/flow-display';
+import { buildNodeBalanceLines, buildInputPortLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { MACHINE_NODE_MIN_WIDTH } from '@/canvas/node-bounds';
 import { getMachineName, getMachineRecipeCount } from '@/data/pack-registry';
 import type { PackData } from '@/data/types';
@@ -164,15 +164,37 @@ export function buildMachineNodeLayoutWidths(
     const inputRates = rateMapToStrings(input.flowResult?.nodeInputRates[node.id]);
     const outputRates = rateMapToStrings(input.flowResult?.nodeOutputRates[node.id]);
     const outputPortRateRationals = input.flowResult?.nodePortOutputRates[node.id];
+    const connectedIn = input.connectedIn.get(node.id) ?? new Set();
+    const connectedOut = input.connectedOut.get(node.id) ?? new Set();
+    const inputPortLoadMeta = input.flowResult
+      ? buildInputPortLoadMeta(
+          node.id,
+          recipe,
+          connectedIn,
+          input.flowResult,
+          input.t,
+        )
+      : undefined;
+    const outputPortLoadMeta = input.flowResult
+      ? buildOutputPortLoadMeta(
+          node.id,
+          recipe,
+          connectedOut,
+          input.flowResult,
+          input.t,
+        )
+      : undefined;
     const { inputPorts, outputPorts } = buildPortDisplays(
       recipe,
       input.pack,
       input.lang,
-      input.connectedIn.get(node.id) ?? new Set(),
-      input.connectedOut.get(node.id) ?? new Set(),
+      connectedIn,
+      connectedOut,
       inputRates,
       outputRates,
       outputPortRateRationals,
+      inputPortLoadMeta,
+      outputPortLoadMeta,
     );
     const balanceLines = input.flowResult
       ? buildNodeBalanceLines(

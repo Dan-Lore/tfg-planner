@@ -126,8 +126,63 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 | 32 | VersionSidebar: `{n} recipes · {n} machines` без i18n | `src/components/VersionSidebar.tsx` |
 | 33 | Sidebar labels без `htmlFor` / `aria-labelledby` | `src/pages/EditorPage.tsx` |
 | 34 | `aria-selected={selected \|\| highlighted}` — ложное состояние | `src/components/SearchCombobox.tsx` |
+| 56 | **Запланировано:** нет визуального gap между рёбрами, идущими по одному коридору маршрута | см. §56 ниже |
+| 57 | ~~Подписи рёбер: нет суммы на входном порте; fan-out по `itemId` вместо физического порта~~ **Исправлено (2026-06-23):** см. [edge-labels-and-port-load.md](./edge-labels-and-port-load.md) | `src/canvas/flow-display.ts` |
+| 58 | ~~Нет % загрузки на выходных портах~~ **Исправлено (2026-06-23):** `nodePortOutLoad` + UI | `flow-solver.ts`, `MachineNode.tsx` |
 
-### Производительность
+### 56. Parallel gap между рёбрами по сегменту маршрута (запланировано)
+
+**Статус:** backlog (прототип 2026-06-17 откатан — группировка по портам/узлам не подходит)  
+**Файлы (целевые):** `src/canvas/FlowEdge.tsx`, `src/lib/edge-routing.ts`, `src/lib/bezier-edge-label.ts`
+
+#### Цель
+
+Визуальный зазор **2–10 px** (константа) между рёбрами, которые **делят один и тот же вычисленный сегмент маршрута** (горизонтальный коридор `centerY`, вертикальный `centerX`, общий участок polyline/bezier), а не между рёбрами, которые просто имеют общий source/target или порт.
+
+#### Почему откатили прототип
+
+Первая попытка группировала рёбра по `(source, sourcePort)`, `(target, targetPort)`, `(source, target)` и смещала control points / `centerY` постфактум. Это:
+
+- не покрывает рёбра из **разных** узлов через **один** gap-коридор (типичный кейс `benzene-distillation-lcr-gap.tfgp`);
+- лишний offset для пары узлов с **разными** портами (handles уже разнесены по Y);
+- дублировало `getBezierPath` в `buildBezierPathString`;
+- выбирало группу по эвристике «самая большая», без связи с геометрией.
+
+#### Правильный критерий группировки
+
+1. Для каждого ребра вычислить маршрут так же, как сейчас: bezier **или** `getRoutedSmoothStepPath` → `waypoints` / `center`.
+2. Извлечь **ключ сегмента-коридора** — участок с постоянной координатой, по которому идут «параллельные» линии:
+   - горизонтальный сегмент: `(orientation: 'h', y: round(centerY), xMin, xMax)`;
+   - вертикальный: `(orientation: 'v', x: round(centerX), yMin, yMax)`.
+3. Для bezier без obstacle routing — аппроксимировать «коридор» по midpoint кривой (или не применять gap, если нет общего сегмента).
+4. Рёбра с **одинаковым ключом** (допуск ε ≈ 1–2 px) → одна **lane-группа**.
+5. Индекс в группе → `laneOffset = (index - (n-1)/2) * PARALLEL_EDGE_GAP`.
+
+**Не группировать** только по `sourcePort` / `targetPort` / паре узлов.
+
+#### Применение offset
+
+- Endpoints (handles) **не смещать**.
+- Смещать только внутренние точки: `centerY` / `centerX` маршрута и interior waypoints / control points **перпендикулярно** оси сегмента.
+- `edgePathNeedsObstacleRouting` и выбор `center` — **до** lane offset, но offset учитывать при финальном path (или пересчитывать collision check с малым ε).
+
+#### Где считать
+
+Предпочтительно **в `FlowEdge` при рендере** (доступ к `useEdges()`, актуальным `sourceX/Y`, obstacles), а не в `EditorPage` по статическому `scheme.edges`.
+
+Вариант: вынести `computeParallelLaneOffsetsByRouteSegment(edges, routeByEdgeId)` в `src/lib/edge-routing.ts` или отдельный модуль, вызывать из canvas-слоя.
+
+#### Тесты (обязательно до merge)
+
+- **Unit:** два ребра с одинаковым `centerY` в `getRoutedSmoothStepPath` → разный Y горизонтального сегмента на ±gap/2.
+- **Integration:** `src/lib/fixtures/edge-routing/benzene-distillation-lcr-gap.tfgp` — несколько рёбер через gap между `node_37` и `node_44`: попарное расстояние между путями на общем сегменте ≥ `PARALLEL_EDGE_GAP`.
+- **Regression:** fan-out с одного порта на **разные** `centerY` не получает лишний offset; рёбра с разными портами одной пары узлов без общего сегмента — offset 0.
+
+#### Константы
+
+- `PARALLEL_EDGE_GAP` — одна константа (по умолчанию 3–4 px; настраиваемо позже).
+- Не смешивать с `DEFAULT_EDGE_OFFSET` (20 px) — это отступ от handle, не lane spacing.
+
 
 | # | Недостаток | Где |
 |---|-----------|-----|
@@ -205,7 +260,8 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 
 ### P2 — backlog / polish
 
-Пункты #7–#55 по таблицам выше.
+Пункты #7–#55 по таблицам выше.  
+**#56** — parallel gap по сегменту маршрута (детали в §56).
 
 ---
 
@@ -214,3 +270,4 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 - [specification.md](./specification.md) — требования продукта
 - [kanban.md](./kanban.md) — карточки backlog
 - [schema-format.md](./schema-format.md) — формат `.tfgp`
+- [edge-labels-and-port-load.md](./edge-labels-and-port-load.md) — подписи рёбер и загрузка портов

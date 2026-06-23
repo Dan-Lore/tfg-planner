@@ -75,15 +75,12 @@ function pickCentralEdge(
 }
 
 function targetFlowGroupKey(edge: TfgpEdge): string {
-  const key = productKey(edge);
-  return key ? `${edge.target}\0${key}` : edge.target;
+  return `${edge.target}\0${normalizePortId(edge.targetPort)}`;
 }
 
-/** Same physical output handle fanning out — dedupe one source label with total rate. */
+/** One source label per physical output handle — sum all fan-out edges. */
 function sourceFlowGroupKey(edge: TfgpEdge): string {
-  const key = productKey(edge);
-  const port = normalizePortId(edge.sourcePort);
-  return key ? `${edge.source}\0${key}\0${port}` : `${edge.source}\0${port}`;
+  return `${edge.source}\0${normalizePortId(edge.sourcePort)}`;
 }
 
 function buildLabelWinners(
@@ -122,7 +119,22 @@ function buildLabelWinners(
 
   for (const [groupKey, group] of incoming) {
     if (group.length <= 1) continue;
+    const targetPort = normalizePortId(group[0]!.targetPort);
+    const allSameTargetPort = group.every(
+      (edge) => normalizePortId(edge.targetPort) === targetPort,
+    );
     const winner = pickCentralEdge(group, (edge) => {
+      if (allSameTargetPort) {
+        const n = nodeById.get(edge.source);
+        return n
+          ? estimatePortCenter(
+              pack,
+              n,
+              edge.sourcePort,
+              nodeWidths?.[n.id] ?? MACHINE_NODE_WIDTH,
+            )
+          : { x: 0, y: 0 };
+      }
       const n = nodeById.get(edge.target);
       return n
         ? estimatePortCenter(
@@ -205,6 +217,23 @@ function applyLabelDedup(
       totalFlow,
       flow ? isChancedFlow(flow) : false,
     );
+  }
+
+  for (const winnerId of targetLabelEdge.values()) {
+    const entry = data[winnerId];
+    const edge = edges.find((e) => e.id === winnerId);
+    if (!entry?.target || !edge) continue;
+
+    const targetGroupKey = targetFlowGroupKey(edge);
+    let totalFlow = R.zero;
+    for (const e of edges) {
+      if (targetFlowGroupKey(e) !== targetGroupKey) continue;
+      const flow = result.edgeFlows[e.id];
+      if (flow) totalFlow = totalFlow.add(flow);
+    }
+    if (totalFlow.compare(R.zero) <= 0) continue;
+
+    entry.target = `${formatRate(totalFlow)}/s`;
   }
 }
 
@@ -360,6 +389,50 @@ export function buildInputPortLoadMeta(
         : t('editor.portLoadOpenTitle', {
             load: formatLoadPercent(loadFraction),
             demand: `${formatRate(demand)}/s`,
+          }),
+    };
+  }
+
+  return meta;
+}
+
+export function buildOutputPortLoadMeta(
+  nodeId: string,
+  recipe: Recipe | undefined,
+  connectedOut: Set<string>,
+  result: FlowResult,
+  t: (key: string, opts?: Record<string, string>) => string,
+): Record<string, PortLoadMeta> {
+  const meta: Record<string, PortLoadMeta> = {};
+  if (!recipe || recipe.outputs.length === 0) return meta;
+
+  const portLoads = result.nodePortOutLoad[nodeId] ?? {};
+  const portRates = result.nodePortOutputRates[nodeId] ?? {};
+
+  for (let i = 0; i < recipe.outputs.length; i++) {
+    const portId = `out_${i}`;
+    const produced = portRates[portId] ?? R.zero;
+    if (produced.compare(R.zero) <= 0) continue;
+
+    const connected = connectedOut.has(portId);
+    const loadFraction = connected ? (portLoads[portId] ?? R.zero) : R.zero;
+    const loadPercent = Math.min(
+      100,
+      Math.max(0, loadFraction.mul(R.from(100)).toNumber()),
+    );
+    const sent = produced.mul(loadFraction);
+
+    meta[portId] = {
+      loadPercent,
+      title: connected
+        ? t('editor.portOutLoadTitle', {
+            load: formatLoadPercent(loadFraction),
+            sent: `${formatRate(sent)}/s`,
+            produced: `${formatRate(produced)}/s`,
+          })
+        : t('editor.portOutLoadOpenTitle', {
+            load: formatLoadPercent(loadFraction),
+            produced: `${formatRate(produced)}/s`,
           }),
     };
   }

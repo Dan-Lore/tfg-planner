@@ -86,6 +86,7 @@ describe('buildEdgeFlowData', () => {
       },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
@@ -101,7 +102,7 @@ describe('buildEdgeFlowData', () => {
     expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(3);
   });
 
-  it('dedupes target labels when the same ingredient fan-ins on multiple edges', () => {
+  it('dedupes target labels when multiple edges hit the same input port', () => {
     const edges: TfgpEdge[] = [
       {
         id: 'e1',
@@ -116,8 +117,8 @@ describe('buildEdgeFlowData', () => {
         source: 'srcB',
         target: 'mixer1',
         sourcePort: 'out_0',
-        targetPort: 'in_1',
-        itemId: 'a',
+        targetPort: 'in_0',
+        itemId: 'b',
       },
     ];
 
@@ -129,7 +130,7 @@ describe('buildEdgeFlowData', () => {
       edgeTargetFlows: {},
       nodeOutputRates: {
         srcA: { a: R.from(4) },
-        srcB: { a: R.from(2) },
+        srcB: { b: R.from(2) },
       },
       nodePortOutputRates: {},
       nodeInputRates: {
@@ -137,6 +138,7 @@ describe('buildEdgeFlowData', () => {
       },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
@@ -146,7 +148,7 @@ describe('buildEdgeFlowData', () => {
 
     const withTarget = edges.filter((e) => data[e.id]?.target);
     expect(withTarget).toHaveLength(1);
-    expect(['4.00/s', '2.00/s']).toContain(data[withTarget[0]!.id]?.target);
+    expect(data[withTarget[0]!.id]?.target).toBe('6.00/s');
   });
 
   it('keeps label on a single incoming edge without dedup', () => {
@@ -169,6 +171,7 @@ describe('buildEdgeFlowData', () => {
       nodeInputRates: { mixer1: { a: R.from(12) } },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
@@ -222,6 +225,7 @@ describe('buildEdgeFlowData', () => {
       nodeInputRates: { t1: { out: R.from(8) }, t2: { out: R.from(8) } },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { src: 1 },
@@ -301,6 +305,7 @@ describe('buildEdgeFlowData', () => {
       },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 1, mixer2: 1, auto: 1 },
@@ -350,6 +355,7 @@ describe('buildEdgeFlowData', () => {
       },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: {},
@@ -359,7 +365,7 @@ describe('buildEdgeFlowData', () => {
 
     expect(data.m1a?.source).toBe('8.00/s');
     expect(data.m2a?.source).toBe('8.00/s');
-    expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(1);
+    expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(2);
   });
 
   it('keeps source on each parallel output port when the same product leaves on separate handles', () => {
@@ -434,6 +440,7 @@ describe('buildEdgeFlowData', () => {
       },
       nodePortDeficit: {},
       nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { gh: 1, pyro: 1 },
@@ -445,7 +452,91 @@ describe('buildEdgeFlowData', () => {
     expect(data.e2?.source).toBe('0.0267/s');
     expect(data.e3?.source).toBe('0.0267/s');
     expect(edges.filter((e) => data[e.id]?.source)).toHaveLength(3);
-    expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(1);
+    const withTarget = edges.filter((e) => data[e.id]?.target);
+    expect(withTarget).toHaveLength(1);
+    expect(data[withTarget[0]!.id]?.target).toBe('0.1600/s');
+  });
+
+  it('sums source on one port across targets even when edge itemId differs', () => {
+    const greenhouse: TfgpNode = {
+      id: 'gh',
+      machineId: 'gtceu:greenhouse',
+      recipeId: 'tfg:tfc_wood_sapling_pine/1',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV',
+      parallel: 1,
+    };
+    const pyro1: TfgpNode = {
+      id: 'pyro1',
+      machineId: 'gtceu:pyrolyse_oven',
+      recipeId: 'mix',
+      position: { x: 400, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV',
+      parallel: 1,
+    };
+    const pyro2: TfgpNode = {
+      id: 'pyro2',
+      machineId: 'gtceu:pyrolyse_oven',
+      recipeId: 'mix',
+      position: { x: 400, y: 200 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV',
+      parallel: 1,
+    };
+
+    const edges: TfgpEdge[] = [
+      {
+        id: 'e1',
+        source: 'gh',
+        target: 'pyro1',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'tfc:wood/log/pine',
+      },
+      {
+        id: 'e2',
+        source: 'gh',
+        target: 'pyro2',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'tfc:wood/log/acacia',
+      },
+    ];
+
+    const result = {
+      edgeFlows: {
+        e1: R.from(3),
+        e2: R.from(5),
+      },
+      edgeTargetFlows: {},
+      nodeOutputRates: {},
+      nodePortOutputRates: {
+        gh: { out_0: R.from(8) },
+      },
+      nodeInputRates: {},
+      nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodePortOutLoad: {},
+      nodeLoad: {},
+      nodeSurplus: {},
+      nodeMachineCounts: { gh: 1 },
+    };
+
+    const data = buildEdgeFlowData(
+      edges,
+      [greenhouse, pyro1, pyro2],
+      pack,
+      result,
+    );
+
+    const withSource = edges.filter((e) => data[e.id]?.source);
+    expect(withSource).toHaveLength(1);
+    expect(data[withSource[0]!.id]?.source).toBe('8.00/s');
   });
 });
 
@@ -464,6 +555,8 @@ describe('buildNodeBalanceLines', () => {
           in_2: R.from(2),
         },
       },
+      nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeSurplus: { mixer1: { out: R.from(0.5) } },
       nodeMachineCounts: { mixer1: 2 },
     };
@@ -493,6 +586,8 @@ describe('buildNodeBalanceLines', () => {
       nodePortOutputRates: { mixer1: { out_0: R.from(4) } },
       nodeInputRates: { mixer1: { a: R.from(8) } },
       nodePortDeficit: { mixer1: { in_0: R.from(6) } },
+      nodePortInLoad: {},
+      nodePortOutLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
     };

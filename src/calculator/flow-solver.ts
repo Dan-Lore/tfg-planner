@@ -50,6 +50,8 @@ export interface FlowResult {
   nodePortDeficit: Record<string, Record<string, Rational>>;
   /** Input port load 0…1: inflow / demand (capped at 1). */
   nodePortInLoad: Record<string, Record<string, Rational>>;
+  /** Output port load 0…1: sent / produced (capped at 1). */
+  nodePortOutLoad: Record<string, Record<string, Rational>>;
   /** Overall node load 0…1 (min input loads, or output use for sources). */
   nodeLoad: Record<string, Rational>;
   nodeSurplus: Record<string, Record<string, Rational>>;
@@ -553,14 +555,45 @@ function computeNodePortInLoad(
   return nodePortInLoad;
 }
 
+function computeNodePortOutLoad(
+  nodes: SchemeNode[],
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  outgoing: Map<string, SchemeEdge[]>,
+  edgeFlows: Record<string, Rational>,
+  recipes: Map<string, Recipe>,
+): Record<string, Record<string, Rational>> {
+  const nodePortOutLoad: Record<string, Record<string, Rational>> = {};
+
+  for (const node of nodes) {
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe || recipe.outputs.length === 0) continue;
+    nodePortOutLoad[node.id] = {};
+
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      const portId = `out_${i}`;
+      const produced = nodePortOutputRates[node.id]?.[portId] ?? R.zero;
+      if (produced.compare(R.zero) <= 0) continue;
+
+      let sent = R.zero;
+      for (const edge of outgoing.get(node.id) ?? []) {
+        const edgePort = resolveSourceOutputPort(edge, recipe);
+        if (edgePort !== portId) continue;
+        sent = sent.add(edgeFlows[edge.id] ?? R.zero);
+      }
+      nodePortOutLoad[node.id][portId] = capLoadFraction(sent, produced);
+    }
+  }
+
+  return nodePortOutLoad;
+}
+
 function computeNodeLoad(
   nodes: SchemeNode[],
   nodePortOutputRates: Record<string, Record<string, Rational>>,
   effectivePortRatesByNode: Record<string, Record<string, Rational>>,
   inflowsByNode: Record<string, Record<string, Rational>>,
   connectedInPortsByNode: Record<string, Set<string>>,
-  outgoing: Map<string, SchemeEdge[]>,
-  edgeFlows: Record<string, Rational>,
+  nodePortOutLoad: Record<string, Record<string, Rational>>,
   recipes: Map<string, Recipe>,
 ): Record<string, Rational> {
   const nodeLoad: Record<string, Rational> = {};
@@ -573,17 +606,12 @@ function computeNodeLoad(
     const effectivePrimary = effectivePortRatesByNode[node.id]?.['out_0'] ?? R.zero;
 
     let outputUse = R.from(1);
+    const outLoads = nodePortOutLoad[node.id] ?? {};
     for (let i = 0; i < recipe.outputs.length; i++) {
       const portId = `out_${i}`;
       const produced = nodePortOutputRates[node.id]?.[portId] ?? R.zero;
       if (produced.compare(R.zero) <= 0) continue;
-      let sent = R.zero;
-      for (const edge of outgoing.get(node.id) ?? []) {
-        const edgePort = resolveSourceOutputPort(edge, recipe);
-        if (edgePort !== portId) continue;
-        sent = sent.add(edgeFlows[edge.id] ?? R.zero);
-      }
-      const portUse = capLoadFraction(sent, produced);
+      const portUse = outLoads[portId] ?? R.from(1);
       if (portUse.compare(outputUse) < 0) outputUse = portUse;
     }
 
@@ -961,14 +989,20 @@ export function solveFlows(input: SolverInput): FlowResult {
     connectedInPortsByNode,
     recipes,
   );
+  const nodePortOutLoad = computeNodePortOutLoad(
+    input.nodes,
+    nodePortOutputRates,
+    outgoing,
+    convergedEdgeFlows,
+    recipes,
+  );
   const nodeLoad = computeNodeLoad(
     input.nodes,
     nodePortOutputRates,
     effectivePortRatesByNode,
     inflowsByNode,
     connectedInPortsByNode,
-    outgoing,
-    convergedEdgeFlows,
+    nodePortOutLoad,
     recipes,
   );
   const nodeSurplus = computeSurplusFromEffective(
@@ -1011,6 +1045,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     nodeInputRates,
     nodePortDeficit,
     nodePortInLoad,
+    nodePortOutLoad,
     nodeLoad,
     nodeSurplus,
     nodeMachineCounts,
