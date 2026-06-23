@@ -49,6 +49,8 @@ export interface MachineNodeData {
   inputPorts: PortDisplay[];
   outputPorts: PortDisplay[];
   balanceLines: NodeBalanceLine[];
+  /** Unified width for all nodes of the same machineId. */
+  layoutWidth?: number;
   [key: string]: unknown;
 }
 
@@ -175,6 +177,11 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
       ]
         .filter(Boolean)
         .join(' ')}
+      style={
+        d.layoutWidth != null
+          ? { width: d.layoutWidth, minWidth: d.layoutWidth }
+          : undefined
+      }
     >
       <div className="machine-node__drag-handle machine-node__header">
         <div className="title" title={title}>

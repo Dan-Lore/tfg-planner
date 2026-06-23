@@ -21,6 +21,7 @@ function estimatePortCenter(
   pack: PackData,
   node: TfgpNode,
   port: string,
+  nodeWidth = MACHINE_NODE_WIDTH,
 ): { x: number; y: number } {
   const parsed = parsePortId(normalizePortId(port));
   if (!parsed) {
@@ -32,7 +33,7 @@ function estimatePortCenter(
   const x =
     parsed.kind === 'in'
       ? node.position.x
-      : node.position.x + MACHINE_NODE_WIDTH;
+      : node.position.x + nodeWidth;
   return { x, y };
 }
 
@@ -90,6 +91,7 @@ function buildLabelWinners(
   nodes: TfgpNode[],
   pack: PackData,
   data: Record<string, FlowEdgeData>,
+  nodeWidths?: Record<string, number>,
 ): {
   targetLabelEdge: Map<string, string>;
   sourceLabelEdge: Map<string, string>;
@@ -123,7 +125,12 @@ function buildLabelWinners(
     const winner = pickCentralEdge(group, (edge) => {
       const n = nodeById.get(edge.target);
       return n
-        ? estimatePortCenter(pack, n, edge.targetPort)
+        ? estimatePortCenter(
+            pack,
+            n,
+            edge.targetPort,
+            nodeWidths?.[n.id] ?? MACHINE_NODE_WIDTH,
+          )
         : { x: 0, y: 0 };
     });
     if (winner) targetLabelEdge.set(groupKey, winner);
@@ -134,7 +141,12 @@ function buildLabelWinners(
     const winner = pickCentralEdge(group, (edge) => {
       const n = nodeById.get(edge.source);
       return n
-        ? estimatePortCenter(pack, n, edge.sourcePort)
+        ? estimatePortCenter(
+            pack,
+            n,
+            edge.sourcePort,
+            nodeWidths?.[n.id] ?? MACHINE_NODE_WIDTH,
+          )
         : { x: 0, y: 0 };
     });
     if (winner) sourceLabelEdge.set(groupKey, winner);
@@ -201,6 +213,7 @@ export function buildEdgeFlowData(
   nodes: TfgpNode[],
   pack: PackData,
   result: FlowResult,
+  nodeWidths?: Record<string, number>,
 ): Record<string, FlowEdgeData> {
   const data: Record<string, FlowEdgeData> = {};
 
@@ -230,6 +243,7 @@ export function buildEdgeFlowData(
     nodes,
     pack,
     data,
+    nodeWidths,
   );
   applyLabelDedup(
     data,

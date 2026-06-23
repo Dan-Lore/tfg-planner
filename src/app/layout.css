@@ -814,6 +814,7 @@ a {
   border: 2px solid var(--border);
   border-radius: 8px;
   min-width: 200px;
+  box-sizing: border-box;
   font-size: 0.8rem;
   cursor: grab;
   display: flex;

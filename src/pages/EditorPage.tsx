@@ -24,6 +24,7 @@ import { EditorCanvas } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
 import { PortContextMenu, type PortAttachDirection } from '@/canvas/PortContextMenu';
 import { buildNodeBalanceLines, rateMapToStrings } from '@/canvas/flow-display';
+import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
@@ -258,6 +259,19 @@ export function EditorPage() {
 
   const closePortMenu = useCallback(() => setPortMenu(null), []);
 
+  const layoutWidthByNodeId = useMemo(() => {
+    if (!pack) return {};
+    return buildMachineNodeLayoutWidths({
+      nodes: scheme.nodes,
+      pack,
+      lang,
+      flowResult,
+      connectedIn: connectedPorts.inPorts,
+      connectedOut: connectedPorts.outPorts,
+      t,
+    });
+  }, [scheme.nodes, pack, lang, flowResult, connectedPorts, t]);
+
   const rfNodes: Node[] = useMemo(() => {
     if (!pack) return [];
     return scheme.nodes.map((n) => {
@@ -313,10 +327,12 @@ export function EditorPage() {
                 lang,
               )
             : [],
+          layoutWidth: layoutWidthByNodeId[n.id],
         },
+        width: layoutWidthByNodeId[n.id],
       };
     });
-  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, handleRecipeChange, handlePortContextMenu, updateNode]);
+  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, layoutWidthByNodeId, handleRecipeChange, handlePortContextMenu, updateNode]);
 
   const rfEdges: Edge[] = useMemo(
     () =>

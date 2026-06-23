@@ -17,6 +17,11 @@ import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import {
   buildEdgeFlowData,
 } from '@/canvas/flow-display';
+import {
+  buildConnectedPortMaps,
+  buildMachineNodeLayoutWidths,
+} from '@/canvas/machine-node-layout';
+import i18n from 'i18next';
 import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
@@ -24,6 +29,31 @@ import type { FlowResult } from '@/calculator/flow-solver';
 import { usePackStore } from './pack-store';
 
 const MAX_HISTORY = 50;
+
+function buildFlowEdgeData(
+  scheme: TfgpFile,
+  pack: NonNullable<ReturnType<typeof usePackStore.getState>['activePack']>,
+  result: FlowResult,
+): Record<string, FlowEdgeData> {
+  const lang = i18n.language === 'en' ? 'en' : 'ru';
+  const { connectedIn, connectedOut } = buildConnectedPortMaps(scheme.edges);
+  const nodeWidths = buildMachineNodeLayoutWidths({
+    nodes: scheme.nodes,
+    pack,
+    lang,
+    flowResult: result,
+    connectedIn,
+    connectedOut,
+    t: i18n.t.bind(i18n),
+  });
+  return buildEdgeFlowData(
+    scheme.edges,
+    scheme.nodes,
+    pack,
+    result,
+    nodeWidths,
+  );
+}
 
 interface EditorState {
   scheme: TfgpFile;
@@ -465,9 +495,8 @@ export const useEditorStore = create<EditorState>()(
         const { scheme } = get();
         const snap = get().snapshot();
         const result = runSolver(snap, pack, { preserveManualMachineCounts: true });
-        const flowEdgeData = buildEdgeFlowData(
-          scheme.edges,
-          scheme.nodes,
+        const flowEdgeData = buildFlowEdgeData(
+          scheme,
           pack,
           result,
         );
@@ -490,9 +519,8 @@ export const useEditorStore = create<EditorState>()(
         const result = runSolver(snap, pack, { preserveManualMachineCounts: false });
         const nodes = applyFlowResult(snap.nodes, result, 'full');
         const schemeWithNodes = { ...scheme, nodes };
-        const flowEdgeData = buildEdgeFlowData(
-          schemeWithNodes.edges,
-          schemeWithNodes.nodes,
+        const flowEdgeData = buildFlowEdgeData(
+          schemeWithNodes,
           pack,
           result,
         );

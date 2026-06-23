@@ -4,6 +4,7 @@ import type { PackData } from '@/data/types';
 import { getMachineRecipeCount } from '@/data/pack-registry';
 
 export const MACHINE_NODE_WIDTH = 220;
+export const MACHINE_NODE_MIN_WIDTH = 200;
 /** Matches `.machine-port` min-height (1.35rem) + column gap (~0.2rem). */
 export const PORT_ROW_HEIGHT = 24;
 export const PORT_SECTION_PADDING = 6;
@@ -72,7 +73,8 @@ export function estimateMachineNodeHeight(data: MachineNodeData): number {
 /** Obstacle box from visible content — not bloated measured height from flex/minHeight. */
 export function getMachineNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): NodeRect {
   const data = node.data as MachineNodeData;
-  const width = node.measured?.width ?? node.width ?? MACHINE_NODE_WIDTH;
+  const width =
+    data.layoutWidth ?? node.measured?.width ?? node.width ?? MACHINE_NODE_WIDTH;
   const height = estimateMachineNodeHeight(data);
 
   return {
