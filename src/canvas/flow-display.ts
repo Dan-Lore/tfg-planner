@@ -1,5 +1,5 @@
 import type { FlowResult } from '@/calculator/flow-solver';
-import { formatRate } from '@/calculator/flow-solver';
+import { formatLoadPercent, formatRate, portInputDemandRate } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { PackData, Recipe } from '@/data/types';
@@ -307,4 +307,92 @@ export function rateMapToStrings(
     if (v.toNumber() > 0) out[k] = `${formatRate(v)}/s`;
   }
   return out;
+}
+
+export interface PortLoadMeta {
+  loadPercent: number;
+  title: string;
+}
+
+export interface NodeLoadMeta {
+  loadPercent: number;
+  label: string;
+  title: string;
+}
+
+export function buildInputPortLoadMeta(
+  nodeId: string,
+  recipe: Recipe | undefined,
+  connectedIn: Set<string>,
+  result: FlowResult,
+  t: (key: string, opts?: Record<string, string>) => string,
+): Record<string, PortLoadMeta> {
+  const meta: Record<string, PortLoadMeta> = {};
+  if (!recipe || recipe.inputs.length === 0) return meta;
+
+  const theoreticalPrimary =
+    result.nodePortOutputRates[nodeId]?.['out_0'] ?? R.zero;
+  const portLoads = result.nodePortInLoad[nodeId] ?? {};
+
+  for (let i = 0; i < recipe.inputs.length; i++) {
+    const portId = inputPortId(i);
+    const demand = portInputDemandRate(recipe, i, theoreticalPrimary);
+    if (demand.compare(R.zero) <= 0) continue;
+
+    const connected = connectedIn.has(portId);
+    const loadFraction = connected
+      ? (portLoads[portId] ?? R.zero)
+      : R.zero;
+    const loadPercent = Math.min(
+      100,
+      Math.max(0, loadFraction.mul(R.from(100)).toNumber()),
+    );
+    const received = demand.mul(loadFraction);
+
+    meta[portId] = {
+      loadPercent,
+      title: connected
+        ? t('editor.portLoadTitle', {
+            load: formatLoadPercent(loadFraction),
+            received: `${formatRate(received)}/s`,
+            demand: `${formatRate(demand)}/s`,
+          })
+        : t('editor.portLoadOpenTitle', {
+            load: formatLoadPercent(loadFraction),
+            demand: `${formatRate(demand)}/s`,
+          }),
+    };
+  }
+
+  return meta;
+}
+
+export function buildNodeLoadMeta(
+  nodeId: string,
+  recipe: Recipe | undefined,
+  result: FlowResult,
+  t: (key: string, opts?: Record<string, string>) => string,
+): NodeLoadMeta | undefined {
+  const loadFraction = result.nodeLoad[nodeId];
+  if (loadFraction === undefined) return undefined;
+
+  const loadPercent = Math.min(
+    100,
+    Math.max(0, loadFraction.mul(R.from(100)).toNumber()),
+  );
+  const loadStr = formatLoadPercent(loadFraction);
+
+  if (!recipe || recipe.inputs.length === 0) {
+    return {
+      loadPercent,
+      label: t('editor.nodeOutputLoadMeta', { value: loadStr }),
+      title: t('editor.nodeOutputLoadTitle', { load: loadStr }),
+    };
+  }
+
+  return {
+    loadPercent,
+    label: t('editor.nodeLoadMeta', { value: loadStr }),
+    title: t('editor.nodeLoadTitle', { load: loadStr }),
+  };
 }

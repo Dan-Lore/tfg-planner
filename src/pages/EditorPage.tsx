@@ -23,7 +23,7 @@ import { buildPortDisplays, useNodeTypes } from '@/canvas/MachineNode';
 import { EditorCanvas } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
 import { PortContextMenu, type PortAttachDirection } from '@/canvas/PortContextMenu';
-import { buildNodeBalanceLines, rateMapToStrings } from '@/canvas/flow-display';
+import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
@@ -279,15 +279,23 @@ export function EditorPage() {
       const inputRates = rateMapToStrings(flowResult?.nodeInputRates[n.id]);
       const outputRates = rateMapToStrings(flowResult?.nodeOutputRates[n.id]);
       const outputPortRateRationals = flowResult?.nodePortOutputRates[n.id];
+      const connectedIn = connectedPorts.inPorts.get(n.id) ?? new Set();
+      const inputPortLoadMeta = flowResult
+        ? buildInputPortLoadMeta(n.id, recipe, connectedIn, flowResult, t)
+        : undefined;
+      const nodeLoadMeta = flowResult
+        ? buildNodeLoadMeta(n.id, recipe, flowResult, t)
+        : undefined;
       const { inputPorts, outputPorts } = buildPortDisplays(
         recipe,
         pack,
         lang,
-        connectedPorts.inPorts.get(n.id) ?? new Set(),
+        connectedIn,
         connectedPorts.outPorts.get(n.id) ?? new Set(),
         inputRates,
         outputRates,
         outputPortRateRationals,
+        inputPortLoadMeta,
       );
       return {
         id: n.id,
@@ -327,12 +335,15 @@ export function EditorPage() {
                 lang,
               )
             : [],
+          loadPercent: nodeLoadMeta?.loadPercent,
+          loadLabel: nodeLoadMeta?.label,
+          loadTitle: nodeLoadMeta?.title,
           layoutWidth: layoutWidthByNodeId[n.id],
         },
         width: layoutWidthByNodeId[n.id],
       };
     });
-  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, layoutWidthByNodeId, handleRecipeChange, handlePortContextMenu, updateNode]);
+  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, layoutWidthByNodeId, t, handleRecipeChange, handlePortContextMenu, updateNode]);
 
   const rfEdges: Edge[] = useMemo(
     () =>

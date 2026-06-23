@@ -47,6 +47,14 @@ const resources = {
         hatchesMeta: 'Люки x{{count}}',
         energyMeta: '{{value}}',
         totalEuMeta: '{{value}} за рецепт',
+        nodeLoadMeta: 'Загрузка {{value}}',
+        nodeLoadTitle:
+          'Загрузка {{load}} — min(входы по связям, использование выхода)',
+        nodeOutputLoadMeta: 'Использование {{value}}',
+        nodeOutputLoadTitle:
+          'Использование выхода {{load}} — сколько продукции уходит по связям',
+        portLoadTitle: '{{load}} · {{received}} из {{demand}}',
+        portLoadOpenTitle: '{{load}} · порт не подключён, требуется {{demand}}',
         voltageTier: 'Tier',
         energyHatchCount: 'Energy hatches',
         parallel: 'Параллель',
@@ -122,6 +130,14 @@ const resources = {
         hatchesMeta: 'Hatches x{{count}}',
         energyMeta: '{{value}}',
         totalEuMeta: '{{value}} total',
+        nodeLoadMeta: 'Load {{value}}',
+        nodeLoadTitle:
+          'Load {{load}} — min(connected inputs, output use)',
+        nodeOutputLoadMeta: 'Output use {{value}}',
+        nodeOutputLoadTitle:
+          'Output use {{load}} — share of production sent on edges',
+        portLoadTitle: '{{load}} · {{received}} of {{demand}}',
+        portLoadOpenTitle: '{{load}} · port open, requires {{demand}}',
         parallel: 'Parallel',
         apply: 'Apply',
         ratePrompt: 'Rate per second',

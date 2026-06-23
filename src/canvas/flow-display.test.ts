@@ -85,6 +85,8 @@ describe('buildEdgeFlowData', () => {
         mixer1: { a: R.from(12), b: R.from(6), c: R.from(6) },
       },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
     };
@@ -134,6 +136,8 @@ describe('buildEdgeFlowData', () => {
         mixer1: { a: R.from(12) },
       },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
     };
@@ -164,6 +168,8 @@ describe('buildEdgeFlowData', () => {
       nodePortOutputRates: {},
       nodeInputRates: { mixer1: { a: R.from(12) } },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
     };
@@ -215,6 +221,8 @@ describe('buildEdgeFlowData', () => {
       },
       nodeInputRates: { t1: { out: R.from(8) }, t2: { out: R.from(8) } },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { src: 1 },
     };
@@ -292,6 +300,8 @@ describe('buildEdgeFlowData', () => {
         auto: { a: R.from(6), b: R.from(4) },
       },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 1, mixer2: 1, auto: 1 },
     };
@@ -339,6 +349,8 @@ describe('buildEdgeFlowData', () => {
         auto: { out: R.from(8) },
       },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: {},
     };
@@ -421,6 +433,8 @@ describe('buildEdgeFlowData', () => {
         pyro: { 'tfc:wood/log/pine': R.from(96 / 600) },
       },
       nodePortDeficit: {},
+      nodePortInLoad: {},
+      nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { gh: 1, pyro: 1 },
     };

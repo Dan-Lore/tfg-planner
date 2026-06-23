@@ -48,6 +48,10 @@ export interface FlowResult {
   nodeInputRates: Record<string, Record<string, Rational>>;
   /** Shortfall per input port (`in_0`, …) after converged flow. */
   nodePortDeficit: Record<string, Record<string, Rational>>;
+  /** Input port load 0…1: inflow / demand (capped at 1). */
+  nodePortInLoad: Record<string, Record<string, Rational>>;
+  /** Overall node load 0…1 (min input loads, or output use for sources). */
+  nodeLoad: Record<string, Rational>;
   nodeSurplus: Record<string, Record<string, Rational>>;
   nodeMachineCounts: Record<string, number>;
 }
@@ -511,6 +515,112 @@ function computeNodePortDeficit(
   return nodePortDeficit;
 }
 
+function capLoadFraction(inflow: Rational, demand: Rational): Rational {
+  if (demand.compare(R.zero) <= 0) return R.from(1);
+  const ratio = inflow.div(demand);
+  return ratio.compare(R.from(1)) > 0 ? R.from(1) : ratio;
+}
+
+function computeNodePortInLoad(
+  nodes: SchemeNode[],
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  inflowsByNode: Record<string, Record<string, Rational>>,
+  connectedInPortsByNode: Record<string, Set<string>>,
+  recipes: Map<string, Recipe>,
+): Record<string, Record<string, Rational>> {
+  const nodePortInLoad: Record<string, Record<string, Rational>> = {};
+
+  for (const node of nodes) {
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe || recipe.inputs.length === 0) continue;
+    nodePortInLoad[node.id] = {};
+
+    const theoreticalPrimary = nodePortOutputRates[node.id]?.['out_0'] ?? R.zero;
+
+    for (let i = 0; i < recipe.inputs.length; i++) {
+      const portId = `in_${i}`;
+      const demand = portInputDemandRate(recipe, i, theoreticalPrimary);
+      if (demand.compare(R.zero) <= 0) continue;
+
+      const connected = connectedInPortsByNode[node.id]?.has(portId) ?? false;
+      const inflow = connected
+        ? (inflowsByNode[node.id]?.[portId] ?? R.zero)
+        : R.zero;
+      nodePortInLoad[node.id][portId] = capLoadFraction(inflow, demand);
+    }
+  }
+
+  return nodePortInLoad;
+}
+
+function computeNodeLoad(
+  nodes: SchemeNode[],
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+  effectivePortRatesByNode: Record<string, Record<string, Rational>>,
+  inflowsByNode: Record<string, Record<string, Rational>>,
+  connectedInPortsByNode: Record<string, Set<string>>,
+  outgoing: Map<string, SchemeEdge[]>,
+  edgeFlows: Record<string, Rational>,
+  recipes: Map<string, Recipe>,
+): Record<string, Rational> {
+  const nodeLoad: Record<string, Rational> = {};
+
+  for (const node of nodes) {
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe) continue;
+
+    const theoreticalPrimary = nodePortOutputRates[node.id]?.['out_0'] ?? R.zero;
+    const effectivePrimary = effectivePortRatesByNode[node.id]?.['out_0'] ?? R.zero;
+
+    let outputUse = R.from(1);
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      const portId = `out_${i}`;
+      const produced = nodePortOutputRates[node.id]?.[portId] ?? R.zero;
+      if (produced.compare(R.zero) <= 0) continue;
+      let sent = R.zero;
+      for (const edge of outgoing.get(node.id) ?? []) {
+        const edgePort = resolveSourceOutputPort(edge, recipe);
+        if (edgePort !== portId) continue;
+        sent = sent.add(edgeFlows[edge.id] ?? R.zero);
+      }
+      const portUse = capLoadFraction(sent, produced);
+      if (portUse.compare(outputUse) < 0) outputUse = portUse;
+    }
+
+    if (recipe.inputs.length === 0) {
+      nodeLoad[node.id] = outputUse;
+      continue;
+    }
+
+    let minConnectedInLoad = R.from(1);
+    let hasConnectedInput = false;
+    for (let i = 0; i < recipe.inputs.length; i++) {
+      const portId = `in_${i}`;
+      const connected = connectedInPortsByNode[node.id]?.has(portId) ?? false;
+      if (!connected) continue;
+      hasConnectedInput = true;
+      const demand = portInputDemandRate(recipe, i, theoreticalPrimary);
+      if (demand.compare(R.zero) <= 0) continue;
+      const inflow = inflowsByNode[node.id]?.[portId] ?? R.zero;
+      const portLoad = capLoadFraction(inflow, demand);
+      if (portLoad.compare(minConnectedInLoad) < 0) {
+        minConnectedInLoad = portLoad;
+      }
+    }
+
+    const inputLimited =
+      theoreticalPrimary.compare(R.zero) <= 0
+        ? R.zero
+        : capLoadFraction(effectivePrimary, theoreticalPrimary);
+
+    const inputLoad = hasConnectedInput ? minConnectedInLoad : inputLimited;
+    nodeLoad[node.id] =
+      outputUse.compare(inputLoad) < 0 ? outputUse : inputLoad;
+  }
+
+  return nodeLoad;
+}
+
 function computeSurplusFromEffective(
   nodes: SchemeNode[],
   outgoing: Map<string, SchemeEdge[]>,
@@ -844,6 +954,23 @@ export function solveFlows(input: SolverInput): FlowResult {
     connectedInPortsByNode,
     recipes,
   );
+  const nodePortInLoad = computeNodePortInLoad(
+    input.nodes,
+    nodePortOutputRates,
+    inflowsByNode,
+    connectedInPortsByNode,
+    recipes,
+  );
+  const nodeLoad = computeNodeLoad(
+    input.nodes,
+    nodePortOutputRates,
+    effectivePortRatesByNode,
+    inflowsByNode,
+    connectedInPortsByNode,
+    outgoing,
+    convergedEdgeFlows,
+    recipes,
+  );
   const nodeSurplus = computeSurplusFromEffective(
     input.nodes,
     outgoing,
@@ -883,6 +1010,8 @@ export function solveFlows(input: SolverInput): FlowResult {
     nodePortOutputRates,
     nodeInputRates,
     nodePortDeficit,
+    nodePortInLoad,
+    nodeLoad,
     nodeSurplus,
     nodeMachineCounts,
   };
@@ -893,4 +1022,15 @@ export function formatRate(rate: Rational): string {
   if (n >= 100) return n.toFixed(1);
   if (n >= 1) return n.toFixed(2);
   return n.toFixed(4);
+}
+
+/** Load fraction 0…1 → display percent (capped 0–100). */
+export function formatLoadPercent(fraction: Rational): string {
+  const pct = Math.min(
+    100,
+    Math.max(0, fraction.mul(R.from(100)).toNumber()),
+  );
+  if (pct >= 99.95) return '100%';
+  if (pct <= 0.05) return '0%';
+  return `${Math.round(pct)}%`;
 }

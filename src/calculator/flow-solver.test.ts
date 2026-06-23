@@ -332,6 +332,8 @@ describe('solveFlows', () => {
       result.nodePortOutputRates.b!.out_0!.toNumber(),
     );
     expect(result.nodePortDeficit.b!.in_0!.toNumber()).toBeGreaterThan(0);
+    expect(result.nodeLoad.b!.toNumber()).toBeLessThan(1);
+    expect(result.nodePortInLoad.b!.in_0!.toNumber()).toBeLessThan(1);
   });
 
   it('reduces effective output when a multi-input recipe lacks one ingredient', () => {
@@ -439,6 +441,7 @@ describe('solveFlows', () => {
     const produced = result.nodePortOutputRates.a!.out_0!.toNumber();
     expect(produced).toBeGreaterThan(sent);
     expect(result.nodeSurplus.a!.crushed!.toNumber()).toBeCloseTo(produced - sent, 5);
+    expect(result.nodeLoad.a!.toNumber()).toBeCloseTo(sent / produced, 5);
   });
 
   it('converges flows on a cyclic graph with an external source', () => {
@@ -507,5 +510,6 @@ describe('solveFlows', () => {
     expect(
       result.edgeFlows.e1!.add(result.edgeFlows.e2!).toNumber(),
     ).toBeGreaterThan(0);
+    expect(result.nodeLoad.loop!.toNumber()).toBeCloseTo(1, 5);
   });
 });

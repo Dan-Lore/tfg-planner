@@ -1052,6 +1052,15 @@ a {
   color: var(--recipe-out);
 }
 
+.machine-node__load {
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-top: 0.2rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
 .machine-node__ports {
   display: flex;
   justify-content: space-between;
@@ -1134,6 +1143,14 @@ a {
   font-size: 0.6rem;
   font-weight: 600;
   color: var(--text);
+}
+
+.machine-port__load {
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 0 0.2rem;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .machine-node:hover:not(.is-dragging) {
