@@ -93,10 +93,11 @@ function PortList({
           </span>
           <span className="editor-inspector__port-meta">
             {port.rate && <span className="editor-inspector__port-rate">{port.rate}</span>}
-            {port.loadLabel != null && (
+            {(port.loadLabel != null || (direction === 'out' && port.loadPercent != null)) && (
               <span
                 className="editor-inspector__port-load"
                 style={loadGradientStyle(port.loadPercent ?? 0)}
+                title={port.tooltip}
               >
                 {formatLoadPercentDisplay(port.loadPercent ?? 0)}
               </span>
@@ -243,7 +244,7 @@ function MachineInspector({
           {nodeLoadMeta && (
             <div
               className="editor-inspector__load-chip"
-              style={loadGradientStyle(nodeLoadMeta.loadPercent)}
+              style={loadGradientStyle(nodeLoadMeta.currentLoadPercent)}
               title={nodeLoadMeta.title}
             >
               {nodeLoadMeta.label}

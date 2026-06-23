@@ -350,14 +350,44 @@ export function rateMapToStrings(
 }
 
 export interface PortLoadMeta {
+  /** Input: max-load contribution. Output: min(100%, sent / downstream demand). */
   loadPercent: number;
   title: string;
 }
 
 export interface NodeLoadMeta {
+  maxLoadPercent: number;
+  currentLoadPercent: number;
+  maxLabel: string;
+  currentLabel: string;
+  maxTitle: string;
+  currentTitle: string;
+  /** @deprecated Use currentLoadPercent */
   loadPercent: number;
+  /** @deprecated Use currentLabel */
   label: string;
+  /** @deprecated Use currentTitle */
   title: string;
+}
+
+function fractionToPercent(fraction: ReturnType<typeof R.from>): number {
+  return Math.min(100, Math.max(0, fraction.mul(R.from(100)).toNumber()));
+}
+
+/** Min recipe load on connected outputs — actual throughput vs full recipe rate. */
+function computeNodeRecipeThroughput(
+  nodeId: string,
+  result: FlowResult,
+): Rational | undefined {
+  const loads = result.nodePortOutRecipeLoad[nodeId];
+  if (!loads) return undefined;
+  const values = Object.values(loads);
+  if (values.length === 0) return undefined;
+  let min = R.from(1);
+  for (const load of values) {
+    if (load.compare(min) < 0) min = load;
+  }
+  return min;
 }
 
 export function buildInputPortLoadMeta(
@@ -383,16 +413,13 @@ export function buildInputPortLoadMeta(
     const loadFraction = connected
       ? (portLoads[portId] ?? R.zero)
       : R.zero;
-    const loadPercent = Math.min(
-      100,
-      Math.max(0, loadFraction.mul(R.from(100)).toNumber()),
-    );
+    const loadPercent = fractionToPercent(loadFraction);
     const received = demand.mul(loadFraction);
 
     meta[portId] = {
       loadPercent,
       title: connected
-        ? t('editor.portLoadTitle', {
+        ? t('editor.portInputMaxLoadTitle', {
             load: formatLoadPercent(loadFraction),
             received: `${formatRate(received)}/s`,
             demand: `${formatRate(demand)}/s`,
@@ -417,33 +444,34 @@ export function buildOutputPortLoadMeta(
   const meta: Record<string, PortLoadMeta> = {};
   if (!recipe || recipe.outputs.length === 0) return meta;
 
-  const portLoads = result.nodePortOutLoad[nodeId] ?? {};
-  const portRates = result.nodePortOutputRates[nodeId] ?? {};
+  const consumerLoads = result.nodePortOutConsumerLoad[nodeId] ?? {};
+  const downstreamDemand = result.nodePortDownstreamDemand[nodeId] ?? {};
 
   for (let i = 0; i < recipe.outputs.length; i++) {
     const portId = `out_${i}`;
-    const produced = portRates[portId] ?? R.zero;
-    if (produced.compare(R.zero) <= 0) continue;
+    const demand = downstreamDemand[portId] ?? R.zero;
+    if (demand.compare(R.zero) <= 0 && !connectedOut.has(portId)) continue;
 
     const connected = connectedOut.has(portId);
-    const loadFraction = connected ? (portLoads[portId] ?? R.zero) : R.zero;
-    const loadPercent = Math.min(
-      100,
-      Math.max(0, loadFraction.mul(R.from(100)).toNumber()),
-    );
-    const sent = produced.mul(loadFraction);
+    const loadFraction = connected ? (consumerLoads[portId] ?? R.zero) : R.zero;
+    const loadPercent = fractionToPercent(loadFraction);
+
+    let sent = R.zero;
+    if (connected && demand.compare(R.zero) > 0) {
+      sent = demand.mul(loadFraction);
+    }
 
     meta[portId] = {
       loadPercent,
       title: connected
-        ? t('editor.portOutLoadTitle', {
+        ? t('editor.portOutConsumerLoadTitle', {
             load: formatLoadPercent(loadFraction),
             sent: `${formatRate(sent)}/s`,
-            produced: `${formatRate(produced)}/s`,
+            demand: `${formatRate(demand)}/s`,
           })
         : t('editor.portOutLoadOpenTitle', {
             load: formatLoadPercent(loadFraction),
-            produced: `${formatRate(produced)}/s`,
+            produced: `${formatRate(demand)}/s`,
           }),
     };
   }
@@ -457,26 +485,58 @@ export function buildNodeLoadMeta(
   result: FlowResult,
   t: (key: string, opts?: Record<string, string>) => string,
 ): NodeLoadMeta | undefined {
-  const loadFraction = result.nodeLoad[nodeId];
-  if (loadFraction === undefined) return undefined;
+  const maxFraction = result.nodeMaxLoad[nodeId];
+  const capacityFraction =
+    result.nodeCurrentLoad[nodeId] ?? result.nodeLoad[nodeId];
+  const throughputFraction =
+    computeNodeRecipeThroughput(nodeId, result) ??
+    capacityFraction ??
+    maxFraction;
+  if (maxFraction === undefined && throughputFraction === undefined) return undefined;
 
-  const loadPercent = Math.min(
-    100,
-    Math.max(0, loadFraction.mul(R.from(100)).toNumber()),
-  );
-  const loadStr = formatLoadPercent(loadFraction);
+  const maxLoadPercent = fractionToPercent(maxFraction ?? R.from(1));
+  const currentLoadPercent = fractionToPercent(throughputFraction ?? R.from(1));
+  const maxStr = formatLoadPercent(maxFraction ?? R.from(1));
+  const currentStr = formatLoadPercent(throughputFraction ?? R.from(1));
+  const capacityStr =
+    capacityFraction != null ? formatLoadPercent(capacityFraction) : undefined;
+  const combinedLabel = t('editor.loadUtilizationMeta', {
+    current: currentStr,
+    max: maxStr,
+  });
+  const combinedTitle = [
+    t('editor.recipeThroughputTitle', { load: currentStr }),
+    t('editor.maxLoadTitle', { load: maxStr }),
+    capacityStr != null
+      ? t('editor.currentLoadTitle', { load: capacityStr })
+      : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
 
   if (!recipe || recipe.inputs.length === 0) {
     return {
-      loadPercent,
-      label: t('editor.nodeOutputLoadMeta', { value: loadStr }),
-      title: t('editor.nodeOutputLoadTitle', { load: loadStr }),
+      maxLoadPercent,
+      currentLoadPercent,
+      maxLabel: t('editor.maxLoadMeta', { value: maxStr }),
+      currentLabel: t('editor.currentLoadMeta', { value: currentStr }),
+      maxTitle: t('editor.maxLoadTitle', { load: maxStr }),
+      currentTitle: t('editor.nodeOutputLoadTitle', { load: currentStr }),
+      loadPercent: currentLoadPercent,
+      label: combinedLabel,
+      title: combinedTitle,
     };
   }
 
   return {
-    loadPercent,
-    label: t('editor.nodeLoadMeta', { value: loadStr }),
-    title: t('editor.nodeLoadTitle', { load: loadStr }),
+    maxLoadPercent,
+    currentLoadPercent,
+    maxLabel: t('editor.maxLoadMeta', { value: maxStr }),
+    currentLabel: t('editor.currentLoadMeta', { value: currentStr }),
+    maxTitle: t('editor.maxLoadTitle', { load: maxStr }),
+    currentTitle: t('editor.currentLoadTitle', { load: currentStr }),
+    loadPercent: currentLoadPercent,
+    label: combinedLabel,
+    title: combinedTitle,
   };
 }

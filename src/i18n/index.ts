@@ -50,12 +50,29 @@ const resources = {
         nodeLoadMeta: 'Загрузка {{value}}',
         nodeLoadTitle:
           'Загрузка {{load}} — min(входы по связям, использование выхода)',
+        maxLoadMeta: 'Макс {{value}}',
+        maxLoadTitle:
+          'Максимальная загрузка {{load}} — min(подключённые входы): потолок скорости при текущих поставках',
+        currentLoadMeta: 'Работа {{value}}',
+        currentLoadTitle:
+          'Текущая загрузка {{load}} — min(утилизация выходов относительно максимальной загрузки)',
+        recipeThroughputTitle:
+          'Текущая {{load}} — фактическая скорость относительно полного рецепта',
+        loadUtilizationMeta: 'Загруженность: {{current}} / {{max}}',
+        portInputMaxLoadTitle: '{{load}} · {{received}} из {{demand}} (вклад в макс. загрузку)',
+        portRecipeLoad: 'Рец {{value}}',
+        portCapacityLoad: 'Ёмк {{value}}',
+        portOutRecipeLoadTitle:
+          'Рецепт {{load}} · {{sent}} из {{produced}} (от полной скорости рецепта)',
+        portOutCapacityLoadTitle:
+          'Ёмкость {{load}} · {{sent}} из {{maxOutput}} (от доступного при макс. загрузке)',
         nodeOutputLoadMeta: 'Использование {{value}}',
         nodeOutputLoadTitle:
           'Использование выхода {{load}} — сколько продукции уходит по связям',
         portLoadTitle: '{{load}} · {{received}} из {{demand}}',
         portLoadOpenTitle: '{{load}} · порт не подключён, требуется {{demand}}',
-        portOutLoadTitle: '{{load}} · {{sent}} из {{produced}}',
+        portOutConsumerLoadTitle:
+          '{{load}} · {{sent}} из {{demand}} (потребность потребителей на порту)',
         portOutLoadOpenTitle: '{{load}} · порт не подключён, производится {{produced}}',
         voltageTier: 'Tier',
         energyHatchCount: 'Energy hatches',
@@ -175,12 +192,29 @@ const resources = {
         nodeLoadMeta: 'Load {{value}}',
         nodeLoadTitle:
           'Load {{load}} — min(connected inputs, output use)',
+        maxLoadMeta: 'Max {{value}}',
+        maxLoadTitle:
+          'Max load {{load}} — min(connected inputs): speed ceiling at current supply',
+        currentLoadMeta: 'Run {{value}}',
+        currentLoadTitle:
+          'Current load {{load}} — min(output use vs max-load capacity)',
+        recipeThroughputTitle:
+          'Current {{load}} — actual rate vs full recipe',
+        loadUtilizationMeta: 'Load: {{current}} / {{max}}',
+        portInputMaxLoadTitle: '{{load}} · {{received}} of {{demand}} (max load contribution)',
+        portRecipeLoad: 'Rec {{value}}',
+        portCapacityLoad: 'Cap {{value}}',
+        portOutRecipeLoadTitle:
+          'Recipe {{load}} · {{sent}} of {{produced}} (vs full recipe rate)',
+        portOutCapacityLoadTitle:
+          'Capacity {{load}} · {{sent}} of {{maxOutput}} (vs available at max load)',
         nodeOutputLoadMeta: 'Output use {{value}}',
         nodeOutputLoadTitle:
           'Output use {{load}} — share of production sent on edges',
         portLoadTitle: '{{load}} · {{received}} of {{demand}}',
         portLoadOpenTitle: '{{load}} · port open, requires {{demand}}',
-        portOutLoadTitle: '{{load}} · {{sent}} of {{produced}}',
+        portOutConsumerLoadTitle:
+          '{{load}} · {{sent}} of {{demand}} (downstream demand on this port)',
         portOutLoadOpenTitle: '{{load}} · port open, produces {{produced}}',
         parallel: 'Parallel',
         apply: 'Apply',

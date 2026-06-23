@@ -469,7 +469,7 @@ export function EditorPage() {
                 lang,
               )
             : [],
-          loadPercent: nodeLoadMeta?.loadPercent,
+          loadPercent: nodeLoadMeta?.currentLoadPercent,
           loadLabel: nodeLoadMeta?.label,
           loadTitle: nodeLoadMeta?.title,
           layoutWidth: layoutWidthByNodeId[n.id],

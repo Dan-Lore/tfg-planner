@@ -848,6 +848,17 @@ a {
   border-radius: 4px;
 }
 
+.editor-inspector__load-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.editor-inspector__load-row .editor-inspector__load-chip {
+  margin-bottom: 0;
+}
+
 .editor-inspector__balance-line {
   font-size: 0.75rem;
   font-weight: 600;
@@ -914,6 +925,14 @@ a {
 .editor-inspector__port-id {
   font-size: 0.65rem;
   color: var(--muted);
+}
+
+.editor-inspector__port-load--recipe {
+  font-size: 0.6rem;
+}
+
+.editor-inspector__port-load--capacity {
+  font-size: 0.6rem;
 }
 
 .flow-edge-label {
@@ -1389,6 +1408,13 @@ a {
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
   width: fit-content;
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.machine-node__load--max,
+.machine-node__load--current {
+  margin-top: 0.2rem;
 }
 
 .machine-node__ports {
@@ -1496,6 +1522,12 @@ a {
   padding: 0 0.2rem;
   border-radius: 3px;
   flex-shrink: 0;
+}
+
+.machine-port__load--recipe,
+.machine-port__load--capacity {
+  font-size: 0.5rem;
+  padding: 0 0.15rem;
 }
 
 .machine-node:hover:not(.is-dragging) {

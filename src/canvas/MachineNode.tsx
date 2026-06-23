@@ -3,7 +3,7 @@ import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflo
 import { useTranslation } from 'react-i18next';
 import type { PackData, Flow } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
-import type { NodeBalanceLine } from '@/canvas/flow-display';
+import type { NodeBalanceLine, PortLoadMeta } from '@/canvas/flow-display';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import type { VoltageTier } from '@/calculator/gt-voltage';
@@ -26,7 +26,7 @@ export interface PortDisplay {
   label: string;
   tooltip?: string;
   rate?: string;
-  /** Input port load 0…100 for styling. */
+  /** Input: max-load contribution. Output: sent / effective produced at current load. */
   loadPercent?: number;
   loadLabel?: string;
   connected: boolean;
@@ -53,7 +53,6 @@ export interface MachineNodeData {
   inputPorts: PortDisplay[];
   outputPorts: PortDisplay[];
   balanceLines: NodeBalanceLine[];
-  /** Overall load 0…100. */
   loadPercent?: number;
   loadLabel?: string;
   loadTitle?: string;
@@ -398,8 +397,8 @@ export function buildPortDisplays(
   inputRates: Record<string, string>,
   outputRates: Record<string, string>,
   outputPortRateRationals?: Record<string, Rational>,
-  inputPortLoadMeta?: Record<string, { loadPercent: number; title: string }>,
-  outputPortLoadMeta?: Record<string, { loadPercent: number; title: string }>,
+  inputPortLoadMeta?: Record<string, PortLoadMeta>,
+  outputPortLoadMeta?: Record<string, PortLoadMeta>,
 ): { inputPorts: PortDisplay[]; outputPorts: PortDisplay[] } {
   if (!recipe) {
     return { inputPorts: [], outputPorts: [] };
