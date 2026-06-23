@@ -47,6 +47,7 @@ describe('mergeFlowNodes', () => {
     ];
 
     const merged = mergeFlowNodes(prev, next);
+    expect(merged[0]?.width).toBe(340);
     expect(merged[0]?.measured).toBeUndefined();
     expect(merged[0]?.position).toEqual({ x: 10, y: 20 });
   });

@@ -1,4 +1,4 @@
-import { memo, useLayoutEffect, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { memo, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackData, Flow } from '@/data/types';
@@ -158,8 +158,9 @@ function formatLoadPercentDisplay(percent: number): string {
   return `${Math.round(percent)}%`;
 }
 
-function MachineNodeComponent({ id, data, dragging, selected }: NodeProps) {
+function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps) {
   const updateNodeInternals = useUpdateNodeInternals();
+  const rootRef = useRef<HTMLDivElement>(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
@@ -190,12 +191,21 @@ function MachineNodeComponent({ id, data, dragging, selected }: NodeProps) {
     return effectiveTotalEu(recipe, d.voltageTier, d.overclock);
   }, [recipe, d.voltageTier, d.overclock]);
   const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
+  const cardWidth = width ?? d.layoutWidth;
 
   useLayoutEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
     updateNodeInternals(id);
+    const observer = new ResizeObserver(() => {
+      updateNodeInternals(id);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [
     id,
-    d.layoutWidth,
+    cardWidth,
     d.inputPorts.length,
     d.outputPorts.length,
     d.balanceLines.length,
@@ -206,6 +216,7 @@ function MachineNodeComponent({ id, data, dragging, selected }: NodeProps) {
 
   return (
     <div
+      ref={rootRef}
       className={[
         'machine-node',
         selected ? 'selected' : '',
@@ -215,10 +226,10 @@ function MachineNodeComponent({ id, data, dragging, selected }: NodeProps) {
         .filter(Boolean)
         .join(' ')}
       style={
-        d.layoutWidth != null
+        cardWidth != null
           ? {
-              width: d.layoutWidth,
-              minWidth: d.layoutWidth,
+              width: cardWidth,
+              minWidth: cardWidth,
               boxSizing: 'border-box',
             }
           : undefined

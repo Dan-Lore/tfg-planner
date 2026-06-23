@@ -809,6 +809,10 @@ a {
   color: var(--muted);
 }
 
+.react-flow__node:has(> .machine-node) {
+  box-sizing: border-box;
+}
+
 .machine-node {
   background: var(--surface2);
   border: 2px solid var(--border);

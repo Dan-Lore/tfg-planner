@@ -22,6 +22,7 @@ export function mergeFlowNodes(prev: Node[], next: Node[]): Node[] {
     return {
       ...rf,
       position: existing.position,
+      ...(nextLayoutWidth != null ? { width: nextLayoutWidth } : {}),
       measured:
         layoutWidthChanged ? undefined : (existing.measured ?? rf.measured),
     };
