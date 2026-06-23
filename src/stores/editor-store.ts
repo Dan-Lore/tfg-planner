@@ -27,6 +27,13 @@ import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import type { FlowResult } from '@/calculator/flow-solver';
 import { usePackStore } from './pack-store';
+import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import {
+  estimateBufferDefaults,
+  clampNonNegativeInt,
+} from '@/lib/buffer-defaults';
+import type { TfgpBufferKind } from '@/schema/tfgp';
+import { normalizeBufferNode } from '@/lib/node-scaling';
 
 const MAX_HISTORY = 50;
 
@@ -86,6 +93,15 @@ interface EditorState {
     anchorNodeId: string;
     anchorPort: string;
     newPort: string;
+    direction: 'upstream' | 'downstream';
+    itemId?: string;
+    fluidId?: string;
+  }) => string;
+  attachBuffer: (params: {
+    bufferKind: TfgpBufferKind;
+    position: { x: number; y: number };
+    anchorNodeId: string;
+    anchorPort: string;
     direction: 'upstream' | 'downstream';
     itemId?: string;
     fluidId?: string;
@@ -324,7 +340,28 @@ export const useEditorStore = create<EditorState>()(
             ...s.scheme,
             nodes: s.scheme.nodes.map((n) => {
               if (n.id !== id) return n;
-              let next = { ...n, ...patch };
+              let next = { ...n, ...patch } as TfgpNode;
+              if (isBufferNode(next)) {
+                if (patch.capacity != null) {
+                  next = { ...next, capacity: clampNonNegativeInt(patch.capacity) };
+                }
+                if (next.kind === 'start_buffer') {
+                  if (patch.supplyRate != null) {
+                    next = {
+                      ...next,
+                      supplyRate: clampNonNegativeInt(patch.supplyRate),
+                      autoSupplyRate: false,
+                    };
+                  }
+                  if (patch.initialStock != null) {
+                    next = {
+                      ...next,
+                      initialStock: clampNonNegativeInt(patch.initialStock),
+                    };
+                  }
+                }
+                return normalizeBufferNode(next);
+              }
               if (patch.recipeId && pack) {
                 const recipe = pack.recipes.find((r) => r.id === patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };
@@ -432,6 +469,86 @@ export const useEditorStore = create<EditorState>()(
                 itemId: params.itemId,
                 fluidId: params.fluidId,
               };
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            nodes: [...s.scheme.nodes, node],
+            edges: [...s.scheme.edges, edge],
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        get().updateFlows();
+        return nodeId;
+      },
+
+      attachBuffer: (params) => {
+        get().pushHistory();
+        const { scheme, flowResult } = get();
+        const defaults = estimateBufferDefaults(
+          params.anchorNodeId,
+          params.anchorPort,
+          params.direction,
+          scheme,
+          flowResult,
+        );
+        const nodeId = allocateNodeId(scheme.nodes, scheme.edges);
+        const edgeId = allocateEdgeId(scheme.nodes, scheme.edges);
+
+        const base = {
+          id: nodeId,
+          position: params.position,
+          itemId: params.itemId,
+          fluidId: params.fluidId,
+          capacity: defaults.capacity,
+        };
+
+        let node: TfgpNode;
+        if (params.bufferKind === 'start_buffer') {
+          node = normalizeBufferNode({
+            ...base,
+            kind: 'start_buffer',
+            supplyMode: 'rate',
+            supplyRate: defaults.supplyRate,
+            autoSupplyRate: true,
+          });
+        } else if (params.bufferKind === 'intermediate_buffer') {
+          node = normalizeBufferNode({
+            ...base,
+            kind: 'intermediate_buffer',
+          });
+        } else {
+          node = normalizeBufferNode({
+            ...base,
+            kind: 'end_buffer',
+          });
+        }
+
+        const bufferOutPort = 'out_0';
+        const bufferInPort = 'in_0';
+        const edge: TfgpEdge =
+          params.direction === 'downstream'
+            ? {
+                id: edgeId,
+                source: params.anchorNodeId,
+                sourcePort: params.anchorPort,
+                target: nodeId,
+                targetPort: bufferInPort,
+                itemId: params.itemId,
+                fluidId: params.fluidId,
+              }
+            : {
+                id: edgeId,
+                source: nodeId,
+                sourcePort: bufferOutPort,
+                target: params.anchorNodeId,
+                targetPort: params.anchorPort,
+                itemId: params.itemId,
+                fluidId: params.fluidId,
+              };
+
         set((s) => {
           const scheme = {
             ...s.scheme,
@@ -588,6 +705,10 @@ export const useEditorStore = create<EditorState>()(
           state.scheme = cached;
           seedIdCounter(cached.nodes, cached.edges);
         }
+        queueMicrotask(() => {
+          const pack = usePackStore.getState().activePack;
+          if (pack) useEditorStore.getState().updateFlows();
+        });
       },
     },
   ),

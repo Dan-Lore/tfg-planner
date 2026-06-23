@@ -41,6 +41,13 @@
       "parallel": 1,
       "machineCount": 1,
       "label": ""
+    },
+    {
+      "id": "buf1",
+      "kind": "intermediate_buffer",
+      "position": { "x": 400, "y": 200 },
+      "fluidId": "gtceu:steam",
+      "capacity": 3600
     }
   ],
   "edges": [

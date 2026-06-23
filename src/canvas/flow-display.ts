@@ -4,13 +4,15 @@ import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { PackData, Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
-import { normalizePortId, parsePortId, portFlow, productKey, inputPortId } from '@/canvas/ports';
+import { normalizePortId, parsePortId, portFlow, productKey, inputPortId, nodePortFlow } from '@/canvas/ports';
+import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import {
   formatFlowRateLabel,
   isChancedFlow,
 } from '@/lib/flow-chance';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 import {
+  BUFFER_NODE_WIDTH,
   MACHINE_NODE_WIDTH,
   PORT_ROW_HEIGHT,
   estimateHeaderHeight,
@@ -27,13 +29,22 @@ function estimatePortCenter(
   if (!parsed) {
     return { x: node.position.x, y: node.position.y };
   }
-  const portsTopY =
-    estimateHeaderHeight(pack, node.machineId, node.recipeId) + node.position.y;
+  let portsTopY: number;
+  let effectiveWidth = nodeWidth;
+  if (isBufferNode(node)) {
+    const header = 56;
+    const fields = node.kind === 'start_buffer' ? 88 : 36;
+    portsTopY = node.position.y + header + fields;
+    effectiveWidth = BUFFER_NODE_WIDTH;
+  } else {
+    portsTopY =
+      estimateHeaderHeight(pack, node.machineId, node.recipeId) + node.position.y;
+  }
   const y = portsTopY + parsed.index * PORT_ROW_HEIGHT + PORT_ROW_HEIGHT / 2;
   const x =
     parsed.kind === 'in'
       ? node.position.x
-      : node.position.x + nodeWidth;
+      : node.position.x + effectiveWidth;
   return { x, y };
 }
 
@@ -209,10 +220,10 @@ function applyLabelDedup(
     if (totalFlow.compare(R.zero) <= 0) continue;
 
     const node = nodes.find((n) => n.id === edge.source);
-    const recipe = node
+    const recipe = node && isMachineNode(node)
       ? pack.recipes.find((r) => r.id === node.recipeId)
       : undefined;
-    const flow = portFlow(recipe, edge.sourcePort);
+    const flow = node ? nodePortFlow(node, edge.sourcePort, recipe) : null;
     entry.source = formatFlowRateLabel(
       totalFlow,
       flow ? isChancedFlow(flow) : false,
@@ -254,10 +265,10 @@ export function buildEdgeFlowData(
     if (!flow || flow.compare(R.zero) <= 0) continue;
 
     const node = nodes.find((n) => n.id === edge.source);
-    const recipe = node
+    const recipe = node && isMachineNode(node)
       ? pack.recipes.find((r) => r.id === node.recipeId)
       : undefined;
-    const sourceFlow = portFlow(recipe, edge.sourcePort);
+    const sourceFlow = node ? nodePortFlow(node, edge.sourcePort, recipe) : null;
     const srcApprox = sourceFlow ? isChancedFlow(sourceFlow) : false;
     const label = formatFlowRateLabel(flow, srcApprox);
 

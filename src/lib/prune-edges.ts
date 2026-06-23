@@ -1,11 +1,12 @@
 import type { PackData } from '@/data/types';
-import type { TfgpEdge } from '@/schema/tfgp';
-import { portFlow, portsMatch } from '@/canvas/ports';
+import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
+import { nodePortFlow, portsMatch } from '@/canvas/ports';
 import { buildTagIndex } from '@/lib/tag-index';
+import { isMachineNode } from '@/lib/node-kind';
 
 export function pruneInvalidEdges(
   edges: TfgpEdge[],
-  nodes: { id: string; recipeId: string }[],
+  nodes: TfgpNode[],
   pack: PackData,
 ): TfgpEdge[] {
   const nodeById = new Map(nodes.map((n) => [n.id, n]));
@@ -14,10 +15,14 @@ export function pruneInvalidEdges(
     const src = nodeById.get(edge.source);
     const tgt = nodeById.get(edge.target);
     if (!src || !tgt) return false;
-    const srcRecipe = pack.recipes.find((r) => r.id === src.recipeId);
-    const tgtRecipe = pack.recipes.find((r) => r.id === tgt.recipeId);
-    const srcFlow = portFlow(srcRecipe, edge.sourcePort);
-    const tgtFlow = portFlow(tgtRecipe, edge.targetPort);
+    const srcRecipe = isMachineNode(src)
+      ? pack.recipes.find((r) => r.id === src.recipeId)
+      : undefined;
+    const tgtRecipe = isMachineNode(tgt)
+      ? pack.recipes.find((r) => r.id === tgt.recipeId)
+      : undefined;
+    const srcFlow = nodePortFlow(src, edge.sourcePort, srcRecipe);
+    const tgtFlow = nodePortFlow(tgt, edge.targetPort, tgtRecipe);
     return portsMatch(srcFlow, tgtFlow, tags);
   });
 }

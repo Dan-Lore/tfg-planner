@@ -1,10 +1,13 @@
 import type { Node } from '@xyflow/react';
 import type { MachineNodeData } from '@/canvas/MachineNode';
+import type { BufferNodeData } from '@/canvas/BufferNode';
 import type { PackData } from '@/data/types';
 import { getMachineRecipeCount } from '@/data/pack-registry';
+import type { TfgpBufferKind } from '@/schema/tfgp';
 
 export const MACHINE_NODE_WIDTH = 220;
 export const MACHINE_NODE_MIN_WIDTH = 200;
+export const BUFFER_NODE_WIDTH = 200;
 /** Matches `.machine-port` min-height (1.35rem) + column gap (~0.2rem). */
 export const PORT_ROW_HEIGHT = 24;
 export const PORT_SECTION_PADDING = 6;
@@ -68,6 +71,35 @@ export function estimateMachineNodeHeight(data: MachineNodeData): number {
     portCount,
     data.balanceLines?.length ?? 0,
   );
+}
+
+export function estimateBufferNodeHeight(bufferKind: TfgpBufferKind): number {
+  const header = 56;
+  const fields = bufferKind === 'start_buffer' ? 88 : 36;
+  const portRows = 1;
+  return header + fields + portRows * PORT_ROW_HEIGHT + PORT_SECTION_PADDING;
+}
+
+export function estimateBufferNodeHeightFromData(data: BufferNodeData): number {
+  return estimateBufferNodeHeight(data.bufferKind);
+}
+
+export function getBufferNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): NodeRect {
+  const data = node.data as BufferNodeData;
+  const width = BUFFER_NODE_WIDTH;
+  const height = estimateBufferNodeHeightFromData(data);
+  return {
+    left: node.position.x - padding,
+    top: node.position.y - padding,
+    right: node.position.x + width + padding,
+    bottom: node.position.y + height + padding,
+  };
+}
+
+/** Rect for edge-routing obstacles (machine or buffer nodes). */
+export function getFlowNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): NodeRect {
+  if (node.type === 'buffer') return getBufferNodeRect(node, padding);
+  return getMachineNodeRect(node, padding);
 }
 
 /** Obstacle box from visible content — not bloated measured height from flex/minHeight. */

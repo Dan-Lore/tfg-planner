@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import type { MachineNodeData } from '@/canvas/MachineNode';
 import {
+  estimateBufferNodeHeight,
   estimateMachineNodeHeight,
   estimateMachineNodeHeightFromPorts,
+  getFlowNodeRect,
   getMachineNodeRect,
   PORT_ROW_HEIGHT,
 } from '@/canvas/node-bounds';
@@ -77,6 +79,41 @@ describe('estimateMachineNodeHeight', () => {
 
     expect(rect.bottom - rect.top).toBeLessThan(contentHeight + 40);
     expect(rect.bottom).toBe(200 + contentHeight + 8);
+  });
+});
+
+describe('estimateBufferNodeHeight', () => {
+  it('uses one port row for intermediate buffer', () => {
+    const intermediate = estimateBufferNodeHeight('intermediate_buffer');
+    const end = estimateBufferNodeHeight('end_buffer');
+    expect(intermediate).toBe(end);
+    expect(intermediate).toBe(56 + 36 + PORT_ROW_HEIGHT + 6);
+  });
+});
+
+describe('getFlowNodeRect', () => {
+  it('uses buffer height for buffer nodes', () => {
+    const rect = getFlowNodeRect({
+      id: 'b1',
+      type: 'buffer',
+      position: { x: 50, y: 100 },
+      data: {
+        bufferKind: 'intermediate_buffer',
+        capacity: 100,
+        pack: { recipes: [], machines: [], items: [], fluids: [] } as PackData,
+        inputPorts: [],
+        outputPorts: [],
+        onCapacityChange: () => {},
+        onSupplyModeChange: () => {},
+        onSupplyRateChange: () => {},
+        onInitialStockChange: () => {},
+        onPortContextMenu: () => {},
+      },
+    });
+    expect(rect.left).toBe(42);
+    expect(rect.top).toBe(92);
+    expect(rect.right).toBe(50 + 200 + 8);
+    expect(rect.bottom).toBe(100 + estimateBufferNodeHeight('intermediate_buffer') + 8);
   });
 });
 

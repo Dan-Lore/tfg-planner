@@ -77,7 +77,7 @@ function EditorCanvasComponent({
       if (!dragEnded) return;
 
       setFlowNodes((current) => {
-        onPersistNodePositions(current);
+        queueMicrotask(() => onPersistNodePositions(current));
         return current;
       });
     },

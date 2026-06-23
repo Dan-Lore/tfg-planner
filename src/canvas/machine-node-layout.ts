@@ -16,6 +16,7 @@ import type { PackData } from '@/data/types';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
+import { isMachineNode } from '@/lib/node-kind';
 
 export function buildConnectedPortMaps(edges: TfgpEdge[]): {
   connectedIn: Map<string, Set<string>>;
@@ -160,6 +161,7 @@ export function buildMachineNodeLayoutWidths(
   const naturalByNode = new Map<string, number>();
 
   for (const node of input.nodes) {
+    if (!isMachineNode(node)) continue;
     const recipe = input.pack.recipes.find((r) => r.id === node.recipeId);
     const inputRates = rateMapToStrings(input.flowResult?.nodeInputRates[node.id]);
     const outputRates = rateMapToStrings(input.flowResult?.nodeOutputRates[node.id]);

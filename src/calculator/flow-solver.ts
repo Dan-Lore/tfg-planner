@@ -7,17 +7,49 @@ import { buildTagIndex } from '@/lib/tag-index';
 import { recipeInputMatchesProduct } from '@/lib/flow-match';
 import { normalizePortId, parsePortId } from '@/canvas/ports';
 import { chanceRateMultiplier } from '@/lib/flow-chance';
+import {
+  assignStartBufferInitialFlows,
+  buildBufferNodeLoad,
+  buildBufferPortOutputRates,
+  buildBufferSurplus,
+  buildStartBufferTheoreticalRates,
+  collectBufferInflows,
+  computeIntermediateBufferEffectiveOut,
+  computeStartBufferEffectiveOut,
+  computeDownstreamDemand,
+  isSchemeBufferNode,
+  isSchemeEndBuffer,
+  isSchemeIntermediateBuffer,
+  isSchemeStartBuffer,
+  processIntermediateBufferIteration,
+  processStartBufferIteration,
+  resolveBufferTargetPort,
+} from '@/calculator/buffer-solver';
 
 export const TICKS_PER_SECOND = 20;
 
+export type SchemeNodeKind =
+  | 'machine'
+  | 'start_buffer'
+  | 'intermediate_buffer'
+  | 'end_buffer';
+
 export interface SchemeNode {
   id: string;
+  kind?: SchemeNodeKind;
   machineId: string;
   recipeId: string;
   machineCount: number;
   overclock: number;
   parallel: number;
   voltageTier: VoltageTier;
+  itemId?: string;
+  fluidId?: string;
+  capacity?: number;
+  supplyMode?: 'rate' | 'stock';
+  supplyRate?: number;
+  initialStock?: number;
+  autoSupplyRate?: boolean;
 }
 
 export interface SchemeEdge {
@@ -188,7 +220,15 @@ function assignEdgeFlowsFromPorts(
   }
   for (const [nodeId, nodeEdges] of outgoing) {
     const node = nodeById.get(nodeId);
-    const recipe = node ? recipes.get(node.recipeId) : undefined;
+    if (!node) continue;
+
+    if (isSchemeStartBuffer(node)) {
+      assignStartBufferInitialFlows(nodeId, nodeEdges, node, edgeFlows);
+      continue;
+    }
+    if (isSchemeBufferNode(node)) continue;
+
+    const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     const byPort = new Map<string, SchemeEdge[]>();
     for (const edge of nodeEdges) {
@@ -412,8 +452,21 @@ function computeConvergedFlows(
 
   for (const nodeId of nodeOrder) {
     const node = nodeById.get(nodeId);
-    const recipe = node ? recipes.get(node.recipeId) : undefined;
-    if (!node || !recipe) continue;
+    if (!node) continue;
+
+    if (isSchemeStartBuffer(node)) {
+      assignStartBufferInitialFlows(
+        nodeId,
+        outgoing.get(nodeId) ?? [],
+        node,
+        edgeFlows,
+      );
+      continue;
+    }
+    if (isSchemeBufferNode(node)) continue;
+
+    const recipe = recipes.get(node.recipeId);
+    if (!recipe) continue;
     const theoretical = nodePortOutputRates[nodeId] ?? {};
     assignOutgoingFromEffectiveRates(
       nodeId,
@@ -433,8 +486,45 @@ function computeConvergedFlows(
     let maxDelta = 0;
     for (const nodeId of nodeOrder) {
       const node = nodeById.get(nodeId);
-      const recipe = node ? recipes.get(node.recipeId) : undefined;
-      if (!node || !recipe) continue;
+      if (!node) continue;
+
+      if (isSchemeStartBuffer(node)) {
+        const delta = processStartBufferIteration(
+          nodeId,
+          node,
+          outgoing.get(nodeId) ?? [],
+          edges,
+          edgeFlows,
+          nodeById,
+          recipes,
+          tags,
+          nodePortOutputRates,
+        );
+        if (delta > maxDelta) maxDelta = delta;
+        continue;
+      }
+
+      if (isSchemeIntermediateBuffer(node)) {
+        const delta = processIntermediateBufferIteration(
+          nodeId,
+          node,
+          incoming.get(nodeId) ?? [],
+          outgoing.get(nodeId) ?? [],
+          edges,
+          edgeFlows,
+          nodeById,
+          recipes,
+          tags,
+          nodePortOutputRates,
+        );
+        if (delta > maxDelta) maxDelta = delta;
+        continue;
+      }
+
+      if (isSchemeEndBuffer(node)) continue;
+
+      const recipe = recipes.get(node.recipeId);
+      if (!recipe) continue;
 
       const theoretical = nodePortOutputRates[nodeId] ?? {};
       const inflows = collectInflowsByPort(
@@ -692,6 +782,12 @@ function buildConnectedInPorts(
   const connected: Record<string, Set<string>> = {};
   for (const node of nodes) {
     connected[node.id] = new Set();
+    if (isSchemeBufferNode(node)) {
+      for (const edge of incoming.get(node.id) ?? []) {
+        if (resolveBufferTargetPort(edge)) connected[node.id]!.add('in_0');
+      }
+      continue;
+    }
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     for (const edge of incoming.get(node.id) ?? []) {
@@ -776,7 +872,7 @@ export function solveFlows(input: SolverInput): FlowResult {
 
   for (const target of input.targets) {
     const node = nodeById.get(target.nodeId);
-    if (!node) continue;
+    if (!node || isSchemeBufferNode(node)) continue;
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     const key = target.itemId ?? target.fluidId ?? '';
@@ -803,7 +899,7 @@ export function solveFlows(input: SolverInput): FlowResult {
 
   for (const nodeId of reverseOrder) {
     const node = nodeById.get(nodeId);
-    if (!node) continue;
+    if (!node || isSchemeBufferNode(node)) continue;
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
 
@@ -864,6 +960,17 @@ export function solveFlows(input: SolverInput): FlowResult {
   const nodePortOutputRates: Record<string, Record<string, Rational>> = {};
 
   for (const node of input.nodes) {
+    if (isSchemeStartBuffer(node)) {
+      nodePortOutputRates[node.id] = buildStartBufferTheoreticalRates(node);
+      const key = node.itemId ?? node.fluidId ?? '';
+      if (key) nodeOutputRates[node.id] = { [key]: nodePortOutputRates[node.id]!.out_0! };
+      continue;
+    }
+    if (isSchemeBufferNode(node)) {
+      nodePortOutputRates[node.id] = {};
+      nodeOutputRates[node.id] = {};
+      continue;
+    }
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     const factor = R.from(nodeMachineCounts[node.id]);
@@ -888,7 +995,7 @@ export function solveFlows(input: SolverInput): FlowResult {
         const rate = edgeFlows[edge.id];
         if (!rate || rate.compare(R.zero) <= 0) continue;
         const down = nodeById.get(edge.target);
-        if (!down) continue;
+        if (!down || isSchemeBufferNode(down)) continue;
         const recipe = recipes.get(down.recipeId);
         if (!recipe) continue;
         if (!requiredOutput[edge.target][key]) {
@@ -912,6 +1019,17 @@ export function solveFlows(input: SolverInput): FlowResult {
   }
 
   for (const node of input.nodes) {
+    if (isSchemeStartBuffer(node)) {
+      nodePortOutputRates[node.id] = buildStartBufferTheoreticalRates(node);
+      const key = node.itemId ?? node.fluidId ?? '';
+      if (key) nodeOutputRates[node.id] = { [key]: nodePortOutputRates[node.id]!.out_0! };
+      continue;
+    }
+    if (isSchemeBufferNode(node)) {
+      nodePortOutputRates[node.id] = {};
+      nodeOutputRates[node.id] = {};
+      continue;
+    }
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     const factor = R.from(nodeMachineCounts[node.id]);
@@ -952,6 +1070,55 @@ export function solveFlows(input: SolverInput): FlowResult {
   const effectivePortRatesByNode: Record<string, Record<string, Rational>> = {};
   const inflowsByNode: Record<string, Record<string, Rational>> = {};
   for (const node of input.nodes) {
+    if (isSchemeBufferNode(node)) {
+      const inflow = collectBufferInflows(
+        incoming.get(node.id) ?? [],
+        convergedEdgeFlows,
+      );
+      let outflow = R.zero;
+      for (const edge of outgoing.get(node.id) ?? []) {
+        outflow = outflow.add(convergedEdgeFlows[edge.id] ?? R.zero);
+      }
+      inflowsByNode[node.id] = { in_0: inflow };
+
+      if (isSchemeStartBuffer(node)) {
+        const demand = computeDownstreamDemand(
+          node.id,
+          outgoing.get(node.id) ?? [],
+          input.edges,
+          convergedEdgeFlows,
+          nodeById,
+          recipes,
+          tags,
+          nodePortOutputRates,
+        );
+        const effectiveOut = computeStartBufferEffectiveOut(node, demand);
+        effectivePortRatesByNode[node.id] = buildBufferPortOutputRates(node, effectiveOut);
+        nodePortOutputRates[node.id] = effectivePortRatesByNode[node.id];
+        const key = node.itemId ?? node.fluidId ?? '';
+        if (key) nodeOutputRates[node.id] = { [key]: effectiveOut };
+      } else if (isSchemeIntermediateBuffer(node)) {
+        const demand = computeDownstreamDemand(
+          node.id,
+          outgoing.get(node.id) ?? [],
+          input.edges,
+          convergedEdgeFlows,
+          nodeById,
+          recipes,
+          tags,
+          nodePortOutputRates,
+        );
+        const effectiveOut = computeIntermediateBufferEffectiveOut(node, inflow, demand);
+        effectivePortRatesByNode[node.id] = buildBufferPortOutputRates(node, effectiveOut);
+        nodePortOutputRates[node.id] = effectivePortRatesByNode[node.id];
+        const key = node.itemId ?? node.fluidId ?? '';
+        if (key) nodeOutputRates[node.id] = { [key]: effectiveOut };
+      } else {
+        effectivePortRatesByNode[node.id] = {};
+      }
+      continue;
+    }
+
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     const theoretical = nodePortOutputRates[node.id] ?? {};
@@ -974,7 +1141,7 @@ export function solveFlows(input: SolverInput): FlowResult {
   const edgeTargetFlows: Record<string, Rational> = {};
   const nodeInputRates: Record<string, Record<string, Rational>> = {};
   const nodePortDeficit = computeNodePortDeficit(
-    input.nodes,
+    input.nodes.filter((n) => !isSchemeBufferNode(n)),
     incoming,
     nodePortOutputRates,
     effectivePortRatesByNode,
@@ -983,21 +1150,21 @@ export function solveFlows(input: SolverInput): FlowResult {
     recipes,
   );
   const nodePortInLoad = computeNodePortInLoad(
-    input.nodes,
+    input.nodes.filter((n) => !isSchemeBufferNode(n)),
     nodePortOutputRates,
     inflowsByNode,
     connectedInPortsByNode,
     recipes,
   );
   const nodePortOutLoad = computeNodePortOutLoad(
-    input.nodes,
+    input.nodes.filter((n) => !isSchemeBufferNode(n)),
     nodePortOutputRates,
     outgoing,
     convergedEdgeFlows,
     recipes,
   );
   const nodeLoad = computeNodeLoad(
-    input.nodes,
+    input.nodes.filter((n) => !isSchemeBufferNode(n)),
     nodePortOutputRates,
     effectivePortRatesByNode,
     inflowsByNode,
@@ -1006,7 +1173,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     recipes,
   );
   const nodeSurplus = computeSurplusFromEffective(
-    input.nodes,
+    input.nodes.filter((n) => !isSchemeBufferNode(n)),
     outgoing,
     effectivePortRatesByNode,
     convergedEdgeFlows,
@@ -1014,6 +1181,38 @@ export function solveFlows(input: SolverInput): FlowResult {
   );
 
   for (const node of input.nodes) {
+    if (!isSchemeBufferNode(node)) continue;
+    const inflow = inflowsByNode[node.id]?.in_0 ?? R.zero;
+    let outflow = R.zero;
+    for (const edge of outgoing.get(node.id) ?? []) {
+      outflow = outflow.add(convergedEdgeFlows[edge.id] ?? R.zero);
+    }
+    nodeLoad[node.id] = buildBufferNodeLoad(node, inflow, outflow);
+    const key = node.itemId ?? node.fluidId ?? '';
+    if (key) {
+      nodeSurplus[node.id] = buildBufferSurplus(node, inflow, outflow);
+      if (isSchemeEndBuffer(node)) {
+        nodeInputRates[node.id] = { [key]: inflow };
+      } else if (isSchemeIntermediateBuffer(node)) {
+        nodeInputRates[node.id] = { [key]: inflow };
+        nodePortInLoad[node.id] = {
+          in_0: inflow.compare(R.zero) > 0 ? R.from(1) : R.zero,
+        };
+        nodePortOutLoad[node.id] = {
+          out_0: outflow.compare(R.zero) > 0 && inflow.compare(R.zero) > 0
+            ? outflow.div(inflow)
+            : R.zero,
+        };
+      } else if (isSchemeStartBuffer(node)) {
+        nodePortOutLoad[node.id] = {
+          out_0: buildBufferNodeLoad(node, inflow, outflow),
+        };
+      }
+    }
+  }
+
+  for (const node of input.nodes) {
+    if (isSchemeBufferNode(node)) continue;
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     nodeInputRates[node.id] = {};

@@ -378,8 +378,10 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
 
 export const MachineNode = memo(MachineNodeComponent);
 
+import { BufferNode } from '@/canvas/BufferNode';
+
 export function useNodeTypes() {
-  return useMemo(() => ({ machine: MachineNode }), []);
+  return useMemo(() => ({ machine: MachineNode, buffer: BufferNode }), []);
 }
 
 export function buildPortDisplays(

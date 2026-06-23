@@ -9,19 +9,66 @@ export interface TfgpMeta {
   description: string;
 }
 
-export interface TfgpNode {
+export type TfgpNodeKind =
+  | 'machine'
+  | 'start_buffer'
+  | 'intermediate_buffer'
+  | 'end_buffer';
+
+export type TfgpBufferKind = Exclude<TfgpNodeKind, 'machine'>;
+
+export type TfgpSupplyMode = 'rate' | 'stock';
+
+export interface TfgpNodeBase {
   id: string;
+  position: { x: number; y: number };
+  label?: string;
+  kind?: TfgpNodeKind;
+}
+
+export interface TfgpMachineNode extends TfgpNodeBase {
+  kind?: 'machine';
   machineId: string;
   recipeId: string;
-  position: { x: number; y: number };
   voltageTier: VoltageTier;
   overclock: number;
   parallel: number;
   machineCount: number;
   /** Multiblock: number of energy hatches (≥ ceil(recipe amperage)). */
   energyHatchCount?: number;
-  label?: string;
 }
+
+export interface TfgpBufferNodeBase extends TfgpNodeBase {
+  itemId?: string;
+  fluidId?: string;
+  /** Storage capacity in items/mB; set once at creation. */
+  capacity: number;
+}
+
+export interface TfgpStartBufferNode extends TfgpBufferNodeBase {
+  kind: 'start_buffer';
+  supplyMode: TfgpSupplyMode;
+  /** Items/s when supplyMode is rate. */
+  supplyRate?: number;
+  /** Total items when supplyMode is stock. */
+  initialStock?: number;
+  /** When true, supplyRate tracks downstream demand each solve. */
+  autoSupplyRate?: boolean;
+}
+
+export interface TfgpIntermediateBufferNode extends TfgpBufferNodeBase {
+  kind: 'intermediate_buffer';
+}
+
+export interface TfgpEndBufferNode extends TfgpBufferNodeBase {
+  kind: 'end_buffer';
+}
+
+export type TfgpNode =
+  | TfgpMachineNode
+  | TfgpStartBufferNode
+  | TfgpIntermediateBufferNode
+  | TfgpEndBufferNode;
 
 export interface TfgpEdge {
   id: string;

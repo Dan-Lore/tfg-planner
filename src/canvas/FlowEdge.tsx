@@ -15,7 +15,7 @@ import {
   getRoutedSmoothStepPath,
   type EdgeRouteEndpoints,
 } from '@/lib/edge-routing';
-import { getMachineNodeRect } from '@/canvas/node-bounds';
+import { getFlowNodeRect } from '@/canvas/node-bounds';
 
 export interface FlowEdgeData {
   source?: string;
@@ -93,10 +93,10 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
   const obstacles = useMemo(
     () =>
       nodes
-        .filter((node) => node.type === 'machine')
+        .filter((node) => node.type === 'machine' || node.type === 'buffer')
         .map((node) => ({
           nodeId: node.id,
-          rect: getMachineNodeRect(node),
+          rect: getFlowNodeRect(node),
         })),
     [nodes],
   );
