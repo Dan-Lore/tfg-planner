@@ -340,7 +340,6 @@ export function EditorPage() {
           loadTitle: nodeLoadMeta?.title,
           layoutWidth: layoutWidthByNodeId[n.id],
         },
-        width: layoutWidthByNodeId[n.id],
       };
     });
   }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, layoutWidthByNodeId, t, handleRecipeChange, handlePortContextMenu, updateNode]);

@@ -94,9 +94,21 @@ function portColumnWidth(ports: PortDisplay[]): number {
   for (const port of ports) {
     const labelW = Math.min(measureTextWidth(port.label, 0.65), PORT_LABEL_MAX);
     const rateW = port.rate ? measureTextWidth(port.rate, 0.6, 600) : 0;
-    max = Math.max(max, PORT_SIDE_PAD + labelW + PORT_INNER_GAP + rateW);
+    const loadW = port.loadLabel
+      ? measureTextWidth(formatLoadPercentDisplay(port.loadPercent ?? 0), 0.55, 700)
+      : 0;
+    max = Math.max(
+      max,
+      PORT_SIDE_PAD + labelW + PORT_INNER_GAP + rateW + (loadW > 0 ? PORT_INNER_GAP + loadW : 0),
+    );
   }
   return max;
+}
+
+function formatLoadPercentDisplay(percent: number): string {
+  if (percent >= 99.95) return '100%';
+  if (percent <= 0.05) return '0%';
+  return `${Math.round(percent)}%`;
 }
 
 /** Estimate rendered width from node display data (matches `.machine-node` layout). */

@@ -1,5 +1,5 @@
-import { memo, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
-import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { memo, useLayoutEffect, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackData, Flow } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
@@ -158,7 +158,8 @@ function formatLoadPercentDisplay(percent: number): string {
   return `${Math.round(percent)}%`;
 }
 
-function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
+function MachineNodeComponent({ id, data, dragging, selected }: NodeProps) {
+  const updateNodeInternals = useUpdateNodeInternals();
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
@@ -190,6 +191,19 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
   }, [recipe, d.voltageTier, d.overclock]);
   const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
 
+  useLayoutEffect(() => {
+    updateNodeInternals(id);
+  }, [
+    id,
+    d.layoutWidth,
+    d.inputPorts.length,
+    d.outputPorts.length,
+    d.balanceLines.length,
+    d.loadLabel,
+    d.recipeId,
+    updateNodeInternals,
+  ]);
+
   return (
     <div
       className={[
@@ -202,7 +216,11 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
         .join(' ')}
       style={
         d.layoutWidth != null
-          ? { width: d.layoutWidth, minWidth: d.layoutWidth }
+          ? {
+              width: d.layoutWidth,
+              minWidth: d.layoutWidth,
+              boxSizing: 'border-box',
+            }
           : undefined
       }
     >

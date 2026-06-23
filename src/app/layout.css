@@ -815,6 +815,7 @@ a {
   border-radius: 8px;
   min-width: 200px;
   box-sizing: border-box;
+  position: relative;
   font-size: 0.8rem;
   cursor: grab;
   display: flex;
@@ -1062,18 +1063,19 @@ a {
 }
 
 .machine-node__ports {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem;
   padding: 0 0 0.35rem;
   min-height: 1.5rem;
+  min-width: 0;
 }
 
 .machine-node__ports-col {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  flex: 0 0 auto;
+  min-width: 0;
 }
 
 .machine-node__ports-col--in {
@@ -1092,6 +1094,8 @@ a {
   font-size: 0.65rem;
   min-height: 1.35rem;
   padding: 0.1rem 0;
+  width: auto;
+  max-width: 100%;
 }
 
 .machine-port--left {
@@ -1111,7 +1115,19 @@ a {
   background: var(--accent) !important;
   position: absolute !important;
   top: 50% !important;
-  transform: translateY(-50%);
+  margin: 0 !important;
+}
+
+.machine-port__handle.react-flow__handle-left {
+  left: -5px !important;
+  right: auto !important;
+  transform: translateY(-50%) !important;
+}
+
+.machine-port__handle.react-flow__handle-right {
+  right: -5px !important;
+  left: auto !important;
+  transform: translateY(-50%) !important;
 }
 
 .machine-port--left .machine-port__handle {
