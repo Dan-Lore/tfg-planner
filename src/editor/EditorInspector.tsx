@@ -30,7 +30,7 @@ import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipeComboboxItems } from '@/lib/search-combobox';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
-import type { TfgpEdge, TfgpNode, TfgpSupplyMode } from '@/schema/tfgp';
+import type { TfgpEdge, TfgpNode, TfgpNodeBase, TfgpSupplyMode } from '@/schema/tfgp';
 
 function formatLoadPercentDisplay(percent: number): string {
   if (percent >= 99.95) return '100%';
@@ -56,7 +56,7 @@ function getNodeDisplayName(node: TfgpNode, pack: PackData, lang: 'ru' | 'en'): 
     );
     return product;
   }
-  return node.id;
+  return (node as TfgpNodeBase).id;
 }
 
 function InspectorSection({
@@ -178,12 +178,16 @@ function MachineInspector({
 
   const euPerTick = useMemo(() => {
     if (!recipe) return undefined;
-    return effectiveEuPerTick(recipe, node.voltageTier, node.overclock) * node.machineCount;
-  }, [recipe, node.voltageTier, node.overclock, node.machineCount]);
+    const perTick = effectiveEuPerTick(recipe, node.voltageTier);
+    if (perTick === undefined) return undefined;
+    return perTick * node.machineCount;
+  }, [recipe, node.voltageTier, node.machineCount]);
 
   const totalEu = useMemo(() => {
     if (!recipe) return undefined;
-    return effectiveTotalEu(recipe, node.voltageTier, node.overclock) * node.machineCount;
+    const total = effectiveTotalEu(recipe, node.voltageTier, node.overclock);
+    if (total === undefined) return undefined;
+    return total * node.machineCount;
   }, [recipe, node.voltageTier, node.overclock, node.machineCount]);
 
   return (

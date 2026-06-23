@@ -278,6 +278,7 @@ export function buildMachineNodeLayoutWidths(
 
   const byMachineId = new Map<string, number>();
   for (const node of input.nodes) {
+    if (!isMachineNode(node)) continue;
     const natural = naturalByNode.get(node.id) ?? MACHINE_NODE_MIN_WIDTH;
     byMachineId.set(
       node.machineId,
@@ -287,6 +288,7 @@ export function buildMachineNodeLayoutWidths(
 
   const result: Record<string, number> = {};
   for (const node of input.nodes) {
+    if (!isMachineNode(node)) continue;
     result[node.id] = byMachineId.get(node.machineId) ?? MACHINE_NODE_MIN_WIDTH;
   }
   return result;

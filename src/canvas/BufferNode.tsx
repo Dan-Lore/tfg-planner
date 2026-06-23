@@ -202,7 +202,9 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
               port={port}
               type="target"
               side="left"
-              onContextMenu={d.onPortContextMenu}
+              onContextMenu={(portId, side, e) =>
+                d.onPortContextMenu(portId, side, e.clientX, e.clientY)
+              }
             />
           ))}
         </div>
@@ -213,7 +215,9 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
               port={port}
               type="source"
               side="right"
-              onContextMenu={d.onPortContextMenu}
+              onContextMenu={(portId, side, e) =>
+                d.onPortContextMenu(portId, side, e.clientX, e.clientY)
+              }
             />
           ))}
         </div>

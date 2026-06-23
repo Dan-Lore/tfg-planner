@@ -4,7 +4,8 @@ import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { PackData, Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
-import { normalizePortId, parsePortId, portFlow, productKey, inputPortId, nodePortFlow } from '@/canvas/ports';
+import { normalizePortId, parsePortId, productKey, inputPortId, nodePortFlow } from '@/canvas/ports';
+import type { Rational } from '@/calculator/rational';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import {
   formatFlowRateLabel,

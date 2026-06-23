@@ -234,10 +234,7 @@ export function computeIntermediateBufferEffectiveOut(
 }
 
 export function assignBufferOutgoing(
-  nodeId: string,
-  node: SchemeNode,
   nodeEdges: SchemeEdge[],
-  allEdges: SchemeEdge[],
   effectiveOut: Rational,
   edgeFlows: Record<string, Rational>,
 ): number {
@@ -279,7 +276,7 @@ export function processStartBufferIteration(
     nodePortOutputRates,
   );
   const effectiveOut = computeStartBufferEffectiveOut(node, demand);
-  return assignBufferOutgoing(nodeId, node, nodeEdges, allEdges, effectiveOut, edgeFlows);
+  return assignBufferOutgoing(nodeEdges, effectiveOut, edgeFlows);
 }
 
 export function processIntermediateBufferIteration(
@@ -306,11 +303,10 @@ export function processIntermediateBufferIteration(
     nodePortOutputRates,
   );
   const effectiveOut = computeIntermediateBufferEffectiveOut(node, inflow, demand);
-  return assignBufferOutgoing(nodeId, node, nodeEdges, allEdges, effectiveOut, edgeFlows);
+  return assignBufferOutgoing(nodeEdges, effectiveOut, edgeFlows);
 }
 
 export function assignStartBufferInitialFlows(
-  nodeId: string,
   nodeEdges: SchemeEdge[],
   node: SchemeNode,
   edgeFlows: Record<string, Rational>,

@@ -239,7 +239,7 @@ function assignEdgeFlowsFromPorts(
     if (!node) continue;
 
     if (isSchemeStartBuffer(node)) {
-      assignStartBufferInitialFlows(nodeId, nodeEdges, node, edgeFlows);
+      assignStartBufferInitialFlows(nodeEdges, node, edgeFlows);
       continue;
     }
     if (isSchemeBufferNode(node)) continue;
@@ -265,7 +265,6 @@ function assignEdgeFlowsFromPorts(
 }
 
 function collectInflowsByPort(
-  nodeId: string,
   recipe: Recipe,
   nodeIncoming: SchemeEdge[],
   edgeFlows: Record<string, Rational>,
@@ -408,7 +407,6 @@ function computeOutputLimitedScale(
 }
 
 function computePortDownstreamDemandByOutputPort(
-  nodeId: string,
   recipe: Recipe,
   nodeEdges: SchemeEdge[],
   nodePortOutputRates: Record<string, Record<string, Rational>>,
@@ -649,7 +647,6 @@ function assignOutgoingFromEffectiveRates(
 }
 
 function computeConvergedFlows(
-  nodes: SchemeNode[],
   edges: SchemeEdge[],
   nodePortOutputRates: Record<string, Record<string, Rational>>,
   incoming: Map<string, SchemeEdge[]>,
@@ -672,7 +669,6 @@ function computeConvergedFlows(
 
     if (isSchemeStartBuffer(node)) {
       assignStartBufferInitialFlows(
-        nodeId,
         outgoing.get(nodeId) ?? [],
         node,
         edgeFlows,
@@ -685,7 +681,6 @@ function computeConvergedFlows(
     if (!recipe) continue;
     const theoretical = nodePortOutputRates[nodeId] ?? {};
     const inflows = collectInflowsByPort(
-      nodeId,
       recipe,
       incoming.get(nodeId) ?? [],
       edgeFlows,
@@ -768,7 +763,6 @@ function computeConvergedFlows(
 
       const theoretical = nodePortOutputRates[nodeId] ?? {};
       const inflows = collectInflowsByPort(
-        nodeId,
         recipe,
         incoming.get(nodeId) ?? [],
         edgeFlows,
@@ -813,7 +807,6 @@ function computeConvergedFlows(
 
 function computeNodePortDeficit(
   nodes: SchemeNode[],
-  incoming: Map<string, SchemeEdge[]>,
   nodePortOutputRates: Record<string, Record<string, Rational>>,
   effectivePortRatesByNode: Record<string, Record<string, Rational>>,
   inflowsByNode: Record<string, Record<string, Rational>>,
@@ -1098,48 +1091,6 @@ function computeNodeCurrentLoad(
   }
 
   return nodeCurrentLoad;
-}
-
-/** @deprecated Use computeNodePortOutRecipeLoad */
-function computeNodePortOutLoad(
-  nodes: SchemeNode[],
-  nodePortOutputRates: Record<string, Record<string, Rational>>,
-  outgoing: Map<string, SchemeEdge[]>,
-  edgeFlows: Record<string, Rational>,
-  connectedOutPortsByNode: Record<string, Set<string>>,
-  recipes: Map<string, Recipe>,
-): Record<string, Record<string, Rational>> {
-  return computeNodePortOutRecipeLoad(
-    nodes,
-    nodePortOutputRates,
-    outgoing,
-    edgeFlows,
-    connectedOutPortsByNode,
-    recipes,
-  );
-}
-
-/** @deprecated Use computeNodeCurrentLoad */
-function computeNodeLoad(
-  nodes: SchemeNode[],
-  nodePortOutputRates: Record<string, Record<string, Rational>>,
-  _effectivePortRatesByNode: Record<string, Record<string, Rational>>,
-  _inflowsByNode: Record<string, Record<string, Rational>>,
-  _connectedInPortsByNode: Record<string, Set<string>>,
-  _nodePortOutLoad: Record<string, Record<string, Rational>>,
-  recipes: Map<string, Recipe>,
-  nodeMaxLoad: Record<string, Rational>,
-  nodePortOutCapacityLoad: Record<string, Record<string, Rational>>,
-  connectedOutPortsByNode: Record<string, Set<string>>,
-): Record<string, Rational> {
-  return computeNodeCurrentLoad(
-    nodes,
-    nodePortOutputRates,
-    nodeMaxLoad,
-    nodePortOutCapacityLoad,
-    connectedOutPortsByNode,
-    recipes,
-  );
 }
 
 function computeSurplusFromEffective(
@@ -1497,7 +1448,6 @@ export function solveFlows(input: SolverInput): FlowResult {
   );
 
   const convergedEdgeFlows = computeConvergedFlows(
-    input.nodes,
     input.edges,
     nodePortOutputRates,
     incoming,
@@ -1570,7 +1520,6 @@ export function solveFlows(input: SolverInput): FlowResult {
     if (!recipe) continue;
     const theoretical = nodePortOutputRates[node.id] ?? {};
     const inflows = collectInflowsByPort(
-      node.id,
       recipe,
       incoming.get(node.id) ?? [],
       convergedEdgeFlows,
@@ -1606,7 +1555,6 @@ export function solveFlows(input: SolverInput): FlowResult {
   const nodeInputRates: Record<string, Record<string, Rational>> = {};
   const nodePortDeficit = computeNodePortDeficit(
     input.nodes.filter((n) => !isSchemeBufferNode(n)),
-    incoming,
     nodePortOutputRates,
     effectivePortRatesByNode,
     inflowsByNode,
@@ -1642,7 +1590,6 @@ export function solveFlows(input: SolverInput): FlowResult {
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     nodePortDownstreamDemand[node.id] = computePortDownstreamDemandByOutputPort(
-      node.id,
       recipe,
       outgoing.get(node.id) ?? [],
       nodePortOutputRates,

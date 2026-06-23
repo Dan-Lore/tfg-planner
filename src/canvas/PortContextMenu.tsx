@@ -37,7 +37,7 @@ export function PortContextMenu({
   pack,
   lang,
   direction,
-  portSide,
+  portSide: _portSide,
   bufferOptions,
   candidates,
   onSelectBuffer,

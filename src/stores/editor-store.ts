@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { TfgpFile, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
+import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import {
@@ -82,7 +82,7 @@ interface EditorState {
   setNodes: (nodes: TfgpNode[]) => void;
   setEdges: (edges: TfgpEdge[]) => void;
   setViewport: (viewport: TfgpFile['viewport']) => void;
-  addNode: (node: Omit<TfgpNode, 'id'>) => string;
+  addNode: (node: Omit<TfgpMachineNode, 'id'>) => string;
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
   removeNodes: (ids: string[]) => void;
   addEdge: (edge: Omit<TfgpEdge, 'id'>) => void;
@@ -308,7 +308,7 @@ export const useEditorStore = create<EditorState>()(
         const pack = usePackStore.getState().activePack;
         const recipe = pack?.recipes.find((r) => r.id === partial.recipeId);
         const id = allocateNodeId(scheme.nodes, scheme.edges);
-        const node: TfgpNode = normalizeNodeVoltage(
+        const node: TfgpMachineNode = normalizeNodeVoltage(
           {
             ...partial,
             id,
@@ -340,20 +340,20 @@ export const useEditorStore = create<EditorState>()(
             ...s.scheme,
             nodes: s.scheme.nodes.map((n) => {
               if (n.id !== id) return n;
-              let next = { ...n, ...patch } as TfgpNode;
-              if (isBufferNode(next)) {
-                if (patch.capacity != null) {
+              if (isBufferNode(n)) {
+                let next = { ...n, ...patch } as typeof n;
+                if ('capacity' in patch && patch.capacity != null) {
                   next = { ...next, capacity: clampNonNegativeInt(patch.capacity) };
                 }
                 if (next.kind === 'start_buffer') {
-                  if (patch.supplyRate != null) {
+                  if ('supplyRate' in patch && patch.supplyRate != null) {
                     next = {
                       ...next,
                       supplyRate: clampNonNegativeInt(patch.supplyRate),
                       autoSupplyRate: false,
                     };
                   }
-                  if (patch.initialStock != null) {
+                  if ('initialStock' in patch && patch.initialStock != null) {
                     next = {
                       ...next,
                       initialStock: clampNonNegativeInt(patch.initialStock),
@@ -362,17 +362,22 @@ export const useEditorStore = create<EditorState>()(
                 }
                 return normalizeBufferNode(next);
               }
-              if (patch.recipeId && pack) {
+              if (!isMachineNode(n)) return n;
+              let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
+              if ('recipeId' in patch && patch.recipeId && pack) {
                 const recipe = pack.recipes.find((r) => r.id === patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };
-              } else if (patch.voltageTier || patch.recipeId === undefined) {
+              } else if (
+                ('voltageTier' in patch && patch.voltageTier) ||
+                !('recipeId' in patch)
+              ) {
                 const recipe = pack?.recipes.find((r) => r.id === next.recipeId);
                 next = normalizeNodeVoltage(next, recipe);
               }
               return next;
             }),
           };
-          if (patch.recipeId) {
+          if ('recipeId' in patch && patch.recipeId) {
             const pack = usePackStore.getState().activePack;
             if (pack) {
               scheme = {

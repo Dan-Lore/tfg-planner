@@ -60,6 +60,9 @@ export function runSolver(
           autoSupplyRate: n.kind === 'start_buffer' ? n.autoSupplyRate : undefined,
         };
       }
+      if (!isMachineNode(n)) {
+        throw new Error(`Unexpected node kind for flow solve: ${(n as TfgpNode).id}`);
+      }
       const recipe = pack.recipes.find((r) => r.id === n.recipeId);
       const normalized = normalizeNodeVoltage(n, recipe);
       return {

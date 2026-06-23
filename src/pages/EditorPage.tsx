@@ -324,7 +324,7 @@ export function EditorPage() {
       nodes: scheme.nodes,
       pack,
       lang,
-      flowResult,
+      flowResult: flowResult ?? undefined,
       connectedIn: connectedPorts.inPorts,
       connectedOut: connectedPorts.outPorts,
       t,
@@ -586,6 +586,7 @@ export function EditorPage() {
     if (recipes.length === 0) return;
     const firstRecipe = recipes[0]!;
     const newId = addNode({
+      kind: 'machine',
       machineId: resolvedMachineId,
       recipeId: firstRecipe.id,
       position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
@@ -658,7 +659,7 @@ export function EditorPage() {
           type="button"
           className="btn btn-secondary"
           onClick={() => {
-            if (!selectedNode) return;
+            if (!selectedNode || !isMachineNode(selectedNode)) return;
             const recipe = pack.recipes.find((r) => r.id === selectedNode.recipeId);
             const out = recipe?.outputs[0];
             const v = prompt(t('editor.ratePrompt'), '1');
