@@ -8,29 +8,22 @@ import type { RecipeOp } from '../src/types.js';
 const goldenDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'golden');
 
 describe('golden diff', () => {
-  it('matches fixture recipes against golden subset', () => {
-    const recipes: RecipeOp[] = [
-      {
-        id: 'tfg:magnesium_diboride_cool_down',
-        machineId: 'gtceu:chemical_bath',
-        inputs: [
-          { itemId: 'gtceu:hot_magnesium_diboride_ingot', amount: 1 },
-          { fluidId: 'minecraft:water', amount: 100 },
-        ],
-        outputs: [{ itemId: 'gtceu:magnesium_diboride_ingot', amount: 1 }],
-        durationTicks: 400,
-        energy: {
-          minVoltageTier: 'MV',
-          voltage: 128,
-          amperage: 0.9375,
-        },
-        source: 'test',
-      },
-    ];
-    const pack = normalizePack(recipes, '0.12.8', 1);
+  it('matches golden marker recipes when present in pack input', () => {
     const golden = loadGolden(join(goldenDir, '0.12.8.json'));
     expect(golden).not.toBeNull();
+
+    const recipes: RecipeOp[] = golden!.recipes.map((g) => ({
+      id: g.id,
+      machineId: g.machineId ?? 'gtceu:unknown',
+      inputs: [{ itemId: 'minecraft:stone', amount: 1 }],
+      outputs: [{ itemId: 'minecraft:cobblestone', amount: 1 }],
+      durationTicks: g.durationTicks ?? 20,
+      source: 'golden-test',
+    }));
+
+    const pack = normalizePack(recipes, '0.12.8', 1);
     const diff = diffAgainstGolden(pack, golden!);
-    expect(diff.matched).toBeGreaterThanOrEqual(1);
+    expect(diff.missing).toBe(0);
+    expect(diff.matched).toBe(golden!.recipes.length);
   });
 });

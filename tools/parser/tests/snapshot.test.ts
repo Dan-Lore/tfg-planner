@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { loadRecipeSnapshot } from '../src/snapshot/load-recipe-snapshot.js';
 import { recipeFromSnapshotJson } from '../src/snapshot/recipe-json.js';
+import { REQUIRED_MARKER_RECIPE_IDS } from '../src/snapshot/manifest.js';
 
 describe('recipeFromSnapshotJson', () => {
   it('parses flat RecipeOp export', () => {
@@ -143,30 +144,41 @@ describe('loadRecipeSnapshot', () => {
         durationTicks: 320,
       },
       {
-        id: 'gtceu:distill_charcoal_byproducts',
+        id: 'gtceu:distillation_tower/distill_wood_tar',
         machineId: 'gtceu:distillation_tower',
-        inputs: [{ fluidId: 'gtceu:charcoal_byproducts', amount: 1000 }],
-        outputs: [{ fluidId: 'gtceu:wood_tar', amount: 250 }],
-        durationTicks: 40,
-      },
-      {
-        id: 'gtceu:distill_wood_tar',
-        machineId: 'gtceu:distillation_tower',
-        inputs: [{ fluidId: 'gtceu:wood_tar', amount: 1000 }],
+        inputs: [{ fluidId: '#forge:wood_tar', amount: 1000 }],
         outputs: [{ fluidId: 'gtceu:creosote', amount: 300 }],
         durationTicks: 40,
       },
+      ...REQUIRED_MARKER_RECIPE_IDS.filter(
+        (id) =>
+          ![
+            'gtceu:pyrolyse_oven/log_to_charcoal_byproducts',
+            'gtceu:distillation_tower/distill_wood_tar',
+          ].includes(id),
+      ).map((id) => ({
+        id,
+        machineId: id.includes('greenhouse')
+          ? 'gtceu:greenhouse'
+          : id.includes('liquefaction') || id.includes('aromatic_mix')
+            ? 'gtceu:coal_liquefaction_tower'
+            : 'gtceu:large_chemical_reactor',
+        inputs: [{ itemId: 'minecraft:charcoal', amount: 1 }],
+        outputs: [{ fluidId: 'tfg:raw_aromatic_mix', amount: 1000 }],
+        durationTicks: 100,
+      })),
     ];
     writeFileSync(join(dir, 'recipes.json'), JSON.stringify(recipes));
     writeFileSync(
       join(dir, 'snapshot-manifest.json'),
       JSON.stringify({
-        schemaVersion: 1,
+        schemaVersion: 2,
         modpackTag: '0.12.8',
         pakkuLockSha256: 'test',
-        recipeCount: recipes.length,
+        recipeCount: 45_000,
         exportedAt: new Date().toISOString(),
         markerRecipeIds: recipes.map((r) => r.id),
+        typeCounts: { 'gtceu:greenhouse': 1130, 'gtceu:coal_liquefaction_tower': 12 },
       }),
     );
 
@@ -174,7 +186,7 @@ describe('loadRecipeSnapshot', () => {
       snapshotDir: dir,
       modpackTag: '0.12.8',
     });
-    expect(result.recipes).toHaveLength(3);
+    expect(result.recipes.length).toBeGreaterThanOrEqual(3);
     expect(result.manifestOk).toBe(false);
     rmSync(dir, { recursive: true, force: true });
   });

@@ -179,7 +179,7 @@ export function loadRecipeSnapshot(options: LoadRecipeSnapshotOptions): Snapshot
   const recipeIds = new Set(recipes.map((r) => r.id));
   let manifestOk = false;
   if (manifest) {
-    const errors = validateManifest(manifest, recipeIds, modpackTag);
+    const errors = validateManifest(manifest, recipeIds, modpackTag, recipes);
     manifestOk = errors.length === 0;
     for (const err of errors) {
       warnings.push({ file: 'snapshot-manifest.json', reason: err, kind: 'substrate' });

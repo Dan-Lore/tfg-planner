@@ -26,7 +26,7 @@ const serverRunDir = join(workDir, 'server-run');
 const outDir = join(repoRoot, 'tools', 'parser', 'snapshots', tag);
 const exportScript = join(repoRoot, 'tools', 'parser', 'snapshot', 'kubejs-export-recipes.js');
 const serverTimeoutMin = computeServerTimeoutMin();
-const minRecipes = 6000;
+const minRecipes = 40_000;
 
 function resolveJava() {
   const candidates = [];
@@ -294,6 +294,18 @@ const recipesOut = join(outDir, 'recipes.json');
 const recipes = loadExportedRecipes(exportFile);
 writeFileSync(recipesOut, JSON.stringify(recipes));
 
+const exportManifestPath = join(
+  serverRunDir,
+  'kubejs',
+  'config',
+  'tfg-planner-recipe-snapshot',
+  'manifest.json',
+);
+let exportManifest = null;
+if (existsSync(exportManifestPath)) {
+  exportManifest = JSON.parse(readFileSync(exportManifestPath, 'utf-8'));
+}
+
 if (recipes.length < minRecipes) {
   throw new Error(`Only ${recipes.length} recipes (need ${minRecipes})`);
 }
@@ -310,24 +322,63 @@ const lockSha = createHash('sha256')
   .digest('hex');
 const recipesSha = createHash('sha256').update(readFileSync(recipesOut)).digest('hex');
 const markers = [
+  'tfg:tfc_wood_sapling_pine/1',
+  'tfg:raw_aromatic_mix_charcoal_hydrogen',
+  'tfg:aromatic_feedstock@lcr',
+  'tfg:reformed_aromatic_feedstock@lcr',
+  'tfg:reformate_gas_cracker',
   'gtceu:pyrolyse_oven/log_to_charcoal_byproducts',
-  'gtceu:distill_charcoal_byproducts',
-  'gtceu:distill_wood_tar',
+  'gtceu:distillation_tower/distill_wood_tar',
 ];
+const markerAliases = {
+  'gtceu:pyrolyse_oven/log_to_charcoal_byproducts': ['tfg:pyrolyse_oven/log_to_charcoal_byproducts'],
+  'gtceu:distillation_tower/distill_wood_tar': [
+    'gtceu:distill_wood_tar',
+    'tfg:distillation_tower/distill_wood_tar',
+  ],
+  'tfg:tfc_wood_sapling_pine/1': ['tfg:greenhouse/8x_tfc_wood_sapling_pine/1'],
+  'tfg:raw_aromatic_mix_charcoal_hydrogen': [
+    'tfg:coal_liquefaction_tower/raw_aromatic_mix_charcoal_hydrogen',
+  ],
+  'tfg:aromatic_feedstock@lcr': ['tfg:large_chemical_reactor/aromatic_feedstock'],
+  'tfg:reformed_aromatic_feedstock@lcr': ['tfg:large_chemical_reactor/reformed_aromatic_feedstock'],
+  'tfg:reformate_gas_cracker': ['tfg:cracker/reformate_gas_cracker'],
+};
+function markerPresent(ids, marker) {
+  if (ids.has(marker)) return true;
+  for (const alt of markerAliases[marker] ?? []) {
+    if (ids.has(alt)) return true;
+  }
+  return false;
+}
 const ids = new Set(recipes.map((r) => r.id));
 const recipeCount = recipes.length;
+const tfgCount = recipes.filter((r) => String(r.id).startsWith('tfg:')).length;
+const typeCounts = exportManifest?.typeCounts ?? null;
+const serializeStats = exportManifest?.serializeStats ?? null;
+
+if (tfgCount < 3000) {
+  throw new Error(`Only ${tfgCount} tfg: recipes in export (need >= 3000)`);
+}
+for (const marker of markers) {
+  if (!markerPresent(ids, marker)) {
+    throw new Error(`Missing marker recipe in export: ${marker}`);
+  }
+}
 
 writeFileSync(
   join(outDir, 'snapshot-manifest.json'),
   JSON.stringify(
     {
-      schemaVersion: 1,
+      schemaVersion: 2,
       modpackTag: tag,
       pakkuLockSha256: lockSha,
       recipeCount,
       exportedAt: new Date().toISOString(),
-      markerRecipeIds: markers.filter((m) => ids.has(m)),
+      markerRecipeIds: markers.filter((m) => markerPresent(ids, m)),
       snapshotSha256: recipesSha,
+      typeCounts,
+      serializeStats,
       source: 'generate-tfg-snapshot',
     },
     null,

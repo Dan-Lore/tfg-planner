@@ -2,57 +2,34 @@
   "modpackVersion": "0.12.8",
   "recipes": [
     {
-      "id": "gtceu:vacuum_freezer/cool_hot_magnesium_diboride_ingot",
-      "machineId": "gtceu:vacuum_freezer",
-      "durationTicks": 200,
-      "energy": {
-        "minVoltageTier": "LV",
-        "voltage": 32,
-        "amperage": 3.75
-      },
-      "inputs": [
-        { "itemId": "#forge:hot_ingots/magnesium_diboride", "amount": 1 }
-      ],
-      "outputs": [{ "itemId": "gtceu:magnesium_diboride_ingot", "amount": 1 }]
+      "id": "tfg:tfc_wood_sapling_pine/1",
+      "machineId": "gtceu:greenhouse",
+      "durationTicks": 12000
     },
     {
-      "id": "gtceu:centrifuge/uranium_238_separation",
-      "machineId": "gtceu:centrifuge",
-      "durationTicks": 800
+      "id": "tfg:raw_aromatic_mix_charcoal_hydrogen",
+      "machineId": "gtceu:coal_liquefaction_tower",
+      "durationTicks": 640
     },
     {
-      "id": "gtceu:compressor/snowballs_to_snow",
-      "machineId": "gtceu:compressor",
-      "durationTicks": 200,
-      "energy": {
-        "minVoltageTier": "ULV",
-        "voltage": 8,
-        "amperage": 0.25
-      }
-    },
-    {
-      "id": "gtceu:distillation_tower/distill_dilute_hcl",
-      "machineId": "gtceu:distillation_tower",
+      "id": "tfg:aromatic_feedstock@lcr",
+      "machineId": "gtceu:large_chemical_reactor",
       "durationTicks": 600
     },
     {
-      "id": "gtceu:alloy_blast_smelter/mo_50_re",
-      "machineId": "gtceu:alloy_blast_smelter",
-      "durationTicks": 2850,
-      "inputs": [
-        { "itemId": "#forge:dusts/molybdenum", "amount": 1 },
-        { "itemId": "#forge:dusts/rhenium", "amount": 1 }
-      ],
-      "outputs": [{ "fluidId": "tfg:mo_50_re", "amount": 288 }]
+      "id": "tfg:reformed_aromatic_feedstock@lcr",
+      "machineId": "gtceu:large_chemical_reactor",
+      "durationTicks": 360
     },
     {
-      "id": "gtceu:electrolyzer/decomposition_electrolyzing_mo_50_re",
-      "machineId": "gtceu:electrolyzer",
-      "durationTicks": 232,
-      "outputs": [
-        { "itemId": "gtceu:molybdenum_dust", "amount": 1 },
-        { "itemId": "gtceu:rhenium_dust", "amount": 1 }
-      ]
+      "id": "tfg:reformate_gas_cracker",
+      "machineId": "gtceu:cracker",
+      "durationTicks": 320
+    },
+    {
+      "id": "gtceu:pyrolyse_oven/log_to_charcoal_byproducts",
+      "machineId": "gtceu:pyrolyse_oven",
+      "durationTicks": 320
     }
   ]
 }

@@ -13,6 +13,8 @@ import { loadTfgExcludes } from './datapack/excludes.js';
 import { validatePackSchema, buildReportFromPack } from './validate/schema.js';
 import { runSmokeChains } from './validate/smoke-chains.js';
 import { loadGolden, diffAgainstGolden } from './validate/golden-diff.js';
+import { expandRecipeSchemeAliases } from './pipeline/recipe-id-aliases.js';
+import { mirrorChemReactorToLcr } from './pipeline/mirror-lcr.js';
 import { isCircuitOnlyBrokenRecipe } from './pipeline/extract-circuit.js';
 import { loadRecipeSnapshot } from './snapshot/load-recipe-snapshot.js';
 import { defaultSnapshotDir } from './snapshot/manifest.js';
@@ -113,6 +115,8 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
     every: 5000,
     intervalMs: 20_000,
   });
+  recipes = expandRecipeSchemeAliases(recipes);
+  recipes = [...recipes, ...mirrorChemReactorToLcr(recipes)];
   logStage('Sanitizing energy…');
   const energySanitize = sanitizeRecipeEnergy(recipes);
   recipes = energySanitize.recipes;

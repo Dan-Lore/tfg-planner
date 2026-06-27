@@ -60,7 +60,7 @@
     {
       "id": "node_28",
       "machineId": "gtceu:chemical_reactor",
-      "recipeId": "tfg:reformed_aromatic_feedstock",
+      "recipeId": "tfg:reformed_aromatic_feedstock@lcr",
       "position": {
         "x": 1936.4715579418605,
         "y": 216.67657038994656

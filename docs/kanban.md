@@ -150,21 +150,21 @@
 
 | Поле | Значение |
 |------|----------|
-| Статус | `in_progress` |
+| Статус | `done` |
 | Приоритет | P0 |
+| Закрыто | 2026-06-28 |
 
-**Scope (rev. 4 — single source of truth):**
+**Scope (rev. 5 — full RecipeManager export):**
 
 - [x] `generate-tfg-snapshot`: pakku + runServer + KubeJS export → `snapshots/<tag>/`
 - [x] `loadRecipeSnapshot()` — GT JSON adapter + flat legacy (tests only)
 - [x] `build-pack`: snapshot only — **без** `enrich-energy` / `enrich-chances` / auto-bootstrap
-- [x] Export script: GT JSON via `ServerEvents.recipes` + `findRecipes` + `recipe.json.toString()` (Rhino-safe, batched chunks)
-- [x] `Recipe.circuitConfiguration` — circuit не в product flows; smoke `wiremill-copper-8`
-- [x] Tier picker скрыт без `recipe.energy`; `allowedTiersForRecipe` → `[]`
-- [ ] **Server export 0.12.8** — collection verified (~36k gtceu/tfg in logs); **JsonIO chunk write** must land `kubejs/config/tfg-planner-recipe-snapshot/manifest.json` (see snapshots/README)
-- [ ] Smoke 15/15 + wiremill / greenhouse / liquefaction energy на GT snapshot
+- [x] Export script v2: RecipeManager on tick 500/800/1200 + CODEC fallback + quality gate
+- [x] Manifest schema v2: `typeCounts`, `serializeStats`, TFG marker recipes
+- [x] Smoke chains: full aromatic chain (`tfg:*` IDs from modpack)
+- [x] Re-export 0.12.8: 56 720 snapshot recipes (1 869 greenhouse, 10 832 `tfg:*`); pack 57 179; smoke 15/15; `.tfgp` aromatic 10/10
 
-**Следующий шаг:** `npm run resume-tfg-server-export -- 0.12.8` → проверить `server-run/kubejs/config/tfg-planner-recipe-snapshot/manifest.json` → `npm run build-pack -- --tag 0.12.8 --strict-snapshot`
+**Критерий закрытия:** `build-pack --strict-snapshot` для 0.12.8; greenhouse/liquefaction/aromatic markers + fluids из aromatic `.tfgp`.
 
 ---
 

@@ -7,6 +7,7 @@
 
 ### Fixed
 
+- **RecipeManager export (K-010):** Rhino-safe GTRecipe collection (`isInstance`, `ResourceLocation` ids); CODEC fallback when `recipe.json` null; 0.12.8 snapshot 56 720 recipes (was ~43k GT-only); `RECIPE_SCHEME_ALIASES` maps scheme ids ↔ codec ids (`tfg:greenhouse/8x_…` → `tfg:tfc_wood_sapling_pine/1`).
 - **Recipe data:** server snapshot as single source of truth — removed `enrich-energy` / `enrich-chances` and auto-bootstrap from `build-pack`; GT JSON export script (I/O + `tickInputs.eu`).
 - **Wiremill / GT circuit:** `circuitConfiguration` field; integrated circuit excluded from product flows; circuit-only broken bootstrap recipes dropped at build.
 - **Tier picker:** hidden when recipe has no `energy`; no fake LV fallback in `allowedTiersForRecipe`.
@@ -19,6 +20,7 @@
 
 ### Added
 
+- **RecipeManager v2 export:** full server snapshot via `RecipeManager` + `GTRecipeSerializer.CODEC` fallback; manifest schema v2 with `typeCounts`/`serializeStats`; strict gates for greenhouse, liquefaction, and `tfg:*` markers; 0.12.8 pack 57 179 recipes, smoke 15/15.
 - **Recipe picker:** tier badge + circuit meta (`C:N`) in combobox options.
 - Smoke chains: wiremill copper×8, liquefaction aromatic, greenhouse bamboo.
 - Multiblock registry: `coal_liquefaction_tower`, `hydroponics_facility`.

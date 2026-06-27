@@ -1,19 +1,19 @@
 {
   "modpackVersion": "0.12.8",
   "tag": "0.12.8",
-  "generatedAt": "2026-06-27T21:50:14.684Z",
+  "generatedAt": "2026-06-27T23:09:49.405Z",
   "stats": {
-    "snapshotRecipes": 41105,
+    "snapshotRecipes": 57179,
     "snapshotFiles": 1,
-    "snapshotParsed": 41105,
-    "snapshotSkipped": 2072,
-    "snapshotSha256": "30abe22c00f44005c82cc30ea762be37982d24a5b8d913f1f822503d2430e997",
-    "finalRecipes": 41105,
-    "machines": 57,
-    "items": 19369,
-    "fluids": 913,
-    "recipesWithEnergy": 36939,
-    "recipesWithChance": 6277,
+    "snapshotParsed": 56715,
+    "snapshotSkipped": 5,
+    "snapshotSha256": "ca5f5571a90c060e70023e73ddeb579fad4e327dc5f5fad836d67013322b4ef7",
+    "finalRecipes": 57179,
+    "machines": 86,
+    "items": 24551,
+    "fluids": 1183,
+    "recipesWithEnergy": 57009,
+    "recipesWithChance": 9884,
     "goldenMatched": 6,
     "goldenMismatched": 0,
     "goldenMissing": 0
@@ -21,12 +21,12 @@
   "warnings": [
     {
       "file": "snapshot",
-      "reason": "4143 recipes have no outputs after snapshot parse",
+      "reason": "113 recipes have no outputs after snapshot parse",
       "kind": "substrate"
     },
     {
       "file": "lang",
-      "reason": "Localized 9787/20282 resources (tags: 149/5496, gtceu: 6094/11082, tfg: 417/474, minecraft: 857/857, malformed: 0; kubejs: 179 files, jars: 179, mc keys ru/en: 8121/6217, keys ru/en: 61353/62607)"
+      "reason": "Localized 14705/25734 resources (tags: 229/5913, gtceu: 6180/11305, tfg: 1478/1557, minecraft: 464/465, malformed: 0; kubejs: 179 files, jars: 179, mc keys ru/en: 8121/6217, keys ru/en: 61353/62607)"
     }
   ],
   "warningsByKind": {
@@ -36,47 +36,19 @@
   "unparsedFiles": [],
   "smokeResults": [
     {
-      "id": "copper-centrifuge",
+      "id": "greenhouse-pine-sapling",
       "ok": true
     },
     {
-      "id": "mv-chemical-bath-arc",
+      "id": "pyrolyse-log-wood-tar-nitrogen",
       "ok": true
     },
     {
-      "id": "magnesium-diboride-cool",
+      "id": "pyrolyse-log-creosote-nitrogen",
       "ok": true
     },
     {
-      "id": "snow-compressor-fix",
-      "ok": true
-    },
-    {
-      "id": "diluted-hcl",
-      "ok": true
-    },
-    {
-      "id": "mo-re-alloy-blast",
-      "ok": true
-    },
-    {
-      "id": "mo-re-electrolyzer",
-      "ok": true
-    },
-    {
-      "id": "phenol-lcr-shortcut",
-      "ok": true
-    },
-    {
-      "id": "pyrolyse-log-creosote",
-      "ok": true
-    },
-    {
-      "id": "pyrolyse-log-charcoal-byproducts",
-      "ok": true
-    },
-    {
-      "id": "distill-charcoal-byproducts",
+      "id": "liquefaction-aromatic-charcoal-hydrogen",
       "ok": true
     },
     {
@@ -84,15 +56,43 @@
       "ok": true
     },
     {
+      "id": "aromatic-feedstock-lcr",
+      "ok": true
+    },
+    {
+      "id": "electrolyze-syngas-lcr",
+      "ok": true
+    },
+    {
+      "id": "reformed-aromatic-lcr",
+      "ok": true
+    },
+    {
+      "id": "reformate-gas-cracker",
+      "ok": true
+    },
+    {
+      "id": "methanol-distil-propylene",
+      "ok": true
+    },
+    {
+      "id": "pyrolyse-log-charcoal-byproducts",
+      "ok": true
+    },
+    {
       "id": "wiremill-copper-8",
       "ok": true
     },
     {
-      "id": "distill-charcoal-to-wood-tar",
+      "id": "centrifuge-uranium-separation",
       "ok": true
     },
     {
-      "id": "pyrolyse-log-creosote-nitrogen",
+      "id": "snow-compressor",
+      "ok": true
+    },
+    {
+      "id": "distill-charcoal-byproducts",
       "ok": true
     }
   ],
