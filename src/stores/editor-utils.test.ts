@@ -27,6 +27,10 @@ const result: FlowResult = {
   nodeOutputRates: {},
   nodePortOutputRates: {},
   nodeInputRates: {},
+  nodePortDeficit: {},
+  nodePortInLoad: {},
+  nodePortOutLoad: {},
+  nodeLoad: {},
   nodeSurplus: {},
   nodeMachineCounts: { n1: 9 },
 };

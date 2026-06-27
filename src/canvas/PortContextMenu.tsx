@@ -3,6 +3,13 @@ import { useTranslation } from 'react-i18next';
 import type { PackData } from '@/data/types';
 import { getMachineName } from '@/data/pack-registry';
 import type { AttachCandidate } from '@/lib/recipe-index';
+import type { TfgpBufferKind } from '@/schema/tfgp';
+
+const BUFFER_MENU_KEYS: Record<TfgpBufferKind, string> = {
+  start_buffer: 'editor.portMenu.addStartBuffer',
+  intermediate_buffer: 'editor.portMenu.addIntermediateBuffer',
+  end_buffer: 'editor.portMenu.addEndBuffer',
+};
 
 export type PortAttachDirection = 'upstream' | 'downstream';
 
@@ -12,7 +19,10 @@ interface PortContextMenuProps {
   pack: PackData;
   lang: 'ru' | 'en';
   direction: PortAttachDirection;
+  portSide: 'in' | 'out';
+  bufferOptions: TfgpBufferKind[];
   candidates: AttachCandidate[];
+  onSelectBuffer: (kind: TfgpBufferKind) => void;
   onSelect: (candidate: AttachCandidate) => void;
   onClose: () => void;
 }
@@ -27,7 +37,10 @@ export function PortContextMenu({
   pack,
   lang,
   direction,
+  portSide: _portSide,
+  bufferOptions,
   candidates,
+  onSelectBuffer,
   onSelect,
   onClose,
 }: PortContextMenuProps) {
@@ -70,6 +83,29 @@ export function PortContextMenu({
       onWheel={stopWheel}
       role="menu"
     >
+      {bufferOptions.length > 0 && (
+        <>
+          <div className="port-context-menu__title">{t('editor.portMenu.buffers')}</div>
+          <ul className="port-context-menu__list">
+            {bufferOptions.map((kind) => (
+              <li key={kind} role="presentation">
+                <button
+                  type="button"
+                  className="port-context-menu__item"
+                  role="menuitem"
+                  onClick={() => {
+                    onSelectBuffer(kind);
+                    onClose();
+                  }}
+                >
+                  {t(BUFFER_MENU_KEYS[kind])}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="port-context-menu__divider" role="separator" />
+        </>
+      )}
       <div className="port-context-menu__title">{t(titleKey)}</div>
       <ul className="port-context-menu__list">
         {candidates.length === 0 ? (
@@ -101,4 +137,9 @@ export function PortContextMenu({
       </ul>
     </div>
   );
+}
+
+export function bufferKindsForPort(side: 'in' | 'out'): TfgpBufferKind[] {
+  if (side === 'in') return ['start_buffer', 'intermediate_buffer'];
+  return ['intermediate_buffer', 'end_buffer'];
 }

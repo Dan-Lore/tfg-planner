@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { TfgpFile, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
+import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import {
@@ -17,13 +17,50 @@ import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import {
   buildEdgeFlowData,
 } from '@/canvas/flow-display';
+import {
+  buildConnectedPortMaps,
+  buildMachineNodeLayoutWidths,
+} from '@/canvas/machine-node-layout';
+import i18n from 'i18next';
 import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import type { FlowResult } from '@/calculator/flow-solver';
 import { usePackStore } from './pack-store';
+import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import {
+  estimateBufferDefaults,
+  clampNonNegativeInt,
+} from '@/lib/buffer-defaults';
+import type { TfgpBufferKind } from '@/schema/tfgp';
+import { normalizeBufferNode } from '@/lib/node-scaling';
 
 const MAX_HISTORY = 50;
+
+function buildFlowEdgeData(
+  scheme: TfgpFile,
+  pack: NonNullable<ReturnType<typeof usePackStore.getState>['activePack']>,
+  result: FlowResult,
+): Record<string, FlowEdgeData> {
+  const lang = i18n.language === 'en' ? 'en' : 'ru';
+  const { connectedIn, connectedOut } = buildConnectedPortMaps(scheme.edges);
+  const nodeWidths = buildMachineNodeLayoutWidths({
+    nodes: scheme.nodes,
+    pack,
+    lang,
+    flowResult: result,
+    connectedIn,
+    connectedOut,
+    t: i18n.t.bind(i18n),
+  });
+  return buildEdgeFlowData(
+    scheme.edges,
+    scheme.nodes,
+    pack,
+    result,
+    nodeWidths,
+  );
+}
 
 interface EditorState {
   scheme: TfgpFile;
@@ -45,7 +82,7 @@ interface EditorState {
   setNodes: (nodes: TfgpNode[]) => void;
   setEdges: (edges: TfgpEdge[]) => void;
   setViewport: (viewport: TfgpFile['viewport']) => void;
-  addNode: (node: Omit<TfgpNode, 'id'>) => string;
+  addNode: (node: Omit<TfgpMachineNode, 'id'>) => string;
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
   removeNodes: (ids: string[]) => void;
   addEdge: (edge: Omit<TfgpEdge, 'id'>) => void;
@@ -56,6 +93,15 @@ interface EditorState {
     anchorNodeId: string;
     anchorPort: string;
     newPort: string;
+    direction: 'upstream' | 'downstream';
+    itemId?: string;
+    fluidId?: string;
+  }) => string;
+  attachBuffer: (params: {
+    bufferKind: TfgpBufferKind;
+    position: { x: number; y: number };
+    anchorNodeId: string;
+    anchorPort: string;
     direction: 'upstream' | 'downstream';
     itemId?: string;
     fluidId?: string;
@@ -262,7 +308,7 @@ export const useEditorStore = create<EditorState>()(
         const pack = usePackStore.getState().activePack;
         const recipe = pack?.recipes.find((r) => r.id === partial.recipeId);
         const id = allocateNodeId(scheme.nodes, scheme.edges);
-        const node: TfgpNode = normalizeNodeVoltage(
+        const node: TfgpMachineNode = normalizeNodeVoltage(
           {
             ...partial,
             id,
@@ -294,18 +340,44 @@ export const useEditorStore = create<EditorState>()(
             ...s.scheme,
             nodes: s.scheme.nodes.map((n) => {
               if (n.id !== id) return n;
-              let next = { ...n, ...patch };
-              if (patch.recipeId && pack) {
+              if (isBufferNode(n)) {
+                let next = { ...n, ...patch } as typeof n;
+                if ('capacity' in patch && patch.capacity != null) {
+                  next = { ...next, capacity: clampNonNegativeInt(patch.capacity) };
+                }
+                if (next.kind === 'start_buffer') {
+                  if ('supplyRate' in patch && patch.supplyRate != null) {
+                    next = {
+                      ...next,
+                      supplyRate: clampNonNegativeInt(patch.supplyRate),
+                      autoSupplyRate: false,
+                    };
+                  }
+                  if ('initialStock' in patch && patch.initialStock != null) {
+                    next = {
+                      ...next,
+                      initialStock: clampNonNegativeInt(patch.initialStock),
+                    };
+                  }
+                }
+                return normalizeBufferNode(next);
+              }
+              if (!isMachineNode(n)) return n;
+              let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
+              if ('recipeId' in patch && patch.recipeId && pack) {
                 const recipe = pack.recipes.find((r) => r.id === patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };
-              } else if (patch.voltageTier || patch.recipeId === undefined) {
+              } else if (
+                ('voltageTier' in patch && patch.voltageTier) ||
+                !('recipeId' in patch)
+              ) {
                 const recipe = pack?.recipes.find((r) => r.id === next.recipeId);
                 next = normalizeNodeVoltage(next, recipe);
               }
               return next;
             }),
           };
-          if (patch.recipeId) {
+          if ('recipeId' in patch && patch.recipeId) {
             const pack = usePackStore.getState().activePack;
             if (pack) {
               scheme = {
@@ -417,6 +489,86 @@ export const useEditorStore = create<EditorState>()(
         return nodeId;
       },
 
+      attachBuffer: (params) => {
+        get().pushHistory();
+        const { scheme, flowResult } = get();
+        const defaults = estimateBufferDefaults(
+          params.anchorNodeId,
+          params.anchorPort,
+          params.direction,
+          scheme,
+          flowResult,
+        );
+        const nodeId = allocateNodeId(scheme.nodes, scheme.edges);
+        const edgeId = allocateEdgeId(scheme.nodes, scheme.edges);
+
+        const base = {
+          id: nodeId,
+          position: params.position,
+          itemId: params.itemId,
+          fluidId: params.fluidId,
+          capacity: defaults.capacity,
+        };
+
+        let node: TfgpNode;
+        if (params.bufferKind === 'start_buffer') {
+          node = normalizeBufferNode({
+            ...base,
+            kind: 'start_buffer',
+            supplyMode: 'rate',
+            supplyRate: defaults.supplyRate,
+            autoSupplyRate: true,
+          });
+        } else if (params.bufferKind === 'intermediate_buffer') {
+          node = normalizeBufferNode({
+            ...base,
+            kind: 'intermediate_buffer',
+          });
+        } else {
+          node = normalizeBufferNode({
+            ...base,
+            kind: 'end_buffer',
+          });
+        }
+
+        const bufferOutPort = 'out_0';
+        const bufferInPort = 'in_0';
+        const edge: TfgpEdge =
+          params.direction === 'downstream'
+            ? {
+                id: edgeId,
+                source: params.anchorNodeId,
+                sourcePort: params.anchorPort,
+                target: nodeId,
+                targetPort: bufferInPort,
+                itemId: params.itemId,
+                fluidId: params.fluidId,
+              }
+            : {
+                id: edgeId,
+                source: nodeId,
+                sourcePort: bufferOutPort,
+                target: params.anchorNodeId,
+                targetPort: params.anchorPort,
+                itemId: params.itemId,
+                fluidId: params.fluidId,
+              };
+
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            nodes: [...s.scheme.nodes, node],
+            edges: [...s.scheme.edges, edge],
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        get().updateFlows();
+        return nodeId;
+      },
+
       removeEdge: (id) => {
         get().removeEdges([id]);
       },
@@ -465,9 +617,8 @@ export const useEditorStore = create<EditorState>()(
         const { scheme } = get();
         const snap = get().snapshot();
         const result = runSolver(snap, pack, { preserveManualMachineCounts: true });
-        const flowEdgeData = buildEdgeFlowData(
-          scheme.edges,
-          scheme.nodes,
+        const flowEdgeData = buildFlowEdgeData(
+          scheme,
           pack,
           result,
         );
@@ -490,9 +641,8 @@ export const useEditorStore = create<EditorState>()(
         const result = runSolver(snap, pack, { preserveManualMachineCounts: false });
         const nodes = applyFlowResult(snap.nodes, result, 'full');
         const schemeWithNodes = { ...scheme, nodes };
-        const flowEdgeData = buildEdgeFlowData(
-          schemeWithNodes.edges,
-          schemeWithNodes.nodes,
+        const flowEdgeData = buildFlowEdgeData(
+          schemeWithNodes,
           pack,
           result,
         );
@@ -560,6 +710,10 @@ export const useEditorStore = create<EditorState>()(
           state.scheme = cached;
           seedIdCounter(cached.nodes, cached.edges);
         }
+        queueMicrotask(() => {
+          const pack = usePackStore.getState().activePack;
+          if (pack) useEditorStore.getState().updateFlows();
+        });
       },
     },
   ),

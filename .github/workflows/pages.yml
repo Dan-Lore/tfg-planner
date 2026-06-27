@@ -16,26 +16,10 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-      - run: npm test
-
-      - name: Build for GitHub Pages
-        run: npm run build
-        env:
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+    uses: ./.github/workflows/verify.yml
+    with:
+      vite_base_path: /${{ github.event.repository.name }}/
+      upload_dist: true
 
   deploy:
     needs: build
@@ -44,5 +28,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
       - uses: actions/deploy-pages@v4
         id: deployment

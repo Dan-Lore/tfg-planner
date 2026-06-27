@@ -20,24 +20,29 @@ import { usePackStore } from '@/stores/pack-store';
 import { useEditorStore } from '@/stores/editor-store';
 import { useThemeStore } from '@/stores/theme-store';
 import { buildPortDisplays, useNodeTypes } from '@/canvas/MachineNode';
+import {
+  buildBufferPortDisplays,
+  formatBufferRate,
+} from '@/canvas/BufferNode';
 import { EditorCanvas } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
-import { PortContextMenu, type PortAttachDirection } from '@/canvas/PortContextMenu';
-import { buildNodeBalanceLines, rateMapToStrings } from '@/canvas/flow-display';
+import {
+  PortContextMenu,
+  bufferKindsForPort,
+  type PortAttachDirection,
+} from '@/canvas/PortContextMenu';
+import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
+import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
-import { formatRecipeLabel } from '@/lib/recipe-label';
+import { EditorInspector } from '@/editor/EditorInspector';
 import {
-  buildRecipeComboboxItems,
   filterItemsByQuery,
   resolveMachineId,
 } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
-import { WheelNumberInput } from '@/components/WheelNumberInput';
 import type { VoltageTier } from '@/calculator/gt-voltage';
-import {
-  allowedTiersForRecipe,
-} from '@/calculator/energy';
+import { R } from '@/calculator/rational';
 import {
   buildRecipeFlowIndex,
   findDownstreamCandidates,
@@ -45,10 +50,15 @@ import {
   type AttachCandidate,
 } from '@/lib/recipe-index';
 import { buildTagIndex } from '@/lib/tag-index';
-import type { Flow } from '@/data/types';
-import { parsePortId, portFlow, portsMatch } from '@/canvas/ports';
+import type { Flow, PackData } from '@/data/types';
+import { parsePortId, nodePortFlow, portsMatch } from '@/canvas/ports';
+import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
 
-import { PORT_ROW_HEIGHT, estimateHeaderHeight } from '@/canvas/node-bounds';
+import {
+  PORT_ROW_HEIGHT,
+  estimateHeaderHeight,
+} from '@/canvas/node-bounds';
 
 const NODE_ATTACH_OFFSET_X = 280;
 
@@ -57,9 +67,29 @@ interface PortMenuState {
   y: number;
   anchorNodeId: string;
   anchorPort: string;
+  portSide: 'in' | 'out';
   direction: PortAttachDirection;
+  bufferOptions: TfgpBufferKind[];
   candidates: AttachCandidate[];
   flow: Flow;
+}
+
+function anchorPortY(
+  anchor: TfgpNode,
+  anchorPort: string,
+  pack: PackData,
+): number {
+  const portIndex = parsePortId(anchorPort)?.index ?? 0;
+  if (isBufferNode(anchor)) {
+    const header = 56;
+    const fields = anchor.kind === 'start_buffer' ? 88 : 36;
+    return anchor.position.y + header + fields + portIndex * PORT_ROW_HEIGHT;
+  }
+  return (
+    anchor.position.y +
+    estimateHeaderHeight(pack, anchor.machineId, anchor.recipeId) +
+    portIndex * PORT_ROW_HEIGHT
+  );
 }
 
 function useEdgeTypes() {
@@ -74,6 +104,7 @@ export function EditorPage() {
   const flowEdgeData = useEditorStore((s) => s.flowEdgeData);
   const flowResult = useEditorStore((s) => s.flowResult);
   const selectedNodeIds = useEditorStore((s) => s.selectedNodeIds);
+  const selectedEdgeIds = useEditorStore((s) => s.selectedEdgeIds);
   const setNodes = useEditorStore((s) => s.setNodes);
   const setViewport = useEditorStore((s) => s.setViewport);
   const addNode = useEditorStore((s) => s.addNode);
@@ -82,6 +113,7 @@ export function EditorPage() {
   const removeEdges = useEditorStore((s) => s.removeEdges);
   const addEdgeToStore = useEditorStore((s) => s.addEdge);
   const attachMachine = useEditorStore((s) => s.attachMachine);
+  const attachBuffer = useEditorStore((s) => s.attachBuffer);
   const pushHistory = useEditorStore((s) => s.pushHistory);
   const undo = useEditorStore((s) => s.undo);
   const redo = useEditorStore((s) => s.redo);
@@ -195,8 +227,10 @@ export function EditorPage() {
       if (!pack || !recipeIndex || !tagIndex) return;
       const node = scheme.nodes.find((n) => n.id === nodeId);
       if (!node) return;
-      const recipe = pack.recipes.find((r) => r.id === node.recipeId);
-      const flow = portFlow(recipe, portId);
+      const recipe = isMachineNode(node)
+        ? pack.recipes.find((r) => r.id === node.recipeId)
+        : undefined;
+      const flow = nodePortFlow(node, portId, recipe);
       if (!flow) return;
 
       const direction: PortAttachDirection = side === 'out' ? 'downstream' : 'upstream';
@@ -210,7 +244,9 @@ export function EditorPage() {
         y: clientY,
         anchorNodeId: nodeId,
         anchorPort: portId,
+        portSide: side,
         direction,
+        bufferOptions: bufferKindsForPort(side),
         candidates,
         flow,
       });
@@ -224,19 +260,16 @@ export function EditorPage() {
       const anchor = scheme.nodes.find((n) => n.id === portMenu.anchorNodeId);
       if (!anchor) return;
 
-      const portIndex = parsePortId(portMenu.anchorPort)?.index ?? 0;
-      const portsTop =
-        anchor.position.y +
-        estimateHeaderHeight(pack!, anchor.machineId, anchor.recipeId);
+      const portY = anchorPortY(anchor, portMenu.anchorPort, pack!);
       const position =
         portMenu.direction === 'downstream'
           ? {
               x: anchor.position.x + NODE_ATTACH_OFFSET_X,
-              y: portsTop + portIndex * PORT_ROW_HEIGHT,
+              y: portY,
             }
           : {
               x: anchor.position.x - NODE_ATTACH_OFFSET_X,
-              y: portsTop + portIndex * PORT_ROW_HEIGHT,
+              y: portY,
             };
 
       const newId = attachMachine({
@@ -256,24 +289,147 @@ export function EditorPage() {
     [portMenu, scheme.nodes, attachMachine, setSelectedNodeIds],
   );
 
+  const handlePortBufferSelect = useCallback(
+    (bufferKind: TfgpBufferKind) => {
+      if (!portMenu || !pack) return;
+      const anchor = scheme.nodes.find((n) => n.id === portMenu.anchorNodeId);
+      if (!anchor) return;
+
+      const portY = anchorPortY(anchor, portMenu.anchorPort, pack);
+      const position =
+        portMenu.direction === 'downstream'
+          ? { x: anchor.position.x + NODE_ATTACH_OFFSET_X, y: portY }
+          : { x: anchor.position.x - NODE_ATTACH_OFFSET_X, y: portY };
+
+      const newId = attachBuffer({
+        bufferKind,
+        position,
+        anchorNodeId: portMenu.anchorNodeId,
+        anchorPort: portMenu.anchorPort,
+        direction: portMenu.direction,
+        itemId: portMenu.flow.itemId,
+        fluidId: portMenu.flow.fluidId,
+      });
+      setSelectedNodeIds([newId]);
+      setPortMenu(null);
+    },
+    [portMenu, scheme.nodes, pack, attachBuffer, setSelectedNodeIds],
+  );
+
   const closePortMenu = useCallback(() => setPortMenu(null), []);
+
+  const layoutWidthByNodeId = useMemo(() => {
+    if (!pack) return {};
+    return buildMachineNodeLayoutWidths({
+      nodes: scheme.nodes,
+      pack,
+      lang,
+      flowResult: flowResult ?? undefined,
+      connectedIn: connectedPorts.inPorts,
+      connectedOut: connectedPorts.outPorts,
+      t,
+    });
+  }, [scheme.nodes, pack, lang, flowResult, connectedPorts, t]);
 
   const rfNodes: Node[] = useMemo(() => {
     if (!pack) return [];
     return scheme.nodes.map((n) => {
+      const connectedIn = connectedPorts.inPorts.get(n.id) ?? new Set();
+      const connectedOut = connectedPorts.outPorts.get(n.id) ?? new Set();
+
+      if (isBufferNode(n)) {
+        const inRate = formatBufferRate(flowResult?.nodeInputRates[n.id]
+          ? Object.values(flowResult.nodeInputRates[n.id]!)[0]
+          : undefined);
+        const outRate = formatBufferRate(flowResult?.nodePortOutputRates[n.id]?.out_0);
+        const inLoad = flowResult?.nodePortInLoad[n.id]?.in_0
+          ?.mul(R.from(100))
+          .toNumber();
+        const outLoad = flowResult?.nodePortOutLoad[n.id]?.out_0
+          ?.mul(R.from(100))
+          .toNumber();
+        const loadFraction = flowResult?.nodeLoad[n.id];
+        const loadPercent = loadFraction
+          ? Math.min(100, Math.max(0, loadFraction.mul(R.from(100)).toNumber()))
+          : undefined;
+        const { inputPorts, outputPorts } = buildBufferPortDisplays(
+          n.kind,
+          pack,
+          lang,
+          n.itemId,
+          n.fluidId,
+          connectedIn,
+          connectedOut,
+          inRate,
+          outRate,
+          inLoad,
+          outLoad,
+        );
+        return {
+          id: n.id,
+          type: 'buffer',
+          position: n.position,
+          selected: selectedNodeIds.includes(n.id),
+          data: {
+            bufferKind: n.kind,
+            itemId: n.itemId,
+            fluidId: n.fluidId,
+            capacity: n.capacity,
+            supplyMode: n.kind === 'start_buffer' ? n.supplyMode : undefined,
+            supplyRate: n.kind === 'start_buffer' ? n.supplyRate : undefined,
+            initialStock: n.kind === 'start_buffer' ? n.initialStock : undefined,
+            autoSupplyRate: n.kind === 'start_buffer' ? n.autoSupplyRate : undefined,
+            pack,
+            inputPorts,
+            outputPorts,
+            loadPercent,
+            loadLabel:
+              loadPercent != null
+                ? t('editor.nodeLoadMeta', {
+                    value: `${Math.round(loadPercent)}%`,
+                  })
+                : undefined,
+            onCapacityChange: (capacity: number) => updateNode(n.id, { capacity }),
+            onSupplyModeChange: (supplyMode: 'rate' | 'stock') =>
+              updateNode(n.id, { supplyMode }),
+            onSupplyRateChange: (supplyRate: number) =>
+              updateNode(n.id, { supplyRate }),
+            onInitialStockChange: (initialStock: number) =>
+              updateNode(n.id, { initialStock }),
+            onPortContextMenu: (
+              portId: string,
+              side: 'in' | 'out',
+              clientX: number,
+              clientY: number,
+            ) => handlePortContextMenu(n.id, portId, side, clientX, clientY),
+          },
+        };
+      }
+
       const recipe = pack.recipes.find((r) => r.id === n.recipeId);
       const inputRates = rateMapToStrings(flowResult?.nodeInputRates[n.id]);
       const outputRates = rateMapToStrings(flowResult?.nodeOutputRates[n.id]);
       const outputPortRateRationals = flowResult?.nodePortOutputRates[n.id];
+      const inputPortLoadMeta = flowResult
+        ? buildInputPortLoadMeta(n.id, recipe, connectedIn, flowResult, t)
+        : undefined;
+      const outputPortLoadMeta = flowResult
+        ? buildOutputPortLoadMeta(n.id, recipe, connectedOut, flowResult, t)
+        : undefined;
+      const nodeLoadMeta = flowResult
+        ? buildNodeLoadMeta(n.id, recipe, flowResult, t)
+        : undefined;
       const { inputPorts, outputPorts } = buildPortDisplays(
         recipe,
         pack,
         lang,
-        connectedPorts.inPorts.get(n.id) ?? new Set(),
-        connectedPorts.outPorts.get(n.id) ?? new Set(),
+        connectedIn,
+        connectedOut,
         inputRates,
         outputRates,
         outputPortRateRationals,
+        inputPortLoadMeta,
+        outputPortLoadMeta,
       );
       return {
         id: n.id,
@@ -313,10 +469,17 @@ export function EditorPage() {
                 lang,
               )
             : [],
+          loadPercent: nodeLoadMeta?.currentLoadPercent,
+          loadLabel: nodeLoadMeta?.label,
+          loadTitle: nodeLoadMeta?.title,
+          layoutWidth: layoutWidthByNodeId[n.id],
         },
+        ...(layoutWidthByNodeId[n.id] != null
+          ? { width: layoutWidthByNodeId[n.id] }
+          : {}),
       };
     });
-  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, handleRecipeChange, handlePortContextMenu, updateNode]);
+  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, layoutWidthByNodeId, t, handleRecipeChange, handlePortContextMenu, updateNode]);
 
   const rfEdges: Edge[] = useMemo(
     () =>
@@ -354,10 +517,15 @@ export function EditorPage() {
       if (!conn.targetHandle?.startsWith('in_')) return false;
       const srcNode = scheme.nodes.find((n) => n.id === conn.source);
       const tgtNode = scheme.nodes.find((n) => n.id === conn.target);
-      const srcRecipe = pack.recipes.find((r) => r.id === srcNode?.recipeId);
-      const tgtRecipe = pack.recipes.find((r) => r.id === tgtNode?.recipeId);
-      const srcFlow = portFlow(srcRecipe, conn.sourceHandle);
-      const tgtFlow = portFlow(tgtRecipe, conn.targetHandle);
+      if (!srcNode || !tgtNode) return false;
+      const srcRecipe = isMachineNode(srcNode)
+        ? pack.recipes.find((r) => r.id === srcNode.recipeId)
+        : undefined;
+      const tgtRecipe = isMachineNode(tgtNode)
+        ? pack.recipes.find((r) => r.id === tgtNode.recipeId)
+        : undefined;
+      const srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
+      const tgtFlow = nodePortFlow(tgtNode, conn.targetHandle, tgtRecipe);
       return portsMatch(srcFlow, tgtFlow, tagIndex ?? undefined);
     },
     [pack, scheme.nodes, tagIndex],
@@ -370,8 +538,11 @@ export function EditorPage() {
       }
       if (!isValidConnection(conn)) return;
       const srcNode = scheme.nodes.find((n) => n.id === conn.source);
-      const srcRecipe = pack?.recipes.find((r) => r.id === srcNode?.recipeId);
-      const srcFlow = portFlow(srcRecipe, conn.sourceHandle);
+      if (!srcNode) return;
+      const srcRecipe = isMachineNode(srcNode)
+        ? pack?.recipes.find((r) => r.id === srcNode.recipeId)
+        : undefined;
+      const srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
       if (!srcFlow) return;
       addEdgeToStore({
         source: conn.source,
@@ -408,12 +579,6 @@ export function EditorPage() {
   );
 
   const selectedNode = scheme.nodes.find((n) => n.id === selectedNodeIds[0]);
-  const selectedRecipe = selectedNode
-    ? pack?.recipes.find((r) => r.id === selectedNode.recipeId)
-    : undefined;
-  const selectedAllowedTiers = selectedRecipe
-    ? allowedTiersForRecipe(selectedRecipe)
-    : [];
 
   const handleAddMachine = () => {
     if (!pack || !resolvedMachineId) return;
@@ -421,6 +586,7 @@ export function EditorPage() {
     if (recipes.length === 0) return;
     const firstRecipe = recipes[0]!;
     const newId = addNode({
+      kind: 'machine',
       machineId: resolvedMachineId,
       recipeId: firstRecipe.id,
       position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
@@ -434,21 +600,6 @@ export function EditorPage() {
     setMachineQuery('');
     setMachineResetKey((k) => k + 1);
   };
-
-  const selectedRecipeItems = useMemo(() => {
-    if (!pack || !selectedNode) return [];
-    return buildRecipeComboboxItems(
-      pack,
-      getRecipesForMachine(pack, selectedNode.machineId),
-      lang,
-    );
-  }, [pack, selectedNode, lang]);
-
-  const selectedRecipeDisplay = useMemo(() => {
-    if (!pack || !selectedNode) return '';
-    const recipe = pack.recipes.find((r) => r.id === selectedNode.recipeId);
-    return recipe ? formatRecipeLabel(pack, recipe, lang) : '';
-  }, [pack, selectedNode, lang]);
 
   const handleClearScheme = () => {
     if (!window.confirm(t('editor.clearSchemeConfirm'))) return;
@@ -508,7 +659,7 @@ export function EditorPage() {
           type="button"
           className="btn btn-secondary"
           onClick={() => {
-            if (!selectedNode) return;
+            if (!selectedNode || !isMachineNode(selectedNode)) return;
             const recipe = pack.recipes.find((r) => r.id === selectedNode.recipeId);
             const out = recipe?.outputs[0];
             const v = prompt(t('editor.ratePrompt'), '1');
@@ -520,7 +671,7 @@ export function EditorPage() {
               ratePerSecond: Number(v),
             });
           }}
-          disabled={!selectedNode}
+          disabled={!selectedNode || !isMachineNode(selectedNode)}
         >
           {t('editor.targetRate')}
         </button>
@@ -591,69 +742,19 @@ export function EditorPage() {
         </div>
         <aside className="editor-sidebar">
           <h3>{t('editor.title')}</h3>
-          {!selectedNode ? (
-            <p className="editor-sidebar__hint">{t('editor.selectNode')}</p>
-          ) : (
-            <>
-              <p>
-                <strong>
-                  {getMachineName(pack, selectedNode.machineId, lang)}
-                </strong>
-              </p>
-              <label>{t('editor.recipe')}</label>
-              <SearchCombobox
-                mode="recipe"
-                items={selectedRecipeItems}
-                value={selectedNode.recipeId}
-                displayValue={selectedRecipeDisplay}
-                placeholder={t('editor.searchRecipe')}
-                resetKey={selectedNode.recipeId}
-                onChange={(recipeId) =>
-                  updateNode(selectedNode.id, { recipeId })
-                }
-              />
-              <label>{t('editor.machineCount')}</label>
-              <WheelNumberInput
-                min={1}
-                step={1}
-                value={selectedNode.machineCount}
-                onChange={(machineCount) =>
-                  updateNode(selectedNode.id, {
-                    machineCount: Math.max(1, machineCount),
-                  })
-                }
-              />
-              <label>{t('editor.overclock')}</label>
-              <WheelNumberInput
-                min={0.1}
-                step={0.1}
-                value={selectedNode.overclock}
-                onChange={(overclock) =>
-                  updateNode(selectedNode.id, { overclock })
-                }
-              />
-              {selectedAllowedTiers.length > 0 && (
-                <>
-                  <label>{t('editor.voltageTier')}</label>
-                  <select
-                    className="editor-sidebar__select"
-                    value={selectedNode.voltageTier}
-                    onChange={(e) =>
-                      updateNode(selectedNode.id, {
-                        voltageTier: e.target.value as VoltageTier,
-                      })
-                    }
-                  >
-                    {selectedAllowedTiers.map((tier) => (
-                      <option key={tier} value={tier}>
-                        {tier}
-                      </option>
-                    ))}
-                  </select>
-                </>
-              )}
-            </>
-          )}
+          <EditorInspector
+            pack={pack}
+            lang={lang}
+            nodes={scheme.nodes}
+            edges={scheme.edges}
+            flowResult={flowResult}
+            flowEdgeData={flowEdgeData}
+            selectedNodeIds={selectedNodeIds}
+            selectedEdgeIds={selectedEdgeIds}
+            connectedInByNode={connectedPorts.inPorts}
+            connectedOutByNode={connectedPorts.outPorts}
+            updateNode={updateNode}
+          />
         </aside>
       </div>
       {portMenu && (
@@ -663,7 +764,10 @@ export function EditorPage() {
           pack={pack}
           lang={lang}
           direction={portMenu.direction}
+          portSide={portMenu.portSide}
+          bufferOptions={portMenu.bufferOptions}
           candidates={portMenu.candidates}
+          onSelectBuffer={handlePortBufferSelect}
           onSelect={handlePortMenuSelect}
           onClose={closePortMenu}
         />

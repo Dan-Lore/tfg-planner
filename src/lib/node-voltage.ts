@@ -1,13 +1,13 @@
 import type { Recipe } from '@/data/types';
-import type { TfgpNode } from '@/schema/tfgp';
+import type { TfgpMachineNode } from '@/schema/tfgp';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { isVoltageTier } from '@/calculator/gt-voltage';
 import { clampVoltageTier, defaultVoltageTierForRecipe } from '@/calculator/energy';
 
 export function normalizeNodeVoltage(
-  node: TfgpNode,
+  node: TfgpMachineNode,
   recipe: Recipe | undefined,
-): TfgpNode {
+): TfgpMachineNode {
   const minTier = recipe ? defaultVoltageTierForRecipe(recipe) : 'LV';
   const rawTier = node.voltageTier;
   const voltageTier: VoltageTier =
@@ -20,8 +20,8 @@ export function normalizeNodeVoltage(
 
 export function patchForRecipeChange(
   recipe: Recipe | undefined,
-  current: Pick<TfgpNode, 'voltageTier'>,
-): Pick<TfgpNode, 'voltageTier'> {
+  current: Pick<TfgpMachineNode, 'voltageTier'>,
+): Pick<TfgpMachineNode, 'voltageTier'> {
   const minTier = recipe ? defaultVoltageTierForRecipe(recipe) : 'LV';
   const voltageTier = clampVoltageTier(
     current.voltageTier && isVoltageTier(current.voltageTier)

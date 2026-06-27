@@ -54,6 +54,30 @@ export function portFlow(recipe: Recipe | undefined, port: string): Flow | null 
   return list[parsed.index] ?? null;
 }
 
+export function bufferProductFlow(node: {
+  itemId?: string;
+  fluidId?: string;
+}): Flow | null {
+  if (!node.itemId && !node.fluidId) return null;
+  return { itemId: node.itemId, fluidId: node.fluidId, amount: 1 };
+}
+
+export function nodePortFlow(
+  node: { kind?: string; itemId?: string; fluidId?: string },
+  port: string,
+  recipe?: Recipe,
+): Flow | null {
+  const kind = node.kind ?? 'machine';
+  if (kind !== 'machine') {
+    const parsed = parsePortId(port);
+    if (!parsed) return null;
+    if (kind === 'start_buffer' && parsed.kind === 'in') return null;
+    if (kind === 'end_buffer' && parsed.kind === 'out') return null;
+    return bufferProductFlow(node);
+  }
+  return portFlow(recipe, port);
+}
+
 export function portsMatch(
   sourceFlow: Flow | null,
   targetFlow: Flow | null,

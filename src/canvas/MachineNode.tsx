@@ -1,9 +1,9 @@
-import { memo, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
-import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { memo, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackData, Flow } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
-import type { NodeBalanceLine } from '@/canvas/flow-display';
+import type { NodeBalanceLine, PortLoadMeta } from '@/canvas/flow-display';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import type { VoltageTier } from '@/calculator/gt-voltage';
@@ -20,11 +20,15 @@ import { adjustByWheel } from '@/lib/wheel-adjust';
 import type { Rational } from '@/calculator/rational';
 import { R } from '@/calculator/rational';
 import { formatFlowRateLabel, isChancedFlow } from '@/lib/flow-chance';
+import { loadGradientStyle } from '@/lib/load-gradient';
 export interface PortDisplay {
   portId: string;
   label: string;
   tooltip?: string;
   rate?: string;
+  /** Input: max-load contribution. Output: sent / effective produced at current load. */
+  loadPercent?: number;
+  loadLabel?: string;
   connected: boolean;
 }
 
@@ -49,6 +53,11 @@ export interface MachineNodeData {
   inputPorts: PortDisplay[];
   outputPorts: PortDisplay[];
   balanceLines: NodeBalanceLine[];
+  loadPercent?: number;
+  loadLabel?: string;
+  loadTitle?: string;
+  /** Unified width for all nodes of the same machineId. */
+  layoutWidth?: number;
   [key: string]: unknown;
 }
 
@@ -129,11 +138,28 @@ function PortRow({
           {port.rate}
         </span>
       )}
+      {port.loadLabel != null && (
+        <span
+          className="machine-port__load"
+          style={loadGradientStyle(port.loadPercent ?? 0)}
+          title={port.tooltip ?? port.loadLabel}
+        >
+          {formatLoadPercentDisplay(port.loadPercent ?? 0)}
+        </span>
+      )}
     </div>
   );
 }
 
-function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
+function formatLoadPercentDisplay(percent: number): string {
+  if (percent >= 99.95) return '100%';
+  if (percent <= 0.05) return '0%';
+  return `${Math.round(percent)}%`;
+}
+
+function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps) {
+  const updateNodeInternals = useUpdateNodeInternals();
+  const rootRef = useRef<HTMLDivElement>(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
@@ -164,9 +190,32 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
     return effectiveTotalEu(recipe, d.voltageTier, d.overclock);
   }, [recipe, d.voltageTier, d.overclock]);
   const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
+  const cardWidth = width ?? d.layoutWidth;
+
+  useLayoutEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
+    updateNodeInternals(id);
+    const observer = new ResizeObserver(() => {
+      updateNodeInternals(id);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [
+    id,
+    cardWidth,
+    d.inputPorts.length,
+    d.outputPorts.length,
+    d.balanceLines.length,
+    d.loadLabel,
+    d.recipeId,
+    updateNodeInternals,
+  ]);
 
   return (
     <div
+      ref={rootRef}
       className={[
         'machine-node',
         selected ? 'selected' : '',
@@ -175,6 +224,15 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
       ]
         .filter(Boolean)
         .join(' ')}
+      style={
+        cardWidth != null
+          ? {
+              width: cardWidth,
+              minWidth: cardWidth,
+              boxSizing: 'border-box',
+            }
+          : undefined
+      }
     >
       <div className="machine-node__drag-handle machine-node__header">
         <div className="title" title={title}>
@@ -266,6 +324,15 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
             )}
           </div>
         )}
+        {d.loadLabel != null && (
+          <div
+            className="machine-node__load"
+            style={loadGradientStyle(d.loadPercent ?? 0)}
+            title={d.loadTitle}
+          >
+            {d.loadLabel}
+          </div>
+        )}
         {d.balanceLines.map((line) => (
           <div
             key={line.text}
@@ -310,8 +377,10 @@ function MachineNodeComponent({ data, dragging, selected }: NodeProps) {
 
 export const MachineNode = memo(MachineNodeComponent);
 
+import { BufferNode } from '@/canvas/BufferNode';
+
 export function useNodeTypes() {
-  return useMemo(() => ({ machine: MachineNode }), []);
+  return useMemo(() => ({ machine: MachineNode, buffer: BufferNode }), []);
 }
 
 export function buildPortDisplays(
@@ -328,6 +397,8 @@ export function buildPortDisplays(
   inputRates: Record<string, string>,
   outputRates: Record<string, string>,
   outputPortRateRationals?: Record<string, Rational>,
+  inputPortLoadMeta?: Record<string, PortLoadMeta>,
+  outputPortLoadMeta?: Record<string, PortLoadMeta>,
 ): { inputPorts: PortDisplay[]; outputPorts: PortDisplay[] } {
   if (!recipe) {
     return { inputPorts: [], outputPorts: [] };
@@ -338,11 +409,18 @@ export function buildPortDisplays(
       const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
       const rate = inputRates[key];
+      const loadMeta = inputPortLoadMeta?.[portId];
       return {
         portId,
         label,
-        tooltip: rate ? `${label} · ${rate}` : label,
+        tooltip: [rate ? `${label} · ${rate}` : label, loadMeta?.title]
+          .filter(Boolean)
+          .join('\n'),
         rate,
+        loadPercent: loadMeta?.loadPercent,
+        loadLabel: loadMeta
+          ? formatLoadPercentDisplay(loadMeta.loadPercent)
+          : undefined,
         connected: connectedIn.has(portId),
       };
     }),
@@ -351,6 +429,7 @@ export function buildPortDisplays(
       const key = productKey(flow);
       const label = flowLabel(flow, pack, lang, flow.amount);
       const portRate = outputPortRateRationals?.[portId];
+      const loadMeta = outputPortLoadMeta?.[portId];
       const rate =
         portRate && portRate.compare(R.zero) > 0
           ? formatFlowRateLabel(portRate, isChancedFlow(flow))
@@ -358,8 +437,14 @@ export function buildPortDisplays(
       return {
         portId,
         label,
-        tooltip: rate ? `${label} · ${rate}` : label,
+        tooltip: [rate ? `${label} · ${rate}` : label, loadMeta?.title]
+          .filter(Boolean)
+          .join('\n'),
         rate,
+        loadPercent: loadMeta?.loadPercent,
+        loadLabel: loadMeta
+          ? formatLoadPercentDisplay(loadMeta.loadPercent)
+          : undefined,
         connected: connectedOut.has(portId),
       };
     }),
