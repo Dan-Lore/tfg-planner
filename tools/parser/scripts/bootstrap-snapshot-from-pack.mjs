@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 /**
- * One-time bootstrap: copy recipes from an existing pack.json into snapshot format.
- * Use until generate-tfg-snapshot has been run for the tag.
+ * DEPRECATED — dev-only interim helper.
+ * Production pack data MUST come from server snapshot:
+ *   npm run generate-tfg-snapshot -- <tag>
+ * Do not use bootstrap output for release builds.
  */
+console.warn(
+  '[DEPRECATED] bootstrap-snapshot-from-pack copies pack.json and loses GT recipe fidelity.\n' +
+    'Use: npm run generate-tfg-snapshot -- ' + (process.argv[2] ?? '0.12.8'),
+);
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';

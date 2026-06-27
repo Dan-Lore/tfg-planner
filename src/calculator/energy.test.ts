@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { Recipe } from '@/data/types';
 import {
   baseEuPerTick,
+  allowedTiersForRecipe,
   effectiveDurationTicks,
   effectiveEuPerTick,
   effectiveTotalEu,
@@ -77,6 +78,17 @@ describe('energy', () => {
     expect(effectiveEuPerTick(recipe, 'MV')).toBe(64);
     expect(effectiveDurationTicks(recipe, 'MV', 2)).toBe(5);
     expect(effectiveTotalEu(recipe, 'MV', 2)).toBe(320);
+  });
+
+  it('recipe without energy has no allowed tiers', () => {
+    const recipe: Recipe = {
+      id: 'test:no_energy',
+      machineId: 'gtceu:assembler',
+      inputs: [],
+      outputs: [{ itemId: 'minecraft:stone', amount: 1 }],
+      durationTicks: 100,
+    };
+    expect(allowedTiersForRecipe(recipe)).toEqual([]);
   });
 
   it('recipe without energy uses overclock on duration only', () => {

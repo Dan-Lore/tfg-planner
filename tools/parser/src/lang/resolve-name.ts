@@ -295,6 +295,17 @@ export function resolveMachineName(machineId: string, bundle: LangBundle): { ru:
   return fb;
 }
 
+export function countNamedDefs(
+  defs: readonly { id: string; names: { ru: string; en: string } }[],
+): { resolved: number; total: number } {
+  let resolved = 0;
+  for (const d of defs) {
+    const fb = fallbackName(d.id);
+    if (d.names.ru !== fb.ru || d.names.en !== fb.en) resolved++;
+  }
+  return { resolved, total: defs.length };
+}
+
 export function countResolved(
   ids: string[],
   bundle: LangBundle,

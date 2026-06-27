@@ -62,6 +62,44 @@ describe('recipeFromSnapshotJson', () => {
     });
   });
 
+  it('parses wiremill GT JSON with circuit configuration', () => {
+    const { recipe } = recipeFromSnapshotJson(
+      'gtceu:mill_copper_wire_8',
+      {
+        id: 'gtceu:mill_copper_wire_8',
+        type: 'gtceu:wiremill',
+        duration: 100,
+        inputs: {
+          item: [
+            {
+              content: {
+                type: 'gtceu:sized',
+                count: 1,
+                ingredient: { tag: 'forge:ingots/copper' },
+              },
+            },
+            {
+              content: { type: 'gtceu:circuit', configuration: 8 },
+            },
+          ],
+        },
+        outputs: {
+          item: [
+            {
+              content: { item: 'gtceu:copper_wire', amount: 8 },
+            },
+          ],
+        },
+        tickInputs: { eu: [{ content: 4 }] },
+      },
+      'fixture',
+    );
+    expect(recipe?.circuitConfiguration).toBe(8);
+    expect(recipe?.inputs).toEqual([{ itemId: '#forge:ingots/copper', amount: 1 }]);
+    expect(recipe?.outputs).toEqual([{ itemId: 'gtceu:copper_wire', amount: 8 }]);
+    expect(recipe?.energy?.minVoltageTier).toBe('ULV');
+  });
+
   it('parses chanced GT JSON outputs with chance weight', () => {
     const { recipe } = recipeFromSnapshotJson(
       'gtceu:greenhouse/test',

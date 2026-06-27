@@ -42,6 +42,8 @@ export interface Recipe {
   outputs: Flow[];
   durationTicks: number;
   energy?: RecipeEnergy;
+  /** GT integrated circuit configuration; not a consumed product flow. */
+  circuitConfiguration?: number;
 }
 
 export interface Machine {

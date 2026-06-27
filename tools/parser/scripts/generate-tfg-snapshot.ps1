@@ -11,7 +11,6 @@ $CacheDir = Join-Path $RepoRoot ".cache\tfg-snapshot"
 $WorkDir = Join-Path $CacheDir $Tag
 $OutDir = Join-Path $ParserRoot "snapshots\$Tag"
 $ExportScript = Join-Path $ParserRoot "snapshot\kubejs-export-recipes.js"
-$ServerTimeoutMin = 120
 $MinRecipes = 6000
 
 function Resolve-Java {
@@ -66,14 +65,18 @@ if (-not $reuseWorkDir) {
   }
   New-Item -ItemType Directory -Path $WorkDir -Force | Out-Null
   Copy-Item -Path (Join-Path $ModpackRoot "*") -Destination $WorkDir -Recurse -Force
-  $kubeExport = Join-Path $WorkDir "kubejs\server_scripts\_tfg_planner_export.js"
+  $kubeExport = Join-Path $WorkDir "kubejs\server_scripts\zzz_tfg_planner_export.js"
+  $legacyExport = Join-Path $WorkDir "kubejs\server_scripts\_tfg_planner_export.js"
+  if (Test-Path $legacyExport) { Remove-Item -Force $legacyExport }
   Copy-Item -Path $ExportScript -Destination $kubeExport -Force
 } else {
   Write-Host "Reusing workdir $WorkDir (SkipFetch)"
   $serverOverridesSrc = Join-Path $ModpackRoot ".pakku\server-overrides"
   $serverOverridesDst = Join-Path $WorkDir ".pakku\server-overrides"
   Copy-Item -Path (Join-Path $serverOverridesSrc "*") -Destination $serverOverridesDst -Recurse -Force
-  $kubeExport = Join-Path $WorkDir "kubejs\server_scripts\_tfg_planner_export.js"
+  $kubeExport = Join-Path $WorkDir "kubejs\server_scripts\zzz_tfg_planner_export.js"
+  $legacyExport = Join-Path $WorkDir "kubejs\server_scripts\_tfg_planner_export.js"
+  if (Test-Path $legacyExport) { Remove-Item -Force $legacyExport }
   Copy-Item -Path $ExportScript -Destination $kubeExport -Force
 }
 
@@ -84,20 +87,24 @@ if (-not (Test-Path $pakkuJar)) {
   throw "pakku.jar missing in modpack root"
 }
 
+$JvmScript = Join-Path $PSScriptRoot "server-jvm-args.mjs"
+$resources = node $JvmScript --json | ConvertFrom-Json
+$pakkuJvmFlags = (node $JvmScript --pakku-flags) -split ' '
+
 $hasMods = Test-Path (Join-Path $WorkDir "mods")
 if (-not $SkipFetch -or -not $hasMods) {
-  Write-Host "pakku fetch..."
+  Write-Host "pakku fetch (JVM $($resources.pakku.xmx))..."
   Push-Location $WorkDir
-  & $Java -jar $pakkuJar -y fetch
+  & $Java @pakkuJvmFlags -jar $pakkuJar -y fetch
   if ($LASTEXITCODE -ne 0) { throw "pakku fetch failed" }
   Pop-Location
 } else {
   Write-Host "Skipping pakku fetch (mods present)"
 }
 
-Write-Host "pakku export..."
+Write-Host "pakku export (JVM $($resources.pakku.xmx))..."
 Push-Location $WorkDir
-& $Java -jar $pakkuJar -y export
+& $Java @pakkuJvmFlags -jar $pakkuJar -y export
 if ($LASTEXITCODE -ne 0) { throw "pakku export failed" }
 Pop-Location
 
@@ -112,7 +119,9 @@ Expand-Archive -Path $serverZip.FullName -DestinationPath $serverRunDir -Force
 # Re-inject export script into extracted server pack (export may omit kubejs timing)
 $serverKube = Join-Path $serverRunDir "kubejs\server_scripts"
 New-Item -ItemType Directory -Path $serverKube -Force | Out-Null
-Copy-Item -Path $ExportScript -Destination (Join-Path $serverKube "_tfg_planner_export.js") -Force
+$legacyServerExport = Join-Path $serverKube "_tfg_planner_export.js"
+if (Test-Path $legacyServerExport) { Remove-Item -Force $legacyServerExport }
+Copy-Item -Path $ExportScript -Destination (Join-Path $serverKube "zzz_tfg_planner_export.js") -Force
 
 $eula = Join-Path $serverRunDir "eula.txt"
 "eula=true" | Set-Content -Path $eula -Encoding ASCII
@@ -120,16 +129,19 @@ $eula = Join-Path $serverRunDir "eula.txt"
 $starterJar = Join-Path $serverRunDir "minecraft_server.jar"
 if (-not (Test-Path $starterJar)) { throw "minecraft_server.jar missing in server pack" }
 
-Write-Host "Starting server (timeout ${ServerTimeoutMin}m)..."
-$exportFile = Join-Path $serverRunDir "logs\tfg-planner-recipe-snapshot\recipes.json"
-$serverArgs = @("-jar", $starterJar, "-Xmx6024M", "-Xms1024M", "nogui")
+Write-Host "Starting server (timeout $($resources.timeoutMin)m, $($resources.jvmCpus) JVM CPUs, $($resources.server.xmx) $($resources.server.xms), system $($resources.systemRamGib) GiB)..."
+$serverJvmFlags = (node $JvmScript --server-flags) -split ' '
+$exportFile = Join-Path $serverRunDir "config\tfg-planner-recipe-snapshot\recipes.json"
+$exportFileKube = Join-Path $serverRunDir "kubejs\tfg-planner-recipe-snapshot\recipes.json"
+$exportFileLegacy = Join-Path $serverRunDir "logs\tfg-planner-recipe-snapshot\recipes.json"
+$serverArgs = @($serverJvmFlags) + @("-jar", $starterJar, "nogui")
 $proc = Start-Process -FilePath $Java -ArgumentList $serverArgs -WorkingDirectory $serverRunDir -PassThru -NoNewWindow
-$deadline = (Get-Date).AddMinutes($ServerTimeoutMin)
+$deadline = (Get-Date).AddMinutes($resources.timeoutMin)
 
 while ((Get-Date) -lt $deadline) {
   Start-Sleep -Seconds 20
-  if (Test-Path $exportFile) { break }
-  if ($proc.HasExited -and -not (Test-Path $exportFile)) {
+  if ((Test-Path $exportFile) -or (Test-Path $exportFileKube) -or (Test-Path $exportFileLegacy)) { break }
+  if ($proc.HasExited -and -not (Test-Path $exportFile) -and -not (Test-Path $exportFileKube) -and -not (Test-Path $exportFileLegacy)) {
     $latestLog = Get-ChildItem (Join-Path $serverRunDir "logs") -Filter "latest.log" -ErrorAction SilentlyContinue | Select-Object -First 1
     if ($latestLog) {
       Write-Host "--- latest.log tail ---"
@@ -139,6 +151,10 @@ while ((Get-Date) -lt $deadline) {
   }
 }
 
+if (-not (Test-Path $exportFile)) {
+  if (Test-Path $exportFileKube) { $exportFile = $exportFileKube }
+  elseif (Test-Path $exportFileLegacy) { $exportFile = $exportFileLegacy }
+}
 if (-not (Test-Path $exportFile)) {
   if (-not $proc.HasExited) { $proc.Kill() }
   throw "Export timeout. Expected $exportFile"

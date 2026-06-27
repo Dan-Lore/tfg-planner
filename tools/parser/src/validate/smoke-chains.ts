@@ -10,55 +10,62 @@ export interface SmokeChain {
   expectMachine?: string;
 }
 
-/** Smoke chains calibrated for TFG-Modern 0.12.8 KubeJS overrides. */
+/** Smoke chains calibrated for TFG-Modern 0.12.8 server GT JSON snapshot. */
 export const SMOKE_CHAINS_0_12_8: SmokeChain[] = [
   {
     id: 'copper-centrifuge',
-    recipeId: 'tfg:uranium_238_separation',
-    expectOutputItem: '#forge:tiny_dusts/uranium_235',
+    recipeId: 'gtceu:centrifuge/uranium_238_separation',
+    expectOutputItem: 'gtceu:tiny_uranium_235_dust',
     expectMachine: 'gtceu:centrifuge',
   },
   {
-    id: 'mv-chemical-bath-shaped',
-    recipeId: 'tfg:shaped/mv_chemical_bath',
-    expectMachine: 'minecraft:shaped',
+    id: 'mv-chemical-bath-arc',
+    recipeId: 'gtceu:arc_furnace/arc_mv_chemical_bath',
+    expectMachine: 'gtceu:arc_furnace',
+    expectInputItem: 'gtceu:mv_chemical_bath',
   },
   {
     id: 'magnesium-diboride-cool',
-    recipeId: 'tfg:magnesium_diboride_cool_down',
-    expectMachine: 'gtceu:chemical_bath',
+    recipeId: 'gtceu:vacuum_freezer/cool_hot_magnesium_diboride_ingot',
+    expectMachine: 'gtceu:vacuum_freezer',
+    expectInputItem: '#forge:hot_ingots/magnesium_diboride',
+    expectOutputItem: 'gtceu:magnesium_diboride_ingot',
   },
   {
     id: 'snow-compressor-fix',
-    recipeId: 'gtceu:compressor/snowballs_to_snow_fixed',
+    recipeId: 'gtceu:compressor/snowballs_to_snow',
     expectMachine: 'gtceu:compressor',
   },
   {
     id: 'diluted-hcl',
-    recipeId: 'tfg:diluted_hcl_acid',
-    expectMachine: 'gtceu:mixer',
+    recipeId: 'gtceu:distillation_tower/distill_dilute_hcl',
+    expectMachine: 'gtceu:distillation_tower',
+    expectInputFluid: '#forge:diluted_hydrochloric_acid',
   },
   {
-    id: 'reformed-aromatic-rhenium',
-    recipeId: 'tfg:reformed_aromatic_feedstock',
-    expectMachine: 'gtceu:chemical_reactor',
-    expectInputItem: 'gtceu:tiny_rhenium_dust',
+    id: 'mo-re-alloy-blast',
+    recipeId: 'gtceu:alloy_blast_smelter/mo_50_re',
+    expectMachine: 'gtceu:alloy_blast_smelter',
+    expectInputItem: '#forge:dusts/rhenium',
+    expectOutputFluid: 'tfg:mo_50_re',
   },
   {
-    id: 'cracker-off-gas-rhenium',
-    recipeId: 'tfg:cracker_off_gas_recycling',
+    id: 'mo-re-electrolyzer',
+    recipeId: 'gtceu:electrolyzer/decomposition_electrolyzing_mo_50_re',
     expectMachine: 'gtceu:electrolyzer',
-    expectOutputItem: 'gtceu:tiny_rhenium_dust',
+    expectOutputItem: 'gtceu:rhenium_dust',
   },
   {
-    id: 'aromatic-lcr-mirror',
-    recipeId: 'tfg:aromatic_feedstock@lcr',
+    id: 'phenol-lcr-shortcut',
+    recipeId: 'gtceu:large_chemical_reactor/phenol_hcl_shortcut',
     expectMachine: 'gtceu:large_chemical_reactor',
+    expectOutputFluid: 'gtceu:diluted_hydrochloric_acid',
   },
   {
-    id: 'pyrolyse-log-creosote-patched',
-    recipeId: 'tfg:pyrolyse_oven/log_to_creosote',
+    id: 'pyrolyse-log-creosote',
+    recipeId: 'gtceu:pyrolyse_oven/log_to_creosote',
     expectMachine: 'gtceu:pyrolyse_oven',
+    expectOutputFluid: 'gtceu:creosote',
   },
   {
     id: 'pyrolyse-log-charcoal-byproducts',
@@ -68,15 +75,35 @@ export const SMOKE_CHAINS_0_12_8: SmokeChain[] = [
   },
   {
     id: 'distill-charcoal-byproducts',
-    recipeId: 'gtceu:distill_charcoal_byproducts',
+    recipeId: 'gtceu:distillation_tower/distill_charcoal_byproducts',
     expectMachine: 'gtceu:distillation_tower',
-    expectInputFluid: 'gtceu:charcoal_byproducts',
+    expectInputFluid: '#forge:charcoal_byproducts',
   },
   {
     id: 'distill-wood-tar',
-    recipeId: 'gtceu:distill_wood_tar',
+    recipeId: 'gtceu:distillation_tower/distill_wood_tar',
     expectMachine: 'gtceu:distillation_tower',
-    expectInputFluid: 'gtceu:wood_tar',
+    expectInputFluid: '#forge:wood_tar',
+  },
+  {
+    id: 'wiremill-copper-8',
+    recipeId: 'gtceu:wiremill/mill_copper_wire_8',
+    expectMachine: 'gtceu:wiremill',
+    expectInputItem: '#forge:ingots/copper',
+    expectOutputItem: 'gtceu:copper_octal_wire',
+  },
+  {
+    id: 'distill-charcoal-to-wood-tar',
+    recipeId: 'gtceu:distillery/distill_charcoal_byproducts_to_wood_tar',
+    expectMachine: 'gtceu:distillery',
+    expectInputFluid: '#forge:charcoal_byproducts',
+    expectOutputFluid: 'gtceu:wood_tar',
+  },
+  {
+    id: 'pyrolyse-log-creosote-nitrogen',
+    recipeId: 'gtceu:pyrolyse_oven/log_to_creosote_nitrogen',
+    expectMachine: 'gtceu:pyrolyse_oven',
+    expectOutputFluid: 'gtceu:creosote',
   },
 ];
 

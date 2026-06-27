@@ -1,14 +1,12 @@
 {
   "schemaVersion": 1,
   "modpackTag": "0.12.8",
-  "pakkuLockSha256": "bootstrap",
-  "recipeCount": 6727,
-  "exportedAt": "2026-06-18T16:11:34.904Z",
+  "pakkuLockSha256": "15f11cb99d6f27a6913f4956e460aa399b008e98ac236bf02d4d9b21af7943e4",
+  "recipeCount": 43177,
+  "exportedAt": "2026-06-27T20:22:51.633Z",
   "markerRecipeIds": [
-    "gtceu:pyrolyse_oven/log_to_charcoal_byproducts",
-    "gtceu:distill_charcoal_byproducts",
-    "gtceu:distill_wood_tar"
+    "gtceu:pyrolyse_oven/log_to_charcoal_byproducts"
   ],
-  "snapshotSha256": "7f18dd12ad21ba6fa721821546d2086a94d1415a4f9e0add0479bb042809d459",
-  "source": "bootstrap-from-pack"
+  "snapshotSha256": "30abe22c00f44005c82cc30ea762be37982d24a5b8d913f1f822503d2430e997",
+  "source": "generate-tfg-snapshot"
 }

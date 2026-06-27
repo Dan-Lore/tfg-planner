@@ -654,6 +654,13 @@ a {
   white-space: nowrap;
 }
 
+.recipe-combobox-option__circuit {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
 .recipe-combobox-option__energy {
   font-size: 0.68rem;
   font-weight: 600;

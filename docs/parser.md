@@ -36,16 +36,24 @@ git tag → generate-tfg-snapshot (once per tag)
 ### CLI
 
 ```bash
-# Полный export из игры (тяжёлый, JDK 17+, pakku)
+# Полный export из игры (обязателен для production pack data)
 npm run generate-tfg-snapshot -- 0.12.8
 
-# Bootstrap snapshot из существующего pack.json (interim)
-npm run bootstrap-snapshot -- 0.12.8
-
-# Сборка pack data
-npm run build-pack -- --tag 0.12.8
+# Сборка pack data (только из server snapshot)
 npm run build-pack -- --tag 0.12.8 --strict-snapshot
 ```
+
+**Bootstrap** (`npm run bootstrap-snapshot`) — **deprecated**, dev-only; копирует `pack.json` и теряет GT I/O (wiremill и др.).
+
+### Single source of truth
+
+| Данные рецепта | Источник |
+|----------------|----------|
+| inputs, outputs, chanced I/O | `tickInputs` / GT JSON slots в server snapshot |
+| energy / min tier | `tickInputs.eu` → `sanitize-energy` |
+| integrated circuit | `gtceu:circuit` → `Recipe.circuitConfiguration` (не product flow) |
+
+KubeJS AST (`enrich-energy`, `enrich-chances`) **не** вызывается из `build-pack`.
 
 ## Snapshot manifest
 
@@ -77,6 +85,7 @@ npm run build-pack -- --tag 0.12.8 --strict-snapshot
 См. [specification.md](specification.md). Кратко:
 
 - `Recipe.energy` — optional `EnergyStack`: `{ minVoltageTier, voltage, amperage }` на min tier рецепта; legacy `euPerTick` нормализуется при сборке. Поле **отсутствует**, если парсер не извлёк.
+- `Recipe.circuitConfiguration` — optional GT integrated circuit (не consumable flow).
 - `Machine.kind` — optional `singleblock` | `multiblock` (для UI energy hatches).
 - Chanced I/O — optional `chance` на потоке (вес GT, 10000 = 100%); в UI — `80% × 16× …`, скорость ≈ `amount/duration × chance/10000` с префиксом `~`
 

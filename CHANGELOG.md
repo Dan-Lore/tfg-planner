@@ -7,24 +7,29 @@
 
 ### Fixed
 
+- **Recipe data:** server snapshot as single source of truth — removed `enrich-energy` / `enrich-chances` and auto-bootstrap from `build-pack`; GT JSON export script (I/O + `tickInputs.eu`).
+- **Wiremill / GT circuit:** `circuitConfiguration` field; integrated circuit excluded from product flows; circuit-only broken bootstrap recipes dropped at build.
+- **Tier picker:** hidden when recipe has no `energy`; no fake LV fallback in `allowedTiersForRecipe`.
 - **Energy model:** removed erroneous `energyHatchCount` UI (amperage ≠ hatch count); parser infer uses machine kind + `nativeTier` (singleblock A≤1, multiblock prefers native tier).
 - CI/Pages: edge-routing tests no longer depend on gitignored `Untitled*.tfgp`; committed fixture `benzene-distillation-lcr-gap.tfgp` + consolidated integration tests.
-- **build-pack:** recipe output/input `chance` weights restored — KubeJS enrichment pass after snapshot load, greenhouse expander chanced outputs, `sanitizeFlow` preserves `chance`.
+- **build-pack:** chanced I/O preserved via snapshot GT JSON + `sanitizeFlow` (no KubeJS enrich pass).
 - **Холст:** подвисание при drag — селективная перерисовка рёбер (`FlowEdge` + `memo`), изоляция drag в `EditorCanvas`; статичная метка рецепта у машин с большим числом рецептов (теплица) во время drag.
 - CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
 - CI: PR workflow now runs production build with `VITE_BASE_PATH` (same as Pages deploy).
 
 ### Added
 
+- **Recipe picker:** tier badge + circuit meta (`C:N`) in combobox options.
+- Smoke chains: wiremill copper×8, liquefaction aromatic, greenhouse bamboo.
+- Multiblock registry: `coal_liquefaction_tower`, `hydroponics_facility`.
 - **K-003 (phase 1):** EnergyStack — `Recipe.energy { minVoltageTier, voltage, amperage }`, `calculator/energy.ts`, `calculator/gt-voltage.ts`.
 - Node field `voltageTier`; tier picker + EU/t/duration/total EU on machine card. `Machine.nativeTier` in pack for multiblock infer.
-- Parser: `enrich-energy`, `sanitize-energy`, `gt-machine-tiers.ts`, GTValues.VA in KubeJS AST, export script energy serialization.
 - Kanban **K-012:** multiblock energy hatch / parallel (backlog).
 
 ### Changed
 
+- **build-pack:** recipe source is server snapshot only; bootstrap deprecated.
 - **flow-solver:** effective duration from tier OC + overclock; overclock no longer double-applied as speed factor.
-- Pack `0.12.8`: **1707** recipes with EnergyStack (KubeJS enrich + snapshot normalize).
 
 ### Added (earlier)
 

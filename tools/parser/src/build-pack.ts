@@ -5,18 +5,18 @@ import { fileURLToPath } from 'node:url';
 import { fetchModpackTag } from './fetch/modpack-fetch.js';
 import { buildModIndex } from './lockfile/parse-pakku.js';
 import { normalizePack } from './pipeline/normalize.js';
-import { sanitizeAllFlows } from './pipeline/sanitize-flows.js';
+import { sanitizeRecipeFlows } from './pipeline/sanitize-flows.js';
 import { sanitizeRecipeEnergy } from './pipeline/sanitize-energy.js';
 import { buildLangBundle } from './lang/build-lang-bundle.js';
-import { countResolved, resolveResourceName } from './lang/resolve-name.js';
+import { countNamedDefs } from './lang/resolve-name.js';
 import { loadTfgExcludes } from './datapack/excludes.js';
 import { validatePackSchema, buildReportFromPack } from './validate/schema.js';
 import { runSmokeChains } from './validate/smoke-chains.js';
 import { loadGolden, diffAgainstGolden } from './validate/golden-diff.js';
-import { enrichRecipeChances } from './pipeline/enrich-chances.js';
-import { enrichRecipeEnergy } from './pipeline/enrich-energy.js';
+import { isCircuitOnlyBrokenRecipe } from './pipeline/extract-circuit.js';
 import { loadRecipeSnapshot } from './snapshot/load-recipe-snapshot.js';
 import { defaultSnapshotDir } from './snapshot/manifest.js';
+import { logStage, mapWithProgress } from './progress.js';
 import type { BuildReport, ParseWarning } from './types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -58,15 +58,18 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   const dataVersion = options.dataVersion ?? 1;
   const warnings: ParseWarning[] = [];
 
+  logStage(`Fetching modpack tag ${tag}…`);
   const snapshot = await fetchModpackTag(tag, cacheDir);
   const modpackRoot = snapshot.rootDir;
   const indexOut = join(cacheDir, 'modpack', tag);
+  logStage('Building mod index…');
   const modIndex = buildModIndex(modpackRoot, tag, indexOut);
 
   const excluded = loadTfgExcludes(modpackRoot);
   const parserRoot = join(__dirname, '..');
   const snapshotDir = options.snapshotDir ?? defaultSnapshotDir(parserRoot, tag);
 
+  logStage(`Loading recipe snapshot from ${snapshotDir}…`);
   const snapshotLoad = loadRecipeSnapshot({
     snapshotDir,
     modpackTag: tag,
@@ -74,23 +77,43 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   });
   warnings.push(...snapshotLoad.warnings);
 
+  if (snapshotLoad.recipes.length === 0) {
+    throw new Error(
+      `No recipes loaded from snapshot at ${snapshotDir}. Run: npm run generate-tfg-snapshot -- ${tag}`,
+    );
+  }
+
+  logStage(`Loaded ${snapshotLoad.recipes.length} recipes from snapshot`);
   let recipes = snapshotLoad.recipes.filter((r) => !excluded.has(r.id));
+  if (excluded.size > 0) {
+    logStage(`After excludes: ${recipes.length} recipes (${excluded.size} ids excluded)`);
+  }
 
-  const chanceEnrich = enrichRecipeChances(recipes, modpackRoot);
-  recipes = chanceEnrich.recipes;
-  warnings.push({
-    file: 'kubejs-chances',
-    reason: `Enriched ${chanceEnrich.stats.enrichedRecipes} recipes (${chanceEnrich.stats.enrichedFlows} flows) from ${chanceEnrich.stats.kubejsRecipesWithChance} KubeJS recipes with chance data`,
+  const broken = recipes.filter(isCircuitOnlyBrokenRecipe);
+  if (broken.length > 0) {
+    warnings.push({
+      file: 'snapshot',
+      reason: `Dropped ${broken.length} circuit-only broken recipes (missing product I/O; re-export with GT JSON snapshot)`,
+      kind: 'substrate',
+    });
+    const brokenIds = new Set(broken.map((r) => r.id));
+    recipes = recipes.filter((r) => !brokenIds.has(r.id));
+  }
+
+  const missingOutputs = recipes.filter((r) => r.outputs.length === 0).length;
+  if (missingOutputs > 0) {
+    warnings.push({
+      file: 'snapshot',
+      reason: `${missingOutputs} recipes have no outputs after snapshot parse`,
+      kind: 'substrate',
+    });
+  }
+
+  recipes = mapWithProgress(recipes, 'Sanitizing flows', sanitizeRecipeFlows, {
+    every: 5000,
+    intervalMs: 20_000,
   });
-
-  const energyEnrich = enrichRecipeEnergy(recipes, modpackRoot);
-  recipes = energyEnrich.recipes;
-  warnings.push({
-    file: 'kubejs-energy',
-    reason: `Enriched ${energyEnrich.stats.enrichedRecipes} recipes from ${energyEnrich.stats.kubejsRecipesWithEnergy} KubeJS recipes with energy data`,
-  });
-
-  recipes = sanitizeAllFlows(recipes);
+  logStage('Sanitizing energy…');
   const energySanitize = sanitizeRecipeEnergy(recipes);
   recipes = energySanitize.recipes;
   if (energySanitize.stats.singleblockAmperageOver1 > 0) {
@@ -106,29 +129,30 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
     });
   }
 
+  logStage('Building lang bundle…');
   const { bundle: langBundle, stats: langStats } = await buildLangBundle(
     modpackRoot,
     modIndex,
     cacheDir,
   );
 
+  logStage(`Normalizing pack (${recipes.length} recipes)…`);
   const pack = normalizePack(recipes, tag, dataVersion, langBundle);
-  const itemIds = [...pack.items, ...pack.fluids].map((x) => x.id);
-  const itemCoverage = countResolved(itemIds, langBundle, resolveResourceName);
-  const tagIds = itemIds.filter((id) => id.startsWith('#'));
-  const gtceuIds = itemIds.filter((id) => id.startsWith('gtceu:'));
-  const tfgIds = itemIds.filter((id) => id.startsWith('tfg:'));
-  const mcIds = itemIds.filter((id) => id.startsWith('minecraft:'));
-  const malformedIds = itemIds.filter((id) => /^\d+x\s/.test(id));
-  const tagCoverage = countResolved(tagIds, langBundle, resolveResourceName);
-  const gtceuCoverage = countResolved(gtceuIds, langBundle, resolveResourceName);
-  const tfgCoverage = countResolved(tfgIds, langBundle, resolveResourceName);
-  const mcCoverage = countResolved(mcIds, langBundle, resolveResourceName);
+  logStage(`Pack normalized (${pack.recipes.length} recipes, ${pack.items.length} items)`);
+  logStage('Summarizing lang coverage…');
+  const allDefs = [...pack.items, ...pack.fluids];
+  const itemCoverage = countNamedDefs(allDefs);
+  const tagCoverage = countNamedDefs(allDefs.filter((d) => d.id.startsWith('#')));
+  const gtceuCoverage = countNamedDefs(allDefs.filter((d) => d.id.startsWith('gtceu:')));
+  const tfgCoverage = countNamedDefs(allDefs.filter((d) => d.id.startsWith('tfg:')));
+  const mcCoverage = countNamedDefs(allDefs.filter((d) => d.id.startsWith('minecraft:')));
+  const malformedIds = allDefs.filter((d) => /^\d+x\s/.test(d.id));
   warnings.push({
     file: 'lang',
     reason: `Localized ${itemCoverage.resolved}/${itemCoverage.total} resources (tags: ${tagCoverage.resolved}/${tagCoverage.total}, gtceu: ${gtceuCoverage.resolved}/${gtceuCoverage.total}, tfg: ${tfgCoverage.resolved}/${tfgCoverage.total}, minecraft: ${mcCoverage.resolved}/${mcCoverage.total}, malformed: ${malformedIds.length}; kubejs: ${langStats.kubejsFiles} files, jars: ${langStats.modJars}, mc keys ru/en: ${langStats.minecraftKeysRu}/${langStats.minecraftKeysEn}, keys ru/en: ${langStats.keysRu}/${langStats.keysEn})`,
   });
 
+  logStage('Validating schema and smoke chains…');
   const schemaErrors = validatePackSchema(pack);
   for (const err of schemaErrors) {
     warnings.push({ file: 'pack.json', reason: err });
@@ -191,6 +215,8 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
           (f) => f.chance !== undefined && f.chance > 0 && f.chance < 10_000,
         ),
       ).length,
+      recipesMissingOutputs: missingOutputs,
+      recipesCircuitOnlyDropped: broken.length,
     },
     warnings,
     [],
@@ -204,7 +230,9 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   const reportPath = join(outDir, 'build-report.json');
   const manifestPath = join(outDir, 'manifest.json');
 
+  logStage('Serializing pack.json (may take 1–3 min)…');
   const packJson = JSON.stringify(pack, null, 2);
+  logStage(`Writing ${Math.round(packJson.length / 1_048_576)} MiB to disk…`);
   writeJson(packPath, pack);
   writeJson(reportPath, report);
   writeJson(manifestPath, {

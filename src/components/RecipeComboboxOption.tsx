@@ -45,6 +45,11 @@ export function RecipeComboboxOption({ detail }: RecipeComboboxOptionProps) {
           {detail.tierLabel && (
             <span className="recipe-combobox-option__tier">{detail.tierLabel}</span>
           )}
+          {detail.circuitLabel && (
+            <span className="recipe-combobox-option__circuit">
+              {t('editor.circuitMeta', { value: detail.circuitLabel })}
+            </span>
+          )}
           <span className="recipe-combobox-option__duration">{detail.durationLabel}</span>
           {detail.energyLabel && (
             <span className="recipe-combobox-option__energy">{detail.energyLabel}</span>

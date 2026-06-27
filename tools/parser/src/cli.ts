@@ -3,11 +3,10 @@
  *
  * Usage:
  *   npm run build-pack -- --tag 0.12.8
- *   npm run build-pack -- --tag 0.12.8 --strict-snapshot
+ *   npm run build-pack -- --tag 0.12.8 --no-strict-snapshot
  *   npm run parser:validate -- --pack public/data/packs/0.12.8/pack.json
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildPack } from './build-pack.js';
@@ -27,7 +26,7 @@ interface Args {
 }
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = { command: argv[0] ?? 'help' };
+  const args: Args = { command: argv[0] ?? 'help', strictSnapshot: true };
   for (let i = 1; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--tag') args.tag = argv[++i];
@@ -36,20 +35,20 @@ function parseArgs(argv: string[]): Args {
     else if (a === '--pack') args.pack = argv[++i];
     else if (a === '--snapshot-dir') args.snapshotDir = argv[++i];
     else if (a === '--strict-snapshot') args.strictSnapshot = true;
+    else if (a === '--no-strict-snapshot') args.strictSnapshot = false;
   }
   return args;
 }
 
-function ensureSnapshotRecipes(tag: string, snapshotDir: string, packPath: string): void {
+function requireSnapshotRecipes(tag: string, snapshotDir: string): void {
   const recipesPath = join(snapshotDir, 'recipes.json');
-  if (existsSync(recipesPath) || !existsSync(packPath)) return;
-
-  console.log(`Snapshot recipes missing; bootstrapping from ${packPath}…`);
-  const script = join(__dirname, '..', 'scripts', 'bootstrap-snapshot-from-pack.mjs');
-  const r = spawnSync(process.execPath, [script, tag, packPath], { stdio: 'inherit' });
-  if (r.status !== 0) {
-    throw new Error(`bootstrap-snapshot failed (exit ${r.status ?? 1})`);
-  }
+  if (existsSync(recipesPath)) return;
+  throw new Error(
+    `Recipe snapshot missing at ${recipesPath}.\n` +
+      `Production pack data requires in-game export:\n` +
+      `  npm run generate-tfg-snapshot -- ${tag}\n` +
+      `See tools/parser/snapshots/README.md`,
+  );
 }
 
 async function cmdBuildPack(args: Args): Promise<void> {
@@ -59,11 +58,10 @@ async function cmdBuildPack(args: Args): Promise<void> {
   const snapshotDir = args.snapshotDir
     ? resolve(args.snapshotDir)
     : join(__dirname, '..', 'snapshots', tag);
-  const packPath = join(outDir, 'pack.json');
 
-  ensureSnapshotRecipes(tag, snapshotDir, packPath);
+  requireSnapshotRecipes(tag, snapshotDir);
 
-  console.log(`Building pack for tag ${tag} (snapshot pipeline)…`);
+  console.log(`Building pack for tag ${tag} (server snapshot only)…`);
   const result = await buildPack({
     tag,
     cacheDir,
@@ -98,16 +96,19 @@ function printHelp(): void {
   console.log(`TFG-Modern parser CLI
 
 Commands:
-  build-pack   Build pack.json from recipe snapshot + lang bundle
+  build-pack   Build pack.json from server recipe snapshot + lang bundle
   validate     Validate existing pack.json and write build-report.json
 
 Options:
-  --tag <ver>           Modpack release tag (default: 0.12.8)
-  --cache <dir>         Cache directory (default: .cache)
-  --out <dir>           Output directory (default: public/data/packs/<tag>)
-  --pack <path>         Pack file for validate
-  --snapshot-dir <dir>  Override tools/parser/snapshots/<tag>
-  --strict-snapshot     Fail if snapshot manifest or smoke chains invalid
+  --tag <ver>              Modpack release tag (default: 0.12.8)
+  --cache <dir>            Cache directory (default: .cache)
+  --out <dir>              Output directory (default: public/data/packs/<tag>)
+  --pack <path>            Pack file for validate
+  --snapshot-dir <dir>     Override tools/parser/snapshots/<tag>
+  --strict-snapshot        Fail if snapshot manifest or smoke chains invalid (default)
+  --no-strict-snapshot     Allow build with smoke/manifest warnings
+
+Recipe source: server snapshot only (npm run generate-tfg-snapshot).
 `);
 }
 

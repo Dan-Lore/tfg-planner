@@ -23,6 +23,8 @@ export const GT_MACHINE_NATIVE_TIER: Record<string, VoltageTier> = {
   'gtceu:steam_oven': 'LV',
   'gtceu:coke_oven': 'LV',
   'gtceu:greenhouse': 'LV',
+  'gtceu:hydroponics_facility': 'LV',
+  'gtceu:coal_liquefaction_tower': 'MV',
 
   // Common singleblocks (LV baseline)
   'gtceu:compressor': 'LV',

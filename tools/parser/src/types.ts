@@ -19,6 +19,8 @@ export interface RecipeOp {
   outputs: FlowOp[];
   durationTicks: number;
   energy?: EnergyOp;
+  /** GT integrated circuit configuration; not a consumed product flow. */
+  circuitConfiguration?: number;
   source: string;
 }
 
@@ -100,6 +102,8 @@ export interface BuildReport {
     fluids: number;
     recipesWithEnergy: number;
     recipesWithChance?: number;
+    recipesMissingOutputs?: number;
+    recipesCircuitOnlyDropped?: number;
     goldenMatched?: number;
     goldenMismatched?: number;
     goldenMissing?: number;

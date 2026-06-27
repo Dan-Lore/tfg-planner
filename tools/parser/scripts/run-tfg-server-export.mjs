@@ -12,9 +12,12 @@ import {
   writeFileSync,
   copyFileSync,
   readdirSync,
+  rmSync,
 } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { describeExportResources, getServerJvmFlags, computeServerTimeoutMin } from './server-jvm-args.mjs';
+import { createWaitHeartbeat, logStage } from './progress-log.mjs';
 
 const tag = process.argv[2] ?? '0.12.8';
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
@@ -22,7 +25,7 @@ const workDir = join(repoRoot, '.cache', 'tfg-snapshot', tag);
 const serverRunDir = join(workDir, 'server-run');
 const outDir = join(repoRoot, 'tools', 'parser', 'snapshots', tag);
 const exportScript = join(repoRoot, 'tools', 'parser', 'snapshot', 'kubejs-export-recipes.js');
-const serverTimeoutMin = 120;
+const serverTimeoutMin = computeServerTimeoutMin();
 const minRecipes = 6000;
 
 function resolveJava() {
@@ -77,24 +80,43 @@ function countJarMods(dir) {
   return readdirSync(modsDir).filter((n) => n.endsWith('.jar')).length;
 }
 
+function removeDirRecursive(path) {
+  if (existsSync(path)) rmSync(path, { recursive: true, force: true });
+}
+
+/** F-S-S downloads Forge into libraries/ on first boot; partial installs break startup. */
+function isForgeInstallComplete(dir) {
+  const serverLib = join(dir, 'libraries', 'net', 'minecraft', 'server');
+  if (!existsSync(serverLib)) return false;
+  for (const version of readdirSync(serverLib)) {
+    if (existsSync(join(serverLib, version, `server-${version}-srg.jar`))) return true;
+  }
+  return false;
+}
+
 function ensureServerRun() {
   const zip = findServerPackZip();
   const zipMods = zip ? countZipMods(zip) : 0;
   const localMods = countJarMods(serverRunDir);
   const starterJar = join(serverRunDir, 'minecraft_server.jar');
+  const kubeDataDir = join(serverRunDir, 'kubejs', 'data', 'tfg');
 
-  if (existsSync(starterJar) && localMods >= Math.min(150, zipMods * 0.8)) {
-    console.log(`Reusing ${serverRunDir} (${localMods} mods)`);
+  if (
+    existsSync(starterJar) &&
+    localMods >= Math.min(150, zipMods * 0.8) &&
+    existsSync(kubeDataDir)
+  ) {
+    const forgeNote = isForgeInstallComplete(serverRunDir) ? '' : ', Forge reinstall pending';
+    console.log(`Reusing ${serverRunDir} (${localMods} mods${forgeNote})`);
     return;
   }
 
-  if (localMods > 0 && localMods < zipMods * 0.8) {
+  if (existsSync(starterJar) && !existsSync(kubeDataDir)) {
+    console.log('server-run missing kubejs/data (datapack) — re-extracting serverpack');
+    removeDirRecursive(serverRunDir);
+  } else if (localMods > 0 && localMods < zipMods * 0.8) {
     console.log(`server-run incomplete (${localMods}/${zipMods} mods) — re-extracting serverpack`);
-    spawnSync('powershell', [
-      '-NoProfile',
-      '-Command',
-      `Remove-Item -Recurse -Force '${serverRunDir.replace(/'/g, "''")}' -ErrorAction SilentlyContinue`,
-    ]);
+    removeDirRecursive(serverRunDir);
   }
 
   if (!zip) {
@@ -119,35 +141,96 @@ function ensureServerRun() {
   }
 }
 
+function configureServerForExport() {
+  const propsPath = join(serverRunDir, 'server.properties');
+  let text = existsSync(propsPath) ? readFileSync(propsPath, 'utf-8') : '';
+  const patch = (key, value) => {
+    const re = new RegExp(`^${key}=.*$`, 'm');
+    if (re.test(text)) text = text.replace(re, `${key}=${value}`);
+    else text += `\n${key}=${value}\n`;
+  };
+  // Avoid clash with a real/local MC server on 25565; export does not need online mode.
+  patch('server-port', '25566');
+  patch('query.port', '25566');
+  patch('online-mode', 'false');
+  writeFileSync(propsPath, text);
+}
+
 function injectExportScript() {
   const kubeDir = join(serverRunDir, 'kubejs', 'server_scripts');
   mkdirSync(kubeDir, { recursive: true });
-  copyFileSync(exportScript, join(kubeDir, '_tfg_planner_export.js'));
+  // Legacy serverpack may still ship the old ES5-incompatible script.
+  removeDirRecursive(join(kubeDir, '_tfg_planner_export.js'));
+  copyFileSync(exportScript, join(kubeDir, 'zzz_tfg_planner_export.js'));
   writeFileSync(join(serverRunDir, 'eula.txt'), 'eula=true\n');
+  configureServerForExport();
+
+  const libsDir = join(serverRunDir, 'libraries');
+  if (existsSync(libsDir) && !isForgeInstallComplete(serverRunDir)) {
+    console.log('Incomplete Forge install — clearing libraries for F-S-S reinstall');
+    removeDirRecursive(libsDir);
+  }
+
+  // Clear stale export artifacts only (never delete kubejs/data — datapack JSON).
+  const exportDirs = [
+    join(serverRunDir, 'kubejs', 'config', 'tfg-planner-recipe-snapshot'),
+    join(serverRunDir, 'logs', 'tfg-planner-recipe-snapshot'),
+  ];
+  for (const exportDir of exportDirs) {
+    removeDirRecursive(exportDir);
+    mkdirSync(exportDir, { recursive: true });
+  }
+  // Fresh world so export flag in persistentData does not skip re-runs.
+  removeDirRecursive(join(serverRunDir, 'world'));
 }
 
 async function waitForExport(java) {
-  const exportFile = join(serverRunDir, 'logs', 'tfg-planner-recipe-snapshot', 'recipes.json');
+  const manifestPath = join(
+    serverRunDir,
+    'kubejs',
+    'config',
+    'tfg-planner-recipe-snapshot',
+    'manifest.json',
+  );
+  const exportCandidates = [
+    manifestPath,
+    join(serverRunDir, 'logs', 'tfg-planner-recipe-snapshot', 'manifest.json'),
+    join(serverRunDir, 'config', 'tfg-planner-recipe-snapshot', 'manifest.json'),
+    join(serverRunDir, 'kubejs', 'tfg-planner-recipe-snapshot', 'recipes.json'),
+    join(serverRunDir, 'logs', 'tfg-planner-recipe-snapshot', 'recipes.json'),
+  ];
   const starterJar = join(serverRunDir, 'minecraft_server.jar');
   if (!existsSync(starterJar)) {
     throw new Error(`minecraft_server.jar missing in ${serverRunDir}`);
   }
 
-  console.log(`Starting dedicated server from serverpack (timeout ${serverTimeoutMin}m)…`);
+  const resources = describeExportResources();
+  console.log(
+    `Starting dedicated server (timeout ${serverTimeoutMin}m, ${resources.jvmCpus} JVM CPUs, ${resources.server.xmx} ${resources.server.xms}, system ${resources.systemRamGib} GiB)…`,
+  );
   const proc = spawn(
     java,
-    ['-jar', starterJar, '-Xmx6024M', '-Xms1024M', 'nogui'],
+    [...getServerJvmFlags(), '-jar', starterJar, 'nogui'],
     { cwd: serverRunDir, stdio: 'inherit' },
   );
 
   const deadline = Date.now() + serverTimeoutMin * 60 * 1000;
+  const heartbeat = createWaitHeartbeat('Waiting for server export', 60_000);
   while (Date.now() < deadline) {
-    await new Promise((r) => setTimeout(r, 20000));
-    if (existsSync(exportFile)) {
-      if (!proc.killed) proc.kill();
-      return exportFile;
+    await new Promise((r) => setTimeout(r, 5000));
+    const serverState = proc.exitCode == null ? 'running' : `exited (${proc.exitCode})`;
+    heartbeat.maybeLog(`server ${serverState}`);
+    for (const exportFile of exportCandidates) {
+      if (existsSync(exportFile)) {
+        await new Promise((r) => setTimeout(r, 3000));
+        if (!proc.killed && proc.exitCode == null) proc.kill();
+        return exportFile;
+      }
     }
-    if (proc.exitCode != null && !existsSync(exportFile)) {
+    if (proc.exitCode != null) {
+      for (const exportFile of exportCandidates) {
+        if (existsSync(exportFile)) return exportFile;
+      }
       const latest = join(serverRunDir, 'logs', 'latest.log');
       if (existsSync(latest)) {
         console.log('--- latest.log tail ---');
@@ -158,7 +241,41 @@ async function waitForExport(java) {
     }
   }
   if (!proc.killed) proc.kill();
-  throw new Error(`Export timeout: ${exportFile}`);
+  throw new Error(`Export timeout: ${manifestPath}`);
+}
+
+function manifestChunkPaths(manifestRaw) {
+  if (Array.isArray(manifestRaw)) return manifestRaw;
+  if (manifestRaw && Array.isArray(manifestRaw.chunks)) return manifestRaw.chunks;
+  throw new Error('Invalid export manifest format');
+}
+
+function chunkRecipes(chunkRaw) {
+  if (Array.isArray(chunkRaw)) return chunkRaw;
+  if (chunkRaw && Array.isArray(chunkRaw.recipes)) return chunkRaw.recipes;
+  throw new Error('Invalid export chunk format');
+}
+
+function loadExportedRecipes(exportPath) {
+  const primaryManifest = join(
+    serverRunDir,
+    'kubejs',
+    'config',
+    'tfg-planner-recipe-snapshot',
+    'manifest.json',
+  );
+  const legacyManifest = join(serverRunDir, 'logs', 'tfg-planner-recipe-snapshot', 'manifest.json');
+  const manifestFile = existsSync(primaryManifest) ? primaryManifest : legacyManifest;
+  if (existsSync(manifestFile)) {
+    const chunkRelPaths = manifestChunkPaths(JSON.parse(readFileSync(manifestFile, 'utf-8')));
+    const recipes = [];
+    for (const rel of chunkRelPaths) {
+      const chunkPath = join(serverRunDir, ...String(rel).split('/'));
+      recipes.push(...chunkRecipes(JSON.parse(readFileSync(chunkPath, 'utf-8'))));
+    }
+    return recipes;
+  }
+  return JSON.parse(readFileSync(exportPath, 'utf-8'));
 }
 
 if (!existsSync(workDir)) {
@@ -170,14 +287,18 @@ injectExportScript();
 
 const java = resolveJava();
 const exportFile = await waitForExport(java);
-const recipes = JSON.parse(readFileSync(exportFile, 'utf-8'));
+
+logStage('Merging exported recipe chunks…');
+mkdirSync(outDir, { recursive: true });
+const recipesOut = join(outDir, 'recipes.json');
+const recipes = loadExportedRecipes(exportFile);
+writeFileSync(recipesOut, JSON.stringify(recipes));
+
 if (recipes.length < minRecipes) {
   throw new Error(`Only ${recipes.length} recipes (need ${minRecipes})`);
 }
 
-mkdirSync(outDir, { recursive: true });
-const recipesOut = join(outDir, 'recipes.json');
-copyFileSync(exportFile, recipesOut);
+const raw = readFileSync(recipesOut, 'utf-8');
 
 const key = createHash('sha256')
   .update(`TerraFirmaGreg-Team/Modpack-Modern@${tag}`)
@@ -194,6 +315,7 @@ const markers = [
   'gtceu:distill_wood_tar',
 ];
 const ids = new Set(recipes.map((r) => r.id));
+const recipeCount = recipes.length;
 
 writeFileSync(
   join(outDir, 'snapshot-manifest.json'),
@@ -202,7 +324,7 @@ writeFileSync(
       schemaVersion: 1,
       modpackTag: tag,
       pakkuLockSha256: lockSha,
-      recipeCount: recipes.length,
+      recipeCount,
       exportedAt: new Date().toISOString(),
       markerRecipeIds: markers.filter((m) => ids.has(m)),
       snapshotSha256: recipesSha,
@@ -213,4 +335,4 @@ writeFileSync(
   ),
 );
 
-console.log(`Snapshot written: ${outDir} (${recipes.length} recipes)`);
+console.log(`Snapshot written: ${outDir} (${recipeCount} recipes)`);

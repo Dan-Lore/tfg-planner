@@ -21,7 +21,6 @@ function parseContentEntry(
     const cfg = (c.configuration as number | undefined) ?? 1;
     return { itemId: 'gtceu:programmed_circuit', amount: cfg };
   }
-
   if (c.type === 'gtceu:sized' && c.ingredient && typeof c.ingredient === 'object') {
     const ing = c.ingredient as { item?: string; tag?: string };
     const amount = (c.count as number | undefined) ?? 1;
@@ -90,6 +89,7 @@ function flowsFromJsonSide(side: unknown): RecipeOp['inputs'] {
 }
 
 import { normalizeRecipeEnergy } from '../pipeline/sanitize-energy.js';
+import { extractCircuitFromFlows } from '../pipeline/extract-circuit.js';
 
 function energyFromTickInputs(
   tickInputs: unknown,
@@ -121,6 +121,19 @@ export function recipeIdFromDumpPath(relativePath: string): string {
   return `gtceu:${noExt}`;
 }
 
+function finishRecipe(
+  base: Omit<RecipeOp, 'circuitConfiguration'> & { circuitConfiguration?: number },
+): RecipeOp {
+  const { productInputs, circuitConfiguration } = extractCircuitFromFlows(base.inputs);
+  const recipe: RecipeOp = {
+    ...base,
+    inputs: productInputs,
+  };
+  const circuit = circuitConfiguration ?? base.circuitConfiguration;
+  if (circuit !== undefined) recipe.circuitConfiguration = circuit;
+  return recipe;
+}
+
 /** Parse GT runtime dump JSON or flat RecipeOp export entry. */
 export function recipeFromSnapshotJson(
   id: string,
@@ -135,39 +148,42 @@ export function recipeFromSnapshotJson(
       outputs: RecipeOp['outputs'];
       durationTicks: number;
       energy?: RecipeOp['energy'];
+      circuitConfiguration?: number;
     };
     if (flat.inputs.length === 0 && flat.outputs.length === 0) {
       return { recipe: null, skipReason: 'empty_io' };
     }
+    const energy = flat.energy
+      ? normalizeRecipeEnergy(
+          flat.energy as import('../types.js').EnergyOp | { euPerTick: number },
+          flat.machineId,
+        )?.energy
+      : undefined;
     return {
-      recipe: {
+      recipe: finishRecipe({
         id: flat.id,
         machineId: flat.machineId,
         inputs: flat.inputs.map((f) => ({ ...f })),
         outputs: flat.outputs.map((f) => ({ ...f })),
         durationTicks: flat.durationTicks,
-        ...(flat.energy
-          ? (() => {
-              const normalized = normalizeRecipeEnergy(
-                flat.energy as import('../types.js').EnergyOp | { euPerTick: number },
-                flat.machineId,
-              );
-              return normalized ? { energy: normalized.energy } : {};
-            })()
+        ...(energy ? { energy } : {}),
+        ...(flat.circuitConfiguration !== undefined
+          ? { circuitConfiguration: flat.circuitConfiguration }
           : {}),
         source,
-      },
+      }),
     };
   }
 
   const typed = data as GtRecipeJson;
   const type = typed.type ?? '';
+  if (!type) {
+    return { recipe: null, skipReason: 'missing_type' };
+  }
   const machineId = machineIdFromRecipeType(type);
+  const recipeId = typeof data.id === 'string' ? data.id : id.includes(':') ? id : `gtceu:${id}`;
 
-  const inputs = [
-    ...flowsFromJsonSide(typed.inputs),
-    ...flowsFromJsonSide(typed.tickInputs),
-  ];
+  const inputs = [...flowsFromJsonSide(typed.inputs)];
   const outputs = [
     ...flowsFromJsonSide(typed.outputs),
     ...flowsFromJsonSide(typed.tickOutputs),
@@ -178,14 +194,15 @@ export function recipeFromSnapshotJson(
   }
 
   const energy = energyFromTickInputs(typed.tickInputs, machineId);
-  const recipe: RecipeOp = {
-    id: id.includes(':') ? id : `gtceu:${id}`,
-    machineId,
-    inputs,
-    outputs,
-    durationTicks: typed.duration ?? 20,
-    source,
+  return {
+    recipe: finishRecipe({
+      id: recipeId,
+      machineId,
+      inputs,
+      outputs,
+      durationTicks: typed.duration ?? 20,
+      ...(energy ? { energy } : {}),
+      source,
+    }),
   };
-  if (energy) recipe.energy = energy;
-  return { recipe };
 }

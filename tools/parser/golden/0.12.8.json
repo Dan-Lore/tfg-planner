@@ -2,27 +2,26 @@
   "modpackVersion": "0.12.8",
   "recipes": [
     {
-      "id": "tfg:magnesium_diboride_cool_down",
-      "machineId": "gtceu:chemical_bath",
-      "durationTicks": 400,
+      "id": "gtceu:vacuum_freezer/cool_hot_magnesium_diboride_ingot",
+      "machineId": "gtceu:vacuum_freezer",
+      "durationTicks": 200,
       "energy": {
-        "minVoltageTier": "MV",
-        "voltage": 128,
-        "amperage": 0.9375
+        "minVoltageTier": "LV",
+        "voltage": 32,
+        "amperage": 3.75
       },
       "inputs": [
-        { "itemId": "gtceu:hot_magnesium_diboride_ingot", "amount": 1 },
-        { "fluidId": "minecraft:water", "amount": 100 }
+        { "itemId": "#forge:hot_ingots/magnesium_diboride", "amount": 1 }
       ],
       "outputs": [{ "itemId": "gtceu:magnesium_diboride_ingot", "amount": 1 }]
     },
     {
-      "id": "tfg:uranium_238_separation",
+      "id": "gtceu:centrifuge/uranium_238_separation",
       "machineId": "gtceu:centrifuge",
       "durationTicks": 800
     },
     {
-      "id": "gtceu:compressor/snowballs_to_snow_fixed",
+      "id": "gtceu:compressor/snowballs_to_snow",
       "machineId": "gtceu:compressor",
       "durationTicks": 200,
       "energy": {
@@ -32,28 +31,27 @@
       }
     },
     {
-      "id": "tfg:diluted_hcl_acid",
-      "machineId": "gtceu:mixer",
+      "id": "gtceu:distillation_tower/distill_dilute_hcl",
+      "machineId": "gtceu:distillation_tower",
       "durationTicks": 600
     },
     {
-      "id": "tfg:reformed_aromatic_feedstock",
-      "machineId": "gtceu:chemical_reactor",
-      "durationTicks": 360,
+      "id": "gtceu:alloy_blast_smelter/mo_50_re",
+      "machineId": "gtceu:alloy_blast_smelter",
+      "durationTicks": 2850,
       "inputs": [
-        { "itemId": "gtceu:tiny_rhenium_dust", "amount": 1 },
-        { "fluidId": "tfg:aromatic_feedstock", "amount": 2000 }
+        { "itemId": "#forge:dusts/molybdenum", "amount": 1 },
+        { "itemId": "#forge:dusts/rhenium", "amount": 1 }
       ],
-      "outputs": [{ "fluidId": "tfg:reformed_aromatic_feedstock", "amount": 2000 }]
+      "outputs": [{ "fluidId": "tfg:mo_50_re", "amount": 288 }]
     },
     {
-      "id": "tfg:cracker_off_gas_recycling",
+      "id": "gtceu:electrolyzer/decomposition_electrolyzing_mo_50_re",
       "machineId": "gtceu:electrolyzer",
-      "durationTicks": 90,
+      "durationTicks": 232,
       "outputs": [
-        { "fluidId": "gtceu:carbon_dioxide", "amount": 500 },
-        { "fluidId": "gtceu:hydrogen", "amount": 500 },
-        { "itemId": "gtceu:tiny_rhenium_dust", "amount": 1 }
+        { "itemId": "gtceu:molybdenum_dust", "amount": 1 },
+        { "itemId": "gtceu:rhenium_dust", "amount": 1 }
       ]
     }
   ]

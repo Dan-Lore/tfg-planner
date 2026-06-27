@@ -1,10 +1,10 @@
 {
   "modpackVersion": "0.12.8",
   "dataVersion": 1,
-  "checksum": "e9416a74b02d2024",
-  "generatedAt": "2026-06-20T14:50:39.569Z",
+  "checksum": "32a554d3abb032af",
+  "generatedAt": "2026-06-27T21:50:14.534Z",
   "source": "https://github.com/TerraFirmaGreg-Team/Modpack-Modern/archive/refs/tags/0.12.8.zip",
-  "snapshotSha256": "7f18dd12ad21ba6fa721821546d2086a94d1415a4f9e0add0479bb042809d459",
+  "snapshotSha256": "30abe22c00f44005c82cc30ea762be37982d24a5b8d913f1f822503d2430e997",
   "pakkuLockSha256": "15f11cb99d6f27a6913f4956e460aa399b008e98ac236bf02d4d9b21af7943e4",
   "modpackTag": "0.12.8"
 }

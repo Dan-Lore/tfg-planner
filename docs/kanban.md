@@ -88,9 +88,9 @@
 
 - [x] `Recipe.energy` как EnergyStack (`minVoltageTier`, `voltage`, `amperage`) в pack data
 - [x] Отображение EU/t, duration, total EU на узле при известных данных
-- [x] Tier picker на узле (≥ min tier)
+- [x] Tier picker на узле (≥ min tier); **скрыт** если `recipe.energy` отсутствует
 - [ ] ~~multiblock — `energyHatchCount`~~ → см. K-012
-- [x] Парсер: snapshot + KubeJS enrich-energy + GTValues.VA в AST + sanitize legacy `euPerTick`
+- [x] Парсер: server snapshot + `sanitize-energy` (без KubeJS enrich в build-pack)
 - [x] `calculator/energy.ts` + effective duration в flow-solver (overclock → duration, не EU/t)
 - [ ] Суммарное потребление линии / группы
 
@@ -150,23 +150,21 @@
 
 | Поле | Значение |
 |------|----------|
-| Статус | `done` |
+| Статус | `in_progress` |
 | Приоритет | P0 |
-| Закрыт | 2026-06-18 |
 
-**Scope (rev. 3):**
+**Scope (rev. 4 — single source of truth):**
 
 - [x] `generate-tfg-snapshot`: pakku + runServer + KubeJS export → `snapshots/<tag>/`
-- [x] `loadRecipeSnapshot()` — flat RecipeOp + GT 7.5 JSON adapters
-- [x] `build-pack`: snapshot → lang → normalize (без substrate/KubeJS simulation)
-- [x] `snapshot-manifest.json` + pack `manifest.json` с `snapshotSha256`
-- [x] Удалены `substrate-dumps`, `generate-gt-dump`, `gt-vanilla-substrate`, GT JAR pipeline
-- [x] Smoke: aromatic chain + pyrolyse + distillation markers; `--strict-snapshot`
-- [x] Pack `0.12.8`: **6727** recipes из bootstrap snapshot, smoke 12/12, golden 6/6
+- [x] `loadRecipeSnapshot()` — GT JSON adapter + flat legacy (tests only)
+- [x] `build-pack`: snapshot only — **без** `enrich-energy` / `enrich-chances` / auto-bootstrap
+- [x] Export script: GT JSON via `ServerEvents.recipes` + `findRecipes` + `recipe.json.toString()` (Rhino-safe, batched chunks)
+- [x] `Recipe.circuitConfiguration` — circuit не в product flows; smoke `wiremill-copper-8`
+- [x] Tier picker скрыт без `recipe.energy`; `allowedTiersForRecipe` → `[]`
+- [ ] **Server export 0.12.8** — collection verified (~36k gtceu/tfg in logs); **JsonIO chunk write** must land `kubejs/config/tfg-planner-recipe-snapshot/manifest.json` (see snapshots/README)
+- [ ] Smoke 15/15 + wiremill / greenhouse / liquefaction energy на GT snapshot
 
-**Метрики:** `snapshotRecipes: 6727`, `snapshotManifestOk: true`, warnings 1 (lang coverage).
-
-**Следующий шаг для 100% in-game:** заменить bootstrap snapshot на `npm run generate-tfg-snapshot -- 0.12.8` (CI K-009).
+**Следующий шаг:** `npm run resume-tfg-server-export -- 0.12.8` → проверить `server-run/kubejs/config/tfg-planner-recipe-snapshot/manifest.json` → `npm run build-pack -- --tag 0.12.8 --strict-snapshot`
 
 ---
 

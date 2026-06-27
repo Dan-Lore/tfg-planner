@@ -1,120 +1,189 @@
+// priority: 10000
 // TFG Planner — export effective RecipeManager after full modpack load.
-// Copied into kubejs/server_scripts/_tfg_planner_export.js during generate-tfg-snapshot only.
+// Rhino-safe: no optional chaining, nullish coalescing, or object spread.
 
-const EXPORT_FLAG = 'tfg_planner_snapshot_exported';
+var TFG_BATCH_SIZE = 1500;
+var TFG_MIN_RECIPES = 6000;
+// JsonIO.write accepts JsonObject only — wrap arrays as { recipes } / { chunks }.
+var TFG_EXPORT_DIR = 'kubejs/config/tfg-planner-recipe-snapshot';
+var TFG_MANIFEST = TFG_EXPORT_DIR + '/manifest.json';
 
-const GT_TIER_NAMES = [
-  'ULV', 'LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UXV', 'OpV', 'MAX',
-];
+console.info('[TFG Planner] Export script loaded');
 
-const GT_VOLTAGE = [8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288, 2097152, 8388608, 33554432, 134217728, 536870912, 2147483647];
-
-function inferEnergyFromFlatEUt(euPerTick) {
-  if (euPerTick <= 0) return undefined;
-  for (let i = 0; i < GT_VOLTAGE.length; i++) {
-    const voltage = GT_VOLTAGE[i];
-    const amperage = euPerTick / voltage;
-    const doubled = amperage * 2;
-    if (amperage > 0 && amperage <= 64 && Math.abs(doubled - Math.round(doubled)) < 1e-6) {
-      return {
-        minVoltageTier: GT_TIER_NAMES[i],
-        voltage,
-        amperage,
-      };
+function mergeRecipeEntry(id, gtJson) {
+  var entry = { id: String(id) };
+  for (var key in gtJson) {
+    if (Object.prototype.hasOwnProperty.call(gtJson, key)) {
+      entry[key] = gtJson[key];
     }
   }
-  return {
-    minVoltageTier: 'LV',
-    voltage: 32,
-    amperage: euPerTick / 32,
-  };
+  return entry;
 }
 
-function serializeEnergy(recipe) {
+function isRelevantRecipeType(type) {
+  if (!type) return false;
+  var t = String(type);
+  return t.indexOf('gtceu:') === 0 || t.indexOf('tfg:') === 0;
+}
+
+function serializeKubeRecipe(recipe) {
   try {
-    const eu = recipe.tickInputs?.eu?.[0]?.content;
-    if (eu != null) return inferEnergyFromFlatEUt(Number(eu));
-    const eut = recipe.getEUt?.();
-    if (eut != null) return inferEnergyFromFlatEUt(Number(eut));
-  } catch (_) {
-    /* optional */
+    if (typeof recipe.serialize === 'function') {
+      recipe.serialize();
+    }
+    var jsonRaw = recipe.json;
+    if (jsonRaw == null) return null;
+    var parsed;
+    if (typeof jsonRaw === 'string') {
+      parsed = JSON.parse(jsonRaw);
+    } else if (typeof jsonRaw.toString === 'function') {
+      parsed = JSON.parse(jsonRaw.toString());
+    } else if (typeof jsonRaw === 'object' && jsonRaw.type) {
+      parsed = jsonRaw;
+    }
+    if (!parsed || !parsed.type || !isRelevantRecipeType(parsed.type)) return null;
+    var recipeId =
+      typeof recipe.getId === 'function' ? String(recipe.getId()) : String(recipe.id);
+    return mergeRecipeEntry(recipeId, parsed);
+  } catch (e) {
+    return null;
   }
-  return undefined;
 }
 
-function serializeRecipe(recipe) {
-  const id = String(recipe.id);
-  const type = String(recipe.type);
-  const machineId = type.startsWith('gtceu:')
-    ? `gtceu:${type.replace(/^gtceu:/, '').split('/')[0]}`
-    : type;
+function collectFromMatches(matches) {
+  var collected = [];
+  var seen = {};
+  if (matches == null) return collected;
 
-  const inputs = [];
-  const outputs = [];
+  if (typeof matches.forEach === 'function') {
+    matches.forEach(function (recipe) {
+      var entry = serializeKubeRecipe(recipe);
+      if (!entry || seen[entry.id]) return;
+      seen[entry.id] = true;
+      collected.push(entry);
+    });
+    return collected;
+  }
 
+  var len = matches.length;
+  if (typeof matches.size === 'function') {
+    len = matches.size();
+  }
+  for (var i = 0; i < len; i++) {
+    var recipe = typeof matches.get === 'function' ? matches.get(i) : matches[i];
+    var entry = serializeKubeRecipe(recipe);
+    if (!entry || seen[entry.id]) continue;
+    seen[entry.id] = true;
+    collected.push(entry);
+  }
+  return collected;
+}
+
+function collectFromRecipeEvent(recipeEvent) {
+  if (recipeEvent == null) return [];
+
+  var collected = collectFromMatches(recipeEvent.findRecipes({}));
+  if (collected.length > 0) return collected;
+
+  var seen = {};
+  collected = [];
+  function pushRecipe(recipe) {
+    var entry = serializeKubeRecipe(recipe);
+    if (!entry || seen[entry.id]) return;
+    seen[entry.id] = true;
+    collected.push(entry);
+  }
+
+  var origIt = recipeEvent.originalRecipes.values().iterator();
+  while (origIt.hasNext()) {
+    pushRecipe(origIt.next());
+  }
+  var addedIt = recipeEvent.addedRecipes.iterator();
+  while (addedIt.hasNext()) {
+    pushRecipe(addedIt.next());
+  }
+  return collected;
+}
+
+function manifestExists() {
   try {
-    const inItems = recipe.ingredients ?? recipe.getIngredients?.() ?? [];
-    for (const ing of inItems) {
-      if (!ing) continue;
-      const stacks = ing.stacks ?? (ing.getStacks ? ing.getStacks() : [ing]);
-      for (const stack of stacks) {
-        const itemId = stack.id ?? stack.item?.id ?? stack.getId?.();
-        const count = stack.count ?? stack.amount ?? 1;
-        if (itemId) inputs.push({ itemId: String(itemId), amount: count });
+    var manifest = JsonIO.read(TFG_MANIFEST);
+    if (manifest == null) return false;
+    if (manifest.chunks != null) return true;
+    if (typeof manifest.length === 'number' && manifest.length > 0) return true;
+    return false;
+  } catch (e) {
+    return false;
+  }
+}
+
+function writeSnapshot(collected, phase) {
+  console.info('[TFG Planner] Collected ' + collected.length + ' GT JSON recipes (' + phase + ')');
+  if (collected.length < TFG_MIN_RECIPES) {
+    console.info('[TFG Planner] Skip export: need >= ' + TFG_MIN_RECIPES + ' recipes');
+    return false;
+  }
+
+  var chunkRelPaths = [];
+  try {
+    for (var b = 0; b < collected.length; b += TFG_BATCH_SIZE) {
+      var chunk = [];
+      var end = b + TFG_BATCH_SIZE;
+      if (end > collected.length) end = collected.length;
+      for (var j = b; j < end; j++) {
+        chunk.push(collected[j]);
       }
+      var chunkRel = TFG_EXPORT_DIR + '/recipes-' + chunkRelPaths.length + '.json';
+      JsonIO.write(chunkRel, { recipes: chunk });
+      chunkRelPaths.push(chunkRel);
     }
-  } catch (_) {
-    /* non-item recipes */
-  }
-
-  try {
-    const result = recipe.result ?? recipe.getResultItem?.();
-    if (result) {
-      const itemId = result.id ?? result.item?.id ?? result.getId?.();
-      const count = result.count ?? result.amount ?? 1;
-      if (itemId) outputs.push({ itemId: String(itemId), amount: count });
+    JsonIO.write(TFG_MANIFEST, { chunks: chunkRelPaths });
+    if (manifestExists()) {
+      console.info(
+        '[TFG Planner] Exported ' +
+          collected.length +
+          ' GT JSON recipes in ' +
+          chunkRelPaths.length +
+          ' chunks -> ' +
+          TFG_EXPORT_DIR,
+      );
+      return true;
     }
-  } catch (_) {
-    /* fluid / multi-output */
+    console.error('[TFG Planner] Export verify failed: manifest missing after write');
+    return false;
+  } catch (e) {
+    console.error('[TFG Planner] Export write failed: ' + e);
+    return false;
   }
-
-  const durationTicks = recipe.cookingTime ?? recipe.processingTime ?? 20;
-  const energy = serializeEnergy(recipe);
-
-  const flat = {
-    id,
-    machineId,
-    inputs,
-    outputs,
-    durationTicks,
-    source: 'kubejs-export',
-  };
-  if (energy) flat.energy = energy;
-  return flat;
 }
 
-ServerEvents.loaded((event) => {
-  if (event.server.persistentData.getBoolean(EXPORT_FLAG)) return;
-  event.server.persistentData.putBoolean(EXPORT_FLAG, true);
+// Collect during recipe reload (JsonIO cannot write during this phase).
+ServerEvents.recipes(function (event) {
+  global.tfgPlannerRecipeEvent = event;
+  global.tfgPlannerRecipes = collectFromRecipeEvent(event);
+  console.info(
+    '[TFG Planner] Stashed ' + global.tfgPlannerRecipes.length + ' GT JSON recipes for export',
+  );
+});
 
-  const recipes = [];
-  const manager = event.server.recipeManager;
-
-  manager.getRecipes().forEach((recipe) => {
-    try {
-      const flat = serializeRecipe(recipe);
-      if (flat.inputs.length > 0 || flat.outputs.length > 0) {
-        recipes.push(flat);
-      }
-    } catch (e) {
-      console.warn(`[TFG Planner] skip recipe ${recipe.id}: ${e}`);
+// Write after server is up; TFG /reload finishes ~20s before tick 500.
+ServerEvents.loaded(function (event) {
+  if (manifestExists()) {
+    console.info('[TFG Planner] Server loaded — manifest already present');
+    return;
+  }
+  console.info('[TFG Planner] Server loaded — scheduling export after reload');
+  event.server.scheduleInTicks(500, function () {
+    if (manifestExists()) return;
+    var collected = global.tfgPlannerRecipes;
+    if (collected == null && global.tfgPlannerRecipeEvent != null) {
+      collected = collectFromRecipeEvent(global.tfgPlannerRecipeEvent);
     }
+    if (collected == null) {
+      console.info('[TFG Planner] No stashed recipes available (loaded+500t)');
+      return;
+    }
+    console.info('[TFG Planner] Running export (loaded+500t)');
+    writeSnapshot(collected, 'loaded+500t');
   });
-
-  const dir = Utils.getGameDirectory().resolve('logs').resolve('tfg-planner-recipe-snapshot');
-  dir.toFile().mkdirs();
-  const out = dir.resolve('recipes.json');
-  JsonIO.write(out.toString(), recipes);
-  console.info(`[TFG Planner] Exported ${recipes.length} recipes → ${out}`);
-  event.server.halt(true);
 });

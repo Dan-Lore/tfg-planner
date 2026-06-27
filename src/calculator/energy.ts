@@ -54,8 +54,8 @@ export function defaultVoltageTierForRecipe(recipe: Recipe): VoltageTier {
 }
 
 export function allowedTiersForRecipe(recipe: Recipe): VoltageTier[] {
-  const min = defaultVoltageTierForRecipe(recipe);
-  return allowedTiersFrom(min);
+  if (!recipe.energy) return [];
+  return allowedTiersFrom(recipe.energy.minVoltageTier);
 }
 
 export { clampVoltageTier, allowedTiersFrom };

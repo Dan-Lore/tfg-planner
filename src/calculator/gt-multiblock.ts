@@ -16,6 +16,8 @@ export const GT_MULTIBLOCK_IDS = new Set([
   'gtceu:primitive_blast_furnace',
   'gtceu:coke_oven',
   'gtceu:greenhouse',
+  'gtceu:hydroponics_facility',
+  'gtceu:coal_liquefaction_tower',
   'gt:electric_blast_furnace',
   'gt:pyrolyse_oven',
 ]);

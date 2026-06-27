@@ -2,6 +2,7 @@ import { getItemName } from '@/data/pack-registry';
 import type { Flow, PackData, Recipe } from '@/data/types';
 import { formatFlowQuantityLabel, isChancedFlow } from '@/lib/flow-chance';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
+import { productInputs } from '@/lib/recipe-product-flows';
 import { baseEuPerTick, formatEuPerTick } from '@/calculator/energy';
 
 export interface RecipeFlowChip {
@@ -13,6 +14,7 @@ export interface RecipePickerDetail {
   durationLabel: string;
   /** GT min voltage tier when recipe energy is known. */
   tierLabel?: string;
+  circuitLabel?: string;
   energyLabel?: string;
   idHint: string;
   inputs: RecipeFlowChip[];
@@ -39,9 +41,13 @@ export function buildRecipePickerDetail(
   return {
     durationLabel: formatRecipeDuration(recipe.durationTicks, lang),
     tierLabel: recipe.energy?.minVoltageTier,
+    circuitLabel:
+      recipe.circuitConfiguration !== undefined
+        ? String(recipe.circuitConfiguration)
+        : undefined,
     energyLabel,
     idHint,
-    inputs: recipe.inputs.map((f) => flowChip(pack, f, lang)),
+    inputs: productInputs(recipe).map((f) => flowChip(pack, f, lang)),
     outputs: recipe.outputs.map((f) => flowChip(pack, f, lang)),
   };
 }

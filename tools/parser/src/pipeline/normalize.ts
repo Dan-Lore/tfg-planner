@@ -4,6 +4,8 @@ import type { LangBundle } from '../lang/types.js';
 import { resolveMachineName, resolveResourceName } from '../lang/resolve-name.js';
 import { isMultiblockMachineId } from '../../../../src/calculator/gt-multiblock.js';
 import { nativeTierForMachine } from '../gt-machine-tiers.js';
+import { extractCircuitFromFlows } from './extract-circuit.js';
+import { createProgressReporter, logStage } from '../progress.js';
 
 function collectIds(recipes: RecipeOp[]): { items: Set<string>; fluids: Set<string>; machines: Set<string> } {
   const items = new Set<string>();
@@ -28,6 +30,7 @@ export function normalizePack(
   const { items, fluids, machines } = collectIds(recipes);
 
   const machineMap = new Map<string, Machine>();
+  const machineRecipeIds = new Map<string, Set<string>>();
   for (const id of machines) {
     const machine: Machine = {
       id,
@@ -42,27 +45,59 @@ export function normalizePack(
     machineMap.set(id, machine);
   }
 
-  const normalizedRecipes: Recipe[] = recipes.map((r) => {
+  const progress = createProgressReporter('Normalizing recipes', { every: 5000, intervalMs: 15_000 });
+  const normalizedRecipes: Recipe[] = new Array(recipes.length);
+  for (let i = 0; i < recipes.length; i++) {
+    const r = recipes[i];
     const m = machineMap.get(r.machineId);
-    if (m && !m.recipeIds.includes(r.id)) m.recipeIds.push(r.id);
+    if (m) {
+      let ids = machineRecipeIds.get(r.machineId);
+      if (!ids) {
+        ids = new Set<string>();
+        machineRecipeIds.set(r.machineId, ids);
+      }
+      if (!ids.has(r.id)) {
+        ids.add(r.id);
+        m.recipeIds.push(r.id);
+      }
+    }
 
+    const { productInputs, circuitConfiguration } = extractCircuitFromFlows(r.inputs);
     const recipe: Recipe = {
       id: r.id,
       machineId: r.machineId,
-      inputs: r.inputs.map((f) => ({ ...f })),
+      inputs: productInputs.map((f) => ({ ...f })),
       outputs: r.outputs.map((f) => ({ ...f })),
       durationTicks: r.durationTicks,
     };
     if (r.energy) recipe.energy = { ...r.energy };
-    return recipe;
-  });
+    const circuit = r.circuitConfiguration ?? circuitConfiguration;
+    if (circuit !== undefined) recipe.circuitConfiguration = circuit;
+    normalizedRecipes[i] = recipe;
+    progress.tick(i + 1, recipes.length);
+  }
+  progress.done(normalizedRecipes.length);
 
   const nameFor = (id: string) =>
     lang ? resolveResourceName(id, lang) : resolveResourceName(id, { ru: {}, en: {} });
 
-  const itemDefs: ItemDef[] = [...items].sort().map((id) => ({ id, names: nameFor(id) }));
-  const fluidDefs: ItemDef[] = [...fluids].sort().map((id) => ({ id, names: nameFor(id) }));
+  logStage(`Building item/fluid defs (${items.size} items, ${fluids.size} fluids)…`);
+  const sortedItems = [...items].sort();
+  const sortedFluids = [...fluids].sort();
+  const itemProgress = createProgressReporter('Item defs', { every: 3000, intervalMs: 15_000 });
+  const itemDefs: ItemDef[] = sortedItems.map((id, i) => {
+    itemProgress.tick(i + 1, sortedItems.length);
+    return { id, names: nameFor(id) };
+  });
+  itemProgress.done(itemDefs.length);
+  const fluidProgress = createProgressReporter('Fluid defs', { every: 500, intervalMs: 15_000 });
+  const fluidDefs: ItemDef[] = sortedFluids.map((id, i) => {
+    fluidProgress.tick(i + 1, sortedFluids.length);
+    return { id, names: nameFor(id) };
+  });
+  fluidProgress.done(fluidDefs.length);
 
+  logStage('Sorting machines and recipes…');
   return {
     format: 'tfg-pack-data',
     formatVersion: 1,

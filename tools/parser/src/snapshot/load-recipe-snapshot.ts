@@ -7,6 +7,7 @@ import {
   sha256File,
   type SnapshotManifest,
 } from './manifest.js';
+import { createProgressReporter, logStage } from '../progress.js';
 import { recipeFromSnapshotJson, recipeIdFromDumpPath } from './recipe-json.js';
 
 export interface SnapshotLoadStats {
@@ -45,15 +46,21 @@ function loadRecipesArray(
   if (!existsSync(path)) return [];
 
   stats.files = 1;
-  const raw = JSON.parse(readFileSync(path, 'utf-8')) as unknown;
+  logStage(`Reading ${path}…`);
+  const text = readFileSync(path, 'utf-8');
+  logStage(`Parsing JSON (${Math.round(text.length / 1_048_576)} MiB)…`);
+  const raw = JSON.parse(text) as unknown;
   const entries = Array.isArray(raw) ? raw : (raw as { recipes?: unknown[] }).recipes;
   if (!Array.isArray(entries)) {
     warnings.push({ file: path, reason: 'recipes.json is not an array', kind: 'substrate' });
     return [];
   }
 
+  logStage(`Parsing ${entries.length} snapshot entries…`);
+  const progress = createProgressReporter('Parsing recipes', { every: 5000, intervalMs: 15_000 });
   const recipes: RecipeOp[] = [];
-  for (const entry of entries) {
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i];
     if (!entry || typeof entry !== 'object') {
       bumpSkip(stats, 'malformed_json');
       continue;
@@ -71,7 +78,9 @@ function loadRecipesArray(
     } else {
       bumpSkip(stats, skipReason ?? 'empty_io');
     }
+    progress.tick(i + 1, entries.length);
   }
+  progress.done(recipes.length, `${stats.skipped} skipped`);
   return recipes;
 }
 
