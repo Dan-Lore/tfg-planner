@@ -121,6 +121,91 @@ export function configuredStartBufferCap(node: SchemeNode): Rational {
   return R.from(node.supplyRate ?? 0);
 }
 
+function groupBufferOutEdgesByTargetPort(
+  nodeEdges: SchemeEdge[],
+  nodeById: Map<string, SchemeNode>,
+  recipes: Map<string, Recipe>,
+  tags: TagIndex,
+): Map<string, SchemeEdge[]> {
+  const byTargetPort = new Map<string, SchemeEdge[]>();
+  const outEdges = nodeEdges.filter((e) => resolveBufferSourcePort(e) === 'out_0');
+  for (const edge of outEdges) {
+    const targetNode = nodeById.get(edge.target);
+    if (!targetNode) continue;
+    const targetPort = resolveTargetPortForNode(
+      edge,
+      targetNode,
+      isSchemeBufferNode(targetNode) ? undefined : recipes.get(targetNode.recipeId),
+      tags,
+    );
+    if (!targetPort) continue;
+    const key = `${edge.target}\0${targetPort}`;
+    if (!byTargetPort.has(key)) byTargetPort.set(key, []);
+    byTargetPort.get(key)!.push(edge);
+  }
+  return byTargetPort;
+}
+
+function computeRemainingTargetPortDemand(
+  sourceNodeId: string,
+  targetId: string,
+  targetPort: string,
+  groupEdges: SchemeEdge[],
+  allEdges: SchemeEdge[],
+  edgeFlows: Record<string, Rational>,
+  nodeById: Map<string, SchemeNode>,
+  recipes: Map<string, Recipe>,
+  tags: TagIndex,
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
+): Rational {
+  const targetNode = nodeById.get(targetId);
+  if (!targetNode || groupEdges.length === 0) return R.zero;
+
+  let targetDemand = R.zero;
+  if (isSchemeBufferNode(targetNode)) {
+    if (isSchemeEndBuffer(targetNode)) {
+      targetDemand = R.from(Number.MAX_SAFE_INTEGER);
+    } else if (isSchemeIntermediateBuffer(targetNode)) {
+      const outEdges = allEdges.filter(
+        (e) => e.source === targetId && resolveBufferSourcePort(e) === 'out_0',
+      );
+      targetDemand = computeDownstreamDemand(
+        targetId,
+        outEdges,
+        allEdges,
+        edgeFlows,
+        nodeById,
+        recipes,
+        tags,
+        nodePortOutputRates,
+      );
+    }
+  } else {
+    const targetRecipe = recipes.get(targetNode.recipeId);
+    if (!targetRecipe) return R.zero;
+    const portIndex = Number.parseInt(targetPort.slice(3), 10);
+    const targetTheoretical = nodePortOutputRates[targetId]?.['out_0'] ?? R.zero;
+    targetDemand = portInputDemandRate(targetRecipe, portIndex, targetTheoretical);
+  }
+
+  let otherFlow = R.zero;
+  for (const edge of allEdges) {
+    if (edge.target !== targetId) continue;
+    const edgeTargetPort = resolveTargetPortForNode(
+      edge,
+      targetNode,
+      isSchemeBufferNode(targetNode) ? undefined : recipes.get(targetNode.recipeId),
+      tags,
+    );
+    if (edgeTargetPort !== targetPort || edge.source === sourceNodeId) continue;
+    otherFlow = otherFlow.add(edgeFlows[edge.id] ?? R.zero);
+  }
+
+  let remainingDemand = targetDemand.sub(otherFlow);
+  if (remainingDemand.compare(R.zero) < 0) remainingDemand = R.zero;
+  return remainingDemand;
+}
+
 /** Sum of remaining demand on all downstream target ports fed by edges from sourceNodeId. */
 export function computeDownstreamDemand(
   sourceNodeId: string,
@@ -132,81 +217,31 @@ export function computeDownstreamDemand(
   tags: TagIndex,
   nodePortOutputRates: Record<string, Record<string, Rational>>,
 ): Rational {
-  const byTargetPort = new Map<string, SchemeEdge[]>();
-  for (const edge of nodeEdges) {
-    const targetNode = nodeById.get(edge.target);
-    if (!targetNode) continue;
-    let targetPort: string | null = null;
-    if (isSchemeBufferNode(targetNode)) {
-      targetPort = resolveBufferTargetPort(edge);
-    } else {
-      const recipe = recipes.get(targetNode.recipeId);
-      if (!recipe) continue;
-      targetPort = resolveMachineTargetInputPort(edge, recipe, tags);
-    }
-    if (!targetPort) continue;
-    const key = `${edge.target}\0${targetPort}`;
-    if (!byTargetPort.has(key)) byTargetPort.set(key, []);
-    byTargetPort.get(key)!.push(edge);
-  }
+  const byTargetPort = groupBufferOutEdgesByTargetPort(
+    nodeEdges,
+    nodeById,
+    recipes,
+    tags,
+  );
 
   let totalDemand = R.zero;
   for (const [key, groupEdges] of byTargetPort) {
     const sep = key.indexOf('\0');
     const targetId = key.slice(0, sep);
     const targetPort = key.slice(sep + 1);
-    const targetNode = nodeById.get(targetId);
-    if (!targetNode) continue;
-
-    let targetDemand = R.zero;
-    if (isSchemeBufferNode(targetNode)) {
-      if (isSchemeEndBuffer(targetNode)) {
-        targetDemand = R.from(Number.MAX_SAFE_INTEGER);
-      } else if (isSchemeIntermediateBuffer(targetNode)) {
-        const outEdges = allEdges.filter(
-          (e) => e.source === targetId && resolveBufferSourcePort(e) === 'out_0',
-        );
-        targetDemand = computeDownstreamDemand(
-          targetId,
-          outEdges,
-          allEdges,
-          edgeFlows,
-          nodeById,
-          recipes,
-          tags,
-          nodePortOutputRates,
-        );
-      }
-    } else {
-      const targetRecipe = recipes.get(targetNode.recipeId);
-      if (!targetRecipe) continue;
-      const portIndex = Number.parseInt(targetPort.slice(3), 10);
-      const targetTheoretical = nodePortOutputRates[targetId]?.['out_0'] ?? R.zero;
-      targetDemand = portInputDemandRate(targetRecipe, portIndex, targetTheoretical);
-    }
-
-    let otherFlow = R.zero;
-    for (const edge of allEdges) {
-      if (edge.target !== targetId) continue;
-      let edgeTargetPort: string | null = null;
-      if (isSchemeBufferNode(targetNode)) {
-        edgeTargetPort = resolveBufferTargetPort(edge);
-      } else {
-        const targetRecipe = recipes.get(targetNode.recipeId);
-        if (!targetRecipe) continue;
-        edgeTargetPort = resolveMachineTargetInputPort(edge, targetRecipe, tags);
-      }
-      if (edgeTargetPort !== targetPort || edge.source === sourceNodeId) continue;
-      otherFlow = otherFlow.add(edgeFlows[edge.id] ?? R.zero);
-    }
-
-    let remainingDemand = targetDemand.sub(otherFlow);
-    if (remainingDemand.compare(R.zero) < 0) remainingDemand = R.zero;
-
-    const edgeCount = groupEdges.length;
-    if (edgeCount > 0) {
-      totalDemand = totalDemand.add(remainingDemand);
-    }
+    const remainingDemand = computeRemainingTargetPortDemand(
+      sourceNodeId,
+      targetId,
+      targetPort,
+      groupEdges,
+      allEdges,
+      edgeFlows,
+      nodeById,
+      recipes,
+      tags,
+      nodePortOutputRates,
+    );
+    totalDemand = totalDemand.add(remainingDemand);
   }
 
   return totalDemand;
@@ -238,21 +273,71 @@ export function computeIntermediateBufferEffectiveOut(
 }
 
 export function assignBufferOutgoing(
+  sourceNodeId: string,
   nodeEdges: SchemeEdge[],
   effectiveOut: Rational,
   edgeFlows: Record<string, Rational>,
+  allEdges: SchemeEdge[],
+  nodeById: Map<string, SchemeNode>,
+  recipes: Map<string, Recipe>,
+  tags: TagIndex,
+  nodePortOutputRates: Record<string, Record<string, Rational>>,
 ): number {
   let maxDelta = 0;
   const outEdges = nodeEdges.filter((e) => resolveBufferSourcePort(e) === 'out_0');
   if (outEdges.length === 0) return 0;
 
-  const shareBase = effectiveOut.div(R.from(outEdges.length));
-  for (const edge of outEdges) {
-    const prev = edgeFlows[edge.id] ?? R.zero;
-    const next = shareBase;
+  const byTargetPort = groupBufferOutEdgesByTargetPort(
+    nodeEdges,
+    nodeById,
+    recipes,
+    tags,
+  );
+
+  const edgeWeights = new Map<string, Rational>();
+  let totalWeight = R.zero;
+
+  for (const [key, groupEdges] of byTargetPort) {
+    const sep = key.indexOf('\0');
+    const targetId = key.slice(0, sep);
+    const targetPort = key.slice(sep + 1);
+    const remainingDemand = computeRemainingTargetPortDemand(
+      sourceNodeId,
+      targetId,
+      targetPort,
+      groupEdges,
+      allEdges,
+      edgeFlows,
+      nodeById,
+      recipes,
+      tags,
+      nodePortOutputRates,
+    );
+    const perEdgeWeight = remainingDemand.div(R.from(groupEdges.length));
+    for (const edge of groupEdges) {
+      edgeWeights.set(edge.id, perEdgeWeight);
+      totalWeight = totalWeight.add(perEdgeWeight);
+    }
+  }
+
+  const assignFlow = (edgeId: string, next: Rational) => {
+    const prev = edgeFlows[edgeId] ?? R.zero;
     const delta = Math.abs(next.sub(prev).toNumber());
     if (delta > maxDelta) maxDelta = delta;
-    edgeFlows[edge.id] = next;
+    edgeFlows[edgeId] = next;
+  };
+
+  if (totalWeight.compare(R.zero) <= 0) {
+    const shareBase = effectiveOut.div(R.from(outEdges.length));
+    for (const edge of outEdges) {
+      assignFlow(edge.id, shareBase);
+    }
+    return maxDelta;
+  }
+
+  for (const edge of outEdges) {
+    const weight = edgeWeights.get(edge.id) ?? R.zero;
+    assignFlow(edge.id, effectiveOut.mul(weight).div(totalWeight));
   }
 
   return maxDelta;
@@ -280,7 +365,17 @@ export function processStartBufferIteration(
     nodePortOutputRates,
   );
   const effectiveOut = computeStartBufferEffectiveOut(node, demand);
-  return assignBufferOutgoing(nodeEdges, effectiveOut, edgeFlows);
+  return assignBufferOutgoing(
+    nodeId,
+    nodeEdges,
+    effectiveOut,
+    edgeFlows,
+    allEdges,
+    nodeById,
+    recipes,
+    tags,
+    nodePortOutputRates,
+  );
 }
 
 export function processIntermediateBufferIteration(
@@ -307,7 +402,17 @@ export function processIntermediateBufferIteration(
     nodePortOutputRates,
   );
   const effectiveOut = computeIntermediateBufferEffectiveOut(node, inflow, demand);
-  return assignBufferOutgoing(nodeEdges, effectiveOut, edgeFlows);
+  return assignBufferOutgoing(
+    nodeId,
+    nodeEdges,
+    effectiveOut,
+    edgeFlows,
+    allEdges,
+    nodeById,
+    recipes,
+    tags,
+    nodePortOutputRates,
+  );
 }
 
 export function assignStartBufferInitialFlows(

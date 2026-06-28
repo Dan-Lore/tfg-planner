@@ -246,6 +246,111 @@ describe('buffer nodes in solveFlows', () => {
     expect(out).toBeCloseTo(1, 5);
   });
 
+  it('intermediate buffer splits outflow by downstream demand, not equally', () => {
+    const tieredPack: PackData = {
+      ...pack,
+      recipes: [
+        {
+          id: 'feeder',
+          machineId: 'm0',
+          durationTicks: 20,
+          inputs: [],
+          outputs: [{ itemId: 'ore', amount: 1 }],
+        },
+        {
+          id: 'consumer_mv',
+          machineId: 'm1',
+          durationTicks: 20,
+          inputs: [{ itemId: 'ore', amount: 1 }],
+          outputs: [{ itemId: 'ingot', amount: 1 }],
+          energy: { minVoltageTier: 'MV', voltage: 128, amperage: 1 },
+        },
+      ],
+    };
+
+    const result = solveFlows({
+      pack: tieredPack,
+      nodes: [
+        {
+          id: 'src',
+          kind: 'machine',
+          machineId: 'm0',
+          recipeId: 'feeder',
+          machineCount: 100,
+          overclock: 1,
+          parallel: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'buf',
+          kind: 'intermediate_buffer',
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          voltageTier: 'LV',
+          itemId: 'ore',
+          capacity: 3600,
+        },
+        {
+          id: 'c_hv',
+          kind: 'machine',
+          machineId: 'm1',
+          recipeId: 'consumer_mv',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          voltageTier: 'HV',
+        },
+        {
+          id: 'c_ev',
+          kind: 'machine',
+          machineId: 'm1',
+          recipeId: 'consumer_mv',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          voltageTier: 'EV',
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'src',
+          sourcePort: 'out_0',
+          target: 'buf',
+          targetPort: 'in_0',
+          itemId: 'ore',
+        },
+        {
+          id: 'e_hv',
+          source: 'buf',
+          sourcePort: 'out_0',
+          target: 'c_hv',
+          targetPort: 'in_0',
+          itemId: 'ore',
+        },
+        {
+          id: 'e_ev',
+          source: 'buf',
+          sourcePort: 'out_0',
+          target: 'c_ev',
+          targetPort: 'in_0',
+          itemId: 'ore',
+        },
+      ],
+      targets: [],
+    });
+
+    const hvFlow = result.edgeFlows.e_hv?.toNumber() ?? 0;
+    const evFlow = result.edgeFlows.e_ev?.toNumber() ?? 0;
+    expect(hvFlow).toBeCloseTo(2, 5);
+    expect(evFlow).toBeCloseTo(4, 5);
+    expect(result.nodePortDeficit.c_hv?.in_0?.toNumber() ?? 0).toBeCloseTo(0, 5);
+    expect(result.nodePortDeficit.c_ev?.in_0?.toNumber() ?? 0).toBeCloseTo(0, 5);
+  });
+
   it('end buffer accepts inflow with no outputs', () => {
     const result = solveFlows({
       pack,

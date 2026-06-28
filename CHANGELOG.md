@@ -23,6 +23,7 @@
 - CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
 - CI: `check-scheme` test uses committed fixture instead of gitignored `Untitled (29).tfgp`.
 - **Промежуточный буфер:** `capacity` больше не ограничивает скорость выхода; pass-through `min(вход, спрос downstream)`.
+- **Буферы:** исходящий поток распределяется пропорционально спросу потребителей (tier/overclock), а не поровну между рёбрами.
 
 ### Added
 
