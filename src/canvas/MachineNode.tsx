@@ -27,7 +27,7 @@ export interface PortDisplay {
   label: string;
   tooltip?: string;
   rate?: string;
-  /** Input: max-load contribution. Output: sent / effective produced at current load. */
+  /** Input: max-load contribution. Output: sent / recipe rate; consumer demand % in tooltip. */
   loadPercent?: number;
   loadLabel?: string;
   connected: boolean;

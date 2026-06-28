@@ -82,6 +82,8 @@ const resources = {
         portLoadOpenTitle: '{{load}} · порт не подключён, требуется {{demand}}',
         portOutConsumerLoadTitle:
           '{{load}} · {{sent}} из {{demand}} (потребность потребителей на порту)',
+        portOutConsumerDemandTitle:
+          'Обеспечивает {{load}} потребности потребителей на порту · {{sent}} из {{demand}}',
         portOutLoadOpenTitle: '{{load}} · порт не подключён, производится {{produced}}',
         voltageTier: 'Tier',
         energyHatchCount: 'Energy hatches',
@@ -245,6 +247,8 @@ const resources = {
         portLoadOpenTitle: '{{load}} · port open, requires {{demand}}',
         portOutConsumerLoadTitle:
           '{{load}} · {{sent}} of {{demand}} (downstream demand on this port)',
+        portOutConsumerDemandTitle:
+          'Supplies {{load}} of downstream port demand · {{sent}} of {{demand}}',
         portOutLoadOpenTitle: '{{load}} · port open, produces {{produced}}',
         parallel: 'Parallel',
         apply: 'Apply',

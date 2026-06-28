@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { R } from '@/calculator/rational';
-import { buildEdgeFlowData, buildNodeBalanceLines } from '@/canvas/flow-display';
+import { buildEdgeFlowData, buildNodeBalanceLines, buildOutputPortLoadMeta } from '@/canvas/flow-display';
 import type { PackData } from '@/data/types';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 
@@ -602,5 +602,32 @@ describe('buildNodeBalanceLines', () => {
     );
 
     expect(lines).toContainEqual({ kind: 'in', text: '-6.00/s a' });
+  });
+});
+
+describe('buildOutputPortLoadMeta', () => {
+  const recipe = pack.recipes[0]!;
+  const t = (key: string, opts?: Record<string, string>) =>
+    `${key}:${JSON.stringify(opts ?? {})}`;
+
+  it('shows recipe throughput on the port and consumer demand in the tooltip', () => {
+    const result = {
+      nodePortOutRecipeLoad: { mixer1: { out_0: R.from(0.5) } },
+      nodePortOutConsumerLoad: { mixer1: { out_0: R.from(0.96) } },
+      nodePortDownstreamDemand: { mixer1: { out_0: R.from(4) } },
+      nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
+    } as import('@/calculator/flow-solver').FlowResult;
+
+    const meta = buildOutputPortLoadMeta(
+      'mixer1',
+      recipe,
+      new Set(['out_0']),
+      result,
+      t,
+    );
+
+    expect(meta.out_0?.loadPercent).toBeCloseTo(50, 5);
+    expect(meta.out_0?.title).toContain('editor.portOutConsumerDemandTitle');
+    expect(meta.out_0?.title).toContain('"load":"96%"');
   });
 });

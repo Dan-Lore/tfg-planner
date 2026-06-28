@@ -353,8 +353,9 @@ export function rateMapToStrings(
 }
 
 export interface PortLoadMeta {
-  /** Input: max-load contribution. Output: min(100%, sent / downstream demand). */
+  /** Input: max-load contribution. Output: sent / recipe rate at current load. */
   loadPercent: number;
+  /** Hover detail (output: consumer demand satisfaction). */
   title: string;
 }
 
@@ -447,35 +448,55 @@ export function buildOutputPortLoadMeta(
   const meta: Record<string, PortLoadMeta> = {};
   if (!recipe || recipe.outputs.length === 0) return meta;
 
+  const recipeLoads = result.nodePortOutRecipeLoad[nodeId] ?? {};
   const consumerLoads = result.nodePortOutConsumerLoad[nodeId] ?? {};
   const downstreamDemand = result.nodePortDownstreamDemand[nodeId] ?? {};
+  const producedRates = result.nodePortOutputRates[nodeId] ?? {};
 
   for (let i = 0; i < recipe.outputs.length; i++) {
     const portId = `out_${i}`;
+    const produced = producedRates[portId] ?? R.zero;
     const demand = downstreamDemand[portId] ?? R.zero;
-    if (demand.compare(R.zero) <= 0 && !connectedOut.has(portId)) continue;
+    if (produced.compare(R.zero) <= 0 && demand.compare(R.zero) <= 0 && !connectedOut.has(portId)) {
+      continue;
+    }
 
     const connected = connectedOut.has(portId);
-    const loadFraction = connected ? (consumerLoads[portId] ?? R.zero) : R.zero;
-    const loadPercent = fractionToPercent(loadFraction);
+    const recipeLoadFraction = connected ? (recipeLoads[portId] ?? R.zero) : R.zero;
+    const loadPercent = fractionToPercent(recipeLoadFraction);
 
     let sent = R.zero;
-    if (connected && demand.compare(R.zero) > 0) {
-      sent = demand.mul(loadFraction);
+    if (connected && produced.compare(R.zero) > 0) {
+      sent = produced.mul(recipeLoadFraction);
+    } else if (connected && demand.compare(R.zero) > 0) {
+      const consumerLoadFraction = consumerLoads[portId] ?? R.zero;
+      sent = demand.mul(consumerLoadFraction);
+    }
+
+    let title: string;
+    if (!connected) {
+      title = t('editor.portOutLoadOpenTitle', {
+        load: formatLoadPercent(recipeLoadFraction),
+        produced: `${formatRate(produced)}/s`,
+      });
+    } else if (demand.compare(R.zero) > 0) {
+      const consumerLoadFraction = consumerLoads[portId] ?? R.zero;
+      title = t('editor.portOutConsumerDemandTitle', {
+        load: formatLoadPercent(consumerLoadFraction),
+        sent: `${formatRate(sent)}/s`,
+        demand: `${formatRate(demand)}/s`,
+      });
+    } else {
+      title = t('editor.portOutRecipeLoadTitle', {
+        load: formatLoadPercent(recipeLoadFraction),
+        sent: `${formatRate(sent)}/s`,
+        produced: `${formatRate(produced)}/s`,
+      });
     }
 
     meta[portId] = {
       loadPercent,
-      title: connected
-        ? t('editor.portOutConsumerLoadTitle', {
-            load: formatLoadPercent(loadFraction),
-            sent: `${formatRate(sent)}/s`,
-            demand: `${formatRate(demand)}/s`,
-          })
-        : t('editor.portOutLoadOpenTitle', {
-            load: formatLoadPercent(loadFraction),
-            produced: `${formatRate(demand)}/s`,
-          }),
+      title,
     };
   }
 
