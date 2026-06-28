@@ -1,6 +1,6 @@
 import { useEffect, useRef, type WheelEvent as ReactWheelEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PackData } from '@/data/types';
+import type { ActivePack } from '@/data/pack-runtime';
 import { getMachineName } from '@/data/pack-registry';
 import type { AttachCandidate } from '@/lib/recipe-index';
 import type { TfgpBufferKind } from '@/schema/tfgp';
@@ -16,7 +16,7 @@ export type PortAttachDirection = 'upstream' | 'downstream';
 interface PortContextMenuProps {
   x: number;
   y: number;
-  pack: PackData;
+  pack: ActivePack;
   lang: 'ru' | 'en';
   direction: PortAttachDirection;
   portSide: 'in' | 'out';

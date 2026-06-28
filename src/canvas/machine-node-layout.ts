@@ -11,8 +11,8 @@ import type { VoltageTier } from '@/calculator/gt-voltage';
 import { buildPortDisplays, type MachineNodeData, type PortDisplay } from '@/canvas/MachineNode';
 import { buildNodeBalanceLines, buildInputPortLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { MACHINE_NODE_MIN_WIDTH } from '@/canvas/node-bounds';
-import { getMachineName, getMachineRecipeCount } from '@/data/pack-registry';
-import type { PackData } from '@/data/types';
+import type { PackLike } from '@/data/pack-registry';
+import { getMachineName, getMachineRecipeCount, getRecipe } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
@@ -118,7 +118,7 @@ export function estimateMachineNodeLayoutWidth(
   lang: 'ru' | 'en' = 'ru',
 ): number {
   const title = getMachineName(data.pack, data.machineId, lang);
-  const recipe = data.pack.recipes.find((r) => r.id === data.recipeId);
+  const recipe = getRecipe(data.pack, data.recipeId);
   const recipeLabel = recipe ? formatRecipeLabel(data.pack, recipe, lang) : '';
   const hasRecipePicker = getMachineRecipeCount(data.pack, data.machineId) > 1;
 
@@ -146,7 +146,7 @@ export function estimateMachineNodeLayoutWidth(
 
 export interface BuildMachineNodeLayoutWidthsInput {
   nodes: TfgpNode[];
-  pack: PackData;
+  pack: PackLike;
   lang: 'ru' | 'en';
   flowResult?: FlowResult;
   connectedIn: Map<string, Set<string>>;
@@ -162,7 +162,7 @@ export function buildMachineNodeLayoutWidths(
 
   for (const node of input.nodes) {
     if (!isMachineNode(node)) continue;
-    const recipe = input.pack.recipes.find((r) => r.id === node.recipeId);
+    const recipe = getRecipe(input.pack, node.recipeId);
     const inputRates = rateMapToStrings(input.flowResult?.nodeInputRates[node.id]);
     const outputRates = rateMapToStrings(input.flowResult?.nodeOutputRates[node.id]);
     const outputPortRateRationals = input.flowResult?.nodePortOutputRates[node.id];

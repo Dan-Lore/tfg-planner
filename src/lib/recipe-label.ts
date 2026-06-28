@@ -1,15 +1,16 @@
+import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
-import type { PackData, Recipe, Flow } from '@/data/types';
+import type { Flow, Recipe } from '@/data/types';
 import { formatFlowQuantityLabel } from '@/lib/flow-chance';
 import { productInputs } from '@/lib/recipe-product-flows';
 
-function flowName(pack: PackData, flow: Flow, lang: 'ru' | 'en'): string {
+function flowName(pack: PackLike, flow: Flow, lang: 'ru' | 'en'): string {
   const id = flow.itemId ?? flow.fluidId ?? '?';
   return getItemName(pack, id, lang);
 }
 
 function formatSide(
-  pack: PackData,
+  pack: PackLike,
   flows: Flow[],
   lang: 'ru' | 'en',
   maxItems = 2,
@@ -24,7 +25,7 @@ function formatSide(
 }
 
 export function formatRecipeLabel(
-  pack: PackData,
+  pack: PackLike,
   recipe: Recipe,
   lang: 'ru' | 'en',
 ): string {

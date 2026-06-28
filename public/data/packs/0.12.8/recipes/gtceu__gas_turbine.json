@@ -1,0 +1,254 @@
+[
+  {
+    "id": "gtceu:gas_turbine/butadiene",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:butadiene",
+        "amount": 16
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 102
+  },
+  {
+    "id": "gtceu:gas_turbine/butane",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:butane",
+        "amount": 4
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 37
+  },
+  {
+    "id": "gtceu:gas_turbine/butene",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:butene",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 8
+  },
+  {
+    "id": "gtceu:gas_turbine/coal_gas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:coal_gas",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3
+  },
+  {
+    "id": "gtceu:gas_turbine/ethane",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:ethane",
+        "amount": 4
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 21
+  },
+  {
+    "id": "gtceu:gas_turbine/ethylene",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:ethylene",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 4
+  },
+  {
+    "id": "gtceu:gas_turbine/lpg",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:lpg",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 10
+  },
+  {
+    "id": "gtceu:gas_turbine/methane",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:methane",
+        "amount": 2
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 7
+  },
+  {
+    "id": "gtceu:gas_turbine/natural_gas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:natural_gas",
+        "amount": 8
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 5
+  },
+  {
+    "id": "gtceu:gas_turbine/phenol",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:phenol",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 9
+  },
+  {
+    "id": "gtceu:gas_turbine/propane",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:propane",
+        "amount": 4
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 29
+  },
+  {
+    "id": "gtceu:gas_turbine/propene",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:propene",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 6
+  },
+  {
+    "id": "gtceu:gas_turbine/refinery_gas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:refinery_gas",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 5
+  },
+  {
+    "id": "gtceu:gas_turbine/sulfuric_gas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:sulfuric_gas",
+        "amount": 32
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 25
+  },
+  {
+    "id": "gtceu:gas_turbine/sulfuric_naphtha",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:sulfuric_naphtha",
+        "amount": 4
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 5
+  },
+  {
+    "id": "gtceu:gas_turbine/wood_gas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "#forge:wood_gas",
+        "amount": 8
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 6
+  },
+  {
+    "id": "tfg:gas_turbine/benzene",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "gtceu:benzene",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 4
+  },
+  {
+    "id": "tfg:gas_turbine/btx_fuel",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "tfg:btx_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 57
+  },
+  {
+    "id": "tfg:gas_turbine/nitrobenzene",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "gtceu:nitrobenzene",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 10
+  },
+  {
+    "id": "tfg:gas_turbine/reformate_gas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "tfg:reformate_gas",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 12
+  },
+  {
+    "id": "tfg:gas_turbine/syngas",
+    "machineId": "gtceu:gas_turbine",
+    "inputs": [
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 4
+  }
+]

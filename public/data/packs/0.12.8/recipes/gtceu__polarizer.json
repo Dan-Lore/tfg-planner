@@ -1,0 +1,860 @@
+[
+  {
+    "id": "ae2:polarizer/charged_certus_quartz_crystal_1x",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "ae2:certus_quartz_crystal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:charged_certus_quartz_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.37109375
+    }
+  },
+  {
+    "id": "ae2:polarizer/charged_certus_quartz_crystal_2x",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "gtceu:flawless_certus_quartz_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:charged_certus_quartz_crystal",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.37109375
+    }
+  },
+  {
+    "id": "ae2:polarizer/charged_certus_quartz_crystal_4x",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "gtceu:exquisite_certus_quartz_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:charged_certus_quartz_crystal",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.37109375
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_block",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:storage_blocks/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 504,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_bolt",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:bolts/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_bolt",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 7,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_double_plate",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:double_plates/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:double_magnetic_iron_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 112,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 56,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_ingot",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 56,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_nugget",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_nugget",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_plate",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:plates/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 56,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_rod",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 28,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_screw",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:screws/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_iron_screw",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_small_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:small_dusts/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:small_magnetic_iron_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 14,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_iron_tiny_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:tiny_dusts/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_magnetic_iron_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_block",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:storage_blocks/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_neodymium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1296,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_neodymium_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 144,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_ingot",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 144,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_nugget",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_neodymium_nugget",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 16,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_rod",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_neodymium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 72,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_small_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:small_dusts/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:small_magnetic_neodymium_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 36,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_neodymium_tiny_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:tiny_dusts/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_magnetic_neodymium_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 16,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_block",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:storage_blocks/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_samarium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1350,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_samarium_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_ingot",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_long_rod",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:long_magnetic_samarium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_nugget",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_samarium_nugget",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 16,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_rod",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_samarium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 75,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_small_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:small_dusts/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:small_magnetic_samarium_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 37,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_samarium_tiny_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:tiny_dusts/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_magnetic_samarium_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 16,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_block",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:storage_blocks/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 504,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_dense_plate",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:dense_plates/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:dense_magnetic_steel_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 504,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_double_plate",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:double_plates/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:double_magnetic_steel_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 112,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_steel_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 56,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_ingot",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 56,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_nugget",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_steel_nugget",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_plate",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:plates/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_steel_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 56,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_rod",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnetic_steel_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 28,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_small_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:small_dusts/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:small_magnetic_steel_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 14,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:polarizer/polarize_steel_tiny_dust",
+    "machineId": "gtceu:polarizer",
+    "inputs": [
+      {
+        "itemId": "#forge:tiny_dusts/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_magnetic_steel_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  }
+]

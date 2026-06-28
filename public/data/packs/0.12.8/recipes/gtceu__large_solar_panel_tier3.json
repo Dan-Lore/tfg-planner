@@ -1,0 +1,49 @@
+[
+  {
+    "id": "gtceu:large_solar_panel_tier3/solar_panel_t3_cheap",
+    "machineId": "gtceu:large_solar_panel_tier3",
+    "inputs": [
+      {
+        "itemId": "ad_astra:photovoltaic_vesnium_cell",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400
+  },
+  {
+    "id": "gtceu:large_solar_panel_tier3/solar_panel_t3_emergency",
+    "machineId": "gtceu:large_solar_panel_tier3",
+    "inputs": [
+      {
+        "itemId": "ad_astra:photovoltaic_vesnium_cell",
+        "amount": 1,
+        "chance": 100
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 400
+  },
+  {
+    "id": "gtceu:large_solar_panel_tier3/solar_panel_t3_strong",
+    "machineId": "gtceu:large_solar_panel_tier3",
+    "inputs": [
+      {
+        "itemId": "ad_astra:photovoltaic_vesnium_cell",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400
+  }
+]

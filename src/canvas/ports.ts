@@ -1,5 +1,6 @@
-import type { PackData, Flow, Recipe } from '@/data/types';
+import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
+import type { Flow, Recipe } from '@/data/types';
 import { formatFlowQuantityLabel } from '@/lib/flow-chance';
 import type { TagIndex } from '@/lib/tag-index';
 import { flowsCompatible } from '@/lib/flow-match';
@@ -19,7 +20,7 @@ export function normalizePortId(port: string): string {
 
 export function flowLabel(
   flow: Flow,
-  pack: PackData,
+  pack: PackLike,
   lang: 'ru' | 'en',
   amount?: number,
 ): string {

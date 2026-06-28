@@ -1,6 +1,7 @@
 import { flowKey, inputPortId, outputPortId } from '@/canvas/ports';
 import { getMachineName } from '@/data/pack-registry';
-import type { Flow, PackData, Recipe } from '@/data/types';
+import type { PackLike } from '@/data/pack-registry';
+import type { Flow, Recipe, PackData } from '@/data/types';
 import { flowLookupKeys } from '@/lib/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import type { TagIndex } from '@/lib/tag-index';
@@ -24,10 +25,14 @@ export interface AttachCandidate {
 }
 
 export function buildRecipeFlowIndex(pack: PackData): RecipeFlowIndex {
+  return buildRecipeFlowIndexFromRecipes(pack.recipes);
+}
+
+export function buildRecipeFlowIndexFromRecipes(recipes: readonly Recipe[]): RecipeFlowIndex {
   const byInputKey = new Map<string, RecipePortRef[]>();
   const byOutputKey = new Map<string, RecipePortRef[]>();
 
-  for (const recipe of pack.recipes) {
+  for (const recipe of recipes) {
     recipe.inputs.forEach((flow, i) => {
       const key = flowKey(flow);
       const list = byInputKey.get(key) ?? [];
@@ -46,7 +51,7 @@ export function buildRecipeFlowIndex(pack: PackData): RecipeFlowIndex {
 }
 
 function sortCandidates(
-  pack: PackData,
+  pack: PackLike,
   candidates: AttachCandidate[],
   lang: 'ru' | 'en',
 ): AttachCandidate[] {
@@ -60,7 +65,7 @@ function sortCandidates(
 }
 
 export function findDownstreamCandidates(
-  pack: PackData,
+  pack: PackLike,
   index: RecipeFlowIndex,
   flow: Flow,
   lang: 'ru' | 'en',
@@ -87,7 +92,7 @@ export function findDownstreamCandidates(
 }
 
 export function findUpstreamCandidates(
-  pack: PackData,
+  pack: PackLike,
   index: RecipeFlowIndex,
   flow: Flow,
   lang: 'ru' | 'en',

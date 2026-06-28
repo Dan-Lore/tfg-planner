@@ -1,12 +1,13 @@
 import { useEffect, useMemo, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PackData, Recipe } from '@/data/types';
+import type { PackLike } from '@/data/pack-registry';
+import type { Recipe } from '@/data/types';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipeComboboxItems } from '@/lib/search-combobox';
 import { SearchCombobox } from '@/components/SearchCombobox';
 
 interface RecipePickerProps {
-  pack: PackData;
+  pack: PackLike;
   recipes: Recipe[];
   value: string;
   lang: 'ru' | 'en';

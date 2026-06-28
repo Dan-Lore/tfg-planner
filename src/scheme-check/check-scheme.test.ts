@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import type { PackData } from '@/data/types';
 import type { TfgpFile } from '@/schema/tfgp';
 import { parseTfgp } from '@/schema/tfgp';
+import { loadTestPack } from '@/test-fixtures/load-test-pack';
+import { runSolver } from '@/stores/editor-utils';
 import { checkScheme } from './check-scheme';
 
 const miniPack: PackData = {
@@ -134,11 +136,15 @@ describe('checkScheme', () => {
     () => {
     const raw = readFileSync('Untitled (29).tfgp', 'utf8');
     const file = parseTfgp(raw);
-    const pack = JSON.parse(
-      readFileSync(`public/data/packs/${file.modpack.version}/pack.json`, 'utf8'),
-    ) as PackData;
-
-    const result = checkScheme(file, pack);
+    const pack = loadTestPack(file.modpack.version);
+    const snap = {
+      nodes: file.nodes,
+      edges: file.edges,
+      targets: file.targets,
+      viewport: file.viewport,
+    };
+    const flowResult = runSolver(snap, pack, { preserveManualMachineCounts: true });
+    const result = checkScheme(file, pack, { flowResult });
     const invalidCharcoal = result.issues.filter(
       (i) => i.code === 'invalid_target_port' && i.edgeId === 'edge_85',
     );

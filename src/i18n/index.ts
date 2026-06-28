@@ -15,6 +15,8 @@ const resources = {
         subtitle:
           'Мнемосхемы для модпака TerraFirmaGreg-Modern. Собирайте цепочки, масштабируйте производство, сохраняйте схемы в .tfgp.',
         openEditor: 'Открыть редактор',
+        openEditorLoading: 'Загрузка pack…',
+        openEditorNeedPack: 'Сначала выберите версию modpack',
         selectVersionHint: 'Выберите версию modpack — данные рецептов и машин подгрузятся для редактора.',
         selectVersion: 'Выбрать версию модпака',
         modpackLink: 'Репозиторий Modpack-Modern',
@@ -26,6 +28,8 @@ const resources = {
         active: 'Активна',
         status: 'Статус',
         noPacks: 'Нет доступных версий',
+        loadingMeta: 'Загрузка meta…',
+        recipesLazy: 'рецепты по запросу',
       },
       editor: {
         title: 'Редактор схемы',
@@ -93,6 +97,8 @@ const resources = {
         searchRecipe: 'Поиск рецепта…',
         noMatches: 'Ничего не найдено',
         deleteHint: 'Del — удалить узел или связь',
+        flowComputing: 'Пересчёт…',
+        flowStale: 'Ожидание пересчёта…',
         portMenu: {
           buffers: 'Буферы',
           addDownstream: 'Добавить потребителя',
@@ -170,6 +176,8 @@ const resources = {
         subtitle:
           'Flowcharts for TerraFirmaGreg-Modern. Build chains, scale production, save schemes as .tfgp.',
         openEditor: 'Open editor',
+        openEditorLoading: 'Loading pack…',
+        openEditorNeedPack: 'Select a modpack version first',
         selectVersionHint: 'Pick a modpack version — recipe and machine data will load for the editor.',
         selectVersion: 'Select modpack version',
         modpackLink: 'Modpack-Modern repository',
@@ -181,6 +189,8 @@ const resources = {
         active: 'Active',
         status: 'Status',
         noPacks: 'No versions available',
+        loadingMeta: 'Loading meta…',
+        recipesLazy: 'recipes on demand',
       },
       editor: {
         title: 'Scheme editor',
@@ -248,6 +258,8 @@ const resources = {
         searchRecipe: 'Search recipes…',
         noMatches: 'No matches',
         deleteHint: 'Del — delete node or edge',
+        flowComputing: 'Computing…',
+        flowStale: 'Recalc pending…',
         portMenu: {
           buffers: 'Buffers',
           addDownstream: 'Add consumer',

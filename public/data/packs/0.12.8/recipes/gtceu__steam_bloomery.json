@@ -1,0 +1,574 @@
+[
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/iron",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_basaltic_mineral_sand",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:basaltic_mineral_sand_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_goethite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:goethite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_granitic_mineral_sand",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:granitic_mineral_sand_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_hematite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:hematite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_iron",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:iron_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_magnetite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_pyrite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:pyrite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_vanadium_magnetite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:vanadium_magnetite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_wrought_iron",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:wrought_iron_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coal_yellow_limonite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:yellow_limonite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:bloomery_basic_fuels",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/iron",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_basaltic_mineral_sand",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:basaltic_mineral_sand_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_goethite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:goethite_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_granitic_mineral_sand",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:granitic_mineral_sand_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_hematite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:hematite_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_iron",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:iron_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_magnetite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_pyrite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:pyrite_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_vanadium_magnetite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:vanadium_magnetite_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_wrought_iron",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:wrought_iron_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:steam_bloomery/steam_raw_iron_bloom_coalcoke_yellow_limonite",
+    "machineId": "gtceu:steam_bloomery",
+    "inputs": [
+      {
+        "itemId": "gtceu:yellow_limonite_dust",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfc:blast_furnace_fuel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_iron_bloom",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  }
+]

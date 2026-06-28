@@ -1,0 +1,8912 @@
+[
+  {
+    "id": "gtceu:compressor/blue_ice",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "minecraft:packed_ice",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:blue_ice",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/bone_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/bone",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:bone_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/carbon_fiber_plate",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "gtceu:carbon_fiber_mesh",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:carbon_fiber_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/carbon_mesh",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "gtceu:carbon_fibers",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:carbon_fiber_mesh",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/certus_quartz_plate",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/certus_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:certus_quartz_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/clay",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "minecraft:clay_ball",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:clay",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_almandine_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/almandine",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:almandine_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_aluminium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/aluminium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_aluminium_silicate_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/aluminium_silicate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_silicate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_aluminium_silicate_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/aluminium_silicate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_silicate_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_aluminium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/aluminium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_americium_241_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/americium_241",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:americium_241_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_americium_241_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/americium_241",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:americium_241_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_americium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/americium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:americium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_americium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/americium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:americium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_amethyst_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/amethyst",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:amethyst_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_andradite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/andradite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:andradite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_annealed_copper_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/annealed_copper",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:annealed_copper_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_annealed_copper_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/annealed_copper",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:annealed_copper_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_antimony_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/antimony",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:antimony_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_antimony_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/antimony",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:antimony_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_apatite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/apatite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:apatite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_armalcolite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/armalcolite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:armalcolite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bakelite_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/bakelite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:bakelite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bakelite_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/bakelite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:bakelite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_battery_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/battery_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:battery_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_battery_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/battery_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:battery_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_beryllium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/beryllium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:beryllium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_beryllium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/beryllium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:beryllium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bi_pb_sn_cd_in_tl_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/bi_pb_sn_cd_in_tl",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:bi_pb_sn_cd_in_tl_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bi_pb_sn_cd_in_tl_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/bi_pb_sn_cd_in_tl",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:bi_pb_sn_cd_in_tl_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bismuth_bronze_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/bismuth_bronze",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:bismuth_bronze_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bismuth_bronze_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/bismuth_bronze",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:bismuth_bronze_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bismuth_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/bismuth",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:bismuth_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bismuth_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/bismuth",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:bismuth_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_black_bronze_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/black_bronze",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:black_bronze_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_black_bronze_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/black_bronze",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:black_bronze_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_black_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/black_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/black_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_black_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/black_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:black_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_blue_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/blue_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:blue_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_blue_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/blue_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:blue_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_blue_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/blue_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/blue_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_blue_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/blue_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:blue_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_blue_topaz_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/blue_topaz",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:blue_topaz_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_boron_carbide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/boron_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:boron_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_boron_carbide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/boron_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:boron_carbide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_borosilicate_glass_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/borosilicate_glass",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:borosilicate_glass_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_borosilicate_glass_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/borosilicate_glass",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:borosilicate_glass_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_brass_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/brass",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:brass_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_brass_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/brass",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:brass_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bronze_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/bronze",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:bronze_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_bronze_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/bronze",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:bronze_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cadmium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/cadmium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cadmium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cadmium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/cadmium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cadmium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_californium_252_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/californium_252",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:californium_252_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_californium_252_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/californium_252",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:californium_252_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_calorite_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/calorite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:calorite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_calorite_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/calorite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:calorite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_certus_quartz_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/certus_quartz",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:certus_quartz_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_charcoal_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/charcoal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:charcoal_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_chromium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/chromium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:chromium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_chromium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/chromium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:chromium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cinnabar_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/cinnabar",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cinnabar_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_coal_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/coal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:coal_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cobalt_brass_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/cobalt_brass",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cobalt_brass_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cobalt_brass_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/cobalt_brass",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cobalt_brass_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cobalt_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/cobalt",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cobalt_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cobalt_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/cobalt",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cobalt_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_coke_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/coke",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:coke_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_copper_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/copper",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:copper_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_copper_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/copper",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:copper_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cupronickel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/cupronickel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cupronickel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_cupronickel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/cupronickel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cupronickel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_darmstadtium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/darmstadtium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:darmstadtium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_darmstadtium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/darmstadtium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:darmstadtium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_desh_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/desh",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:desh_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_desh_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/desh",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:desh_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_diamond_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/diamond",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:diamond_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_duranium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/duranium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:duranium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_duranium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/duranium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:duranium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_electrum_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/electrum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:electrum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_electrum_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/electrum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:electrum_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_emerald_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/emerald",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:emerald_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ender_pearl_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/ender_pearl",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ender_pearl_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_enriched_naquadah_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/enriched_naquadah",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:enriched_naquadah_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_enriched_naquadah_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/enriched_naquadah",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:enriched_naquadah_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_enriched_naquadah_trinium_europium_duranide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/enriched_naquadah_trinium_europium_duranide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:enriched_naquadah_trinium_europium_duranide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_enriched_naquadah_trinium_europium_duranide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/enriched_naquadah_trinium_europium_duranide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:enriched_naquadah_trinium_europium_duranide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_epoxy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/epoxy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:epoxy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_epoxy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/epoxy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:epoxy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_etrium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/etrium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:etrium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_etrium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/etrium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:etrium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_europium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/europium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:europium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_europium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/europium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:europium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_flint_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/flint",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:flint_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_gallium_arsenide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/gallium_arsenide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gallium_arsenide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_gallium_arsenide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/gallium_arsenide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gallium_arsenide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_gallium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/gallium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gallium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_gallium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/gallium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gallium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_gold_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/gold",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:gold_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_gold_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/gold",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:gold_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_graphene_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/graphene",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:graphene_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_graphene_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/graphene",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:graphene_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_green_sapphire_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/green_sapphire",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:green_sapphire_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_grossular_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/grossular",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:grossular_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hastelloy_c_276_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/hastelloy_c_276",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hastelloy_c_276_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hastelloy_c_276_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/hastelloy_c_276",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hastelloy_c_276_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hastelloy_x_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/hastelloy_x",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hastelloy_x_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hastelloy_x_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/hastelloy_x",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hastelloy_x_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hsla_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/hsla_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsla_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hsla_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/hsla_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsla_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hsse_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/hsse",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsse_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hsse_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/hsse",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsse_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hssg_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/hssg",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hssg_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hssg_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/hssg",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hssg_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hsss_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/hsss",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsss_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_hsss_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/hsss",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsss_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_incoloy_ma_956_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/incoloy_ma_956",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:incoloy_ma_956_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_incoloy_ma_956_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/incoloy_ma_956",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:incoloy_ma_956_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_inconel_718_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/inconel_718",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:inconel_718_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_inconel_718_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/inconel_718",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:inconel_718_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_indium_gallium_phosphide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/indium_gallium_phosphide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:indium_gallium_phosphide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_indium_gallium_phosphide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/indium_gallium_phosphide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:indium_gallium_phosphide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_indium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/indium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:indium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_indium_tin_barium_titanium_cuprate_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/indium_tin_barium_titanium_cuprate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:indium_tin_barium_titanium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_indium_tin_barium_titanium_cuprate_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/indium_tin_barium_titanium_cuprate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:indium_tin_barium_titanium_cuprate_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_indium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/indium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:indium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_invar_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/invar",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:invar_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_invar_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/invar",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:invar_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_iridium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/iridium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:iridium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_iridium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/iridium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:iridium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_iron_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/iron",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:iron_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_iron_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/iron",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:iron_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_kanthal_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/kanthal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:kanthal_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_kanthal_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/kanthal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:kanthal_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_lapis_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/lapis",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:lapis_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_lazurite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/lazurite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lazurite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_lead_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/lead",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lead_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_lead_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/lead",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lead_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnalium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/magnalium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnalium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnalium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/magnalium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnalium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnesium_diboride_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/magnesium_diboride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnesium_diboride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnesium_diboride_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/magnesium_diboride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnesium_diboride_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_iron_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/magnetic_iron",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:iron_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_iron_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/magnetic_iron",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:iron_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_neodymium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/magnetic_neodymium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_neodymium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/magnetic_neodymium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_samarium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/magnetic_samarium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_samarium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/magnetic_samarium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:samarium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/magnetic_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_magnetic_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/magnetic_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_malachite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/malachite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:malachite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_manganese_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/manganese",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:manganese_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_manganese_phosphide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/manganese_phosphide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:manganese_phosphide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_manganese_phosphide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/manganese_phosphide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:manganese_phosphide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_manganese_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/manganese",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:manganese_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_maraging_steel_300_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/maraging_steel_300",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:maraging_steel_300_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_maraging_steel_300_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/maraging_steel_300",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:maraging_steel_300_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_mercury_barium_calcium_cuprate_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/mercury_barium_calcium_cuprate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:mercury_barium_calcium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_mercury_barium_calcium_cuprate_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/mercury_barium_calcium_cuprate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:mercury_barium_calcium_cuprate_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_mo_50_re_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/mo_50_re",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:mo_50_re_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_mo_50_re_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/mo_50_re",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:mo_50_re_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_mo_si_b_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/mo_si_b",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:mo_si_b_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_mo_si_b_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/mo_si_b",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:mo_si_b_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_molybdenum_disilicide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/molybdenum_disilicide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:molybdenum_disilicide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_molybdenum_disilicide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/molybdenum_disilicide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:molybdenum_disilicide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_molybdenum_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/molybdenum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:molybdenum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_molybdenum_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/molybdenum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:molybdenum_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_monazite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/monazite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:monazite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_naquadah_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/naquadah_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadah_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_naquadah_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/naquadah_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadah_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_naquadah_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/naquadah",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadah_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_naquadah_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/naquadah",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadah_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_naquadria_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/naquadria",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadria_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_naquadria_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/naquadria",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadria_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_neodymium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/neodymium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_neodymium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/neodymium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_neptunium_237_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/neptunium_237",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neptunium_237_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_neptunium_237_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/neptunium_237",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neptunium_237_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nether_quartz_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/nether_quartz",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:quartz_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nether_star_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/nether_star",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nether_star_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_neutronium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/neutronium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neutronium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_neutronium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/neutronium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neutronium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nichrome_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/nichrome",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nichrome_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nichrome_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/nichrome",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nichrome_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nickel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/nickel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nickel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nickel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/nickel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nickel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nickel_zinc_ferrite_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/nickel_zinc_ferrite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nickel_zinc_ferrite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_nickel_zinc_ferrite_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/nickel_zinc_ferrite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nickel_zinc_ferrite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_niobium_nitride_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/niobium_nitride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:niobium_nitride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_niobium_nitride_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/niobium_nitride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:niobium_nitride_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_niobium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/niobium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:niobium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_niobium_titanium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/niobium_titanium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:niobium_titanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_niobium_titanium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/niobium_titanium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:niobium_titanium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_niobium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/niobium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:niobium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_olivine_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/olivine",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:olivine_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_opal_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/opal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:opal_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_osmiridium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/osmiridium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:osmiridium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_osmiridium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/osmiridium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:osmiridium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_osmium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/osmium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:osmium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_osmium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/osmium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:osmium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ostrum_iodide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/ostrum_iodide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ostrum_iodide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ostrum_iodide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/ostrum_iodide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ostrum_iodide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ostrum_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/ostrum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:ostrum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ostrum_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/ostrum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:ostrum_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_palladium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/palladium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:palladium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_palladium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/palladium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:palladium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plate_dust_alumina",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:alumina_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:alumina_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plate_dust_ammonia_borane",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:ammonia_borane_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:ammonia_borane_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plate_dust_glass",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "gtceu:glass_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:glass_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plate_dust_obsidian",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "gtceu:obsidian_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:obsidian_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plate_dust_treated_wood",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "gtceu:treated_wood_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:treated_wood_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_platinum_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/platinum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:platinum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_platinum_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/platinum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:platinum_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plutonium_241_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/plutonium_241",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plutonium_241_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plutonium_241_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/plutonium_241",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plutonium_241_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plutonium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/plutonium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plutonium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_plutonium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/plutonium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plutonium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polybenzimidazole_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polybenzimidazole",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polybenzimidazole_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polybenzimidazole_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polybenzimidazole",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polybenzimidazole_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polycaprolactam_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polycaprolactam",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polycaprolactam_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polycaprolactam_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polycaprolactam",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polycaprolactam_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyethylene_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polyethylene",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyethylene_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyethylene_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polyethylene",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyethylene_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyphenylene_sulfide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polyphenylene_sulfide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyphenylene_sulfide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyphenylene_sulfide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polyphenylene_sulfide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyphenylene_sulfide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polytetrafluoroethylene_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polytetrafluoroethylene",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polytetrafluoroethylene_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polytetrafluoroethylene_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polytetrafluoroethylene",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polytetrafluoroethylene_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyvinyl_butyral_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polyvinyl_butyral",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyvinyl_butyral_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyvinyl_butyral_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polyvinyl_butyral",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyvinyl_butyral_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyvinyl_chloride_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/polyvinyl_chloride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyvinyl_chloride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_polyvinyl_chloride_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/polyvinyl_chloride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polyvinyl_chloride_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_potin_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/potin",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:potin_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_potin_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/potin",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:potin_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_pyrope_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/pyrope",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:pyrope_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_quartzite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/quartzite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quartzite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_realgar_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/realgar",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:realgar_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_red_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/red_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_red_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/red_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_red_garnet_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/red_garnet",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_garnet_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_red_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/red_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/red_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_red_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/red_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_reinforced_epoxy_resin_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/reinforced_epoxy_resin",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:reinforced_epoxy_resin_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_reinforced_epoxy_resin_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/reinforced_epoxy_resin",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:reinforced_epoxy_resin_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rene_41_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rene_41",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rene_41_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rene_41_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rene_41",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rene_41_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rhodium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rhodium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rhodium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rhodium_plated_palladium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rhodium_plated_palladium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rhodium_plated_palladium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rhodium_plated_palladium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rhodium_plated_palladium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rhodium_plated_palladium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rhodium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rhodium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rhodium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rock_salt_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/rock_salt",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rock_salt_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rocket_alloy_t1_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rocket_alloy_t1",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rocket_alloy_t1_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rocket_alloy_t1_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rocket_alloy_t1",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rocket_alloy_t1_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rocket_alloy_t2_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rocket_alloy_t2",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rocket_alloy_t2_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rocket_alloy_t2_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rocket_alloy_t2",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rocket_alloy_t2_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rose_gold_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rose_gold",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rose_gold_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rose_gold_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rose_gold",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rose_gold_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rose_quartz_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/rose_quartz",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:rose_quartz_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rtm_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rtm_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rtm_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rtm_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rtm_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rtm_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rubber_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/rubber",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rubber_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rubber_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/rubber",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rubber_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruby_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/ruby",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruby_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruridit_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/ruridit",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruridit_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruridit_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/ruridit",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruridit_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruthenium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/ruthenium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruthenium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruthenium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/ruthenium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruthenium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruthenium_trinium_americium_neutronate_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/ruthenium_trinium_americium_neutronate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruthenium_trinium_americium_neutronate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ruthenium_trinium_americium_neutronate_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/ruthenium_trinium_americium_neutronate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruthenium_trinium_americium_neutronate_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_rutile_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/rutile",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:rutile_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_salt_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/salt",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:salt_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_samarium_iron_arsenic_oxide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/samarium_iron_arsenic_oxide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:samarium_iron_arsenic_oxide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_samarium_iron_arsenic_oxide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/samarium_iron_arsenic_oxide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:samarium_iron_arsenic_oxide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_samarium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/samarium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_samarium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/samarium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:samarium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_sapphire_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/sapphire",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sapphire_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_silicon_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/silicon",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silicon_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_silicon_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/silicon",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silicon_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_silicone_rubber_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/silicone_rubber",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silicone_rubber_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_silicone_rubber_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/silicone_rubber",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silicone_rubber_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_silver_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/silver",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silver_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_silver_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/silver",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silver_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_sodalite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/sodalite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sodalite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_soldering_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/soldering_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:soldering_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_soldering_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/soldering_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:soldering_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_spessartine_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/spessartine",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:spessartine_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_stainless_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/stainless_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stainless_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_stainless_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/stainless_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stainless_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_stellite_100_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/stellite_100",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stellite_100_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_stellite_100_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/stellite_100",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stellite_100_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_sterling_silver_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/sterling_silver",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sterling_silver_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_sterling_silver_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/sterling_silver",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sterling_silver_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_stone_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/stone",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stone_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_stone_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/stone",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:stone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_styrene_butadiene_rubber_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/styrene_butadiene_rubber",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:styrene_butadiene_rubber_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_styrene_butadiene_rubber_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/styrene_butadiene_rubber",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:styrene_butadiene_rubber_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_sugar_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/sugar",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sugar_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tantalum_carbide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tantalum_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tantalum_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tantalum_carbide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tantalum_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tantalum_carbide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tantalum_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tantalum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tantalum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tantalum_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tantalum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tantalum_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_thorium_230_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/thorium_230",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:thorium_230_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_thorium_230_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/thorium_230",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:thorium_230_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_thorium_232_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/thorium_232",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:thorium_232_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_thorium_232_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/thorium_232",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:thorium_232_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tin_alloy_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tin_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tin_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tin_alloy_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tin_alloy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tin_alloy_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tin_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tin",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tin_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tin_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tin",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tin_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_titanium_carbide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/titanium_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:titanium_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_titanium_carbide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/titanium_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:titanium_carbide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_titanium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/titanium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:titanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_titanium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/titanium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:titanium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_titanium_tungsten_carbide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/titanium_tungsten_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:titanium_tungsten_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_titanium_tungsten_carbide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/titanium_tungsten_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:titanium_tungsten_carbide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_topaz_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/topaz",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:topaz_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_trinium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/trinium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:trinium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_trinium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/trinium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:trinium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tritanium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tritanium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tritanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tritanium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tritanium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tritanium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_bismuth_oxide_composite_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tungsten_bismuth_oxide_composite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:tungsten_bismuth_oxide_composite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_bismuth_oxide_composite_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tungsten_bismuth_oxide_composite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:tungsten_bismuth_oxide_composite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_carbide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tungsten_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tungsten_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_carbide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tungsten_carbide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tungsten_carbide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tungsten",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tungsten_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/tungsten_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tungsten_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tungsten_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tungsten_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_tungsten_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/tungsten",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tungsten_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ultimet_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/ultimet",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ultimet_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_ultimet_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/ultimet",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ultimet_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_235_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/uranium_235",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_235_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_235_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/uranium_235",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_235_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/uranium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_rhodium_dinaquadide_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/uranium_rhodium_dinaquadide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_rhodium_dinaquadide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_rhodium_dinaquadide_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/uranium_rhodium_dinaquadide",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_rhodium_dinaquadide_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/uranium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_triplatinum_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/uranium_triplatinum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_triplatinum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uranium_triplatinum_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/uranium_triplatinum",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uranium_triplatinum_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_uvarovite_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/uvarovite",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uvarovite_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_vanadium_gallium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/vanadium_gallium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:vanadium_gallium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_vanadium_gallium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/vanadium_gallium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:vanadium_gallium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_vanadium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/vanadium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "vintageimprovements:vanadium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_vanadium_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/vanadium_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:vanadium_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_vanadium_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/vanadium_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:vanadium_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_vanadium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/vanadium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "vintageimprovements:vanadium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_watertight_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/watertight_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:watertight_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_watertight_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/watertight_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:watertight_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_weak_blue_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/weak_blue_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/weak_blue_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_weak_blue_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/weak_blue_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:weak_blue_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_weak_red_steel_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/weak_red_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/weak_red_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_weak_red_steel_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/weak_red_steel",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:weak_red_steel_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_woods_metal_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/woods_metal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:woods_metal_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_woods_metal_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/woods_metal",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:woods_metal_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_wrought_iron_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/wrought_iron",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wrought_iron_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_wrought_iron_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/wrought_iron",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wrought_iron_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_yellow_garnet_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/yellow_garnet",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yellow_garnet_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_yttrium_barium_cuprate_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/yttrium_barium_cuprate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yttrium_barium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_yttrium_barium_cuprate_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/yttrium_barium_cuprate",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yttrium_barium_cuprate_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_yttrium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/yttrium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yttrium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_yttrium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/yttrium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yttrium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zeron_100_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/zeron_100",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zeron_100_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zeron_100_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/zeron_100",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zeron_100_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zinc_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/zinc",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:zinc_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zinc_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/zinc",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:zinc_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zinc_to_raw_ore_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "create:raw_zinc",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:raw_zinc_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zircon_gem_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/zircon",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:zircon_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zirconium_diboride_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/zirconium_diboride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:zirconium_diboride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zirconium_diboride_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/zirconium_diboride",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:zirconium_diboride_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zirconium_nugget_to_ingot",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:nuggets/zirconium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zirconium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compress_zirconium_to_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/zirconium",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zirconium_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/compressor/snowballs_to_snow_fixed",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "minecraft:snowball",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:snow_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/nether_quartz_plate",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nether_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nether_quartz_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/packed_ice",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "minecraft:ice",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:packed_ice",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_mars_plants",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfg:mars_plants",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_misc_plants",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#createaddition:plants",
+        "amount": 10
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_moon_plants",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfg:moon_plants",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_sapling",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#minecraft:saplings",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_tfc_corals",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfc:corals",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_tfc_food",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfc:foods",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_tfc_plants",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfc:plants",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_tfc_seeds",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfc:seeds",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/plant_ball_from_wart_blocks",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#minecraft:wart_blocks",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:plant_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/quartzite_plate",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/quartzite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quartzite_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/redstone_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/redstone",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:redstone_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_black_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/black",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/black",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_brown_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/brown",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/brown",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_green_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/green",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/green",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_pink_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/pink",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/pink",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_red_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/red",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/red",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_white_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/white",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/white",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/sand_yellow_to_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:sand/yellow",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:raw_sandstone/yellow",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/slime_block",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfc:glue",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:slime_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/snowballs_to_snow",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "minecraft:snowball",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:snow_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:compressor/wood_mdf",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:chipboard_composite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wood_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:compressor/3_aminopropyltriethoxysilane",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:basalt_fiber_foil",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:basalt_fiber_plate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 960,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:compressor/glue_from_anemones",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfg:anemones",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:glue",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.625
+    }
+  },
+  {
+    "id": "tfg:compressor/glue_from_starfish",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:plant/starfish",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:glue",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.625
+    }
+  },
+  {
+    "id": "tfg:compressor/graphite_moderator",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:moderate_core",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:graphite_moderator",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "tfg:compressor/humus_from_fallen_leaves",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#tfc:fallen_leaves",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:groundcover/humus",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "tfg:compressor/humus_from_leaves",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "#minecraft:leaves",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:groundcover/humus",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "tfg:compressor/impure_graphite_moderator",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:impure_moderate_core",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:impure_graphite_moderator",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "tfg:compressor/permafrost",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "tfg:loose/permafrost",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:permafrost",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "tfg:compressor/venus_sandstone",
+    "machineId": "gtceu:compressor",
+    "inputs": [
+      {
+        "itemId": "ad_astra:venus_sand",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:venus_sandstone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  }
+]

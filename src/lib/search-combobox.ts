@@ -1,5 +1,6 @@
+import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
-import type { PackData, Recipe } from '@/data/types';
+import type { Recipe } from '@/data/types';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipePickerDetail, type RecipePickerDetail } from '@/lib/recipe-picker-detail';
 
@@ -66,7 +67,7 @@ export function getPrefixAutocompleteSuffix(
 }
 
 export function buildRecipeIngredientSearchText(
-  pack: PackData,
+  pack: PackLike,
   recipe: Recipe,
   lang: 'ru' | 'en',
 ): string {
@@ -92,7 +93,7 @@ export function buildRecipeIngredientSearchText(
 }
 
 export function buildRecipeComboboxItems(
-  pack: PackData,
+  pack: PackLike,
   recipes: Recipe[],
   lang: 'ru' | 'en',
 ): SearchComboboxItem[] {
@@ -105,7 +106,7 @@ export function buildRecipeComboboxItems(
 }
 
 export function sortRecipesForPicker(
-  pack: PackData,
+  pack: PackLike,
   recipes: Recipe[],
   lang: 'ru' | 'en',
 ): Recipe[] {

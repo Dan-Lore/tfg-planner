@@ -1,0 +1,4072 @@
+[
+  {
+    "id": "ae2:assembly_line/quantum_link",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "tfg:cryo_fluix_pearl",
+        "amount": 8
+      },
+      {
+        "itemId": "ae2:quartz_glass",
+        "amount": 1
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:ruthenium_trinium_americium_neutronate_hex_wire",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uv_sensor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:uv_emitter",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:uv_field_generator",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:max_battery",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 288000
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 216000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:quantum_link",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 700,
+    "energy": {
+      "minVoltageTier": "UV",
+      "voltage": 524288,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "ae2:assembly_line/quantum_ring",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:batteries/hv",
+        "amount": 6
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:iv_emitter",
+        "amount": 16
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:iv_sensor",
+        "amount": 14
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 28800
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 21600
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:quantum_ring",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "ae2wtlib:assembly_line/quantum_bridge_card",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "ae2:quantum_ring",
+        "amount": 8
+      },
+      {
+        "itemId": "ae2:quantum_link",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_sensor",
+        "amount": 2
+      },
+      {
+        "itemId": "ae2:wireless_booster",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:tritanium",
+        "amount": 2304
+      },
+      {
+        "fluidId": "gtceu:titanium",
+        "amount": 2160
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:styrene_butadiene_rubber",
+        "amount": 864
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2wtlib:quantum_bridge_card",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 31.25
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_crafter",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:oversize_interface",
+        "amount": 1
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dense_plates/rhodium_plated_palladium",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 2304
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1430
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_crafter",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_crafter_moon",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:oversize_interface",
+        "amount": 2
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:iv_field_generator",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dense_plates/tungsten_steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1430
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_crafter",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_frame",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:plascrete",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:luv_machine_casing",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rods/niobium_nitride",
+        "amount": 16
+      },
+      {
+        "itemId": "expatternprovider:ex_molecular_assembler",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:concrete",
+        "amount": 1152
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 2304
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_frame",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_frame_moon",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:plascrete",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:iv_machine_casing",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rods/niobium_nitride",
+        "amount": 16
+      },
+      {
+        "itemId": "expatternprovider:ex_molecular_assembler",
+        "amount": 4
+      },
+      {
+        "fluidId": "gtceu:concrete",
+        "amount": 1152
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 2304
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_frame",
+        "amount": 8
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_pattern",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:extended_pattern_provider",
+        "amount": 1
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:luv_robot_arm",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dense_plates/rhodium_plated_palladium",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 2304
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1430
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_pattern",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_pattern_moon",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:extended_pattern_provider",
+        "amount": 2
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:iv_robot_arm",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dense_plates/tungsten_steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1430
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_pattern",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_speed_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "megacells:mega_crafting_accelerator",
+        "amount": 1
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:luv_conveyor_module",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dense_plates/rhodium_plated_palladium",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 2304
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1430
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_speed",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/assembler_matrix_speed_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "megacells:mega_crafting_accelerator",
+        "amount": 2
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:iv_conveyor_module",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dense_plates/tungsten_steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1430
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:assembler_matrix_speed",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/oversize_interface_iv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:extended_interface",
+        "amount": 4
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:iv_robot_arm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iv_fluid_regulator",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dense_plates/tungsten_steel",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 1296
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:oversize_interface",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/oversize_interface_iv_moon",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:extended_interface",
+        "amount": 4
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:iv_robot_arm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iv_fluid_regulator",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dense_plates/tungsten_steel",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 1296
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:oversize_interface",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/oversize_interface_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:extended_interface",
+        "amount": 8
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:zpm_robot_arm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_fluid_regulator",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dense_plates/naquadah_alloy",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 2592
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:oversize_interface",
+        "amount": 8
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "expatternprovider:assembly_line/oversize_interface_zpm_moon",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#expatternprovider:extended_interface",
+        "amount": 8
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:zpm_robot_arm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_fluid_regulator",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dense_plates/naquadah_alloy",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 2592
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "expatternprovider:oversize_interface",
+        "amount": 16
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "gtceu:assembly_line/quantum_chestplate_advanced",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:quarktech_chestplate",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:quadruple_wires/osmium",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:double_plates/iridium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:gravitation_engine_unit",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dense_plates/rhodium_plated_palladium",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:lapotronic_energy_orb_cluster",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:screws/hsss",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:advanced_quarktech_chestplate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "megacells:assembly_line/cell_component_16m",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:cell_component_4m",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 18432
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 18432
+      },
+      {
+        "fluidId": "gtceu:polyphenylene_sulfide",
+        "amount": 36864
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:cell_component_16m",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 8000,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "megacells:assembly_line/cell_component_1m",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 16
+      },
+      {
+        "itemId": "ae2:cell_component_256k",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 4608
+      },
+      {
+        "fluidId": "gtceu:polyphenylene_sulfide",
+        "amount": 9216
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:cell_component_1m",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "megacells:assembly_line/cell_component_1m_256k",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 16
+      },
+      {
+        "itemId": "ae2:cell_component_256k",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 4608
+      },
+      {
+        "fluidId": "gtceu:polyphenylene_sulfide",
+        "amount": 9216
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:cell_component_1m",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 4000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "megacells:assembly_line/cell_component_4m",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:advanced_soc",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:cell_component_1m",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 9216
+      },
+      {
+        "fluidId": "gtceu:polyphenylene_sulfide",
+        "amount": 18432
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:cell_component_4m",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "megacells:assembly_line/cell_component_4m_256k",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:advanced_soc",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:cell_component_1m",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 9216
+      },
+      {
+        "fluidId": "gtceu:polyphenylene_sulfide",
+        "amount": 18432
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:cell_component_4m",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 4000,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "megacells:assembly_line/cell_component_64m",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 64
+      },
+      {
+        "itemId": "megacells:cell_component_16m",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 36864
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 36864
+      },
+      {
+        "fluidId": "gtceu:polyphenylene_sulfide",
+        "amount": 73728
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:cell_component_64m",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 8000,
+    "energy": {
+      "minVoltageTier": "UV",
+      "voltage": 524288,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/advanced_data_access_hatch",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_input_bus",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:data_orb",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:advanced_data_access_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/conveyor_module_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:plates/hsss",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:rings/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/hsss",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:screws/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 250
+      },
+      {
+        "fluidId": "gtceu:styrene_butadiene_rubber",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_conveyor_module",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/conveyor_module_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:plates/tritanium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:rings/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/tritanium",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:screws/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:styrene_butadiene_rubber",
+        "amount": 3456
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_conveyor_module",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/conveyor_module_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:plates/osmiridium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:rings/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/osmiridium",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:screws/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      },
+      {
+        "fluidId": "gtceu:styrene_butadiene_rubber",
+        "amount": 2304
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_conveyor_module",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/crystal_mainframe_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hsse",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:crystal_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_wires/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1440
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/data_bank",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:computer_casing",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:data_orb",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/cobalt",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:normal_optical_pipe",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:double_wires/indium_tin_barium_titanium_cuprate",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_bank",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/dynamo_hatch_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:springs/niobium_titanium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_voltage_coil",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 6000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 720
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_energy_output_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/dynamo_hatch_uhv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uhv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:springs/europium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_wires/ruthenium_trinium_americium_neutronate",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 12000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 5760
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uhv_energy_output_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "UV",
+      "voltage": 524288,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/dynamo_hatch_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:springs/yttrium_barium_cuprate",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uv_voltage_coil",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 10000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 2880
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_energy_output_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/dynamo_hatch_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:springs/vanadium_gallium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_voltage_coil",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 8000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1440
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_energy_output_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_motor_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/magnetic_samarium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:rods/long/hsss",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:rings/hsss",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:rounds/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/ruridit",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_motor_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/magnetic_samarium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:rods/long/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rings/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/tritanium",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/americium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/americium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_motor_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/magnetic_samarium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:rods/long/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rings/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/osmiridium",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/europium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/europium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_piston_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rings/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/hsss",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:gears/hsss",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_gears/hsss",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_electric_piston",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_piston_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rings/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/tritanium",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:gears/naquadah_alloy",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_gears/naquadah_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_electric_piston",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_piston_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rings/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rounds/osmiridium",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:gears/osmiridium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_gears/osmiridium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_electric_piston",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_pump_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_fluid_pipes/niobium_titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/hsss",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:screws/hsss",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:rings/silicone_rubber",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:rotors/hsss",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_electric_pump",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_pump_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:large_fluid_pipes/naquadah",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/tritanium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:screws/tritanium",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:rings/silicone_rubber",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rotors/naquadah_alloy",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_electric_pump",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/electric_pump_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:normal_fluid_pipes/polybenzimidazole",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/osmiridium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:screws/osmiridium",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:rings/silicone_rubber",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:rotors/osmiridium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_electric_pump",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/emitter_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hsss",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:rods/long/ruridit",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:foils/palladium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/palladium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_emitter",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/emitter_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/tritanium",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:rods/long/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:gravi_star",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:foils/naquadria",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/naquadria",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_emitter",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/emitter_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/naquadah_alloy",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:rods/long/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:foils/trinium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/trinium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_emitter",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/energy_cluster",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/americium",
+        "amount": 16
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:energy_module",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_field_generator",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/osmiridium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:bolts/naquadria",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 2880
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:energy_cluster",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 6250
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/energy_hatch_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_voltage_coil",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 6000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 720
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_energy_input_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/energy_hatch_uhv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uhv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/europium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_wires/ruthenium_trinium_americium_neutronate",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 12000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 5760
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uhv_energy_input_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "UV",
+      "voltage": 524288,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/energy_hatch_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:uv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uv_voltage_coil",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 10000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 2880
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_energy_input_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/energy_hatch_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_voltage_coil",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:sodium_potassium",
+        "amount": 8000
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1440
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_energy_input_hatch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/energy_module",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_plates/europium",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:lapotronic_energy_orb_cluster",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:fine_wires/ruridit",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:bolts/trinium",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1440
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:energy_module",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/field_generator_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hsss",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/hsss",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_emitter",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/indium_tin_barium_titanium_cuprate",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/indium_tin_barium_titanium_cuprate",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/field_generator_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/tritanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/tritanium",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:gravi_star",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uv_emitter",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/enriched_naquadah_trinium_europium_duranide",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/enriched_naquadah_trinium_europium_duranide",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1728
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_field_generator",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/field_generator_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/naquadah_alloy",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/naquadah_alloy",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_emitter",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/uranium_rhodium_dinaquadide",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/uranium_rhodium_dinaquadide",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_field_generator",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/fusion_reactor_mk1",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:superconducting_coil",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:double_plates/plutonium_241",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_plates/osmiridium",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iv_field_generator",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_wires/indium_tin_barium_titanium_cuprate",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:niobium_titanium",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_fusion_reactor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/fusion_reactor_mk2",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:fusion_coil",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:double_plates/naquadria",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_plates/europium",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_wires/uranium_rhodium_dinaquadide",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:vanadium_gallium",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_fusion_reactor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 30
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/fusion_reactor_mk3",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:fusion_coil",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_plates/americium",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_field_generator",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:uhpic_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_wires/enriched_naquadah_trinium_europium_duranide",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:yttrium_barium_cuprate",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_fusion_reactor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/high_performance_computing_array",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:data_bank",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:data_orb",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:computer_monitor_cover",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:double_wires/uranium_rhodium_dinaquadide",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:normal_optical_pipe",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:vanadium_gallium",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:pcb_coolant",
+        "amount": 4000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:high_performance_computation_array",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/lapotronic_energy_orb_cluster",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/europium",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:lapotronic_energy_orb",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iv_field_generator",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:hpic_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:bolts/naquadah",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 720
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotronic_energy_orb_cluster",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 2500
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/me_pattern_buffer",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_dual_input_hatch",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_emitter",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 4
+      },
+      {
+        "itemId": "expatternprovider:ex_pattern_provider",
+        "amount": 3
+      },
+      {
+        "itemId": "expatternprovider:oversize_interface",
+        "amount": 3
+      },
+      {
+        "itemId": "ae2:speed_card",
+        "amount": 4
+      },
+      {
+        "itemId": "ae2:capacity_card",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/europium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:fine_wires/europium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:fine_wires/europium",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:me_pattern_buffer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/network_switch",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:computer_casing",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_emitter",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:zpm_sensor",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:double_wires/enriched_naquadah_trinium_europium_duranide",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:foils/tritanium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/tritanium",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:normal_optical_pipe",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:network_switch",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/object_holder",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_input_bus",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_emitter",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_robot_arm",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:double_wires/uranium_rhodium_dinaquadide",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:normal_optical_pipe",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:object_holder",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/research_station",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:data_bank",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_sensor",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:luv_field_generator",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:double_wires/uranium_rhodium_dinaquadide",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:foils/trinium",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:normal_optical_pipe",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:vanadium_gallium",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:research_station",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/robot_arm_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/hsss",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:gears/hsss",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_gears/hsss",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:luv_electric_piston",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/ev",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_robot_arm",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/robot_arm_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:gears/tritanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_gears/tritanium",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:uv_electric_piston",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1728
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_robot_arm",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/robot_arm_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:gears/osmiridium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_gears/osmiridium",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:zpm_electric_piston",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_robot_arm",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/sensor_luv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hsss",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/ruridit",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:foils/palladium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/palladium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/niobium_titanium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_sensor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 187.5
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/sensor_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/tritanium",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uv_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/tritanium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:gravi_star",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/uv",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:foils/naquadria",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/naquadria",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/yttrium_barium_cuprate",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_sensor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3125
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/sensor_zpm",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/naquadah_alloy",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zpm_electric_motor",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:plates/osmiridium",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:foils/trinium",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:foils/trinium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:single_cables/vanadium_gallium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_sensor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 750
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/ultimate_battery",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:double_plates/darmstadtium",
+        "amount": 16
+      },
+      {
+        "itemId": "#gtceu:circuits/uhv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:energy_cluster",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:uv_field_generator",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:uhpic_wafer",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:uhpic_wafer",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:single_wires/enriched_naquadah_trinium_europium_duranide",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:bolts/neutronium",
+        "amount": 64
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 5760
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 2304
+      },
+      {
+        "fluidId": "gtceu:naquadria",
+        "amount": 2592
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:max_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 9375
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/wetware_mainframe_uhv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/tritanium",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:wetware_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:foils/polybenzimidazole",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:double_wires/enriched_naquadah_trinium_europium_duranide",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:plates/europium",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 2880
+      },
+      {
+        "fluidId": "gtceu:polybenzimidazole",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 9375
+    }
+  },
+  {
+    "id": "tfg:assembly_line/assembly_line/wetware_super_computer_uv",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:wetware_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:foils/polybenzimidazole",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:plates/europium",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 1152
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 18.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/growth_chamber",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "tfg:growth_monitor",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 16
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:iv_electric_pump",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:tungsten_single_cable",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 2304
+      },
+      {
+        "fluidId": "gtceu:residual_radioactive_concoction",
+        "amount": 30000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:growth_chamber",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:assembly_line/me_pattern_buffer_proxy",
+    "machineId": "gtceu:assembly_line",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_machine_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_sensor",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/luv",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:fusion_glass",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:quantum_ring",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:fine_europium_wire",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:fine_europium_wire",
+        "amount": 32
+      },
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 16
+      },
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 500
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:me_pattern_buffer_proxy",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 60
+    }
+  }
+]

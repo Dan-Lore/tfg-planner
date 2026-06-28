@@ -1,0 +1,1537 @@
+[
+  {
+    "id": "gtceu:sifter/gravel_sifting",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#tfc:rock/gravel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:flint",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:flint",
+        "amount": 1,
+        "chance": 9000
+      },
+      {
+        "itemId": "minecraft:flint",
+        "amount": 1,
+        "chance": 8000
+      },
+      {
+        "itemId": "minecraft:flint",
+        "amount": 1,
+        "chance": 6000
+      },
+      {
+        "itemId": "minecraft:flint",
+        "amount": 1,
+        "chance": 3300
+      },
+      {
+        "itemId": "minecraft:flint",
+        "amount": 1,
+        "chance": 2500
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_almandine_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/almandine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_almandine_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_almandine_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:almandine_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_almandine_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_almandine_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_almandine_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_amethyst_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/amethyst",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_amethyst_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_amethyst_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "minecraft:amethyst_shard",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_amethyst_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_amethyst_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_amethyst_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_apatite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/apatite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_apatite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_apatite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:apatite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_apatite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_apatite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_apatite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_armalcolite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/armalcolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_armalcolite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_armalcolite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:armalcolite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_armalcolite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_armalcolite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_armalcolite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_blue_topaz_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/blue_topaz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_blue_topaz_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_blue_topaz_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:blue_topaz_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_blue_topaz_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_blue_topaz_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_blue_topaz_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_certus_quartz_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/certus_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_certus_quartz_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_certus_quartz_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "ae2:certus_quartz_crystal",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_certus_quartz_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_certus_quartz_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_certus_quartz_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_cinnabar_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cinnabar",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_cinnabar_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_cinnabar_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:cinnabar_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_cinnabar_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_cinnabar_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_cinnabar_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_diamond_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/diamond",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_diamond_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_diamond_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "minecraft:diamond",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_diamond_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_diamond_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_diamond_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_emerald_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/emerald",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_emerald_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_emerald_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "minecraft:emerald",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_emerald_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_emerald_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_emerald_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_green_sapphire_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/green_sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_green_sapphire_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_green_sapphire_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:green_sapphire_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_green_sapphire_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_green_sapphire_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_green_sapphire_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_grossular_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/grossular",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_grossular_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_grossular_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:grossular_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_grossular_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_grossular_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_grossular_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_lapis_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lapis",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_lapis_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_lapis_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "minecraft:lapis_lazuli",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_lapis_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_lapis_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_lapis_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_lazurite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lazurite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_lazurite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_lazurite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:lazurite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_lazurite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_lazurite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_lazurite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_malachite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/malachite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_malachite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_malachite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:malachite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_malachite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_malachite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_malachite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_monazite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/monazite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_monazite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_monazite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:monazite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_monazite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_monazite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_monazite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_nether_quartz_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/nether_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_nether_quartz_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_nether_quartz_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "minecraft:quartz",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_nether_quartz_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_nether_quartz_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_nether_quartz_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_olivine_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/olivine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_olivine_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_olivine_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:olivine_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_olivine_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_olivine_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_olivine_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_opal_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/opal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_opal_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_opal_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:opal_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_opal_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_opal_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_opal_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_pyrope_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pyrope",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_pyrope_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_pyrope_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:pyrope_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_pyrope_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_pyrope_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_pyrope_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_quartzite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/quartzite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_quartzite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_quartzite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:quartzite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_quartzite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_quartzite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_quartzite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_realgar_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/realgar",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_realgar_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_realgar_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:realgar_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_realgar_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_realgar_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_realgar_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_red_garnet_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/red_garnet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_red_garnet_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_red_garnet_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:red_garnet_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_red_garnet_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_red_garnet_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_red_garnet_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_rock_salt_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/rock_salt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_rock_salt_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_rock_salt_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:rock_salt_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_rock_salt_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_rock_salt_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_rock_salt_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_rose_quartz_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/rose_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "greate:exquisite_rose_quartz_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "greate:flawless_rose_quartz_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "create:rose_quartz",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "greate:pure_rose_quartz_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "greate:flawed_rose_quartz_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "greate:chipped_rose_quartz_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_ruby_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/ruby",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_ruby_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_ruby_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:ruby_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_ruby_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_ruby_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_ruby_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_salt_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/salt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_salt_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_salt_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:salt_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_salt_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_salt_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_salt_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_sapphire_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_sapphire_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_sapphire_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:sapphire_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_sapphire_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_sapphire_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_sapphire_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_sodalite_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/sodalite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_sodalite_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_sodalite_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:sodalite_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_sodalite_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_sodalite_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_sodalite_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_spessartine_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/spessartine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_spessartine_gem",
+        "amount": 1,
+        "chance": 300
+      },
+      {
+        "itemId": "gtceu:flawless_spessartine_gem",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "itemId": "gtceu:spessartine_gem",
+        "amount": 1,
+        "chance": 3500
+      },
+      {
+        "itemId": "gtceu:pure_spessartine_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:flawed_spessartine_gem",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:chipped_spessartine_gem",
+        "amount": 1,
+        "chance": 3500
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_topaz_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/topaz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_topaz_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_topaz_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:topaz_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_topaz_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_topaz_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_topaz_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:sifter/sift_yellow_garnet_purified_ore_to_gems",
+    "machineId": "gtceu:sifter",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/yellow_garnet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:exquisite_yellow_garnet_gem",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "gtceu:flawless_yellow_garnet_gem",
+        "amount": 1,
+        "chance": 1500
+      },
+      {
+        "itemId": "gtceu:yellow_garnet_gem",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "gtceu:pure_yellow_garnet_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:flawed_yellow_garnet_gem",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "gtceu:chipped_yellow_garnet_gem",
+        "amount": 1,
+        "chance": 3000
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  }
+]

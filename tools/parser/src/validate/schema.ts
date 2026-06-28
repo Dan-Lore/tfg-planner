@@ -1,4 +1,5 @@
-import type { PackData } from '../../../../src/data/types.js';
+import { join } from 'node:path';
+import type { PackData, PackMeta, Recipe, RecipeShardIndex } from '../../../../src/data/types.js';
 import type { BuildReport, ParseWarning, WarningKind } from '../types.js';
 
 export function summarizeWarningsByKind(
@@ -22,7 +23,7 @@ export function summarizeWarningsByKind(
 export function validatePackSchema(pack: PackData): string[] {
   const errors: string[] = [];
   if (pack.format !== 'tfg-pack-data') errors.push('Invalid format');
-  if (pack.formatVersion !== 1) errors.push('Unsupported formatVersion');
+  if (pack.formatVersion !== 1) errors.push('Unsupported formatVersion for monolithic pack');
   if (!pack.modpackVersion) errors.push('Missing modpackVersion');
   if (!Array.isArray(pack.recipes)) errors.push('Missing recipes array');
 
@@ -35,6 +36,66 @@ export function validatePackSchema(pack: PackData): string[] {
     if (r.durationTicks <= 0) errors.push(`Recipe ${r.id} invalid duration`);
   }
   return errors;
+}
+
+export function validatePackMeta(meta: PackMeta): string[] {
+  const errors: string[] = [];
+  if (meta.format !== 'tfg-pack-data') errors.push('Invalid format');
+  if (meta.formatVersion !== 2) errors.push('Unsupported formatVersion');
+  if (!meta.modpackVersion) errors.push('Missing modpackVersion');
+  if (!Array.isArray(meta.machines)) errors.push('Missing machines array');
+  return errors;
+}
+
+function shardFileName(machineId: string): string {
+  return `${machineId.replace(/[:/\\]/g, '__')}.json`;
+}
+
+export function writeShardedPack(
+  outDir: string,
+  pack: PackData,
+  writeJson: (path: string, data: unknown) => void,
+): { metaPath: string; recipesDir: string; shardCount: number } {
+  const recipesDir = join(outDir, 'recipes');
+  const byMachine = new Map<string, Recipe[]>();
+  for (const recipe of pack.recipes) {
+    const list = byMachine.get(recipe.machineId);
+    if (list) list.push(recipe);
+    else byMachine.set(recipe.machineId, [recipe]);
+  }
+
+  const shards: RecipeShardIndex['shards'] = {};
+  for (const [machineId, recipes] of byMachine) {
+    const file = shardFileName(machineId);
+    shards[machineId] = { file, count: recipes.length };
+    writeJson(join(recipesDir, file), recipes);
+  }
+
+  writeJson(join(recipesDir, 'index.json'), {
+    format: 'tfg-pack-recipe-index',
+    formatVersion: 1,
+    shards,
+  } satisfies RecipeShardIndex);
+
+  const meta: PackMeta = {
+    format: 'tfg-pack-data',
+    formatVersion: 2,
+    modpackVersion: pack.modpackVersion,
+    dataVersion: pack.dataVersion,
+    generatedAt: pack.generatedAt,
+    machines: pack.machines,
+    items: pack.items,
+    fluids: pack.fluids,
+  };
+
+  const metaErrors = validatePackMeta(meta);
+  if (metaErrors.length > 0) {
+    throw new Error(`Invalid pack meta: ${metaErrors.join('; ')}`);
+  }
+
+  const metaPath = join(outDir, 'pack.meta.json');
+  writeJson(metaPath, meta);
+  return { metaPath, recipesDir, shardCount: byMachine.size };
 }
 
 export function buildReportFromPack(

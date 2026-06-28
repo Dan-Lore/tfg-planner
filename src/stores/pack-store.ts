@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { PackData, PackManifestEntry } from '@/data/types';
-import { loadManifest, loadPackData } from '@/data/pack-registry';
+import type { PackManifestEntry } from '@/data/types';
+import type { ActivePack, PackLoadStage } from '@/data/pack-runtime';
+import { loadManifest, loadActivePack } from '@/data/pack-registry';
 
 interface PackState {
   manifest: PackManifestEntry[];
-  activePack: PackData | null;
+  activePack: ActivePack | null;
   activeEntry: PackManifestEntry | null;
+  loadStage: PackLoadStage | null;
   loading: boolean;
   error: string | null;
   loadManifestList: () => Promise<void>;
@@ -19,6 +21,7 @@ export const usePackStore = create<PackState>()(
       manifest: [],
       activePack: null,
       activeEntry: null,
+      loadStage: null,
       loading: false,
       error: null,
 
@@ -36,17 +39,19 @@ export const usePackStore = create<PackState>()(
       },
 
       selectPack: async (entry) => {
-        set({ loading: true, error: null });
+        set({ loading: true, error: null, loadStage: 'meta' });
         try {
-          const pack = await loadPackData(entry.path);
+          const pack = await loadActivePack(entry);
           set({
             activePack: pack,
             activeEntry: entry,
             loading: false,
+            loadStage: 'ready',
           });
         } catch (e) {
           set({
             loading: false,
+            loadStage: null,
             error: e instanceof Error ? e.message : 'Unknown error',
           });
         }

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "tfg:hb_import/boron_coolant",
+    "machineId": "deafission:hb_import",
+    "inputs": [
+      {
+        "fluidId": "tfg:hot_boron_enriched_coolant",
+        "amount": 3600
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:boron_enriched_coolant",
+        "amount": 3600
+      }
+    ],
+    "durationTicks": 100
+  },
+  {
+    "id": "tfg:hb_import/dense_steam",
+    "machineId": "deafission:hb_import",
+    "inputs": [
+      {
+        "fluidId": "gtceu:dense_steam",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "minecraft:water",
+        "amount": 20
+      }
+    ],
+    "durationTicks": 100
+  }
+]

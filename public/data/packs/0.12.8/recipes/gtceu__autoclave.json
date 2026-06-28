@@ -1,0 +1,1379 @@
+[
+  {
+    "id": "gtceu:autoclave/agar",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/gelatin",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:agar_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_apatite_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:apatite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:apatite_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_apatite_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:apatite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:apatite_gem",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_certus_quartz_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "ae2:certus_quartz_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:certus_quartz_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_certus_quartz_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "ae2:certus_quartz_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:certus_quartz_crystal",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_cinnabar_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:cinnabar_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cinnabar_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_cinnabar_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:cinnabar_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cinnabar_gem",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_fluix_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "ae2:fluix_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:fluix_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_fluix_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "ae2:fluix_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:fluix_crystal",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_lapis_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:lapis_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:lapis_lazuli",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_lapis_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:lapis_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:lapis_lazuli",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_lazurite_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:lazurite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lazurite_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_lazurite_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:lazurite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lazurite_gem",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_monazite_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:monazite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:monazite_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_monazite_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:monazite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:monazite_gem",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_nether_quartz_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:nether_quartz_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:quartz",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_nether_quartz_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:nether_quartz_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:quartz",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_quartzite_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:quartzite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quartzite_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_quartzite_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:quartzite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quartzite_gem",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_rose_quartz_ice",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rose_quartz",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:gems/rose_quartz",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:ice",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:rose_quartz",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_sodalite_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:sodalite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sodalite_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/autoclave_dust_sodalite_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:sodalite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sodalite_gem",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/carbon_fibers_epoxy",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:epoxy",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:carbon_fibers",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 37,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/carbon_fibers_pbi",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 8
+      },
+      {
+        "fluidId": "#forge:polybenzimidazole",
+        "amount": 9
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:carbon_fibers",
+        "amount": 16
+      }
+    ],
+    "durationTicks": 37,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/carbon_fibers_polyethylene",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:polyethylene",
+        "amount": 36
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:carbon_fibers",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 37,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/carbon_fibers_ptfe",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:polytetrafluoroethylene",
+        "amount": 18
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:carbon_fibers",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 37,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/clay_from_dust",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/clay",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:clay_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/clay_from_dust_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/clay",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:clay_ball",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "gtceu:autoclave/energy_crystal_black_steel",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:energium_dust",
+        "amount": 9
+      },
+      {
+        "fluidId": "#forge:black_steel",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:energy_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:autoclave/energy_crystal_blue_steel",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:energium_dust",
+        "amount": 9
+      },
+      {
+        "fluidId": "#forge:red_steel",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:energy_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/energy_crystal_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:energium_dust",
+        "amount": 9
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:energy_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.625
+    }
+  },
+  {
+    "id": "gtceu:autoclave/energy_crystal_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:energium_dust",
+        "amount": 9
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:energy_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/gravi_star",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:quantum_star",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:neutronium",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gravi_star",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 480,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/lapotron_gem_blue_steel",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/lapotron",
+        "amount": 15
+      },
+      {
+        "fluidId": "#forge:red_steel",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotron_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:autoclave/lapotron_gem_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/lapotron",
+        "amount": 15
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotron_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.625
+    }
+  },
+  {
+    "id": "gtceu:autoclave/lapotron_gem_red_steel",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/lapotron",
+        "amount": 15
+      },
+      {
+        "fluidId": "#forge:blue_steel",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotron_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/lapotron_gem_water",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/lapotron",
+        "amount": 15
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotron_gem",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/raw_crystal_chip_emerald",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:exquisite_gems/emerald",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:europium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1,
+        "chance": 2500
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.625
+    }
+  },
+  {
+    "id": "gtceu:autoclave/raw_crystal_chip_from_part_bacterial_sludge",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip_parts",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:bacterial_sludge",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1,
+        "chance": 8500
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/raw_crystal_chip_from_part_europium",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip_parts",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:europium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/raw_crystal_chip_from_part_mutagen",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip_parts",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:mutagen",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1,
+        "chance": 8500
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:autoclave/raw_crystal_chip_olivine",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:exquisite_gems/olivine",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:europium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1,
+        "chance": 2500
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.625
+    }
+  },
+  {
+    "id": "gtceu:autoclave/silicon_dioxide_to_quartzite_gem",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/silicon_dioxide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quartzite_gem",
+        "amount": 1,
+        "chance": 4500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "tfg:autoclave/autoclave_cleaning/tfg_dirty_dna_syringe_to_tfg_empty_dna_syringe",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "tfg:dirty_dna_syringe",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_dna_syringe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 4800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:autoclave/autoclave_cleaning/tfg_dirty_lab_equipment_to_tfg_lab_equipment",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 4800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:autoclave/crimsene",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "fluidId": "tfg:crimsene",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:liquid_carbon_dioxide",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:crimsene_gem",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:carbon_monoxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:autoclave/cryo_fluix_pearl",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "tfg:vitrified_pearl",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:cryo_fluix_pearl",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:autoclave/mixed_radioactive_fluid",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "tfg:inert_dust_fraction_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:residual_sludge",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:recovered_ionic_complex_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:mixed_radioactive_fluid",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:autoclave/quartz_sand_autoclave",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "gtceu:quartz_sand_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quartzite_gem",
+        "amount": 1,
+        "chance": 4500
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:autoclave/silicon_seed_crystal",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/polysilicon",
+        "amount": 1
+      },
+      {
+        "fluidId": "minecraft:water",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 1,
+        "chance": 7500
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "tfg:autoclave/silicon_seed_crystal_distilled",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/polysilicon",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "tfg:autoclave/warpane",
+    "machineId": "gtceu:autoclave",
+    "inputs": [
+      {
+        "fluidId": "tfg:warpane",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:liquid_carbon_dioxide",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:warpane_gem",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:hydrogen",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  }
+]

@@ -2,7 +2,9 @@ import type { FlowResult } from '@/calculator/flow-solver';
 import { formatLoadPercent, formatRate, portInputDemandRate } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/canvas/FlowEdge';
-import type { PackData, Recipe } from '@/data/types';
+import type { PackLike } from '@/data/pack-registry';
+import { getRecipe } from '@/data/pack-registry';
+import type { Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
 import { normalizePortId, parsePortId, productKey, inputPortId, nodePortFlow } from '@/canvas/ports';
 import type { Rational } from '@/calculator/rational';
@@ -21,7 +23,7 @@ import {
 
 /** Estimate handle center from node layout (matches MachineNode content box). */
 function estimatePortCenter(
-  pack: PackData,
+  pack: PackLike,
   node: TfgpNode,
   port: string,
   nodeWidth = MACHINE_NODE_WIDTH,
@@ -98,7 +100,7 @@ function sourceFlowGroupKey(edge: TfgpEdge): string {
 function buildLabelWinners(
   edges: TfgpEdge[],
   nodes: TfgpNode[],
-  pack: PackData,
+  pack: PackLike,
   data: Record<string, FlowEdgeData>,
   nodeWidths?: Record<string, number>,
 ): {
@@ -183,7 +185,7 @@ function applyLabelDedup(
   data: Record<string, FlowEdgeData>,
   edges: TfgpEdge[],
   nodes: TfgpNode[],
-  pack: PackData,
+  pack: PackLike,
   targetLabelEdge: Map<string, string>,
   sourceLabelEdge: Map<string, string>,
   result: FlowResult,
@@ -222,7 +224,7 @@ function applyLabelDedup(
 
     const node = nodes.find((n) => n.id === edge.source);
     const recipe = node && isMachineNode(node)
-      ? pack.recipes.find((r) => r.id === node.recipeId)
+      ? getRecipe(pack, node.recipeId)
       : undefined;
     const flow = node ? nodePortFlow(node, edge.sourcePort, recipe) : null;
     entry.source = formatFlowRateLabel(
@@ -252,7 +254,7 @@ function applyLabelDedup(
 export function buildEdgeFlowData(
   edges: TfgpEdge[],
   nodes: TfgpNode[],
-  pack: PackData,
+  pack: PackLike,
   result: FlowResult,
   nodeWidths?: Record<string, number>,
 ): Record<string, FlowEdgeData> {
@@ -267,7 +269,7 @@ export function buildEdgeFlowData(
 
     const node = nodes.find((n) => n.id === edge.source);
     const recipe = node && isMachineNode(node)
-      ? pack.recipes.find((r) => r.id === node.recipeId)
+      ? getRecipe(pack, node.recipeId)
       : undefined;
     const sourceFlow = node ? nodePortFlow(node, edge.sourcePort, recipe) : null;
     const srcApprox = sourceFlow ? isChancedFlow(sourceFlow) : false;
@@ -309,7 +311,7 @@ export function buildNodeBalanceLines(
   recipe: Recipe | undefined,
   _connectedInPorts: Set<string>,
   result: FlowResult,
-  pack: PackData,
+  pack: PackLike,
   lang: 'ru' | 'en',
 ): NodeBalanceLine[] {
   const lines: NodeBalanceLine[] = [];

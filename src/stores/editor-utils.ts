@@ -2,6 +2,8 @@ import type { TfgpFile, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
 import type { FlowResult } from '@/calculator/flow-solver';
 import { solveFlows } from '@/calculator/flow-solver';
 import type { PackData } from '@/data/types';
+import type { ActivePack } from '@/data/pack-runtime';
+import { getRecipe } from '@/data/pack-registry';
 import { normalizeNodeScaling, normalizeBufferNode, type RawTfgpNode } from '@/lib/node-scaling';
 import { normalizeNodeVoltage } from '@/lib/node-voltage';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
@@ -9,12 +11,12 @@ import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 /** Normalize legacy/missing node fields (voltage tier, scaling) after load or rehydrate. */
 export function normalizeSchemeNodes(
   nodes: readonly (TfgpNode | RawTfgpNode)[],
-  pack?: PackData | null,
+  pack?: ActivePack | PackData | null,
 ): TfgpNode[] {
   return nodes.map(normalizeNodeScaling).map((n) => {
     if (isBufferNode(n)) return normalizeBufferNode(n);
-    if (!pack) return n;
-    const recipe = pack.recipes.find((r) => r.id === n.recipeId);
+    if (!pack || !isMachineNode(n)) return n;
+    const recipe = getRecipe(pack, n.recipeId);
     return normalizeNodeVoltage(n, recipe);
   });
 }
@@ -63,7 +65,7 @@ export function runSolver(
       if (!isMachineNode(n)) {
         throw new Error(`Unexpected node kind for flow solve: ${(n as TfgpNode).id}`);
       }
-      const recipe = pack.recipes.find((r) => r.id === n.recipeId);
+      const recipe = getRecipe(pack, n.recipeId);
       const normalized = normalizeNodeVoltage(n, recipe);
       return {
         id: normalized.id,

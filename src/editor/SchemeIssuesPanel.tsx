@@ -7,11 +7,11 @@ import {
   type SchemeIssue,
 } from '@/scheme-check/check-scheme';
 import { isMachineNode } from '@/lib/node-kind';
+import type { ActivePack } from '@/data/pack-runtime';
 import { getMachineName } from '@/data/pack-registry';
-import type { PackData } from '@/data/types';
 
 export interface SchemeIssuesPanelProps {
-  pack: PackData | null;
+  pack: ActivePack | null;
   lang: 'ru' | 'en';
   nodes: TfgpNode[];
   edges: TfgpEdge[];
@@ -23,7 +23,7 @@ function issueRefLabel(
   issue: SchemeIssue,
   nodes: TfgpNode[],
   edges: TfgpEdge[],
-  pack: PackData | null,
+  pack: ActivePack | null,
   lang: 'ru' | 'en',
 ): string {
   const parts: string[] = [];

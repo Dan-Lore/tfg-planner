@@ -1,0 +1,5326 @@
+[
+  {
+    "id": "gtceu:electric_blast_furnace/aluminium_from_green_sapphire_dust",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/green_sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_nugget",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 12.5
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/aluminium_from_green_sapphire_gem",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/green_sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_nugget",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 12.5
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/aluminium_from_ruby_dust",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruby",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_nugget",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 12.5
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/aluminium_from_ruby_gem",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/ruby",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_nugget",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 12.5
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/aluminium_from_sapphire_dust",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_nugget",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 12.5
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/aluminium_from_sapphire_gem",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:gems/sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_nugget",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 12.5
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_aluminium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 884,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_aluminium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:aluminium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 592,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_black_steel_gas_mv",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:black_steel_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/black_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 469,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_black_steel_mv",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:black_steel_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/black_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 700,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_blue_steel_gas_mv",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:blue_steel_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/blue_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_blue_steel_mv",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:blue_steel_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/blue_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_boron_carbide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/boron_carbide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_boron_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_boron_carbide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/boron_carbide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_boron_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_chromium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:chromium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1768,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_chromium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:chromium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1184,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_desh",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/desh",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_desh_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 884,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_desh_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/desh",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_desh_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 592,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_enriched_naquadah",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_enriched_naquadah_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_enriched_naquadah_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_enriched_naquadah_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_enriched_naquadah_trinium_europium_duranide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah_trinium_europium_duranide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_enriched_naquadah_trinium_europium_duranide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_enriched_naquadah_trinium_europium_duranide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah_trinium_europium_duranide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_enriched_naquadah_trinium_europium_duranide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_europium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/europium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_europium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 180,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_europium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/europium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_europium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_gallium_arsenide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/gallium_arsenide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gallium_arsenide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_gallium_arsenide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/gallium_arsenide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gallium_arsenide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hastelloy_c_276",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hastelloy_c_276",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hastelloy_c_276_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hastelloy_c_276_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hastelloy_c_276",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hastelloy_c_276_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hastelloy_x",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hastelloy_x",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hastelloy_x_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hastelloy_x_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hastelloy_x",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hastelloy_x_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hsla_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hsla_steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsla_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hsla_steel_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hsla_steel",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hsla_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hsse",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hsse",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hsse_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hsse_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hsse",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hsse_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 938,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hssg",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hssg",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hssg_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hssg_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hssg",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hssg_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 871,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hsss",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hsss",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hsss_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_hsss_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hsss",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_hsss_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_incoloy_ma_956",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/incoloy_ma_956",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_incoloy_ma_956_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_incoloy_ma_956_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/incoloy_ma_956",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_incoloy_ma_956_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 536,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_inconel_718",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/inconel_718",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_inconel_718_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_inconel_718_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/inconel_718",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_inconel_718_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1608,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_indium_tin_barium_titanium_cuprate",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/indium_tin_barium_titanium_cuprate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_indium_tin_barium_titanium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_indium_tin_barium_titanium_cuprate_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/indium_tin_barium_titanium_cuprate",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_indium_tin_barium_titanium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_iridium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_iridium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1100,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_iridium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_iridium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 737,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_kanthal",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/kanthal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_kanthal_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_kanthal_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/kanthal",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_kanthal_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnesium_diboride",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium_diboride",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_magnesium_diboride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnesium_diboride_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium_diboride",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_magnesium_diboride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnetic_neodymium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnetic_neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 3735,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnetic_neodymium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnetic_neodymium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2502,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnetic_samarium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnetic_samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnetic_samarium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnetic_samarium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_magnetic_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnetic_steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_manganese_phosphide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/manganese_phosphide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:manganese_phosphide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1008,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_manganese_phosphide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/manganese_phosphide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:manganese_phosphide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 675,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_maraging_steel_300",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/maraging_steel_300",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_maraging_steel_300_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_maraging_steel_300_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/maraging_steel_300",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_maraging_steel_300_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_mercury_barium_calcium_cuprate",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/mercury_barium_calcium_cuprate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_mercury_barium_calcium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_mercury_barium_calcium_cuprate_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/mercury_barium_calcium_cuprate",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_mercury_barium_calcium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_mo_50_re",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/mo_50_re",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:mo_50_re_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1900,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_mo_50_re_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/mo_50_re",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:mo_50_re_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1273,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_mo_si_b",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/mo_si_b",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_mo_si_b_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_mo_si_b_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/mo_si_b",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_mo_si_b_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1608,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_molybdenum_disilicide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/molybdenum_disilicide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_molybdenum_disilicide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_molybdenum_disilicide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/molybdenum_disilicide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_molybdenum_disilicide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 536,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_naquadah",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadah",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadah_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_naquadah_alloy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadah_alloy",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadah_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_naquadah_alloy_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadah_alloy",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadah_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_naquadah_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadah",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadah_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 402,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_naquadria",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadria",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadria_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_naquadria_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadria",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadria_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_neodymium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 3735,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_neodymium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/neodymium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neodymium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2502,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_nichrome",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nichrome",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_nichrome_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_nichrome_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nichrome",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_nichrome_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 871,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_niobium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_niobium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_niobium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_niobium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_niobium_nitride",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium_nitride",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_niobium_nitride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 3073,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_niobium_nitride_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium_nitride",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_niobium_nitride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2058,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_niobium_titanium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium_titanium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_niobium_titanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_niobium_titanium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium_titanium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_niobium_titanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_osmiridium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/osmiridium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_osmiridium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_osmiridium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/osmiridium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_osmiridium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_osmium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/osmium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_osmium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_osmium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/osmium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_osmium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ostrum",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ostrum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ostrum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 5476,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ostrum_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ostrum",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ostrum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 3668,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ostrum_iodide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ostrum_iodide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ostrum_iodide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ostrum_iodide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ostrum_iodide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ostrum_iodide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1608,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_palladium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/palladium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_palladium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_palladium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/palladium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_palladium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_red_steel_gas_mv",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:red_steel_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/red_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_red_steel_mv",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:red_steel_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:metal/ingot/red_steel",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rene_41",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rene_41",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_rene_41_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 740,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rene_41_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rene_41",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_rene_41_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 495,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rhodium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rhodium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rhodium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rhodium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rhodium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rhodium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rhodium_plated_palladium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rhodium_plated_palladium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rhodium_plated_palladium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rhodium_plated_palladium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rhodium_plated_palladium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rhodium_plated_palladium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rocket_alloy_t1",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rocket_alloy_t1",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rocket_alloy_t1_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 2
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rocket_alloy_t1_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rocket_alloy_t1",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rocket_alloy_t1_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 2
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rocket_alloy_t2",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rocket_alloy_t2",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rocket_alloy_t2_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1100,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 8
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rocket_alloy_t2_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rocket_alloy_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rocket_alloy_t2_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 737,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 8
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rtm_alloy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rtm_alloy",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rtm_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_rtm_alloy_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rtm_alloy",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_rtm_alloy_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 938,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ruridit",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruridit",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ruridit_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ruridit_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruridit",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ruridit_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1072,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ruthenium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ruthenium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ruthenium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ruthenium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 603,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ruthenium_trinium_americium_neutronate",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium_trinium_americium_neutronate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ruthenium_trinium_americium_neutronate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ruthenium_trinium_americium_neutronate_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium_trinium_americium_neutronate",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:neon",
+        "amount": 25
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ruthenium_trinium_americium_neutronate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_samarium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_samarium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_samarium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_samarium_iron_arsenic_oxide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium_iron_arsenic_oxide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_samarium_iron_arsenic_oxide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_samarium_iron_arsenic_oxide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium_iron_arsenic_oxide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_samarium_iron_arsenic_oxide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_silicon",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/silicon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_silicon_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1272,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_silicon_dioxide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/silicon_dioxide",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_silicon_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      },
+      {
+        "fluidId": "gtceu:carbon_monoxide",
+        "amount": 2000
+      }
+    ],
+    "durationTicks": 240,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_stainless_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/stainless_steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stainless_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1100,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_stainless_steel_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/stainless_steel",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:stainless_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 737,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_stellite_100",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/stellite_100",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_stellite_100_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_stellite_100_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/stellite_100",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_stellite_100_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tantalum_carbide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tantalum_carbide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tantalum_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tantalum_carbide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tantalum_carbide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tantalum_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_titanium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_titanium_carbide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium_carbide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_titanium_carbide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium_carbide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_titanium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_titanium_tungsten_carbide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium_tungsten_carbide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_tungsten_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_titanium_tungsten_carbide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium_tungsten_carbide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_tungsten_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_trinium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_trinium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_trinium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_trinium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tungsten_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_bismuth_oxide_composite",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_bismuth_oxide_composite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_tungsten_bismuth_oxide_composite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_bismuth_oxide_composite_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_bismuth_oxide_composite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_tungsten_bismuth_oxide_composite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1608,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_carbide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_carbide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tungsten_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_carbide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_carbide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tungsten_carbide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tungsten_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1206,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tungsten_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_tungsten_steel_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_steel",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_tungsten_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ultimet",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ultimet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ultimet_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_ultimet_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ultimet",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_ultimet_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 871,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_uranium_rhodium_dinaquadide",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium_rhodium_dinaquadide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_uranium_rhodium_dinaquadide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_uranium_rhodium_dinaquadide_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium_rhodium_dinaquadide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_uranium_rhodium_dinaquadide_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_uranium_triplatinum",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium_triplatinum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_uranium_triplatinum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_uranium_triplatinum_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium_triplatinum",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_uranium_triplatinum_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_vanadium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_vanadium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2226,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_vanadium_gallium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium_gallium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_vanadium_gallium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_vanadium_gallium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium_gallium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_vanadium_gallium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 804,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_vanadium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_vanadium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1491,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_vanadium_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium_steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:vanadium_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1598,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_vanadium_steel_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium_steel",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:vanadium_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1070,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_watertight_steel",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/watertight_steel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_watertight_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_watertight_steel_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/watertight_steel",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_watertight_steel_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 536,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_weak_inconel_718",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/weak_inconel_718",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:weak_inconel_718_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_weak_inconel_718_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/weak_inconel_718",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:weak_inconel_718_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1608,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_yttrium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/yttrium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_yttrium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 3202,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_yttrium_barium_cuprate",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/yttrium_barium_cuprate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_yttrium_barium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_yttrium_barium_cuprate_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/yttrium_barium_cuprate",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_yttrium_barium_cuprate_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_zeron_100",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/zeron_100",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_zeron_100_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_zeron_100_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/zeron_100",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_zeron_100_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 670,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_zirconium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/zirconium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_zirconium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_zirconium_diboride",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/zirconium_diboride",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_zirconium_diboride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2700,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_zirconium_diboride_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/zirconium_diboride",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 50
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_zirconium_diboride_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1809,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/blast_zirconium_gas",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/zirconium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_zirconium_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 871,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/chalcopyrite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/chalcopyrite",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/silicon_dioxide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cupric_oxide_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ferrosilite_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 2000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/cobaltite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/cobaltite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cobalt_oxide_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:arsenic_trioxide_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/engraved_crystal_chip_from_emerald",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:plates/emerald",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:engraved_crystal_chip",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/engraved_crystal_chip_from_olivine",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:plates/olivine",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:raw_crystal_chip",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:engraved_crystal_chip",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 900,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/enriched_naquadah_sulfate_separation",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah_sulfate",
+        "amount": 6
+      },
+      {
+        "fluidId": "#forge:hydrogen",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_enriched_naquadah_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:sulfuric_acid",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/galena_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/galena",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:massicot_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silver_nugget",
+        "amount": 6
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/naquadria_sulfate_separation",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadria_sulfate",
+        "amount": 6
+      },
+      {
+        "fluidId": "#forge:hydrogen",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_naquadria_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:sulfuric_acid",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/nickel_zinc_ferrite",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ferrite_mixture",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nickel_zinc_ferrite_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/pentlandite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/pentlandite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:garnierite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/polycaprolactam",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/caprolactam",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:polycaprolactam_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/pyrite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/pyrite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hematite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 2000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/rutile_from_ilmenite",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ilmenite",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wrought_iron_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rutile_dust",
+        "amount": 3
+      },
+      {
+        "fluidId": "gtceu:carbon_dioxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 1600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/soda_ash_from_calcite",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/calcite",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/salt",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:soda_ash_dust",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:calcium_chloride_dust",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/sphalerite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/sphalerite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zincite_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/steel_from_iron",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/iron",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:steel_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      }
+    ],
+    "durationTicks": 500,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/steel_from_wrought_iron",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:ingots/wrought_iron",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:steel_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/stibnite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/stibnite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:antimony_trioxide_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1111
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 1500
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/tempered_glass_blasting",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:storage_blocks/glass",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tempered_glass",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/tetrahedrite_metallurgy",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tetrahedrite",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cupric_oxide_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tiny_antimony_trioxide_dust",
+        "amount": 3
+      },
+      {
+        "fluidId": "gtceu:sulfur_dioxide",
+        "amount": 2000
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "gtceu:electric_blast_furnace/trinium_sulfide_separation",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/trinium_sulfide",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/zinc",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_trinium_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zinc_sulfide_dust",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 750,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/exquisite_rough_sic_gem",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:exquisite_quartzite_gem",
+        "amount": 9
+      },
+      {
+        "itemId": "gtceu:graphite_dust",
+        "amount": 27
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_rough_silicon_carbide_ingot",
+        "amount": 9
+      },
+      {
+        "fluidId": "gtceu:carbon_monoxide",
+        "amount": 18000
+      }
+    ],
+    "durationTicks": 2000,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/flawless_rough_sic_gem",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:flawless_quartzite_gem",
+        "amount": 9
+      },
+      {
+        "itemId": "gtceu:graphite_dust",
+        "amount": 27
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_rough_silicon_carbide_ingot",
+        "amount": 5
+      },
+      {
+        "fluidId": "gtceu:carbon_monoxide",
+        "amount": 18000
+      }
+    ],
+    "durationTicks": 2800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/graphite_rod",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:washed_graphite_briquette",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:impure_graphite_rod",
+        "amount": 1,
+        "chance": 6000
+      },
+      {
+        "itemId": "tfg:pure_graphite_rod",
+        "amount": 1,
+        "chance": 3000
+      },
+      {
+        "itemId": "gtceu:dark_ash_dust",
+        "amount": 1,
+        "chance": 1000
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/homogenized_inconel_718",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:homogenized_inconel_718_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:reducing_process_gas",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_inconel_718_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/hot_mo_si_b_ingot",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:activated_mo_si_b_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:highly_active_off_gas",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_mo_si_b_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 920,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/hot_weak_mo_si_b_ingot",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:weak_mo_si_b_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_weak_mo_si_b_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:furnace_exhaust_gas",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 920,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/molten_aes",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/aes_mix",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 3000
+      },
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 500
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/molten_aes_he",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/aes_mix",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 500
+      }
+    ],
+    "durationTicks": 70,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/rough_sic_gem",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:quartzite_gem",
+        "amount": 9
+      },
+      {
+        "itemId": "gtceu:graphite_dust",
+        "amount": 27
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:hot_rough_silicon_carbide_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:carbon_monoxide",
+        "amount": 18000
+      }
+    ],
+    "durationTicks": 3600,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/small_molten_aes",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:small_dusts/aes_mix",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 1000
+      },
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 125
+      }
+    ],
+    "durationTicks": 120,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/small_molten_aes_he",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:small_dusts/aes_mix",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 125
+      }
+    ],
+    "durationTicks": 40,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/smelt_aes_roll",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:aes_insulation_roll",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 7200
+      }
+    ],
+    "durationTicks": 1000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/smelt_aes_sheet",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:aes_insulation_sheet",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 800
+      }
+    ],
+    "durationTicks": 140,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/smelt_sniffer_wool",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:sniffer_wool",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 7500
+      },
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 200
+      }
+    ],
+    "durationTicks": 80,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/smelt_wraptor_wool",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "tfg:wraptor_wool",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ash_dust",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "fluidId": "tfg:molten_aes",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/titanium_from_tetrachloride",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:titanium_tetrachloride",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_chloride_dust",
+        "amount": 6
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/titanium_trifluoride_separation",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "gtceu:titanium_trifluoride_dust",
+        "amount": 4
+      },
+      {
+        "fluidId": "gtceu:hydrogen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_titanium_ingot",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:hydrofluoric_acid",
+        "amount": 3000
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:electric_blast_furnace/zirconium",
+    "machineId": "gtceu:electric_blast_furnace",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/zirconium_tetrachloride",
+        "amount": 5
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hot_zirconium_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_chloride_dust",
+        "amount": 6
+      }
+    ],
+    "durationTicks": 1100,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  }
+]

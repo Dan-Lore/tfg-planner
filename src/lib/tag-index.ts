@@ -1,4 +1,5 @@
-import type { PackData } from '@/data/types';
+import type { PackData, PackMeta } from '@/data/types';
+import type { Recipe } from '@/data/types';
 
 export interface TagIndex {
   /** tag id (#namespace:path) → member item/fluid ids */
@@ -6,6 +7,8 @@ export interface TagIndex {
   /** item/fluid id → tags it belongs to */
   tagsForItem: Map<string, Set<string>>;
 }
+
+const tagIndexCache = new WeakMap<object, TagIndex>();
 
 function isBurnableLogId(id: string): boolean {
   if (id.startsWith('#')) return false;
@@ -43,11 +46,27 @@ function matchesTagRule(tagId: string, itemId: string): boolean {
   return false;
 }
 
-function collectTagIds(pack: PackData): Set<string> {
+function collectTagIdsFromMeta(meta: Pick<PackMeta, 'items'>): Set<string> {
   const tags = new Set<string>();
-  for (const item of pack.items) {
+  for (const item of meta.items) {
     if (item.id.startsWith('#')) tags.add(item.id);
   }
+  return tags;
+}
+
+function collectTagIdsFromRecipes(recipes: readonly Recipe[]): Set<string> {
+  const tags = new Set<string>();
+  for (const recipe of recipes) {
+    for (const flow of [...recipe.inputs, ...recipe.outputs]) {
+      const id = flow.itemId ?? flow.fluidId;
+      if (id?.startsWith('#')) tags.add(id);
+    }
+  }
+  return tags;
+}
+
+function collectTagIds(pack: PackData): Set<string> {
+  const tags = collectTagIdsFromMeta(pack);
   for (const recipe of pack.recipes) {
     for (const flow of [...recipe.inputs, ...recipe.outputs]) {
       const id = flow.itemId ?? flow.fluidId;
@@ -57,13 +76,16 @@ function collectTagIds(pack: PackData): Set<string> {
   return tags;
 }
 
-export function buildTagIndex(pack: PackData): TagIndex {
+function buildTagIndexCore(
+  tagIds: Set<string>,
+  items: PackMeta['items'],
+  fluids: PackMeta['fluids'],
+): TagIndex {
   const members = new Map<string, Set<string>>();
   const tagsForItem = new Map<string, Set<string>>();
-  const tagIds = collectTagIds(pack);
   const productIds = [
-    ...pack.items.map((i) => i.id),
-    ...pack.fluids.map((f) => f.id),
+    ...items.map((i) => i.id),
+    ...fluids.map((f) => f.id),
   ].filter((id) => !id.startsWith('#'));
 
   for (const tagId of tagIds) {
@@ -85,4 +107,28 @@ export function buildTagIndex(pack: PackData): TagIndex {
   }
 
   return { members, tagsForItem };
+}
+
+/** Tag index from meta only (no recipe I/O). Recipe tag refs merged via buildTagIndexForRecipes. */
+export function buildTagIndexFromMeta(meta: Pick<PackMeta, 'items' | 'fluids'>): TagIndex {
+  return buildTagIndexCore(collectTagIdsFromMeta(meta), meta.items, meta.fluids);
+}
+
+export function buildTagIndexForRecipes(
+  meta: Pick<PackMeta, 'items' | 'fluids'>,
+  recipes: readonly Recipe[],
+  base?: TagIndex,
+): TagIndex {
+  const tagIds = collectTagIdsFromMeta(meta);
+  for (const id of collectTagIdsFromRecipes(recipes)) tagIds.add(id);
+  if (base && recipes.length === 0) return base;
+  return buildTagIndexCore(tagIds, meta.items, meta.fluids);
+}
+
+export function buildTagIndex(pack: PackData): TagIndex {
+  const cached = tagIndexCache.get(pack);
+  if (cached) return cached;
+  const index = buildTagIndexCore(collectTagIds(pack), pack.items, pack.fluids);
+  tagIndexCache.set(pack, index);
+  return index;
 }

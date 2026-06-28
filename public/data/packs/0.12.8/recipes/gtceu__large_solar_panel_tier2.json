@@ -1,0 +1,44 @@
+[
+  {
+    "id": "gtceu:large_solar_panel_tier2/solar_panel_t2_cheap",
+    "machineId": "gtceu:large_solar_panel_tier2",
+    "inputs": [
+      {
+        "itemId": "ad_astra:photovoltaic_etrium_cell",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 400
+  },
+  {
+    "id": "gtceu:large_solar_panel_tier2/solar_panel_t2_emergency",
+    "machineId": "gtceu:large_solar_panel_tier2",
+    "inputs": [
+      {
+        "itemId": "ad_astra:photovoltaic_etrium_cell",
+        "amount": 1,
+        "chance": 100
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 400
+  },
+  {
+    "id": "gtceu:large_solar_panel_tier2/solar_panel_t2_strong",
+    "machineId": "gtceu:large_solar_panel_tier2",
+    "inputs": [
+      {
+        "itemId": "ad_astra:photovoltaic_etrium_cell",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400
+  }
+]

@@ -35,7 +35,7 @@ import {
 import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
-import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
+import { getMachineName, getRecipe, getMachineRecipeCount } from '@/data/pack-registry';
 import { EditorInspector } from '@/editor/EditorInspector';
 import {
   SchemeIssuesPanel,
@@ -51,13 +51,14 @@ import { SearchCombobox } from '@/components/SearchCombobox';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { R } from '@/calculator/rational';
 import {
-  buildRecipeFlowIndex,
+  buildRecipeFlowIndexFromRecipes,
   findDownstreamCandidates,
   findUpstreamCandidates,
   type AttachCandidate,
 } from '@/lib/recipe-index';
-import { buildTagIndex } from '@/lib/tag-index';
-import type { Flow, PackData } from '@/data/types';
+import { buildTagIndexFromMeta, buildTagIndexForRecipes } from '@/lib/tag-index';
+import type { Flow } from '@/data/types';
+import type { ActivePack } from '@/data/pack-runtime';
 import { parsePortId, nodePortFlow, portsMatch } from '@/canvas/ports';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
@@ -84,7 +85,7 @@ interface PortMenuState {
 function anchorPortY(
   anchor: TfgpNode,
   anchorPort: string,
-  pack: PackData,
+  pack: ActivePack,
 ): number {
   const portIndex = parsePortId(anchorPort)?.index ?? 0;
   if (isBufferNode(anchor)) {
@@ -133,6 +134,7 @@ export function EditorPage() {
   const setSelectedNodeIds = useEditorStore((s) => s.setSelectedNodeIds);
   const setSelectedEdgeIds = useEditorStore((s) => s.setSelectedEdgeIds);
   const updateFlows = useEditorStore((s) => s.updateFlows);
+  const flowComputeState = useEditorStore((s) => s.flowComputeState);
   const colorTheme = useThemeStore((s) => s.theme);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -142,7 +144,7 @@ export function EditorPage() {
   const machines = useMemo(() => {
     if (!pack) return [];
     return pack.machines
-      .filter((m) => getRecipesForMachine(pack, m.id).length > 0)
+      .filter((m) => getMachineRecipeCount(pack, m.id) > 0)
       .sort((a, b) =>
         getMachineName(pack, a.id, lang).localeCompare(
           getMachineName(pack, b.id, lang),
@@ -175,13 +177,8 @@ export function EditorPage() {
     [machineExplicitId, filteredMachineItems],
   );
 
-  const recipeIndex = useMemo(
-    () => (pack ? buildRecipeFlowIndex(pack) : null),
-    [pack],
-  );
-
   const tagIndex = useMemo(
-    () => (pack ? buildTagIndex(pack) : null),
+    () => (pack ? buildTagIndexFromMeta(pack) : null),
     [pack],
   );
 
@@ -233,34 +230,49 @@ export function EditorPage() {
       clientX: number,
       clientY: number,
     ) => {
-      if (!pack || !recipeIndex || !tagIndex) return;
+      if (!pack || !tagIndex) return;
       const node = scheme.nodes.find((n) => n.id === nodeId);
       if (!node) return;
-      const recipe = isMachineNode(node)
-        ? pack.recipes.find((r) => r.id === node.recipeId)
-        : undefined;
-      const flow = nodePortFlow(node, portId, recipe);
-      if (!flow) return;
 
-      const direction: PortAttachDirection = side === 'out' ? 'downstream' : 'upstream';
-      const candidates =
-        direction === 'downstream'
-          ? findDownstreamCandidates(pack, recipeIndex, flow, lang, tagIndex)
-          : findUpstreamCandidates(pack, recipeIndex, flow, lang, tagIndex);
+      void (async () => {
+        if (isMachineNode(node)) {
+          await pack.loadMachineRecipes(node.machineId);
+        }
+        await pack.ensureRecipeIds(
+          scheme.nodes.filter(isMachineNode).map((n) => n.recipeId),
+        );
 
-      setPortMenu({
-        x: clientX,
-        y: clientY,
-        anchorNodeId: nodeId,
-        anchorPort: portId,
-        portSide: side,
-        direction,
-        bufferOptions: bufferKindsForPort(side),
-        candidates,
-        flow,
-      });
+        const loadedRecipes = await pack.getAllLoadedRecipes();
+
+        const recipeIndex = buildRecipeFlowIndexFromRecipes(loadedRecipes);
+        const flowTagIndex = buildTagIndexForRecipes(pack, loadedRecipes, tagIndex);
+
+        const recipe = isMachineNode(node)
+          ? getRecipe(pack, node.recipeId)
+          : undefined;
+        const flow = nodePortFlow(node, portId, recipe);
+        if (!flow) return;
+
+        const direction: PortAttachDirection = side === 'out' ? 'downstream' : 'upstream';
+        const candidates =
+          direction === 'downstream'
+            ? findDownstreamCandidates(pack, recipeIndex, flow, lang, flowTagIndex)
+            : findUpstreamCandidates(pack, recipeIndex, flow, lang, flowTagIndex);
+
+        setPortMenu({
+          x: clientX,
+          y: clientY,
+          anchorNodeId: nodeId,
+          anchorPort: portId,
+          portSide: side,
+          direction,
+          bufferOptions: bufferKindsForPort(side),
+          candidates,
+          flow,
+        });
+      })();
     },
-    [pack, recipeIndex, tagIndex, scheme.nodes, lang],
+    [pack, tagIndex, scheme.nodes, lang],
   );
 
   const handlePortMenuSelect = useCallback(
@@ -434,7 +446,7 @@ export function EditorPage() {
         };
       }
 
-      const recipe = pack.recipes.find((r) => r.id === n.recipeId);
+      const recipe = getRecipe(pack, n.recipeId);
       const inputRates = rateMapToStrings(flowResult?.nodeInputRates[n.id]);
       const outputRates = rateMapToStrings(flowResult?.nodeOutputRates[n.id]);
       const outputPortRateRationals = flowResult?.nodePortOutputRates[n.id];
@@ -558,11 +570,11 @@ export function EditorPage() {
       const srcNode = scheme.nodes.find((n) => n.id === conn.source);
       const tgtNode = scheme.nodes.find((n) => n.id === conn.target);
       if (!srcNode || !tgtNode) return false;
-      const srcRecipe = isMachineNode(srcNode)
-        ? pack.recipes.find((r) => r.id === srcNode.recipeId)
+      const srcRecipe = pack && isMachineNode(srcNode)
+        ? getRecipe(pack, srcNode.recipeId)
         : undefined;
-      const tgtRecipe = isMachineNode(tgtNode)
-        ? pack.recipes.find((r) => r.id === tgtNode.recipeId)
+      const tgtRecipe = pack && isMachineNode(tgtNode)
+        ? getRecipe(pack, tgtNode.recipeId)
         : undefined;
       const srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
       const tgtFlow = nodePortFlow(tgtNode, conn.targetHandle, tgtRecipe);
@@ -579,8 +591,8 @@ export function EditorPage() {
       if (!isValidConnection(conn)) return;
       const srcNode = scheme.nodes.find((n) => n.id === conn.source);
       if (!srcNode) return;
-      const srcRecipe = isMachineNode(srcNode)
-        ? pack?.recipes.find((r) => r.id === srcNode.recipeId)
+      const srcRecipe = pack && isMachineNode(srcNode)
+        ? getRecipe(pack, srcNode.recipeId)
         : undefined;
       const srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
       if (!srcFlow) return;
@@ -622,23 +634,25 @@ export function EditorPage() {
 
   const handleAddMachine = () => {
     if (!pack || !resolvedMachineId) return;
-    const recipes = getRecipesForMachine(pack, resolvedMachineId);
-    if (recipes.length === 0) return;
-    const firstRecipe = recipes[0]!;
-    const newId = addNode({
-      kind: 'machine',
-      machineId: resolvedMachineId,
-      recipeId: firstRecipe.id,
-      position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
-      overclock: 1,
-      parallel: 1,
-      machineCount: 1,
-      voltageTier: firstRecipe.energy?.minVoltageTier ?? 'LV',
-    });
-    setSelectedNodeIds([newId]);
-    setMachineExplicitId(null);
-    setMachineQuery('');
-    setMachineResetKey((k) => k + 1);
+    void (async () => {
+      const recipes = await pack.loadMachineRecipes(resolvedMachineId);
+      if (recipes.length === 0) return;
+      const firstRecipe = recipes[0]!;
+      const newId = addNode({
+        kind: 'machine',
+        machineId: resolvedMachineId,
+        recipeId: firstRecipe.id,
+        position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
+        overclock: 1,
+        parallel: 1,
+        machineCount: 1,
+        voltageTier: firstRecipe.energy?.minVoltageTier ?? 'LV',
+      });
+      setSelectedNodeIds([newId]);
+      setMachineExplicitId(null);
+      setMachineQuery('');
+      setMachineResetKey((k) => k + 1);
+    })();
   };
 
   const handleClearScheme = () => {
@@ -710,7 +724,7 @@ export function EditorPage() {
           className="btn btn-secondary"
           onClick={() => {
             if (!selectedNode || !isMachineNode(selectedNode)) return;
-            const recipe = pack.recipes.find((r) => r.id === selectedNode.recipeId);
+            const recipe = getRecipe(pack, selectedNode.recipeId);
             const out = recipe?.outputs[0];
             const v = prompt(t('editor.ratePrompt'), '1');
             if (!v || !out) return;
@@ -739,6 +753,13 @@ export function EditorPage() {
         <button type="button" className="btn btn-secondary" onClick={redo}>
           {t('editor.redo')} (Ctrl+Y)
         </button>
+        {flowComputeState !== 'idle' && (
+          <span className="editor-toolbar__compute" aria-live="polite">
+            {flowComputeState === 'computing'
+              ? t('editor.flowComputing')
+              : t('editor.flowStale')}
+          </span>
+        )}
         <span className="editor-toolbar__hint">{t('editor.deleteHint')}</span>
         <button
           type="button"
@@ -791,28 +812,32 @@ export function EditorPage() {
           />
         </div>
         <aside className="editor-sidebar editor-element-panel">
-          <h3>{t('editor.elementEditor')}</h3>
-          <SchemeIssuesPanel
-            pack={pack}
-            lang={lang}
-            nodes={scheme.nodes}
-            edges={scheme.edges}
-            schemeCheck={schemeCheckResult}
-            onFocusIssue={handleFocusIssue}
-          />
-          <EditorInspector
-            pack={pack}
-            lang={lang}
-            nodes={scheme.nodes}
-            edges={scheme.edges}
-            flowResult={flowResult}
-            flowEdgeData={flowEdgeData}
-            selectedNodeIds={selectedNodeIds}
-            selectedEdgeIds={selectedEdgeIds}
-            connectedInByNode={connectedPorts.inPorts}
-            connectedOutByNode={connectedPorts.outPorts}
-            updateNode={updateNode}
-          />
+          <div className="editor-element-panel__header">
+            <h3>{t('editor.elementEditor')}</h3>
+          </div>
+          <div className="editor-element-panel__body">
+            <SchemeIssuesPanel
+              pack={pack}
+              lang={lang}
+              nodes={scheme.nodes}
+              edges={scheme.edges}
+              schemeCheck={schemeCheckResult}
+              onFocusIssue={handleFocusIssue}
+            />
+            <EditorInspector
+              pack={pack}
+              lang={lang}
+              nodes={scheme.nodes}
+              edges={scheme.edges}
+              flowResult={flowResult}
+              flowEdgeData={flowEdgeData}
+              selectedNodeIds={selectedNodeIds}
+              selectedEdgeIds={selectedEdgeIds}
+              connectedInByNode={connectedPorts.inPorts}
+              connectedOutByNode={connectedPorts.outPorts}
+              updateNode={updateNode}
+            />
+          </div>
         </aside>
       </div>
       {portMenu && (

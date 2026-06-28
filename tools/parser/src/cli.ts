@@ -80,7 +80,7 @@ async function cmdBuildPack(args: Args): Promise<void> {
 
 function cmdValidate(args: Args): void {
   const packPath = resolve(
-    args.pack ?? 'public/data/packs/0.12.8-sample/pack.json',
+    args.pack ?? 'public/data/packs/0.12.8/pack.meta.json',
   );
   const raw = readFileSync(packPath, 'utf-8');
   const pack = JSON.parse(raw) as PackData;

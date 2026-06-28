@@ -1,0 +1,374 @@
+[
+  {
+    "id": "gtceu:large_boiler/gtceu_biomass",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "#forge:biomass",
+        "amount": 40
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 85
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_charcoal_block",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:charcoal_block",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 2700
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_charcoal_dust",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:charcoal_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 300
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_chipped_coal_gem",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:chipped_coal_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 100
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_coal_dust",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:coal_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 400
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_coke_block",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:coke_block",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 7200
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_coke_dust",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:coke_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 800
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_coke_gem",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:coke_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 800
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_exquisite_coal_gem",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:exquisite_coal_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 1600
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_flawed_coal_gem",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:flawed_coal_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 200
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_flawless_coal_gem",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:flawless_coal_gem",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 800
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_heavy_fuel",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "#forge:heavy_fuel",
+        "amount": 16
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 90
+  },
+  {
+    "id": "gtceu:large_boiler/gtceu_sulfuric_heavy_fuel",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "#forge:sulfuric_heavy_fuel",
+        "amount": 32
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "gtceu:large_boiler/minecraft_charcoal",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 300
+  },
+  {
+    "id": "gtceu:large_boiler/minecraft_coal_block",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "minecraft:coal_block",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 4000
+  },
+  {
+    "id": "gtceu:large_boiler/minecraft_lava",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "#forge:lava",
+        "amount": 100
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 225
+  },
+  {
+    "id": "tfg:large_boiler/anthracite",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "beneath:cursecoal",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 800
+  },
+  {
+    "id": "tfg:large_boiler/bituminous_coal",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "tfc:ore/bituminous_coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 400
+  },
+  {
+    "id": "tfg:large_boiler/fish_oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "gtceu:fish_oil",
+        "amount": 160
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/flora_pellets",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "tfg:flora_pellets",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 300
+  },
+  {
+    "id": "tfg:large_boiler/heavy_oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "gtceu:oil_heavy",
+        "amount": 32
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/light_oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "gtceu:oil_light",
+        "amount": 200
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/lignite",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "tfc:ore/lignite",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 300
+  },
+  {
+    "id": "tfg:large_boiler/logs",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "#minecraft:logs",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 75
+  },
+  {
+    "id": "tfg:large_boiler/oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "gtceu:oil",
+        "amount": 200
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/planks",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "#minecraft:planks",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 18
+  },
+  {
+    "id": "tfg:large_boiler/raw_oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "gtceu:oil_medium",
+        "amount": 200
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/saplings",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "itemId": "#minecraft:saplings",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 25
+  },
+  {
+    "id": "tfg:large_boiler/seed_oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "gtceu:seed_oil",
+        "amount": 160
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/soybean_oil",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "firmalife:soybean_oil",
+        "amount": 160
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "tfg:large_boiler/tallow",
+    "machineId": "gtceu:large_boiler",
+    "inputs": [
+      {
+        "fluidId": "tfc:tallow",
+        "amount": 160
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  }
+]

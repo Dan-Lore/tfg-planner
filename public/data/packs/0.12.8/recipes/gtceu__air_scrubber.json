@@ -1,0 +1,20 @@
+[
+  {
+    "id": "gtceu:air_scrubber/carbon_monoxide_poisoning",
+    "machineId": "gtceu:air_scrubber",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:carbon_monoxide",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.46875
+    },
+    "circuitConfiguration": 1
+  }
+]

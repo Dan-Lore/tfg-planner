@@ -1,5 +1,6 @@
+import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
-import type { Flow, PackData, Recipe } from '@/data/types';
+import type { Flow, Recipe } from '@/data/types';
 import { formatFlowQuantityLabel, isChancedFlow } from '@/lib/flow-chance';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { productInputs } from '@/lib/recipe-product-flows';
@@ -21,7 +22,7 @@ export interface RecipePickerDetail {
   outputs: RecipeFlowChip[];
 }
 
-function flowChip(pack: PackData, flow: Flow, lang: 'ru' | 'en'): RecipeFlowChip {
+function flowChip(pack: PackLike, flow: Flow, lang: 'ru' | 'en'): RecipeFlowChip {
   const id = flow.itemId ?? flow.fluidId ?? '?';
   return {
     text: formatFlowQuantityLabel(flow, getItemName(pack, id, lang)),
@@ -30,7 +31,7 @@ function flowChip(pack: PackData, flow: Flow, lang: 'ru' | 'en'): RecipeFlowChip
 }
 
 export function buildRecipePickerDetail(
-  pack: PackData,
+  pack: PackLike,
   recipe: Recipe,
   lang: 'ru' | 'en',
 ): RecipePickerDetail {

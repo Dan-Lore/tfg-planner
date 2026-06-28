@@ -5,6 +5,11 @@
 
 ## [Unreleased]
 
+### Removed
+
+- Deprecated demo pack `0.12.8-sample` (replaced by inline `src/test-fixtures/minimal-pack.ts` for unit tests).
+- Monolithic `public/data/packs/0.12.8/pack.json` (~40 MiB) — replaced by sharded v2 output.
+
 ### Fixed
 
 - **RecipeManager export (K-010):** Rhino-safe GTRecipe collection (`isInstance`, `ResourceLocation` ids); CODEC fallback when `recipe.json` null; 0.12.8 snapshot 56 720 recipes (was ~43k GT-only); `RECIPE_SCHEME_ALIASES` maps scheme ids ↔ codec ids (`tfg:greenhouse/8x_…` → `tfg:tfc_wood_sapling_pine/1`).
@@ -20,6 +25,7 @@
 
 ### Added
 
+- **Pack v2 (performance):** sharded layout `pack.meta.json` + `recipes/{machineId}.json`; `PackRuntime` lazy-loads recipe shards; flow solver + scheme check run in Web Worker on scheme slice only; debounced `updateFlows` (100 ms); UI shows compute state in toolbar.
 - **RecipeManager v2 export:** full server snapshot via `RecipeManager` + `GTRecipeSerializer.CODEC` fallback; manifest schema v2 with `typeCounts`/`serializeStats`; strict gates for greenhouse, liquefaction, and `tfg:*` markers; 0.12.8 pack 57 179 recipes, smoke 15/15.
 - **Recipe picker:** tier badge + circuit meta (`C:N`) in combobox options.
 - Smoke chains: wiremill copper×8, liquefaction aromatic, greenhouse bamboo.

@@ -10,7 +10,7 @@ import { sanitizeRecipeEnergy } from './pipeline/sanitize-energy.js';
 import { buildLangBundle } from './lang/build-lang-bundle.js';
 import { countNamedDefs } from './lang/resolve-name.js';
 import { loadTfgExcludes } from './datapack/excludes.js';
-import { validatePackSchema, buildReportFromPack } from './validate/schema.js';
+import { validatePackSchema, buildReportFromPack, writeShardedPack } from './validate/schema.js';
 import { runSmokeChains } from './validate/smoke-chains.js';
 import { loadGolden, diffAgainstGolden } from './validate/golden-diff.js';
 import { expandRecipeSchemeAliases } from './pipeline/recipe-id-aliases.js';
@@ -230,25 +230,37 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   report.commitHint = snapshot.archiveUrl;
   report.snapshotManifestOk = snapshotLoad.manifestOk;
 
-  const packPath = join(outDir, 'pack.json');
+  const metaPath = join(outDir, 'pack.meta.json');
   const reportPath = join(outDir, 'build-report.json');
   const manifestPath = join(outDir, 'manifest.json');
 
-  logStage('Serializing pack.json (may take 1–3 min)…');
-  const packJson = JSON.stringify(pack, null, 2);
-  logStage(`Writing ${Math.round(packJson.length / 1_048_576)} MiB to disk…`);
-  writeJson(packPath, pack);
+  logStage(`Writing sharded pack v2 (${pack.recipes.length} recipes)…`);
+  const { shardCount } = writeShardedPack(outDir, pack, writeJson);
+  logStage(`Wrote pack.meta.json + ${shardCount} recipe shards`);
+
+  const metaJson = JSON.stringify({
+    format: 'tfg-pack-data',
+    formatVersion: 2,
+    modpackVersion: pack.modpackVersion,
+    dataVersion: pack.dataVersion,
+    generatedAt: pack.generatedAt,
+    machines: pack.machines,
+    items: pack.items,
+    fluids: pack.fluids,
+  });
   writeJson(reportPath, report);
   writeJson(manifestPath, {
     modpackVersion: tag,
     dataVersion,
-    checksum: checksum(packJson),
+    formatVersion: 2,
+    checksum: checksum(metaJson),
     generatedAt: pack.generatedAt,
     source: snapshot.archiveUrl,
     snapshotSha256: snapshotLoad.snapshotSha256 ?? snapshotLoad.manifest?.snapshotSha256,
     pakkuLockSha256: lockSha,
     modpackTag: tag,
+    recipeShards: shardCount,
   });
 
-  return { packPath, reportPath, manifestPath, report };
+  return { packPath: metaPath, reportPath, manifestPath, report };
 }

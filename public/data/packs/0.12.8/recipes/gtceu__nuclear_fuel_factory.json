@@ -1,0 +1,981 @@
+[
+  {
+    "id": "tfg:nuclear_fuel_factory/americium_30_t3",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_americium_241_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_americium_241_dust",
+        "amount": 2,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/americium_300_t1",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_americium_241_dust",
+        "amount": 12,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_americium_241_dust",
+        "amount": 16,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/americium_300_t2",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_americium_241_dust",
+        "amount": 4,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_americium_241_dust",
+        "amount": 8,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/americium_pellet",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/americium_241",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/americium_241",
+        "amount": 32
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radon",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:americium_241_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/californium_t1",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:high_grade_isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_californium_252_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_californium_252_dust",
+        "amount": 2,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_high_grade_isotopic_solvent",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/californium_t2",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:high_grade_isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_californium_252_dust",
+        "amount": 4,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_californium_252_dust",
+        "amount": 8,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_high_grade_isotopic_solvent",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/californium_t3",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:high_grade_isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_californium_252_dust",
+        "amount": 12,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_californium_252_dust",
+        "amount": 16,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_high_grade_isotopic_solvent",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_americium_241_rod",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_americium_241_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_californium_252_rod",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_californium_252_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod_t3",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_neptunium_237_rod",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_neptunium_237_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_plutonium_rod",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_plutonium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:tritiated_water",
+        "amount": 5184
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_plutonium_rod_average",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_plutonium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:tritiated_water",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_plutonium_rod_bad",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_plutonium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:tritiated_water",
+        "amount": 144
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_thorium_rod",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_thorium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radioactive_waste",
+        "amount": 2500
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_thorium_rod_average",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_thorium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radioactive_waste",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_thorium_rod_bad",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_thorium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radioactive_waste",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_uranium_rod",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_uranium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:uranium_waste",
+        "amount": 50000
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_uranium_rod_average",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_uranium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:uranium_waste",
+        "amount": 10000
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/depleted_uranium_rod_bad",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_uranium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:uranium_waste",
+        "amount": 500
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/neptunium_pellet",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/neptunium_237",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/neptunium_237",
+        "amount": 32
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radon",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:neptunium_237_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/neptunium_t1",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 2,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/neptunium_t2",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 4,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 8,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/neptunium_t3",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 12,
+        "chance": 2500
+      },
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 16,
+        "chance": 7500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "durationTicks": 60,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/plutonium_pellet",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/plutonium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/plutonium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/plutonium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/plutonium",
+        "amount": 32
+      },
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radon",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:plutonium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/tbu_232_rod_recycle",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/long/thorium_230",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/long/thorium_230",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:tbu_232_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/tbu_overheated",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:isotopic_solvent",
+        "amount": 64000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:tiny_neptunium_237_dust",
+        "amount": 1,
+        "chance": 2500
+      },
+      {
+        "itemId": "tfg:empty_rod_t2",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:degraded_solvent_stream",
+        "amount": 64000
+      },
+      {
+        "fluidId": "tfg:tbu_waste",
+        "amount": 4000
+      }
+    ],
+    "durationTicks": 320,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/thorium_pellet",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/thorium_230",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/thorium_232",
+        "amount": 32
+      },
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:thorium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 4000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:nuclear_fuel_factory/uranium_pellet",
+    "machineId": "gtceu:nuclear_fuel_factory",
+    "inputs": [
+      {
+        "itemId": "#forge:rods/uranium_235",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:rods/uranium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/uranium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/uranium",
+        "amount": 32
+      },
+      {
+        "itemId": "#forge:rods/uranium",
+        "amount": 32
+      },
+      {
+        "itemId": "tfg:empty_rod",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:radioactive_waste",
+        "amount": 10000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:uranium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  }
+]

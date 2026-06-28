@@ -7,6 +7,9 @@ export function HomePage() {
   const { t } = useTranslation();
   const activeEntry = usePackStore((s) => s.activeEntry);
   const activePack = usePackStore((s) => s.activePack);
+  const loading = usePackStore((s) => s.loading);
+  const error = usePackStore((s) => s.error);
+  const canOpenEditor = Boolean(activePack && activeEntry);
 
   return (
     <div className="page home-page">
@@ -16,13 +19,17 @@ export function HomePage() {
       <PackVersionPanel />
 
       <div className="home-page__actions">
-        {activePack && activeEntry ? (
+        {canOpenEditor ? (
           <Link to="/editor" className="btn">
             {t('home.openEditor')}
           </Link>
         ) : (
-          <span className="btn btn--disabled" aria-disabled="true">
-            {t('home.openEditor')}
+          <span
+            className="btn btn--disabled"
+            aria-disabled="true"
+            title={error ?? (loading ? t('home.openEditorLoading') : t('home.openEditorNeedPack'))}
+          >
+            {loading ? t('home.openEditorLoading') : t('home.openEditor')}
           </span>
         )}
       </div>

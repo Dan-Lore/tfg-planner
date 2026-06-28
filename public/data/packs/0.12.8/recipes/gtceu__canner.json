@@ -1,0 +1,1012 @@
+[
+  {
+    "id": "gtceu:canner/cadmium_battery_hv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:hv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cadmium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hv_cadmium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1600,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/cadmium_battery_lv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:lv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cadmium",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lv_cadmium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/cadmium_battery_mv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:mv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cadmium",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:mv_cadmium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/ev_lapotronic_battery",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_tier_i_battery",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapotron_crystal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ev_lapotronic_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/iv_lapotronic_battery",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_tier_i_battery",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapotronic_energy_orb",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:iv_lapotronic_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/jack_o_lantern",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "tfc:pumpkin",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:jack_o_lantern",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:canner/lithium_battery_hv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:hv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/lithium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hv_lithium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1600,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/lithium_battery_lv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:lv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/lithium",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lv_lithium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/lithium_battery_mv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:mv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/lithium",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:mv_lithium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/luv_lapotronic_battery",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_tier_ii_battery",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapotronic_energy_orb_cluster",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_lapotronic_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/mask_filter",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "#forge:plates/polyethylene",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/activated_carbon",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:mask_filter",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/naquadria_battery_uv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:uv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/naquadria",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_naquadria_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/naquadria_battery_zpm",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:zpm_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/naquadria",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_naquadria_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 250,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:canner/sodium_battery_hv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:hv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/sodium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:hv_sodium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1600,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/sodium_battery_lv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:lv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/sodium",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lv_sodium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/sodium_battery_mv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:mv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/sodium",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:mv_sodium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.25
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_black_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:black_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:black_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_blue_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:blue_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:blue_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_brown_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:brown_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:brown_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_cyan_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:cyan_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:cyan_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_gray_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:gray_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:gray_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_green_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:green_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:green_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_light_blue_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:light_blue_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:light_blue_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_light_gray_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:light_gray_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:light_gray_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_lime_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:lime_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lime_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_magenta_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:magenta_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magenta_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_orange_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:orange_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:orange_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_pink_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:pink_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:pink_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_purple_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:purple_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:purple_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_red_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:red_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_solvent",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:acetone",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:solvent_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_white_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:white_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:white_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/spray_can_yellow_dye",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_spray_can",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:yellow_dye",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yellow_dye_spray_can",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "gtceu:canner/uhv_ultimate_battery",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_tier_iii_battery",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:max_battery",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uhv_ultimate_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/uv_lapotronic_battery",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_tier_iii_battery",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:energy_cluster",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:uv_lapotronic_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/vanadium_battery_ev",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:ev_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ev_vanadium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/vanadium_battery_iv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:iv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 8
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:iv_vanadium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:canner/vanadium_battery_luv",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:luv_battery_hull",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 16
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:luv_vanadium_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:canner/zpm_lapotronic_battery",
+    "machineId": "gtceu:canner",
+    "inputs": [
+      {
+        "itemId": "gtceu:empty_tier_ii_battery",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:energy_module",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:zpm_lapotronic_battery",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  }
+]

@@ -1,0 +1,171 @@
+[
+  {
+    "id": "gtceu:coke_oven/log_to_charcoal",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "#minecraft:logs_that_burn",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 250
+      }
+    ],
+    "durationTicks": 900
+  },
+  {
+    "id": "tfg:coke_oven/coal_block_to_coke_block",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "minecraft:coal_block",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:coke_block",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 18000
+      }
+    ],
+    "durationTicks": 6000
+  },
+  {
+    "id": "tfg:coke_oven/coal_to_coke",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "tfc:ore/bituminous_coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:coke_gem",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 2000
+      }
+    ],
+    "durationTicks": 900
+  },
+  {
+    "id": "tfg:coke_oven/lignite_to_coke",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "tfc:ore/lignite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:coke_gem",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 500
+      }
+    ],
+    "durationTicks": 900
+  },
+  {
+    "id": "tfg:coke_oven/magnesia",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium_hydroxide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnesia_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400
+  },
+  {
+    "id": "tfg:coke_oven/magnesia_from_asbestos",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/asbestos",
+        "amount": 6
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnesia_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800
+  },
+  {
+    "id": "tfg:coke_oven/magnesia_from_fullers_earth",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/fullers_earth",
+        "amount": 13
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnesia_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800
+  },
+  {
+    "id": "tfg:coke_oven/magnesia_from_soapstone",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/soapstone",
+        "amount": 7
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:magnesia_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800
+  },
+  {
+    "id": "tfg:coke_oven/peat",
+    "machineId": "gtceu:coke_oven",
+    "inputs": [
+      {
+        "itemId": "tfc:peat",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 900
+  }
+]

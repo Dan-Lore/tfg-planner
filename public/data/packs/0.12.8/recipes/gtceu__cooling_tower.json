@@ -1,0 +1,87 @@
+[
+  {
+    "id": "tfg:cooling_tower/warm_into_distilled_1",
+    "machineId": "gtceu:cooling_tower",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  },
+  {
+    "id": "tfg:cooling_tower/warm_into_distilled_2",
+    "machineId": "gtceu:cooling_tower",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 5000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  },
+  {
+    "id": "tfg:cooling_tower/warm_into_distilled_3",
+    "machineId": "gtceu:cooling_tower",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 10000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  },
+  {
+    "id": "tfg:cooling_tower/warm_into_distilled_4",
+    "machineId": "gtceu:cooling_tower",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 50000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  },
+  {
+    "id": "tfg:cooling_tower/warm_into_distilled_5",
+    "machineId": "gtceu:cooling_tower",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 100000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  }
+]

@@ -1,0 +1,860 @@
+[
+  {
+    "id": "gtceu:brewery/bacteria",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:distilled_water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:bacteria",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_bio_chaff",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 750
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 750
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_fallen_leaves",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfc:fallen_leaves",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 20
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_glow_berries",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "minecraft:glow_berries",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 20
+      }
+    ],
+    "durationTicks": 160,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_leaves",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#minecraft:leaves",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 20
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_mars_plants",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfg:mars_plants",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_minecraft_plants",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#createaddition:plants",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 20
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_moon_plants",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfg:moon_plants",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_sapling",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#minecraft:saplings",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:water",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_spider_eyes",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "minecraft:spider_eye",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_tfc_corals",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfc:corals",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_tfc_food",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfc:foods",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_tfc_plants",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfc:plants",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_tfc_seeds",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#tfc:seeds",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_twisting_vines",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "minecraft:twisting_vines",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfg:clean_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 20
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/biomass_from_wart_blocks",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#minecraft:wart_blocks",
+        "amount": 1
+      },
+      {
+        "fluidId": "#tfc:any_water",
+        "amount": 20
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.375
+    }
+  },
+  {
+    "id": "gtceu:brewery/enriched_bacterial_sludge_from_naquadria",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:tiny_dusts/naquadria",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:bacterial_sludge",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:enriched_bacterial_sludge",
+        "amount": 2000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/enriched_bacterial_sludge_from_u235",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:tiny_dusts/uranium_235",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:bacterial_sludge",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:enriched_bacterial_sludge",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/enriched_bacterial_sludge_from_u238",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:bacterial_sludge",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:enriched_bacterial_sludge",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_creosote_and_redstone",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:creosote",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_creosote_and_soapstone",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/soapstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:creosote",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_creosote_and_talc",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/talc",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:creosote",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_oil_and_redstone",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oil",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_oil_and_soapstone",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/soapstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oil",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_oil_and_talc",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/talc",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oil",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_seed_oil_and_redstone",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:seed_oil",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_seed_oil_and_soapstone",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/soapstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:seed_oil",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:brewery/lubricant_from_seed_oil_and_talc",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/talc",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:seed_oil",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:lubricant",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 128,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "tfg:brewery/syngas_from_anthracite",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "beneath:cursecoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 400
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:brewery/syngas_from_bituminous_coal",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "tfc:ore/bituminous_coal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 400
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:brewery/syngas_from_charcoal",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 100
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:brewery/syngas_from_coke",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "gtceu:coke_gem",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 400
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:brewery/syngas_from_lignite",
+    "machineId": "gtceu:brewery",
+    "inputs": [
+      {
+        "itemId": "tfc:ore/lignite",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:creosote",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 200
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.46875
+    }
+  }
+]

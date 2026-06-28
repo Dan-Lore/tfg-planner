@@ -1,0 +1,424 @@
+[
+  {
+    "id": "gtceu:bioreactor/alpha_keratin_from_rough_endoplasmic_reticula",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:rough_endoplasmic_reticula",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:proto_growth_medium",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:alpha_keratin",
+        "amount": 4
+      },
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:bioreactor/lactose_from_rough_endoplasmic_reticula",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:rough_endoplasmic_reticula",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:cholesterol_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lactose_dust",
+        "amount": 4
+      },
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:bioreactor/triglyceride_oil_from_smooth_er_byacid",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:smooth_endoplasmic_reticula",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:glycerol",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:butyric_acid",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:triglyceride_oil",
+        "amount": 3000
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:bioreactor/triglyceride_oil_from_smooth_er_lnacid",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:smooth_endoplasmic_reticula",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:glycerol",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:linolenic_acid",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:triglyceride_oil",
+        "amount": 3000
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/chloroplasts",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "fluidId": "gtceu:glycerol",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:chloroplasts",
+        "amount": 100
+      },
+      {
+        "fluidId": "minecraft:water",
+        "amount": 6000
+      },
+      {
+        "fluidId": "gtceu:seed_oil",
+        "amount": 1900
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/decellularization/gtceu_bio_chaff",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:sodium_dodecyl_sulfate",
+        "amount": 200
+      },
+      {
+        "fluidId": "gtceu:acetone",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:sodium_hypochlorite",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:cellulose_matrix",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/decellularization/gtceu_biomass",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:sodium_dodecyl_sulfate",
+        "amount": 200
+      },
+      {
+        "fluidId": "gtceu:acetone",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:sodium_hypochlorite",
+        "amount": 1000
+      },
+      {
+        "fluidId": "gtceu:biomass",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:cellulose_matrix",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/fibroblast_feeder_cells",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "gtceu:collagen_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:filled_dna_syringe",
+        "amount": 1
+      },
+      {
+        "fluidId": "firmalife:sugar_water",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:mutative_yeast",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fibroblast_feeder_cells",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/proto_growth_medium",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sodium_hydroxide_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lactose_dust",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:proto_growth_medium",
+        "amount": 1000
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/rough_endoplasmic_reticula",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:filled_dna_syringe",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:collagen_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "firmalife:sugar_water",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:mutative_yeast",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rough_endoplasmic_reticula",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:bioreactor/smooth_endoplasmic_reticula",
+    "machineId": "gtceu:bioreactor",
+    "inputs": [
+      {
+        "itemId": "tfg:filled_dna_syringe",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:collagen_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:lab_equipment",
+        "amount": 1
+      },
+      {
+        "fluidId": "firmalife:sugar_water",
+        "amount": 1000
+      },
+      {
+        "fluidId": "tfg:mutative_yeast",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:smooth_endoplasmic_reticula",
+        "amount": 1
+      },
+      {
+        "itemId": "tfg:dirty_lab_equipment",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  }
+]

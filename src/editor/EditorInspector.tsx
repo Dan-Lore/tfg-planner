@@ -23,8 +23,8 @@ import { buildPortDisplays, type PortDisplay } from '@/canvas/MachineNode';
 import { flowLabel } from '@/canvas/ports';
 import { SearchCombobox } from '@/components/SearchCombobox';
 import { WheelNumberInput } from '@/components/WheelNumberInput';
-import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
-import type { PackData } from '@/data/types';
+import { getMachineName, getRecipe, getRecipesForMachine } from '@/data/pack-registry';
+import type { PackLike } from '@/data/pack-registry';
 import { loadGradientStyle } from '@/lib/load-gradient';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { formatRecipeLabel } from '@/lib/recipe-label';
@@ -44,7 +44,7 @@ function formatTotalEu(value: number): string {
   return `${Math.round(value * 10) / 10} EU`;
 }
 
-function getNodeDisplayName(node: TfgpNode, pack: PackData, lang: 'ru' | 'en'): string {
+function getNodeDisplayName(node: TfgpNode, pack: PackLike, lang: 'ru' | 'en'): string {
   if (isMachineNode(node)) {
     return getMachineName(pack, node.machineId, lang);
   }
@@ -126,7 +126,7 @@ function MachineInspector({
   updateNode,
 }: {
   node: TfgpNode & { kind?: 'machine'; machineId: string; recipeId: string };
-  pack: PackData;
+  pack: PackLike;
   lang: 'ru' | 'en';
   flowResult: FlowResult | null;
   connectedIn: Set<string>;
@@ -134,7 +134,7 @@ function MachineInspector({
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
 }) {
   const { t } = useTranslation();
-  const recipe = pack.recipes.find((r) => r.id === node.recipeId);
+  const recipe = getRecipe(pack, node.recipeId);
   const allowedTiers = recipe ? allowedTiersForRecipe(recipe) : [];
 
   const recipeItems = useMemo(
@@ -306,7 +306,7 @@ function BufferInspector({
   updateNode,
 }: {
   node: TfgpNode;
-  pack: PackData;
+  pack: PackLike;
   lang: 'ru' | 'en';
   flowResult: FlowResult | null;
   connectedIn: Set<string>;
@@ -461,7 +461,7 @@ function EdgeInspector({
 }: {
   edge: TfgpEdge;
   nodes: TfgpNode[];
-  pack: PackData;
+  pack: PackLike;
   lang: 'ru' | 'en';
   flowEdgeData: Record<string, FlowEdgeData>;
 }) {
@@ -520,7 +520,7 @@ function EdgeInspector({
 }
 
 export interface EditorInspectorProps {
-  pack: PackData;
+  pack: PackLike;
   lang: 'ru' | 'en';
   nodes: TfgpNode[];
   edges: TfgpEdge[];

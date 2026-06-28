@@ -1,0 +1,130 @@
+[
+  {
+    "id": "tfg:super_boiler/heavy_fuel",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:heavy_fuel",
+        "amount": 80000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/heavy_fuel_binder",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:heavy_fuel",
+        "amount": 20000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/light_fuel",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:light_fuel",
+        "amount": 80000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/light_fuel_binder",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:light_fuel",
+        "amount": 20000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/naphtha_binder",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:naphtha",
+        "amount": 20000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/naphtha_fuel",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:naphtha",
+        "amount": 80000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/syngas_fuel",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "minecraft:charcoal",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 80000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  },
+  {
+    "id": "tfg:super_boiler/syngas_fuel_binder",
+    "machineId": "gtceu:super_boiler",
+    "inputs": [
+      {
+        "itemId": "gtceu:bio_chaff",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:syngas",
+        "amount": 20000
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 3000
+  }
+]

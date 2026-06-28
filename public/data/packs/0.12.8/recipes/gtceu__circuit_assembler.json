@@ -1,0 +1,4302 @@
+[
+  {
+    "id": "ae2:circuit_assembler/accumulation_processor",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "megacells:printed_accumulation_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 720
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/accumulation_processor_moon",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "megacells:printed_accumulation_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 720
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "megacells:accumulation_processor",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/calculation_processor",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:printed_calculation_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/lv",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/calculation_processor_moon",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:printed_calculation_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/lv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:calculation_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/engineering_processor",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:printed_engineering_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/lv",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/engineering_processor_moon",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:printed_engineering_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/lv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:engineering_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/logic_processor",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:printed_logic_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/lv",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:cryogenized_fluix",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "ae2:circuit_assembler/logic_processor_moon",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "ae2:printed_silicon",
+        "amount": 1
+      },
+      {
+        "itemId": "ae2:printed_logic_processor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/lv",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:fluix",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:logic_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:circuit_assembler/electronic_circuit_lv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:resin_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_wires/red_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/ulv",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:tin",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:basic_electronic_circuit",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:circuit_assembler/electronic_circuit_lv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:resin_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_wires/red_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:circuits/ulv",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:soldering_alloy",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:basic_electronic_circuit",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "gtceu:circuit_assembler/electronic_circuit_mv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:phenolic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:basic_electronic_circuit",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_wires/copper",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:tin",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:good_electronic_circuit",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:circuit_assembler/electronic_circuit_mv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:phenolic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:basic_electronic_circuit",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:single_wires/copper",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:soldering_alloy",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:good_electronic_circuit",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:circuit_assembler/neuro_processor",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:stem_cells",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:small_fluid_pipes/polybenzimidazole",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:plates/electrum",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:foils/silicone_rubber",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:bolts/hsse",
+        "amount": 8
+      },
+      {
+        "fluidId": "#forge:sterilized_growth_medium",
+        "amount": 250
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neuro_processing_unit",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 600,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.6103515625
+    }
+  },
+  {
+    "id": "gtceu:circuit_assembler/wetware_board",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_circuit_board",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:petri_dish",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:luv_electric_pump",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iv_sensor",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/iv",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:foils/niobium_titanium",
+        "amount": 16
+      },
+      {
+        "fluidId": "#forge:sterilized_growth_medium",
+        "amount": 4000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_circuit_board",
+        "amount": 16
+      }
+    ],
+    "durationTicks": 1200,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_assembly_luv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_assembly_luv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_computer_zpm",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_computer_zpm_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_processor_iv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_cpu",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_processor_iv_soc",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:bolts/yttrium_barium_cuprate",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.6561279296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_processor_iv_soc_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:bolts/yttrium_barium_cuprate",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.6561279296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/crystal_processor_iv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:multilayer_fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_cpu",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:fine_wires/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:crystal_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/data_module",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_module",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/data_module_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/zpm",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_module",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/data_orb",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/hv",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_orb",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.5859375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/data_orb_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:circuits/hv",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 64
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_orb",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.5859375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/data_stick",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cpu_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:plates/polyethylene",
+        "amount": 4
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_stick",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.703125
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/data_stick_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cpu_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nand_memory_chip",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:plates/polyethylene",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:data_stick",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.703125
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/integrated_circuit_hv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:good_integrated_circuit",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ilc_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:transistors",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:bolts/annealed_copper",
+        "amount": 8
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:advanced_integrated_circuit",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/integrated_circuit_hv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:good_integrated_circuit",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ilc_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:transistors",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:bolts/annealed_copper",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:advanced_integrated_circuit",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/integrated_circuit_lv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:resin_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilc_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:bolts/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:basic_integrated_circuit",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/integrated_circuit_lv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:resin_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilc_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:bolts/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:basic_integrated_circuit",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/integrated_circuit_mv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:phenolic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:basic_integrated_circuit",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/gold",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:bolts/silver",
+        "amount": 4
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:good_integrated_circuit",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/integrated_circuit_mv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:phenolic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:basic_integrated_circuit",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/gold",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:bolts/silver",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:good_integrated_circuit",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.75
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/lapotronic_energy_orb",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:mpic_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:engraved_lapotron_crystal_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:plates/platinum",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotronic_energy_orb",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 512,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/lapotronic_energy_orb_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:mpic_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:engraved_lapotron_crystal_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:plates/platinum",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:lapotronic_energy_orb",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 512,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.5
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/microprocessor_lv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:transistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:microchip_processor",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/microprocessor_lv_soc",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:bolts/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:microchip_processor",
+        "amount": 6
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/microprocessor_lv_soc_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:bolts/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:microchip_processor",
+        "amount": 6
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/microprocessor_lv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:transistors",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/copper",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:microchip_processor",
+        "amount": 3
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nand_chip_ulv_good_board",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:phenolic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:simple_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:bolts/red_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nand_chip",
+        "amount": 8
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nand_chip_ulv_good_board_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:phenolic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:simple_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:bolts/red_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nand_chip",
+        "amount": 8
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nand_chip_ulv_plastic_board",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:simple_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:bolts/red_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nand_chip",
+        "amount": 12
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nand_chip_ulv_plastic_board_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:simple_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:bolts/red_alloy",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/tin",
+        "amount": 2
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nand_chip",
+        "amount": 12
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_computer_iv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_diode",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_computer_iv_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_computer_iv_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_computer_iv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_diode",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_mainframe_luv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/aluminium",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_mainframe_luv_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/aluminium",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_mainframe_luv_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/aluminium",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_mainframe_luv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/aluminium",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nano_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 32
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_assembly_ev",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_assembly_ev_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_assembly_ev_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_assembly_ev_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_hv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:smd_resistor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:smd_transistor",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_hv_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_hv_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_resistor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_hv_soc",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:bolts/platinum",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_hv_soc_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:bolts/platinum",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/nano_processor_hv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:epoxy_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:smd_resistor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:smd_transistor",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:nano_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/processor_assembly_hv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:micro_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:inductors",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 8
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/processor_assembly_hv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:micro_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:inductors",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/processor_mv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:transistors",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 4
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/processor_mv_soc",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:bolts/annealed_copper",
+        "amount": 4
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/processor_mv_soc_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:bolts/annealed_copper",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/processor_mv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "#gtceu:resistors",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 4
+      },
+      {
+        "itemId": "#gtceu:transistors",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/red_alloy",
+        "amount": 4
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.46875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_assembly_iv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_assembly_iv_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_assembly_iv_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_assembly_iv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_computer_luv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_diode",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_computer_luv_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_computer_luv_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_diode",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_computer_luv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quantum_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_diode",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:nor_memory_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 32
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_mainframe_zpm",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hssg",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 24
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 48
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 48
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_mainframe_zpm_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hssg",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 48
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_mainframe_zpm_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hssg",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 48
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_mainframe_zpm_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "#forge:frames/hssg",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:quantum_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:smd_inductor",
+        "amount": 24
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 48
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:single_wires/annealed_copper",
+        "amount": 48
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_processor_ev",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:qbit_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:smd_transistor",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 12
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_processor_ev_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:qbit_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 12
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_processor_ev_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:qbit_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 12
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_processor_ev_soc",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:bolts/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_processor_ev_soc_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:bolts/niobium_titanium",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 50,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/quantum_processor_ev_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:fiber_reinforced_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:qbit_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:smd_transistor",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:fine_wires/platinum",
+        "amount": 12
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:quantum_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/wetware_processor_assembly_zpm",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:wetware_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/wetware_processor_assembly_zpm_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:wetware_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:wetware_processor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 6
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 12
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 24
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor_assembly",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/wetware_processor_luv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:neuro_processing_unit",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_cpu",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/wetware_processor_luv_soc",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:neuro_processing_unit",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:highly_advanced_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:bolts/naquadah",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "UV",
+      "voltage": 524288,
+      "amperage": 0.286102294921875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/wetware_processor_luv_soc_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:neuro_processing_unit",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:highly_advanced_soc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:bolts/naquadah",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor",
+        "amount": 4
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "UV",
+      "voltage": 524288,
+      "amperage": 0.286102294921875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/wetware_processor_luv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:neuro_processing_unit",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:crystal_cpu",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 8
+      },
+      {
+        "itemId": "gtceu:advanced_smd_transistor",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:fine_wires/yttrium_barium_cuprate",
+        "amount": 8
+      },
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 72
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:wetware_processor",
+        "amount": 2
+      }
+    ],
+    "durationTicks": 200,
+    "energy": {
+      "minVoltageTier": "ZPM",
+      "voltage": 131072,
+      "amperage": 0.29296875
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/workstation_ev",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:micro_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:bolts/blue_alloy",
+        "amount": 16
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/circuit_assembler/workstation_ev_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:plastic_printed_circuit_board",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:micro_processor_assembly",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:diodes",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:ram_chip",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:fine_wires/electrum",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:bolts/blue_alloy",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 144
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_computer",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/mainframe_iv",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:aluminium_frame",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:micro_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:inductors",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:annealed_copper_single_wire",
+        "amount": 16
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/mainframe_iv_asmd",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:aluminium_frame",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:micro_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:annealed_copper_single_wire",
+        "amount": 16
+      },
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 576
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/mainframe_iv_asmd_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:aluminium_frame",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:micro_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_inductor",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:advanced_smd_capacitor",
+        "amount": 4
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:annealed_copper_single_wire",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:circuit_assembler/mainframe_iv_soldering_alloy",
+    "machineId": "gtceu:circuit_assembler",
+    "inputs": [
+      {
+        "itemId": "gtceu:aluminium_frame",
+        "amount": 2
+      },
+      {
+        "itemId": "gtceu:micro_processor_computer",
+        "amount": 2
+      },
+      {
+        "itemId": "#gtceu:inductors",
+        "amount": 8
+      },
+      {
+        "itemId": "#gtceu:capacitors",
+        "amount": 16
+      },
+      {
+        "itemId": "gtceu:nano_cpu_chip",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:annealed_copper_single_wire",
+        "amount": 16
+      },
+      {
+        "fluidId": "tfg:woods_metal",
+        "amount": 288
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:micro_processor_mainframe",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 800,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  }
+]

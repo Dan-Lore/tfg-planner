@@ -1,0 +1,3994 @@
+[
+  {
+    "id": "gtceu:alloy_blast_smelter/alloy_blast_smelter/rocket_alloy_t2",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 19
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 3
+      },
+      {
+        "fluidId": "gtceu:vanadium",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 16000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_rocket_alloy_t2",
+        "amount": 4608
+      }
+    ],
+    "durationTicks": 26400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/alloy_blast_smelter/rocket_alloy_t2_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 19
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 3
+      },
+      {
+        "fluidId": "gtceu:vanadium",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:distilled_water",
+        "amount": 16000
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 3200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_rocket_alloy_t2",
+        "amount": 4608
+      }
+    ],
+    "durationTicks": 17688,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/battery_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/lead",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/antimony",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:battery_alloy",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 187,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/black_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/black_bronze",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 3
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:black_steel",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/black_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/black_bronze",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 3
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 5000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:black_steel",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 1608,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/blue_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/silver",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/electrotine",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:blue_alloy",
+        "amount": 144
+      }
+    ],
+    "durationTicks": 75,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/blue_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/sterling_silver",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/bismuth_bronze",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/black_steel",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:blue_steel",
+        "amount": 1152
+      }
+    ],
+    "durationTicks": 6000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/blue_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/sterling_silver",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/bismuth_bronze",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/black_steel",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:blue_steel",
+        "amount": 1152
+      }
+    ],
+    "durationTicks": 4020,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/borosilicate_glass",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/glass",
+        "amount": 7
+      },
+      {
+        "itemId": "#forge:dusts/boron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:borosilicate_glass",
+        "amount": 1152
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 8
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/brass",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/zinc",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:brass",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/bronze",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:bronze",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/cobalt_brass",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/brass",
+        "amount": 7
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:cobalt_brass",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 675,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 9
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/cupronickel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:cupronickel",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/electrum",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/gold",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/silver",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:electrum",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/enriched_naquadah_trinium_europium_duranide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/europium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/duranium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_enriched_naquadah_trinium_europium_duranide",
+        "amount": 1440
+      }
+    ],
+    "durationTicks": 9000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/enriched_naquadah_trinium_europium_duranide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/enriched_naquadah",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/europium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/duranium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_enriched_naquadah_trinium_europium_duranide",
+        "amount": 1440
+      }
+    ],
+    "durationTicks": 6030,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/gallium_arsenide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/arsenic",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/gallium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:gallium_arsenide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/gallium_arsenide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/arsenic",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/gallium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:gallium_arsenide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1206,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hastelloy_c_276",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 7
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hastelloy_c_276",
+        "amount": 4320
+      }
+    ],
+    "durationTicks": 22500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 6
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hastelloy_c_276_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 12
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 7
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 1500
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hastelloy_c_276",
+        "amount": 4320
+      }
+    ],
+    "durationTicks": 15075,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 16
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hastelloy_x",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hastelloy_x",
+        "amount": 2736
+      }
+    ],
+    "durationTicks": 12825,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 6
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hastelloy_x_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 950
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hastelloy_x",
+        "amount": 2736
+      }
+    ],
+    "durationTicks": 8592,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 16
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hsla_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/invar",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:hsla_steel",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 3750,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hsla_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/invar",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 5000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:hsla_steel",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 2512,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hsse",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hssg",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/silicon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hsse",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 9450,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hsse_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hssg",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/silicon",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 450
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hsse",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 6331,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hssg",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_steel",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hssg",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 8775,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hssg_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten_steel",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 900
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hssg",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 5879,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hsss",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hssg",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/osmium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hsss",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 10125,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/hsss_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/hssg",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/osmium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 450
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_hsss",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 6783,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/incoloy_ma_956",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium_steel",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/yttrium",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_incoloy_ma_956",
+        "amount": 1872
+      }
+    ],
+    "durationTicks": 7800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/incoloy_ma_956_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium_steel",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/yttrium",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 1300
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_incoloy_ma_956",
+        "amount": 1872
+      }
+    ],
+    "durationTicks": 5226,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/indium_tin_barium_titanium_cuprate",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/indium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/barium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 7
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 14000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_indium_tin_barium_titanium_cuprate",
+        "amount": 2304
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 6
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/indium_tin_barium_titanium_cuprate_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/indium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/barium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 7
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 14000
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 800
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_indium_tin_barium_titanium_cuprate",
+        "amount": 2304
+      }
+    ],
+    "durationTicks": 8040,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 16
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/invar",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:invar",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 225,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/kanthal",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_kanthal",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 2025,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/kanthal_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_kanthal",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 1356,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/magnalium",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:magnalium",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 112,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/magnesium_diboride",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/boron",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_magnesium_diboride",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 2250,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/magnesium_diboride_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/magnesium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/boron",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_magnesium_diboride",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 1507,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/manganese_phosphide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/phosphorus",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:manganese_phosphide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 756,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/manganese_phosphide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/phosphorus",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:manganese_phosphide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 506,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/maraging_steel_300",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_maraging_steel_300",
+        "amount": 3456
+      }
+    ],
+    "durationTicks": 18000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/maraging_steel_300_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 16
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 1200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_maraging_steel_300",
+        "amount": 3456
+      }
+    ],
+    "durationTicks": 12060,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 15
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/mercury_barium_calcium_cuprate",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/barium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/calcium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 3
+      },
+      {
+        "fluidId": "#forge:mercury",
+        "amount": 1000
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_mercury_barium_calcium_cuprate",
+        "amount": 2304
+      }
+    ],
+    "durationTicks": 18000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/mercury_barium_calcium_cuprate_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/barium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/calcium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 3
+      },
+      {
+        "fluidId": "#forge:mercury",
+        "amount": 1000
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 8000
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 16000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_mercury_barium_calcium_cuprate",
+        "amount": 2304
+      }
+    ],
+    "durationTicks": 12060,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 15
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/mo_50_re",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/rhenium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:mo_50_re",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 2850,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/mo_50_re_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/rhenium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:mo_50_re",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1909,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/molybdenum_disilicide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/silicon",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_molybdenum_disilicide",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/molybdenum_disilicide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/silicon",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 300
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_molybdenum_disilicide",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 1206,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/naquadah_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadah",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/osmiridium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_naquadah_alloy",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 3000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/naquadah_alloy_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/naquadah",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/osmiridium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_naquadah_alloy",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 2010,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/nichrome",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_nichrome",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 4875,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/nichrome_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 5000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_nichrome",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 3266,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/nickel_zinc_ferrite",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/zinc",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:nickel_zinc_ferrite",
+        "amount": 864
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 6
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/niobium_nitride",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_niobium_nitride",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 2304,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 1
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/niobium_nitride_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 1000
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_niobium_nitride",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1543,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 11
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/niobium_titanium",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_niobium_titanium",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 2250,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/niobium_titanium_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 100
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_niobium_titanium",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1507,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/osmiridium",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/osmium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_osmiridium",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 2700,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/osmiridium_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/osmium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_osmiridium",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 1809,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ostrum_iodide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ostrum",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/iodine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ostrum_iodide",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 5400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ostrum_iodide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ostrum",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/iodine",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 300
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ostrum_iodide",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 3618,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/potin",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/lead",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:potin",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 9
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/red_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rose_gold",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/brass",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/black_steel",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:red_steel",
+        "amount": 1152
+      }
+    ],
+    "durationTicks": 6000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/red_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/rose_gold",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/brass",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/black_steel",
+        "amount": 4
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:red_steel",
+        "amount": 1152
+      }
+    ],
+    "durationTicks": 4020,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/rene_41",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/boron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:molten_rene_41",
+        "amount": 2016
+      }
+    ],
+    "durationTicks": 7770,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 7
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/rene_41_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/boron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 14000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:molten_rene_41",
+        "amount": 2016
+      }
+    ],
+    "durationTicks": 5205,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 17
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/rhodium_plated_palladium",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/palladium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/rhodium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_rhodium_plated_palladium",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 3600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/rhodium_plated_palladium_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/palladium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/rhodium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_rhodium_plated_palladium",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 2412,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/rtm_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_rtm_alloy",
+        "amount": 1008
+      }
+    ],
+    "durationTicks": 7350,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/rtm_alloy_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 700
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_rtm_alloy",
+        "amount": 1008
+      }
+    ],
+    "durationTicks": 4924,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ruridit",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ruridit",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 3600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ruridit_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/iridium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 150
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ruridit",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 2412,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ruthenium_trinium_americium_neutronate",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/americium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/neutronium",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ruthenium_trinium_americium_neutronate",
+        "amount": 2016
+      }
+    ],
+    "durationTicks": 10500,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ruthenium_trinium_americium_neutronate_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/ruthenium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/trinium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/americium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/neutronium",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 8000
+      },
+      {
+        "fluidId": "#forge:neon",
+        "amount": 350
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ruthenium_trinium_americium_neutronate",
+        "amount": 2016
+      }
+    ],
+    "durationTicks": 7035,
+    "energy": {
+      "minVoltageTier": "LuV",
+      "voltage": 32768,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 15
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/samarium_iron_arsenic_oxide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/arsenic",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_samarium_iron_arsenic_oxide",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 4500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/samarium_iron_arsenic_oxide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/samarium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/arsenic",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 1000
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 400
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_samarium_iron_arsenic_oxide",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 3015,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/soldering_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/lead",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/antimony",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:soldering_alloy",
+        "amount": 1440
+      }
+    ],
+    "durationTicks": 150,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 10
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/stainless_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:stainless_steel",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 7425,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/stainless_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 6
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/manganese",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 9000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:stainless_steel",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 4974,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/stellite_100",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_stellite_100",
+        "amount": 1440
+      }
+    ],
+    "durationTicks": 7500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/stellite_100_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 500
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_stellite_100",
+        "amount": 1440
+      }
+    ],
+    "durationTicks": 5025,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tantalum_carbide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tantalum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_tantalum_carbide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tantalum_carbide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tantalum",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_tantalum_carbide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1206,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tin_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:tin_alloy",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 75,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/titanium_carbide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_titanium_carbide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/titanium_carbide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_titanium_carbide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/titanium_tungsten_carbide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium_carbide",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/tungsten_carbide",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_titanium_tungsten_carbide",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 2250,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/titanium_tungsten_carbide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/titanium_carbide",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/tungsten_carbide",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 150
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_titanium_tungsten_carbide",
+        "amount": 432
+      }
+    ],
+    "durationTicks": 1507,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tungsten_bismuth_oxide_composite",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/bismuth",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:molten_tungsten_bismuth_oxide_composite",
+        "amount": 864
+      }
+    ],
+    "durationTicks": 10800,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tungsten_bismuth_oxide_composite_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/bismuth",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 3000
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 600
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:molten_tungsten_bismuth_oxide_composite",
+        "amount": 864
+      }
+    ],
+    "durationTicks": 7236,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tungsten_carbide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_tungsten_carbide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 2250,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tungsten_carbide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/carbon",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_tungsten_carbide",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1507,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tungsten_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_tungsten_steel",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/tungsten_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_tungsten_steel",
+        "amount": 288
+      }
+    ],
+    "durationTicks": 1005,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ultimet",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ultimet",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 8775,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/ultimet_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 5
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/molybdenum",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 900
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_ultimet",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 5879,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/uranium_rhodium_dinaquadide",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/rhodium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/naquadah",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_uranium_rhodium_dinaquadide",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 4500,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/uranium_rhodium_dinaquadide_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/uranium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/rhodium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/naquadah",
+        "amount": 2
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_uranium_rhodium_dinaquadide",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 3015,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/vanadium_gallium",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/gallium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_vanadium_gallium",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 3600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 2
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/vanadium_gallium_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/gallium",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 200
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_vanadium_gallium",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 2412,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 12
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/vanadium_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 7
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:vanadium_steel",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 5393,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 3
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/vanadium_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/vanadium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/steel",
+        "amount": 7
+      },
+      {
+        "fluidId": "#forge:nitrogen",
+        "amount": 9000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:vanadium_steel",
+        "amount": 1296
+      }
+    ],
+    "durationTicks": 3613,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 3.75
+    },
+    "circuitConfiguration": 13
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/watertight_steel",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 7
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/sulfur",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_watertight_steel",
+        "amount": 2160
+      }
+    ],
+    "durationTicks": 9000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/watertight_steel_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 7
+      },
+      {
+        "itemId": "#forge:dusts/aluminium",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/chromium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/sulfur",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 1500
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_watertight_steel",
+        "amount": 2160
+      }
+    ],
+    "durationTicks": 6030,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 15
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/yttrium_barium_cuprate",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/yttrium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/barium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 3
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 7000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_yttrium_barium_cuprate",
+        "amount": 1872
+      }
+    ],
+    "durationTicks": 9750,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 4
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/yttrium_barium_cuprate_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/yttrium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/barium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 3
+      },
+      {
+        "fluidId": "#forge:oxygen",
+        "amount": 7000
+      },
+      {
+        "fluidId": "#forge:argon",
+        "amount": 650
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_yttrium_barium_cuprate",
+        "amount": 1872
+      }
+    ],
+    "durationTicks": 6532,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 60
+    },
+    "circuitConfiguration": 14
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/zeron_100",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 10
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_zeron_100",
+        "amount": 2304
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 5
+  },
+  {
+    "id": "gtceu:alloy_blast_smelter/zeron_100_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/iron",
+        "amount": 10
+      },
+      {
+        "itemId": "#forge:dusts/nickel",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/tungsten",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/niobium",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/cobalt",
+        "amount": 1
+      },
+      {
+        "fluidId": "#forge:helium",
+        "amount": 1600
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_zeron_100",
+        "amount": 2304
+      }
+    ],
+    "durationTicks": 8040,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    },
+    "circuitConfiguration": 15
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/abs_bismuth_bronze",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "gtceu:bismuth_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:copper_dust",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:zinc_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:bismuth_bronze",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/abs_black_bronze",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "gtceu:copper_dust",
+        "amount": 3
+      },
+      {
+        "itemId": "gtceu:gold_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silver_dust",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:black_bronze",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 300,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/bi_pb_sn_cd_in_tl",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/bismuth",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/lead",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/indium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/cadmium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/thallium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 2880
+      }
+    ],
+    "durationTicks": 9600,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/bi_pb_sn_cd_in_tl_boosted",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/bismuth",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/lead",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/tin",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/indium",
+        "amount": 3
+      },
+      {
+        "itemId": "#forge:dusts/cadmium",
+        "amount": 2
+      },
+      {
+        "itemId": "#forge:dusts/thallium",
+        "amount": 1
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 2000
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "tfg:bi_pb_sn_cd_in_tl",
+        "amount": 2880
+      }
+    ],
+    "durationTicks": 6432,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/liquid_glowstone",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/gold",
+        "amount": 10
+      },
+      {
+        "itemId": "#forge:dusts/redstone",
+        "amount": 10
+      },
+      {
+        "itemId": "#forge:dusts/sulfur",
+        "amount": 10
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:glowstone",
+        "amount": 2880
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 3.75
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/red_alloy",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "#forge:dusts/copper",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/redstone",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:red_alloy",
+        "amount": 720
+      }
+    ],
+    "durationTicks": 75,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 2
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/uranium_triplatinum",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "gtceu:uranium_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:platinum_dust",
+        "amount": 3
+      },
+      {
+        "fluidId": "gtceu:radon",
+        "amount": 10
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_uranium_triplatinum",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 3000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  },
+  {
+    "id": "tfg:alloy_blast_smelter/uranium_triplatinum_gas",
+    "machineId": "gtceu:alloy_blast_smelter",
+    "inputs": [
+      {
+        "itemId": "gtceu:uranium_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:platinum_dust",
+        "amount": 3
+      },
+      {
+        "fluidId": "gtceu:helium",
+        "amount": 400
+      },
+      {
+        "fluidId": "gtceu:radon",
+        "amount": 10
+      }
+    ],
+    "outputs": [
+      {
+        "fluidId": "gtceu:molten_uranium_triplatinum",
+        "amount": 576
+      }
+    ],
+    "durationTicks": 2010,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 15
+    }
+  }
+]

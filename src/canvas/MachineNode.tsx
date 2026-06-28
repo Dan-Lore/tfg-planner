@@ -1,8 +1,9 @@
-import { memo, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
-import type { PackData, Flow } from '@/data/types';
-import { getMachineName, getMachineRecipeCount, getRecipesForMachine } from '@/data/pack-registry';
+import type { PackLike } from '@/data/pack-registry';
+import type { Flow, Recipe } from '@/data/types';
+import { getMachineName, getMachineRecipeCount, getRecipe, getRecipesForMachine } from '@/data/pack-registry';
 import type { NodeBalanceLine, PortLoadMeta } from '@/canvas/flow-display';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
@@ -39,7 +40,7 @@ export interface MachineNodeData {
   overclock: number;
   parallel: number;
   voltageTier: VoltageTier;
-  pack: PackData;
+  pack: PackLike;
   onRecipeChange: (recipeId: string) => void;
   onMachineCountChange: (count: number) => void;
   onOverclockChange: (overclock: number) => void;
@@ -166,9 +167,30 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
   const [recipeMenuOpen, setRecipeMenuOpen] = useState(false);
+  const [machineRecipes, setMachineRecipes] = useState<Recipe[]>(() =>
+    getRecipesForMachine(d.pack, d.machineId),
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const cached = getRecipesForMachine(d.pack, d.machineId);
+    if (cached.length > 0) {
+      setMachineRecipes(cached);
+      return;
+    }
+    if ('loadMachineRecipes' in d.pack) {
+      void d.pack.loadMachineRecipes(d.machineId).then((recipes) => {
+        if (!cancelled) setMachineRecipes(recipes);
+      });
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [d.pack, d.machineId]);
+
   const recipeCount = getMachineRecipeCount(d.pack, d.machineId);
   const hasRecipePicker = recipeCount > 1;
-  const recipe = d.pack.recipes.find((r) => r.id === d.recipeId);
+  const recipe = getRecipe(d.pack, d.recipeId) ?? machineRecipes.find((r) => r.id === d.recipeId);
   const title = getMachineName(d.pack, d.machineId, lang);
   const recipeLabel = useMemo(
     () => (recipe ? formatRecipeLabel(d.pack, recipe, lang) : ''),
@@ -245,7 +267,7 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
         {hasRecipePicker && !dragging && (
           <RecipePicker
             pack={d.pack}
-            recipes={getRecipesForMachine(d.pack, d.machineId)}
+            recipes={machineRecipes}
             value={d.recipeId}
             lang={lang}
             dragging={dragging}
@@ -394,7 +416,7 @@ export function buildPortDisplays(
         outputs: Flow[];
       }
     | undefined,
-  pack: PackData,
+  pack: PackLike,
   lang: 'ru' | 'en',
   connectedIn: Set<string>,
   connectedOut: Set<string>,

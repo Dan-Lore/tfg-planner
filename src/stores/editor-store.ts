@@ -6,10 +6,8 @@ import { packKey } from '@/lib/pack-key';
 import {
   allocateEdgeId,
   allocateNodeId,
-  applyFlowResult,
   dedupeNodeIds,
   normalizeSchemeNodes,
-  runSolver,
   seedIdCounter,
   type EditorSnapshot,
 } from './editor-utils';
@@ -26,7 +24,7 @@ import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import type { FlowResult } from '@/calculator/flow-solver';
-import { checkScheme, type SchemeCheckResult } from '@/scheme-check/check-scheme';
+import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
 import { usePackStore } from './pack-store';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import {
@@ -35,12 +33,19 @@ import {
 } from '@/lib/buffer-defaults';
 import type { TfgpBufferKind } from '@/schema/tfgp';
 import { normalizeBufferNode } from '@/lib/node-scaling';
+import type { ActivePack } from '@/data/pack-runtime';
+import { getRecipe } from '@/data/pack-registry';
+import { debounceFlowUpdate } from '@/lib/debounce-flow-update';
+import { computeFlowsAsync, type FlowComputeMode } from '@/lib/flow-compute';
+import { hydrateFlowResult } from '@/calculator/flow-result-transfer';
 
 const MAX_HISTORY = 50;
 
+export type FlowComputeState = 'idle' | 'computing' | 'stale';
+
 function buildFlowEdgeData(
   scheme: TfgpFile,
-  pack: NonNullable<ReturnType<typeof usePackStore.getState>['activePack']>,
+  pack: ActivePack,
   result: FlowResult,
 ): Record<string, FlowEdgeData> {
   const lang = i18n.language === 'en' ? 'en' : 'ru';
@@ -72,6 +77,7 @@ interface EditorState {
   flowEdgeData: Record<string, FlowEdgeData>;
   flowResult: FlowResult | null;
   schemeCheckResult: SchemeCheckResult | null;
+  flowComputeState: FlowComputeState;
   past: EditorSnapshot[];
   future: EditorSnapshot[];
   switchToPack: (modpackVersion: string, dataVersion: number) => void;
@@ -129,6 +135,87 @@ function cacheScheme(
   return { ...schemesByPack, [key]: structuredClone(scheme) };
 }
 
+let debouncedFlowUpdate: ReturnType<typeof debounceFlowUpdate> | null = null;
+let flowComputeBinding: {
+  get: () => EditorState;
+  set: (partial: Partial<EditorState> | ((s: EditorState) => Partial<EditorState>)) => void;
+} | null = null;
+
+async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
+  const binding = flowComputeBinding;
+  if (!binding) return;
+  const pack = usePackStore.getState().activePack;
+  if (!pack) return;
+
+  binding.set({ flowComputeState: 'computing' });
+  const { scheme } = binding.get();
+  const snap = binding.get().snapshot();
+
+  try {
+    const packSlice = await pack.getSchemeSlice(scheme);
+    const response = await computeFlowsAsync({
+      snapshot: snap,
+      scheme,
+      packSlice,
+      mode,
+    });
+    if (!response) {
+      binding.set({ flowComputeState: 'stale' });
+      return;
+    }
+
+    const flowResult = hydrateFlowResult(response.flowResult);
+
+    const schemeForEdges =
+      mode === 'recalculate' && response.nodes
+        ? { ...scheme, nodes: response.nodes }
+        : scheme;
+
+    const flowEdgeData = buildFlowEdgeData(
+      schemeForEdges,
+      pack,
+      flowResult,
+    );
+
+    binding.set({
+      flowComputeState: 'idle',
+      flowResult,
+      flowEdgeData,
+      schemeCheckResult: response.schemeCheckResult,
+      ...(mode === 'recalculate' && response.nodes
+        ? {
+            scheme: schemeForEdges,
+            schemesByPack: cacheScheme(
+              binding.get().schemesByPack,
+              binding.get().activePackKey,
+              schemeForEdges,
+            ),
+          }
+        : {
+            schemesByPack: cacheScheme(
+              binding.get().schemesByPack,
+              binding.get().activePackKey,
+              scheme,
+            ),
+          }),
+    });
+  } catch (err) {
+    console.error('Flow compute failed:', err);
+    binding.set({ flowComputeState: 'idle' });
+  }
+}
+
+function scheduleFlowUpdate(mode: FlowComputeMode): void {
+  if (mode === 'recalculate') {
+    debouncedFlowUpdate?.cancel();
+    void runFlowCompute('recalculate');
+    return;
+  }
+  if (!debouncedFlowUpdate) return;
+  flowComputeBinding?.set({ flowComputeState: 'stale' });
+  debouncedFlowUpdate();
+}
+
 export const useEditorStore = create<EditorState>()(
   persist(
     (set, get) => ({
@@ -140,6 +227,7 @@ export const useEditorStore = create<EditorState>()(
       flowEdgeData: {},
       flowResult: null,
       schemeCheckResult: null,
+      flowComputeState: 'idle',
       past: [],
       future: [],
 
@@ -163,6 +251,7 @@ export const useEditorStore = create<EditorState>()(
           flowEdgeData: {},
           flowResult: null,
           schemeCheckResult: null,
+          flowComputeState: 'idle',
           selectedNodeIds: [],
           selectedEdgeIds: [],
         });
@@ -311,7 +400,7 @@ export const useEditorStore = create<EditorState>()(
         get().pushHistory();
         const { scheme } = get();
         const pack = usePackStore.getState().activePack;
-        const recipe = pack?.recipes.find((r) => r.id === partial.recipeId);
+        const recipe = pack ? getRecipe(pack, partial.recipeId) : undefined;
         const id = allocateNodeId(scheme.nodes, scheme.edges);
         const node: TfgpMachineNode = normalizeNodeVoltage(
           {
@@ -370,13 +459,13 @@ export const useEditorStore = create<EditorState>()(
               if (!isMachineNode(n)) return n;
               let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
               if ('recipeId' in patch && patch.recipeId && pack) {
-                const recipe = pack.recipes.find((r) => r.id === patch.recipeId);
+                const recipe = getRecipe(pack, patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };
               } else if (
                 ('voltageTier' in patch && patch.voltageTier) ||
                 !('recipeId' in patch)
               ) {
-                const recipe = pack?.recipes.find((r) => r.id === next.recipeId);
+                const recipe = pack ? getRecipe(pack, next.recipeId) : undefined;
                 next = normalizeNodeVoltage(next, recipe);
               }
               return next;
@@ -455,9 +544,9 @@ export const useEditorStore = create<EditorState>()(
             parallel: 1,
             voltageTier: 'LV',
           },
-          usePackStore.getState().activePack?.recipes.find(
-            (r) => r.id === params.recipeId,
-          ),
+          usePackStore.getState().activePack
+            ? getRecipe(usePackStore.getState().activePack!, params.recipeId)
+            : undefined,
         );
         const edge: TfgpEdge =
           params.direction === 'downstream'
@@ -617,52 +706,11 @@ export const useEditorStore = create<EditorState>()(
       },
 
       updateFlows: () => {
-        const pack = usePackStore.getState().activePack;
-        if (!pack) return;
-        const { scheme } = get();
-        const snap = get().snapshot();
-        const result = runSolver(snap, pack, { preserveManualMachineCounts: true });
-        const flowEdgeData = buildFlowEdgeData(
-          scheme,
-          pack,
-          result,
-        );
-        set({
-          flowResult: result,
-          flowEdgeData,
-          schemeCheckResult: checkScheme(scheme, pack),
-          schemesByPack: cacheScheme(
-            get().schemesByPack,
-            get().activePackKey,
-            scheme,
-          ),
-        });
+        scheduleFlowUpdate('update');
       },
 
       recalculateScheme: () => {
-        const pack = usePackStore.getState().activePack;
-        if (!pack) return;
-        const { scheme } = get();
-        const snap = get().snapshot();
-        const result = runSolver(snap, pack, { preserveManualMachineCounts: false });
-        const nodes = applyFlowResult(snap.nodes, result, 'full');
-        const schemeWithNodes = { ...scheme, nodes };
-        const flowEdgeData = buildFlowEdgeData(
-          schemeWithNodes,
-          pack,
-          result,
-        );
-        set({
-          scheme: schemeWithNodes,
-          flowResult: result,
-          flowEdgeData,
-          schemeCheckResult: checkScheme(schemeWithNodes, pack),
-          schemesByPack: cacheScheme(
-            get().schemesByPack,
-            get().activePackKey,
-            schemeWithNodes,
-          ),
-        });
+        scheduleFlowUpdate('recalculate');
       },
 
       duplicateSelected: () => {
@@ -702,6 +750,16 @@ export const useEditorStore = create<EditorState>()(
         activePackKey: s.activePackKey,
       }),
       onRehydrateStorage: () => (state) => {
+        flowComputeBinding = {
+          get: useEditorStore.getState,
+          set: (partial) => useEditorStore.setState(partial),
+        };
+        if (!debouncedFlowUpdate) {
+          debouncedFlowUpdate = debounceFlowUpdate(() => {
+            void runFlowCompute('update');
+          });
+        }
+
         if (!state) return;
         const normalizedCache: Record<string, TfgpFile> = {};
         for (const [key, file] of Object.entries(state.schemesByPack)) {
@@ -725,3 +783,11 @@ export const useEditorStore = create<EditorState>()(
     },
   ),
 );
+
+flowComputeBinding = {
+  get: useEditorStore.getState,
+  set: (partial) => useEditorStore.setState(partial),
+};
+debouncedFlowUpdate = debounceFlowUpdate(() => {
+  void runFlowCompute('update');
+});

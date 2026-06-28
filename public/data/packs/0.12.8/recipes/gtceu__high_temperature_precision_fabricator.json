@@ -1,0 +1,611 @@
+[
+  {
+    "id": "tfg:high_temperature_precision_fabricator/diamond_tipped_mo_50_re",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:mo_50_re_ingot",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:diamond_dust",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:diamond_tipped_mo_50_re_ingot",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_amethyst_purple",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_amethyst_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:amethyst_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_apatite_cyan",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_apatite_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:apatite_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_armalcolite_gray",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_armalcolite_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:armalcolite_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_coal_black",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_coal_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:coal_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_diamond_light_blue",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:dirty_diamond_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:diamond_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_emerald_green",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:dirty_emerald_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:emerald_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_grossular_brown",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_grossular_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:grossular_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_olivine_lime",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_olivine_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:olivine_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_ruby_red",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:dirty_ruby_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:ruby_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_sapphire_blue",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:dirty_sapphire_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:sapphire_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_spessartine_orange",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_spessartine_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:spessartine_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/lens_yellow_garnet_yellow",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:worked_optical_borosilicate_blank",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:filtered_yellow_garnet_slurry",
+        "amount": 1000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:yellow_garnet_lens",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 2400,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/naquadah_boule",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:quartz_crucible",
+        "amount": 1,
+        "chance": 5000
+      },
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:dusts/gallium_arsenide",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:polysilicon",
+        "amount": 18432
+      },
+      {
+        "fluidId": "gtceu:naquadah",
+        "amount": 144
+      },
+      {
+        "fluidId": "gtceu:argon",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:naquadah_boule",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 15000,
+    "energy": {
+      "minVoltageTier": "EV",
+      "voltage": 2048,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/neutronium_boule",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:quartz_crucible",
+        "amount": 1,
+        "chance": 9900
+      },
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:dusts/gallium_arsenide",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:polysilicon",
+        "amount": 36864
+      },
+      {
+        "fluidId": "gtceu:neutronium",
+        "amount": 576
+      },
+      {
+        "fluidId": "gtceu:xenon",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:neutronium_boule",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 18000,
+    "energy": {
+      "minVoltageTier": "IV",
+      "voltage": 8192,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/phosphorus_boule",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:quartz_crucible",
+        "amount": 1,
+        "chance": 2000
+      },
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 4
+      },
+      {
+        "itemId": "#forge:dusts/phosphorus",
+        "amount": 8
+      },
+      {
+        "itemId": "#forge:small_dusts/gallium_arsenide",
+        "amount": 2
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:polysilicon",
+        "amount": 9216
+      },
+      {
+        "fluidId": "gtceu:nitrogen",
+        "amount": 8000
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:phosphorus_boule",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12000,
+    "energy": {
+      "minVoltageTier": "HV",
+      "voltage": 512,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/silicon_boule",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:quartz_crucible",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_dusts/gallium_arsenide",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:polysilicon",
+        "amount": 4608
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silicon_boule",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 9000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "tfg:high_temperature_precision_fabricator/silicon_boule_cleanroom",
+    "machineId": "gtceu:high_temperature_precision_fabricator",
+    "inputs": [
+      {
+        "itemId": "tfg:quartz_crucible",
+        "amount": 1,
+        "chance": 500
+      },
+      {
+        "itemId": "tfg:silicon_seed_crystal",
+        "amount": 1
+      },
+      {
+        "itemId": "#forge:small_dusts/gallium_arsenide",
+        "amount": 1
+      },
+      {
+        "itemId": "#tfg:precision_fabricator_holder_rods",
+        "amount": 1
+      },
+      {
+        "fluidId": "tfg:polysilicon",
+        "amount": 4608
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:silicon_boule",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 6000,
+    "energy": {
+      "minVoltageTier": "MV",
+      "voltage": 128,
+      "amperage": 0.9375
+    }
+  }
+]

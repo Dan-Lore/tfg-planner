@@ -1,4 +1,4 @@
-# Версии конфигураций модпака
+# Версии конфигураций modpacka
 
 Реестр версий [TerraFirmaGreg-Modern](https://github.com/TerraFirmaGreg-Team/Modpack-Modern).
 
@@ -6,17 +6,18 @@
 
 | modpack_version | data_version | status | source | notes |
 |-----------------|--------------|--------|--------|-------|
-| 0.12.8 | 1 | ready | `public/data/packs/0.12.8/pack.json` | K-010 rev.3: **6727** recipes из snapshot; smoke 12/12; `snapshotSha256` в manifest. Полный in-game export: `npm run generate-tfg-snapshot` |
-| 0.12.8-sample | 1 | deprecated | `public/data/packs/0.12.8-sample/pack.json` | Демо MVP: 3 рецепта медной линии (ручные данные) |
+| 0.12.8 | 1 | ready | `public/data/packs/0.12.8/pack.meta.json` + `recipes/` | Pack v2 sharded: **57 179** recipes, 86 machine shards; smoke 15/15. Meta ~5–8 MiB, recipes lazy-loaded in UI |
 
 ## Сборка данных
 
 ```bash
-npm run bootstrap-snapshot -- 0.12.8   # interim, from pack.json
+npm run generate-tfg-snapshot -- 0.12.8   # in-game export (once per tag)
 npm run build-pack -- --tag 0.12.8 --strict-snapshot
 ```
 
-Выход: `public/data/packs/<tag>/pack.json`, `build-report.json`, `manifest.json`.
+Выход: `pack.meta.json`, `recipes/*.json`, `build-report.json`, per-pack `manifest.json`.
+
+Конвертация существующего monolith (dev): `node tools/shard-monolith-pack.mjs 0.12.8`.
 
 ## Целевые версии (план)
 

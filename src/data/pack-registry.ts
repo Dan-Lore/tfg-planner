@@ -1,5 +1,9 @@
-import type { PackData, PackManifest, Recipe } from './types';
+import type { ActivePack } from './pack-runtime';
+import type { PackData, PackManifest, PackManifestEntry, Recipe } from './types';
+import { PackRuntime, wrapPackData } from './pack-runtime';
 import { publicPath } from '@/lib/public-path';
+
+export type PackLike = ActivePack | PackData;
 
 export async function loadManifest(): Promise<PackManifest> {
   const res = await fetch(publicPath('/data/packs/manifest.json'));
@@ -13,11 +17,30 @@ export async function loadPackData(path: string): Promise<PackData> {
   return res.json() as Promise<PackData>;
 }
 
+export async function loadActivePack(entry: PackManifestEntry): Promise<ActivePack> {
+  const res = await fetch(publicPath(entry.path));
+  if (!res.ok) throw new Error(`Failed to load pack: ${entry.path}`);
+  const header = (await res.json()) as PackData | { formatVersion: number };
+
+  if (header.formatVersion === 2) {
+    if (!entry.recipesRoot) {
+      throw new Error(`Pack ${entry.modpackVersion} is v2 but manifest missing recipesRoot`);
+    }
+    return PackRuntime.fromManifestEntry(entry.path, entry.recipesRoot);
+  }
+
+  const pack = header as PackData;
+  return wrapPackData(pack);
+}
+
 export function getItemName(
-  pack: PackData,
+  pack: PackLike,
   itemId: string,
   lang: 'ru' | 'en',
 ): string {
+  if ('getItemName' in pack && typeof pack.getItemName === 'function') {
+    return pack.getItemName(itemId, lang);
+  }
   const item = pack.items.find((i) => i.id === itemId);
   if (item) return item.names[lang] ?? item.names.en;
   const fluid = pack.fluids.find((f) => f.id === itemId);
@@ -26,34 +49,50 @@ export function getItemName(
 }
 
 export function getMachineName(
-  pack: PackData,
+  pack: PackLike,
   machineId: string,
   lang: 'ru' | 'en',
 ): string {
+  if ('getMachineName' in pack && typeof pack.getMachineName === 'function') {
+    return pack.getMachineName(machineId, lang);
+  }
   const m = pack.machines.find((x) => x.id === machineId);
   return m ? (m.names[lang] ?? m.names.en) : machineId;
 }
 
-const recipesByMachineCache = new WeakMap<PackData, Map<string, Recipe[]>>();
-
-function recipesByMachineIndex(pack: PackData): Map<string, Recipe[]> {
-  let index = recipesByMachineCache.get(pack);
-  if (!index) {
-    index = new Map<string, Recipe[]>();
-    for (const recipe of pack.recipes) {
-      const list = index.get(recipe.machineId);
-      if (list) list.push(recipe);
-      else index.set(recipe.machineId, [recipe]);
-    }
-    recipesByMachineCache.set(pack, index);
+export function getMachineRecipeCount(
+  pack: PackLike,
+  machineId: string,
+): number {
+  if ('getMachineRecipeCount' in pack && typeof pack.getMachineRecipeCount === 'function') {
+    return pack.getMachineRecipeCount(machineId);
   }
-  return index;
+  return (pack as PackData).recipes.filter((r) => r.machineId === machineId).length;
 }
 
-export function getMachineRecipeCount(pack: PackData, machineId: string): number {
-  return recipesByMachineIndex(pack).get(machineId)?.length ?? 0;
+export function getRecipesForMachine(
+  pack: PackLike,
+  machineId: string,
+): Recipe[] {
+  if ('getCachedRecipesForMachine' in pack) {
+    return pack.getCachedRecipesForMachine(machineId);
+  }
+  return (pack as PackData).recipes.filter((r) => r.machineId === machineId);
 }
 
-export function getRecipesForMachine(pack: PackData, machineId: string): Recipe[] {
-  return recipesByMachineIndex(pack).get(machineId) ?? [];
+export function getRecipe(
+  pack: PackLike,
+  recipeId: string,
+): Recipe | undefined {
+  if ('getRecipe' in pack && typeof pack.getRecipe === 'function') {
+    return pack.getRecipe(recipeId);
+  }
+  return (pack as PackData).recipes.find((r) => r.id === recipeId);
+}
+
+export function recipeCount(pack: PackLike): number {
+  if ('recipeCount' in pack && typeof pack.recipeCount === 'function') {
+    return pack.recipeCount();
+  }
+  return (pack as PackData).recipes.length;
 }

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "gtceu:heat_exchanger/plutonium_steam",
+    "machineId": "gtceu:heat_exchanger",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:dense_steam",
+        "amount": 6400
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  },
+  {
+    "id": "gtceu:heat_exchanger/uranium_steam",
+    "machineId": "gtceu:heat_exchanger",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:dense_steam",
+        "amount": 1600
+      },
+      {
+        "fluidId": "gtceu:formamide",
+        "amount": 10
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  },
+  {
+    "id": "gtceu:heat_exchanger/uranium_steam_power_only",
+    "machineId": "gtceu:heat_exchanger",
+    "inputs": [],
+    "outputs": [
+      {
+        "fluidId": "gtceu:dense_steam",
+        "amount": 1600
+      }
+    ],
+    "durationTicks": 100,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.125
+    }
+  }
+]

@@ -1,0 +1,158 @@
+[
+  {
+    "id": "gtceu:combustion_generator/biodiesel",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:bio_diesel",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 8
+  },
+  {
+    "id": "gtceu:combustion_generator/ethanol",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:ethanol",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 6
+  },
+  {
+    "id": "gtceu:combustion_generator/gasoline",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:gasoline",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 50
+  },
+  {
+    "id": "gtceu:combustion_generator/high_octane_gasoline",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:high_octane_gasoline",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 100
+  },
+  {
+    "id": "gtceu:combustion_generator/light_oil",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:oil_light",
+        "amount": 32
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 5
+  },
+  {
+    "id": "gtceu:combustion_generator/methanol",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:methanol",
+        "amount": 4
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 8
+  },
+  {
+    "id": "gtceu:combustion_generator/octane",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:octane",
+        "amount": 2
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 5
+  },
+  {
+    "id": "gtceu:combustion_generator/raw_oil",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:oil_medium",
+        "amount": 64
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 15
+  },
+  {
+    "id": "gtceu:combustion_generator/rocket_fuel",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:rocket_fuel",
+        "amount": 16
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 125
+  },
+  {
+    "id": "gtceu:combustion_generator/toluene",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "#forge:toluene",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 10
+  },
+  {
+    "id": "tfg:combustion_generator/cetane_boosted_diesel",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "gtceu:cetane_boosted_diesel",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 32
+  },
+  {
+    "id": "tfg:combustion_generator/diesel",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "gtceu:diesel",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 12
+  },
+  {
+    "id": "tfg:combustion_generator/naphtha",
+    "machineId": "gtceu:combustion_generator",
+    "inputs": [
+      {
+        "fluidId": "gtceu:naphtha",
+        "amount": 1
+      }
+    ],
+    "outputs": [],
+    "durationTicks": 2
+  }
+]

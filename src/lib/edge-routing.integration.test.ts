@@ -11,7 +11,6 @@ import {
   getMachineNodeRect,
 } from '@/canvas/node-bounds';
 import { normalizePortId, parsePortId } from '@/canvas/ports';
-import type { PackData } from '@/data/types';
 import {
   bezierHitsThirdPartyObstacles,
   computeEdgeRouteCenter,
@@ -21,18 +20,14 @@ import {
   type EdgeRouteEndpoints,
   type RoutingObstacle,
 } from '@/lib/edge-routing';
+import { loadTestPack } from '@/test-fixtures/load-test-pack';
 
 const BENZENE_GAP_FIXTURE = path.join(
   process.cwd(),
   'src/lib/fixtures/edge-routing/benzene-distillation-lcr-gap.tfgp',
 );
 
-const pack = JSON.parse(
-  fs.readFileSync(
-    path.join(process.cwd(), 'public/data/packs/0.12.8/pack.json'),
-    'utf8',
-  ),
-) as PackData;
+const pack = loadTestPack('0.12.8');
 
 type FixtureGraph = {
   nodes: Array<{

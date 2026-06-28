@@ -1,0 +1,6672 @@
+[
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_almandine_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/almandine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_almandine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_almandine_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/almandine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_almandine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_aluminium_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/aluminium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_aluminium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bauxite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_aluminium_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/aluminium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_aluminium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bauxite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_alunite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/alunite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_alunite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:alunite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_alunite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/alunite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_alunite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:alunite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_amethyst_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/amethyst",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_amethyst_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:amethyst_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_amethyst_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/amethyst",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_amethyst_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:amethyst_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_apatite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/apatite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_apatite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:phosphate_dust",
+        "amount": 2,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_apatite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/apatite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_apatite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:phosphate_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_armalcolite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/armalcolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_armalcolite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_armalcolite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/armalcolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_armalcolite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_asbestos_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/asbestos",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_asbestos_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silicon_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_asbestos_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/asbestos",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_asbestos_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silicon_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_barite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/barite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_barite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:barite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_barite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/barite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_barite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:barite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_basaltic_mineral_sand_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/basaltic_mineral_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_basaltic_mineral_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_basaltic_mineral_sand_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/basaltic_mineral_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_basaltic_mineral_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bastnasite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/bastnasite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bastnasite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rare_earth_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bastnasite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/bastnasite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bastnasite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rare_earth_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bauxite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/bauxite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bauxite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilmenite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bauxite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/bauxite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bauxite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilmenite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bentonite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/bentonite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bentonite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bentonite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/bentonite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bentonite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_beryllium_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/beryllium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_beryllium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:emerald_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_beryllium_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/beryllium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_beryllium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:emerald_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bismuth_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/bismuth",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bismuth_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bismuth_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bismuth_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/bismuth",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bismuth_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bismuth_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_blue_topaz_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/blue_topaz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_blue_topaz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:topaz_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_blue_topaz_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/blue_topaz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_blue_topaz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:topaz_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_borax_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/borax",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_borax_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:borax_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_borax_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/borax",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_borax_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:borax_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bornite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/bornite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bornite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobalt_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_bornite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/bornite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_bornite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobalt_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_calcite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/calcite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_calcite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_calcite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/calcite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_calcite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cassiterite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/cassiterite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cassiterite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bismuth_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cassiterite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cassiterite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cassiterite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:bismuth_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cassiterite_sand_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/cassiterite_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cassiterite_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tin_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cassiterite_sand_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cassiterite_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cassiterite_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tin_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_certus_quartz_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/certus_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_certus_quartz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quartzite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_certus_quartz_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/certus_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_certus_quartz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quartzite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_chalcocite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/chalcocite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_chalcocite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:massicot_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_chalcocite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/chalcocite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_chalcocite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:massicot_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_chalcopyrite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/chalcopyrite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_chalcopyrite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobalt_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_chalcopyrite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/chalcopyrite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_chalcopyrite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobalt_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_chromite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/chromite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_chromite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_chromite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/chromite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_chromite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cinnabar_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/cinnabar",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cinnabar_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cinnabar_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cinnabar",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cinnabar_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cobalt_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/cobalt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cobalt_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobaltite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cobalt_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cobalt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cobalt_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobaltite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cobaltite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/cobaltite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cobaltite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobalt_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cobaltite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cobaltite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cobaltite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:cobalt_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cooperite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/cooperite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cooperite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_cooperite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/cooperite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_cooperite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_copper_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/copper",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_copper_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:gold_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_copper_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/copper",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_copper_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:gold_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_desh_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/desh",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_desh_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilmenite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_desh_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/desh",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_desh_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilmenite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_diamond_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/diamond",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_diamond_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:graphite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_diamond_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/diamond",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_diamond_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:graphite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_diatomite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/diatomite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_diatomite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sapphire_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_diatomite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/diatomite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_diatomite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sapphire_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_electrotine_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/electrotine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_electrotine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:electrum_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_electrotine_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/electrotine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_electrotine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:electrum_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_emerald_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/emerald",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_emerald_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_emerald_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/emerald",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_emerald_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_fullers_earth_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/fullers_earth",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_fullers_earth_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silicon_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_fullers_earth_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/fullers_earth",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_fullers_earth_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silicon_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_galena_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/galena",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_galena_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silver_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_galena_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/galena",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_galena_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silver_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_garnet_sand_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/garnet_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_garnet_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:yellow_garnet_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_garnet_sand_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/garnet_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_garnet_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:yellow_garnet_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_garnierite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/garnierite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_garnierite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_garnierite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/garnierite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_garnierite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_glauconite_sand_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/glauconite_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_glauconite_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_glauconite_sand_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/glauconite_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_glauconite_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_goethite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/goethite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_goethite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:yellow_limonite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_goethite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/goethite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_goethite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:yellow_limonite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_gold_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/gold",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_gold_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_gold_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/gold",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_gold_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_granitic_mineral_sand_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/granitic_mineral_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_granitic_mineral_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_granitic_mineral_sand_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/granitic_mineral_sand",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_granitic_mineral_sand_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_graphite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/graphite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_graphite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:carbon_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_graphite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/graphite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_graphite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:carbon_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_green_sapphire_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/green_sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_green_sapphire_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sapphire_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_green_sapphire_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/green_sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_green_sapphire_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sapphire_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_grossular_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/grossular",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_grossular_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_grossular_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/grossular",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_grossular_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_gypsum_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/gypsum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_gypsum_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_gypsum_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/gypsum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_gypsum_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_hematite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/hematite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_hematite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_hematite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/hematite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_hematite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_ilmenite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/ilmenite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_ilmenite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilmenite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_ilmenite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/ilmenite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_ilmenite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:ilmenite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_iron_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_iron_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tin_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_iron_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/iron",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_iron_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tin_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_kyanite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/kyanite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_kyanite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_kyanite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/kyanite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_kyanite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lapis_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/lapis",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lapis_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sodalite_dust",
+        "amount": 4,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lapis_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lapis",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lapis_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sodalite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lazurite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/lazurite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lazurite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapis_dust",
+        "amount": 4,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lazurite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lazurite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lazurite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapis_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lead_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/lead",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lead_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lead_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lead",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lead_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lepidolite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/lepidolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lepidolite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:caesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lepidolite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lepidolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lepidolite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:caesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lithium_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/lithium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lithium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lithium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lithium_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lithium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_lithium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lithium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lorandite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/lorandite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:refined_lorandite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_lorandite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/lorandite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:refined_lorandite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_magnesite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/magnesite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_magnesite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_magnesite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/magnesite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_magnesite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_magnetite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/magnetite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_magnetite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:gold_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_magnetite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/magnetite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_magnetite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:gold_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_malachite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/malachite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_malachite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_malachite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/malachite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_malachite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_mica_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/mica",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_mica_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_mica_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/mica",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_mica_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_molybdenite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/molybdenite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_molybdenite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_molybdenite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/molybdenite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_molybdenite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_molybdenum_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/molybdenum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_molybdenum_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:molybdenum_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_molybdenum_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/molybdenum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_molybdenum_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:molybdenum_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_monazite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/monazite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_monazite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:neodymium_dust",
+        "amount": 2,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_monazite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/monazite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_monazite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:neodymium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_naquadah_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/naquadah",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_naquadah_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:barite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_naquadah_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/naquadah",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_naquadah_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:barite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_neodymium_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_neodymium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rare_earth_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_neodymium_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/neodymium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_neodymium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rare_earth_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_nether_quartz_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/nether_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_nether_quartz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quartzite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_nether_quartz_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/nether_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_nether_quartz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:quartzite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_nickel_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/nickel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_nickel_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iron_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_nickel_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/nickel",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_nickel_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:iron_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_oilsands_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/oilsands",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_oilsands_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:oilsands_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_oilsands_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/oilsands",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_oilsands_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:oilsands_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_olivine_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/olivine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_olivine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_olivine_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/olivine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_olivine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_opal_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/opal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_opal_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:opal_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_opal_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/opal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_opal_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:opal_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_palladium_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/palladium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_palladium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:palladium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_palladium_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/palladium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_palladium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:palladium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pentlandite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pentlandite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pentlandite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pentlandite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pentlandite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pentlandite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pitchblende_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pitchblende",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pitchblende_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uraninite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pitchblende_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pitchblende",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pitchblende_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:uraninite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_platinum_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/platinum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_platinum_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_platinum_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/platinum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_platinum_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:nickel_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pollucite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pollucite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pollucite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pollucite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pollucite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pollucite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:aluminium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_powellite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/powellite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_powellite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:potassium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_powellite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/powellite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_powellite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:potassium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pyrite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tricalcium_phosphate_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pyrite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tricalcium_phosphate_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrochlore_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pyrochlore",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrochlore_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrochlore_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pyrochlore",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrochlore_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:calcium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrolusite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pyrolusite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrolusite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tantalite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrolusite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pyrolusite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrolusite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:tantalite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrope_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/pyrope",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrope_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_pyrope_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/pyrope",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_pyrope_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_quartzite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/quartzite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_quartzite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:barite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_quartzite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/quartzite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_quartzite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:barite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_realgar_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/realgar",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_realgar_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:antimony_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_realgar_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/realgar",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_realgar_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:antimony_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_red_garnet_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/red_garnet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_red_garnet_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:pyrope_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_red_garnet_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/red_garnet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_red_garnet_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:pyrope_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_redstone_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/redstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_redstone_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rare_earth_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_redstone_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/redstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_redstone_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rare_earth_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_rock_salt_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/rock_salt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_rock_salt_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:borax_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_rock_salt_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/rock_salt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_rock_salt_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:borax_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_rose_quartz_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/rose_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "greate:refined_rose_quartz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_rose_quartz_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/rose_quartz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "greate:refined_rose_quartz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "minecraft:redstone",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_ruby_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/ruby",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_ruby_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:red_garnet_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_ruby_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/ruby",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_ruby_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:red_garnet_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_salt_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/salt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_salt_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:borax_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_salt_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/salt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_salt_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:borax_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_saltpeter_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/saltpeter",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_saltpeter_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:potassium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_saltpeter_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/saltpeter",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_saltpeter_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:potassium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sapphire_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sapphire_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:green_sapphire_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sapphire_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/sapphire",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sapphire_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:green_sapphire_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_scheelite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/scheelite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_scheelite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:molybdenum_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_scheelite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/scheelite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_scheelite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:molybdenum_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_silver_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/silver",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_silver_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_silver_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/silver",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_silver_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_soapstone_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/soapstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_soapstone_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_soapstone_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/soapstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_soapstone_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnesium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sodalite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/sodalite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sodalite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapis_dust",
+        "amount": 4,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sodalite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/sodalite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sodalite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lapis_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_spessartine_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/spessartine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_spessartine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:manganese_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_spessartine_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/spessartine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_spessartine_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:manganese_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sphalerite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/sphalerite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sphalerite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:gallium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sphalerite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/sphalerite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sphalerite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:gallium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_spodumene_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/spodumene",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_spodumene_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lithium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_spodumene_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/spodumene",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_spodumene_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lithium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_stibnite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/stibnite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_stibnite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:antimony_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_stibnite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/stibnite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_stibnite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:antimony_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sulfur_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/sulfur",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sulfur_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_sulfur_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/sulfur",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_sulfur_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:sulfur_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_talc_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/talc",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_talc_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:carbon_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_talc_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/talc",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_talc_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:carbon_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tantalite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/tantalite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tantalite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:niobium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tantalite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/tantalite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tantalite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:niobium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tarkianite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/tarkianite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tarkianite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rhenium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tarkianite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/tarkianite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tarkianite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:rhenium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tetrahedrite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/tetrahedrite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tetrahedrite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zinc_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tetrahedrite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/tetrahedrite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tetrahedrite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zinc_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_thorium_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/thorium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_thorium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lead_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_thorium_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/thorium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_thorium_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:lead_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tin_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/tin",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tin_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zinc_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tin_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/tin",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tin_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:zinc_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_topaz_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/topaz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_topaz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:blue_topaz_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_topaz_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/topaz",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_topaz_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:blue_topaz_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tricalcium_phosphate_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/tricalcium_phosphate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tricalcium_phosphate_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:phosphate_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tricalcium_phosphate_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/tricalcium_phosphate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tricalcium_phosphate_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:phosphate_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_trona_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/trona",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_trona_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:soda_ash_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_trona_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/trona",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_trona_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:soda_ash_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tungstate_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/tungstate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tungstate_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silver_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_tungstate_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/tungstate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_tungstate_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silver_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_uraninite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/uraninite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_uraninite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:thorium_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_uraninite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/uraninite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_uraninite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:thorium_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_vanadium_magnetite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/vanadium_magnetite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_vanadium_magnetite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_vanadium_magnetite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/vanadium_magnetite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_vanadium_magnetite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:magnetite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_wulfenite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/wulfenite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_wulfenite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:manganese_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_wulfenite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/wulfenite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_wulfenite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:manganese_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_yellow_garnet_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/yellow_garnet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_yellow_garnet_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:grossular_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_yellow_garnet_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/yellow_garnet",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_yellow_garnet_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:grossular_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_yellow_limonite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/yellow_limonite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_yellow_limonite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:goethite_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_yellow_limonite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/yellow_limonite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_yellow_limonite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:goethite_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_zeolite_crushed_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:crushed_ores/zeolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_zeolite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silicon_dust",
+        "amount": 1,
+        "chance": 3333
+      },
+      {
+        "itemId": "gtceu:stone_dust",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  },
+  {
+    "id": "gtceu:thermal_centrifuge/centrifuge_zeolite_purified_ore_to_refined_ore",
+    "machineId": "gtceu:thermal_centrifuge",
+    "inputs": [
+      {
+        "itemId": "#forge:purified_ores/zeolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:refined_zeolite_ore",
+        "amount": 1
+      },
+      {
+        "itemId": "gtceu:silicon_dust",
+        "amount": 1,
+        "chance": 3333
+      }
+    ],
+    "durationTicks": 400,
+    "energy": {
+      "minVoltageTier": "LV",
+      "voltage": 32,
+      "amperage": 0.9375
+    }
+  }
+]

@@ -7,7 +7,20 @@
 ## Цель
 
 На входе — тег релиза модпака (например `0.12.8`).  
-На выходе — JSON-бандл `tfg-pack-data` v1 для загрузки в приложение.
+На выходе — JSON-бандл `tfg-pack-data` **v2** (sharded) для загрузки в приложение.
+
+**Layout v2:**
+
+```
+public/data/packs/<tag>/
+  pack.meta.json       # machines, items, fluids (без recipes)
+  recipes/
+    index.json         # machineId → shard file + count
+    gtceu__macerator.json
+    …                  # по одному файлу на machineId
+```
+
+Manifest entry: `path` → `pack.meta.json`, `recipesRoot` → `recipes/`.
 
 **Принцип:** рецепты = **все** записи `RecipeManager` после полной загрузки modpack (mods + KubeJS + post-reload), не KubeJS AST и не GT-only subset.
 
@@ -32,7 +45,7 @@ git tag → generate-tfg-snapshot (once per tag)
               ↓
         build-pack → lang bundle → normalize → validate
               ↓
-        public/data/packs/<tag>/pack.json
+        public/data/packs/<tag>/pack.meta.json + recipes/*.json
 ```
 
 ### CLI

@@ -1,0 +1,1806 @@
+[
+  {
+    "id": "tfg:rock_breaker/andesite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/andesite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/andesite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/andesite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/andesite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/andesite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/asurine_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "create:asurine",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:asurine",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/basalt_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/basalt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/basalt",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/basalt_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/basalt",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/basalt",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/blackstone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_blackstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_blackstone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/blackstone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "minecraft:blackstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:blackstone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/calcite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "minecraft:calcite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:calcite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/caprock_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:conglomerate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:conglomerate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/chalk_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/chalk",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/chalk",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/chalk_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/chalk",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/chalk",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/chert_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/chert",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/chert",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/chert_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/chert",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/chert",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/claystone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/claystone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/claystone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/claystone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/claystone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/claystone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/conglomerate_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/conglomerate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/conglomerate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/conglomerate_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/conglomerate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/conglomerate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/crackrack_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_crackrack",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_crackrack",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/crackrack_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "beneath:crackrack",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "beneath:crackrack",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/crimsite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "create:crimsite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:crimsite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/dacite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/dacite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/dacite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/dacite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/dacite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/dacite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/deepslate_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "minecraft:cobbled_deepslate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:cobbled_deepslate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/deepslate_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "minecraft:deepslate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:deepslate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/diorite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/diorite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/diorite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/diorite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/diorite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/diorite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/dolomite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/dolomite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/dolomite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/dolomite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/dolomite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/dolomite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/dripstone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_dripstone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_dripstone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/dripstone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "minecraft:dripstone_block",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:dripstone_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/flavolite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_flavolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_flavolite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/flavolite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "betterend:flavolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "betterend:flavolite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/gabbro_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/gabbro",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/gabbro",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/gabbro_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/gabbro",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/gabbro",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/glacio_stone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:glacio_cobblestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:glacio_cobblestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/glacio_stone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:glacio_stone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:glacio_stone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/gneiss_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/gneiss",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/gneiss",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/gneiss_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/gneiss",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/gneiss",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/granite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/granite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/granite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/granite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/granite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/granite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/limestone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/limestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/limestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/limestone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/limestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/limestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/marble_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/marble",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/marble",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/marble_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/marble",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/marble",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/mars_stone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:mars_cobblestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:mars_cobblestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/mars_stone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:mars_stone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:mars_stone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/mercury_stone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:mercury_cobblestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:mercury_cobblestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/mercury_stone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:mercury_stone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:mercury_stone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/moon_deepslate_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_moon_deepslate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_moon_deepslate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/moon_deepslate_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:moon_deepslate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:moon_deepslate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/moon_stone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:moon_cobblestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:moon_cobblestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/moon_stone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:moon_stone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:moon_stone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/ochrum_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "create:ochrum",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:ochrum",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/permafrost_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_permafrost",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_permafrost",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/permafrost_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:permafrost",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:permafrost",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/phyllite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/phyllite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/phyllite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/phyllite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/phyllite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/phyllite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/quartzite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/quartzite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/quartzite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/quartzite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/quartzite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/quartzite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/red_granite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "gtceu:red_granite_cobblestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_granite_cobblestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/red_granite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "gtceu:red_granite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "gtceu:red_granite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/rhyolite_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/rhyolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/rhyolite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/rhyolite_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/rhyolite",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/rhyolite",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/sandy_jadestone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_sandy_jadestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_sandy_jadestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/sandy_jadestone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "betterend:sandy_jadestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "betterend:sandy_jadestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/schist_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/schist",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/schist",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/schist_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/schist",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/schist",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/scorchia_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_scorchia",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_scorchia",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/scorchia_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "create:scorchia",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:scorchia",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/scoria_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_scoria",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_scoria",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/scoria_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "create:scoria",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:scoria",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/shale_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/shale",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/shale",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/shale_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/shale",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/shale",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/sky_stone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ae2:sky_stone_block",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ae2:sky_stone_block",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/slate_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/cobble/slate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/cobble/slate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/slate_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfc:rock/raw/slate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfc:rock/raw/slate",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/sulphuric_rock_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "betterend:sulphuric_rock",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "betterend:sulphuric_rock",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/tuff_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "tfg:rock/cobble_tuff",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:rock/cobble_tuff",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/tuff_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "minecraft:tuff",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "minecraft:tuff",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/venus_stone_cobble",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:venus_cobblestone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:venus_cobblestone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/venus_stone_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "ad_astra:venus_stone",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "ad_astra:venus_stone",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  },
+  {
+    "id": "tfg:rock_breaker/veridium_raw",
+    "machineId": "gtceu:rock_breaker",
+    "inputs": [
+      {
+        "itemId": "create:veridium",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "create:veridium",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 20,
+    "energy": {
+      "minVoltageTier": "ULV",
+      "voltage": 8,
+      "amperage": 0.875
+    }
+  }
+]

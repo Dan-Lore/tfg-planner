@@ -1,8 +1,8 @@
 import type { Node } from '@xyflow/react';
 import type { MachineNodeData } from '@/canvas/MachineNode';
 import type { BufferNodeData } from '@/canvas/BufferNode';
-import type { PackData } from '@/data/types';
-import { getMachineRecipeCount } from '@/data/pack-registry';
+import type { PackLike } from '@/data/pack-registry';
+import { getMachineRecipeCount, getRecipe } from '@/data/pack-registry';
 import type { TfgpBufferKind } from '@/schema/tfgp';
 
 export const MACHINE_NODE_WIDTH = 220;
@@ -22,13 +22,13 @@ export interface NodeRect {
 }
 
 export function estimateHeaderHeight(
-  pack: PackData,
+  pack: PackLike,
   machineId: string,
   recipeId: string,
   balanceLineCount = 0,
 ): number {
   const recipeCount = getMachineRecipeCount(pack, machineId);
-  const recipe = pack.recipes.find((r) => r.id === recipeId);
+  const recipe = getRecipe(pack, recipeId);
 
   let header = 28;
   if (recipeCount > 1) header += 32;
@@ -52,7 +52,7 @@ export function estimatePortsTopY(nodeY: number, data: MachineNodeData): number 
 }
 
 export function estimateMachineNodeHeightFromPorts(
-  pack: PackData,
+  pack: PackLike,
   machineId: string,
   recipeId: string,
   portCount: number,

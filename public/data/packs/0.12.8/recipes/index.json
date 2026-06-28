@@ -1,0 +1,350 @@
+{
+  "format": "tfg-pack-recipe-index",
+  "formatVersion": 1,
+  "shards": {
+    "gtceu:assembler": {
+      "file": "gtceu__assembler.json",
+      "count": 2915
+    },
+    "gtceu:laser_engraver": {
+      "file": "gtceu__laser_engraver.json",
+      "count": 381
+    },
+    "gtceu:alloy_smelter": {
+      "file": "gtceu__alloy_smelter.json",
+      "count": 929
+    },
+    "gtceu:assembly_line": {
+      "file": "gtceu__assembly_line.json",
+      "count": 73
+    },
+    "gtceu:chemical_bath": {
+      "file": "gtceu__chemical_bath.json",
+      "count": 2082
+    },
+    "gtceu:chemical_reactor": {
+      "file": "gtceu__chemical_reactor.json",
+      "count": 449
+    },
+    "gtceu:large_chemical_reactor": {
+      "file": "gtceu__large_chemical_reactor.json",
+      "count": 969
+    },
+    "gtceu:circuit_assembler": {
+      "file": "gtceu__circuit_assembler.json",
+      "count": 98
+    },
+    "gtceu:extruder": {
+      "file": "gtceu__extruder.json",
+      "count": 1231
+    },
+    "gtceu:fluid_solidifier": {
+      "file": "gtceu__fluid_solidifier.json",
+      "count": 860
+    },
+    "gtceu:forming_press": {
+      "file": "gtceu__forming_press.json",
+      "count": 791
+    },
+    "gtceu:macerator": {
+      "file": "gtceu__macerator.json",
+      "count": 11247
+    },
+    "gtceu:mixer": {
+      "file": "gtceu__mixer.json",
+      "count": 393
+    },
+    "gtceu:packer": {
+      "file": "gtceu__packer.json",
+      "count": 2968
+    },
+    "gtceu:polarizer": {
+      "file": "gtceu__polarizer.json",
+      "count": 39
+    },
+    "gtceu:wiremill": {
+      "file": "gtceu__wiremill.json",
+      "count": 296
+    },
+    "gtceu:electric_furnace": {
+      "file": "gtceu__electric_furnace.json",
+      "count": 5319
+    },
+    "gtceu:extractor": {
+      "file": "gtceu__extractor.json",
+      "count": 2814
+    },
+    "gtceu:food_processor": {
+      "file": "gtceu__food_processor.json",
+      "count": 736
+    },
+    "gtceu:cutter": {
+      "file": "gtceu__cutter.json",
+      "count": 3039
+    },
+    "gtceu:wire_coating": {
+      "file": "gtceu__wire_coating.json",
+      "count": 410
+    },
+    "gtceu:air_scrubber": {
+      "file": "gtceu__air_scrubber.json",
+      "count": 1
+    },
+    "gtceu:alloy_blast_smelter": {
+      "file": "gtceu__alloy_blast_smelter.json",
+      "count": 118
+    },
+    "gtceu:arc_furnace": {
+      "file": "gtceu__arc_furnace.json",
+      "count": 4369
+    },
+    "gtceu:autoclave": {
+      "file": "gtceu__autoclave.json",
+      "count": 52
+    },
+    "gtceu:bender": {
+      "file": "gtceu__bender.json",
+      "count": 637
+    },
+    "gtceu:bioreactor": {
+      "file": "gtceu__bioreactor.json",
+      "count": 11
+    },
+    "gtceu:brewery": {
+      "file": "gtceu__brewery.json",
+      "count": 33
+    },
+    "gtceu:canner": {
+      "file": "gtceu__canner.json",
+      "count": 39
+    },
+    "gtceu:centrifuge": {
+      "file": "gtceu__centrifuge.json",
+      "count": 479
+    },
+    "gtceu:coke_oven": {
+      "file": "gtceu__coke_oven.json",
+      "count": 9
+    },
+    "gtceu:combustion_generator": {
+      "file": "gtceu__combustion_generator.json",
+      "count": 13
+    },
+    "gtceu:compressor": {
+      "file": "gtceu__compressor.json",
+      "count": 405
+    },
+    "gtceu:cracker": {
+      "file": "gtceu__cracker.json",
+      "count": 35
+    },
+    "gtceu:distillation_tower": {
+      "file": "gtceu__distillation_tower.json",
+      "count": 62
+    },
+    "gtceu:distillery": {
+      "file": "gtceu__distillery.json",
+      "count": 260
+    },
+    "gtceu:electric_blast_furnace": {
+      "file": "gtceu__electric_blast_furnace.json",
+      "count": 205
+    },
+    "gtceu:electrolyzer": {
+      "file": "gtceu__electrolyzer.json",
+      "count": 253
+    },
+    "gtceu:electromagnetic_separator": {
+      "file": "gtceu__electromagnetic_separator.json",
+      "count": 19
+    },
+    "gtceu:fermenter": {
+      "file": "gtceu__fermenter.json",
+      "count": 14
+    },
+    "gtceu:fluid_heater": {
+      "file": "gtceu__fluid_heater.json",
+      "count": 13
+    },
+    "gtceu:food_oven": {
+      "file": "gtceu__food_oven.json",
+      "count": 131
+    },
+    "gtceu:forge_hammer": {
+      "file": "gtceu__forge_hammer.json",
+      "count": 6032
+    },
+    "gtceu:fusion_reactor": {
+      "file": "gtceu__fusion_reactor.json",
+      "count": 24
+    },
+    "gtceu:gas_collector": {
+      "file": "gtceu__gas_collector.json",
+      "count": 4
+    },
+    "gtceu:gas_pressurizer": {
+      "file": "gtceu__gas_pressurizer.json",
+      "count": 12
+    },
+    "gtceu:gas_turbine": {
+      "file": "gtceu__gas_turbine.json",
+      "count": 21
+    },
+    "gtceu:heat_exchanger": {
+      "file": "gtceu__heat_exchanger.json",
+      "count": 3
+    },
+    "gtceu:implosion_compressor": {
+      "file": "gtceu__implosion_compressor.json",
+      "count": 179
+    },
+    "gtceu:large_boiler": {
+      "file": "gtceu__large_boiler.json",
+      "count": 31
+    },
+    "gtceu:large_solar_panel_tier2": {
+      "file": "gtceu__large_solar_panel_tier2.json",
+      "count": 3
+    },
+    "gtceu:large_solar_panel_tier3": {
+      "file": "gtceu__large_solar_panel_tier3.json",
+      "count": 3
+    },
+    "gtceu:large_solar_panel": {
+      "file": "gtceu__large_solar_panel.json",
+      "count": 2
+    },
+    "gtceu:lathe": {
+      "file": "gtceu__lathe.json",
+      "count": 318
+    },
+    "gtceu:nuclear_turbine": {
+      "file": "gtceu__nuclear_turbine.json",
+      "count": 1
+    },
+    "gtceu:ore_washer": {
+      "file": "gtceu__ore_washer.json",
+      "count": 735
+    },
+    "gtceu:plasma_generator": {
+      "file": "gtceu__plasma_generator.json",
+      "count": 8
+    },
+    "gtceu:primitive_blast_furnace": {
+      "file": "gtceu__primitive_blast_furnace.json",
+      "count": 18
+    },
+    "gtceu:pyrolyse_oven": {
+      "file": "gtceu__pyrolyse_oven.json",
+      "count": 39
+    },
+    "gtceu:research_station": {
+      "file": "gtceu__research_station.json",
+      "count": 34
+    },
+    "gtceu:scanner": {
+      "file": "gtceu__scanner.json",
+      "count": 21
+    },
+    "gtceu:sifter": {
+      "file": "gtceu__sifter.json",
+      "count": 32
+    },
+    "gtceu:steam_bloomery": {
+      "file": "gtceu__steam_bloomery.json",
+      "count": 22
+    },
+    "gtceu:steam_boiler": {
+      "file": "gtceu__steam_boiler.json",
+      "count": 29
+    },
+    "gtceu:steam_turbine": {
+      "file": "gtceu__steam_turbine.json",
+      "count": 1
+    },
+    "gtceu:thermal_centrifuge": {
+      "file": "gtceu__thermal_centrifuge.json",
+      "count": 230
+    },
+    "gtceu:vacuum_freezer": {
+      "file": "gtceu__vacuum_freezer.json",
+      "count": 119
+    },
+    "gtceu:coal_liquefaction_tower": {
+      "file": "gtceu__coal_liquefaction_tower.json",
+      "count": 98
+    },
+    "gtceu:cooling_tower": {
+      "file": "gtceu__cooling_tower.json",
+      "count": 5
+    },
+    "gtceu:evaporation_tower": {
+      "file": "gtceu__evaporation_tower.json",
+      "count": 1
+    },
+    "deafission:fission_reactor_coolant_smr": {
+      "file": "deafission__fission_reactor_coolant_smr.json",
+      "count": 1
+    },
+    "deafission:fission_reactor_coolant": {
+      "file": "deafission__fission_reactor_coolant.json",
+      "count": 6
+    },
+    "deafission:fission_reactor_fuel": {
+      "file": "deafission__fission_reactor_fuel.json",
+      "count": 7
+    },
+    "deafission:fission_reactor_processing": {
+      "file": "deafission__fission_reactor_processing.json",
+      "count": 4
+    },
+    "gtceu:greenhouse": {
+      "file": "gtceu__greenhouse.json",
+      "count": 1870
+    },
+    "deafission:hb_export": {
+      "file": "deafission__hb_export.json",
+      "count": 1
+    },
+    "deafission:hb_import": {
+      "file": "deafission__hb_import.json",
+      "count": 2
+    },
+    "gtceu:high_temperature_precision_fabricator": {
+      "file": "gtceu__high_temperature_precision_fabricator.json",
+      "count": 18
+    },
+    "gtceu:hydroponics_facility": {
+      "file": "gtceu__hydroponics_facility.json",
+      "count": 1869
+    },
+    "gtceu:nuclear_fuel_factory": {
+      "file": "gtceu__nuclear_fuel_factory.json",
+      "count": 28
+    },
+    "gtceu:ostrum_linear_accelerator": {
+      "file": "gtceu__ostrum_linear_accelerator.json",
+      "count": 12
+    },
+    "gtceu:pastoral_engine": {
+      "file": "gtceu__pastoral_engine.json",
+      "count": 4
+    },
+    "gtceu:pisciculture_fishery": {
+      "file": "gtceu__pisciculture_fishery.json",
+      "count": 44
+    },
+    "gtceu:rock_breaker": {
+      "file": "gtceu__rock_breaker.json",
+      "count": 82
+    },
+    "gtceu:smr_generator": {
+      "file": "gtceu__smr_generator.json",
+      "count": 1
+    },
+    "gtceu:super_boiler": {
+      "file": "gtceu__super_boiler.json",
+      "count": 8
+    }
+  }
+}

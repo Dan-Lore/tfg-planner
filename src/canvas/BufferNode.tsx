@@ -1,7 +1,7 @@
 import { memo, useLayoutEffect, useMemo, useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
-import type { PackData } from '@/data/types';
+import type { PackLike } from '@/data/pack-registry';
 import type { TfgpBufferKind, TfgpSupplyMode } from '@/schema/tfgp';
 import { flowLabel } from '@/canvas/ports';
 import { formatRate } from '@/calculator/flow-solver';
@@ -19,7 +19,7 @@ export interface BufferNodeData {
   supplyRate?: number;
   initialStock?: number;
   autoSupplyRate?: boolean;
-  pack: PackData;
+  pack: PackLike;
   checkSeverity?: 'error' | 'warning';
   checkTitle?: string;
   inputPorts: PortDisplay[];
@@ -240,7 +240,7 @@ export const BufferNode = memo(BufferNodeComponent);
 
 export function buildBufferPortDisplays(
   bufferKind: TfgpBufferKind,
-  pack: PackData,
+  pack: PackLike,
   lang: 'ru' | 'en',
   itemId: string | undefined,
   fluidId: string | undefined,

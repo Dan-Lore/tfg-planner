@@ -1,0 +1,121 @@
+[
+  {
+    "id": "tfg:fission_reactor_fuel/americium_241",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:americium_241_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_americium_241_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 5000000
+  },
+  {
+    "id": "tfg:fission_reactor_fuel/californium_252_rod",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:californium_252_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_californium_252_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 312500
+  },
+  {
+    "id": "tfg:fission_reactor_fuel/neptunium_237",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:neptunium_237_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_neptunium_237_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 125000
+  },
+  {
+    "id": "tfg:fission_reactor_fuel/plutonium",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:plutonium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_plutonium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 25000
+  },
+  {
+    "id": "tfg:fission_reactor_fuel/tbu_232",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:tbu_232_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_tbu_232_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 12500
+  },
+  {
+    "id": "tfg:fission_reactor_fuel/thorium",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:thorium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_thorium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 17857
+  },
+  {
+    "id": "tfg:fission_reactor_fuel/uranium",
+    "machineId": "deafission:fission_reactor_fuel",
+    "inputs": [
+      {
+        "itemId": "tfg:uranium_rod",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "itemId": "tfg:depleted_uranium_rod",
+        "amount": 1
+      }
+    ],
+    "durationTicks": 22727
+  }
+]

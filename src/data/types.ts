@@ -62,22 +62,52 @@ export interface ItemDef {
   names: LocalizedName;
 }
 
-export interface PackData {
+/** Shared header for monolithic (v1) and sharded (v2) pack data. */
+export interface PackDataHeader {
   format: 'tfg-pack-data';
-  formatVersion: 1;
+  formatVersion: 1 | 2;
   modpackVersion: string;
   dataVersion: number;
   generatedAt: string;
   machines: Machine[];
-  recipes: Recipe[];
   items: ItemDef[];
   fluids: ItemDef[];
+}
+
+/** v1 monolithic pack (tests, in-memory merges). */
+export interface PackData extends PackDataHeader {
+  formatVersion: 1;
+  recipes: Recipe[];
+}
+
+/** v2 meta file — machines/items/fluids without recipe bodies. */
+export interface PackMeta extends PackDataHeader {
+  formatVersion: 2;
+}
+
+export interface RecipeShardEntry {
+  file: string;
+  count: number;
+}
+
+export interface RecipeShardIndex {
+  format: 'tfg-pack-recipe-index';
+  formatVersion: 1;
+  shards: Record<string, RecipeShardEntry>;
+}
+
+/** Subset of pack data passed to solver / scheme check. */
+export interface PackSlice {
+  meta: PackMeta | PackData;
+  recipes: Recipe[];
 }
 
 export interface PackManifestEntry {
   modpackVersion: string;
   dataVersion: number;
   path: string;
+  /** Base URL for sharded recipe files (v2). */
+  recipesRoot?: string;
   status: 'ready' | 'planned' | 'building' | 'deprecated';
 }
 

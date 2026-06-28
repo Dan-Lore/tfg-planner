@@ -1,8 +1,9 @@
+import type { FlowResult } from '@/calculator/flow-solver';
 import type { PackData, Recipe } from '@/data/types';
 import { nodePortFlow, parsePortId, portsMatch, productKey } from '@/canvas/ports';
 import { buildTagIndex } from '@/lib/tag-index';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
-import { runSolver, normalizeSchemeNodes } from '@/stores/editor-utils';
+import { normalizeSchemeNodes } from '@/stores/editor-utils';
 import type { TfgpEdge, TfgpFile, TfgpNode, TfgpTarget } from '@/schema/tfgp';
 
 export type SchemeIssueSeverity = 'error' | 'warning' | 'info';
@@ -100,9 +101,16 @@ export function indexSchemeIssues(result: SchemeCheckResult): SchemeIssueIndex {
   return { byEdgeId, byNodeId, worstByEdgeId, worstByNodeId };
 }
 
-function recipeForNode(node: TfgpNode, pack: PackData): Recipe | undefined {
+function recipeForNode(
+  node: TfgpNode,
+  recipes: Map<string, Recipe>,
+): Recipe | undefined {
   if (!isMachineNode(node)) return undefined;
-  return pack.recipes.find((r) => r.id === node.recipeId);
+  return recipes.get(node.recipeId);
+}
+
+function recipeMapFromPack(pack: PackData): Map<string, Recipe> {
+  return new Map(pack.recipes.map((r) => [r.id, r]));
 }
 
 function nodeLabel(node: TfgpNode): string {
@@ -133,6 +141,7 @@ function checkEdge(
   edge: TfgpEdge,
   nodeById: Map<string, TfgpNode>,
   pack: PackData,
+  recipes: Map<string, Recipe>,
   tags: ReturnType<typeof buildTagIndex>,
 ): SchemeIssue[] {
   const issues: SchemeIssue[] = [];
@@ -158,8 +167,8 @@ function checkEdge(
     return issues;
   }
 
-  const srcRecipe = recipeForNode(src, pack);
-  const tgtRecipe = recipeForNode(tgt, pack);
+  const srcRecipe = recipeForNode(src, recipes);
+  const tgtRecipe = recipeForNode(tgt, recipes);
 
   if (isMachineNode(src) && !srcRecipe) {
     issues.push({
@@ -293,7 +302,7 @@ function checkEdge(
 function checkDisconnectedInputs(
   nodes: TfgpNode[],
   edges: TfgpEdge[],
-  pack: PackData,
+  recipes: Map<string, Recipe>,
 ): SchemeIssue[] {
   const issues: SchemeIssue[] = [];
   const connectedIn = new Map<string, Set<string>>();
@@ -305,7 +314,7 @@ function checkDisconnectedInputs(
 
   for (const node of nodes) {
     if (!isMachineNode(node)) continue;
-    const recipe = recipeForNode(node, pack);
+    const recipe = recipeForNode(node, recipes);
     if (!recipe) continue;
     const ports = connectedIn.get(node.id) ?? new Set<string>();
     for (let i = 0; i < recipe.inputs.length; i++) {
@@ -355,23 +364,20 @@ function checkTargets(
 function checkStalledMachines(
   scheme: TfgpFile,
   pack: PackData,
+  flowResult: FlowResult,
+  recipes: Map<string, Recipe>,
 ): SchemeIssue[] {
   const issues: SchemeIssue[] = [];
   const nodes = normalizeSchemeNodes(scheme.nodes, pack);
-  const result = runSolver(
-    { nodes, edges: scheme.edges, targets: scheme.targets, viewport: scheme.viewport },
-    pack,
-    { preserveManualMachineCounts: true },
-  );
 
   for (const node of nodes) {
     if (!isMachineNode(node)) continue;
-    const recipe = recipeForNode(node, pack);
+    const recipe = recipeForNode(node, recipes);
     if (!recipe || recipe.outputs.length === 0) continue;
 
-    const theoretical = result.nodePortOutputRates[node.id]?.out_0;
-    const effective = result.nodeEffectivePortOutputRates[node.id]?.out_0;
-    const load = result.nodeLoad[node.id];
+    const theoretical = flowResult.nodePortOutputRates[node.id]?.out_0;
+    const effective = flowResult.nodeEffectivePortOutputRates[node.id]?.out_0;
+    const load = flowResult.nodeLoad[node.id];
 
     if (!theoretical || theoretical.toNumber() <= STALL_RATE_EPS) continue;
     if (load && load.toNumber() > STALL_LOAD_EPS) continue;
@@ -388,20 +394,30 @@ function checkStalledMachines(
   return issues;
 }
 
-export function checkScheme(scheme: TfgpFile, pack: PackData): SchemeCheckResult {
+export interface CheckSchemeOptions {
+  /** Reuse solver output to avoid a second runSolver in stalled-machine check. */
+  flowResult?: FlowResult;
+}
+
+export function checkScheme(
+  scheme: TfgpFile,
+  pack: PackData,
+  options: CheckSchemeOptions = {},
+): SchemeCheckResult {
   const nodeById = new Map(scheme.nodes.map((n) => [n.id, n]));
+  const recipes = recipeMapFromPack(pack);
   const tags = buildTagIndex(pack);
   const issues: SchemeIssue[] = [];
 
   for (const edge of scheme.edges) {
-    issues.push(...checkEdge(edge, nodeById, pack, tags));
+    issues.push(...checkEdge(edge, nodeById, pack, recipes, tags));
   }
-  issues.push(...checkDisconnectedInputs(scheme.nodes, scheme.edges, pack));
+  issues.push(...checkDisconnectedInputs(scheme.nodes, scheme.edges, recipes));
   issues.push(...checkTargets(scheme.targets ?? [], nodeById));
 
   const hasStructuralErrors = issues.some((i) => i.severity === 'error');
-  if (!hasStructuralErrors) {
-    issues.push(...checkStalledMachines(scheme, pack));
+  if (!hasStructuralErrors && options.flowResult) {
+    issues.push(...checkStalledMachines(scheme, pack, options.flowResult, recipes));
   }
 
   const errorCount = issues.filter((i) => i.severity === 'error').length;
