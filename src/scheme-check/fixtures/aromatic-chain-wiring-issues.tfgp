@@ -1,0 +1,451 @@
+{
+  "format": "tfg-planner-graph",
+  "formatVersion": 1,
+  "meta": {
+    "name": "Aromatic chain wiring issues (test fixture)",
+    "author": "TFG Planner",
+    "createdAt": "2026-06-18T10:33:14.342Z",
+    "updatedAt": "2026-06-28T00:00:39.333Z",
+    "description": "Regression layout for checkScheme: invalid charcoal port edge_85 and disconnected copper on node_49. Committed fixture; see src/scheme-check/fixtures/README.md."
+  },
+  "modpack": {
+    "version": "0.12.8",
+    "dataVersion": 1
+  },
+  "viewport": {
+    "x": -1162.0252318672285,
+    "y": 55.69467806194206,
+    "zoom": 0.7578582832552003
+  },
+  "nodes": [
+    {
+      "machineId": "gtceu:pyrolyse_oven",
+      "recipeId": "tfg:pyrolyse_oven/log_to_wood_tar_nitrogen",
+      "position": {
+        "x": 316.11529222994966,
+        "y": 109.72248972223679
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 2,
+      "id": "node_22",
+      "voltageTier": "HV"
+    },
+    {
+      "machineId": "gtceu:coal_liquefaction_tower",
+      "recipeId": "tfg:raw_aromatic_mix_charcoal_hydrogen",
+      "position": {
+        "x": 862.4873257968536,
+        "y": -123.59028602866115
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 4,
+      "id": "node_24",
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_30",
+      "machineId": "gtceu:cracker",
+      "recipeId": "tfg:reformate_gas_cracker",
+      "position": {
+        "x": 2493.920503146008,
+        "y": 176.96749204641776
+      },
+      "machineCount": 2,
+      "overclock": 1,
+      "parallel": 1,
+      "voltageTier": "MV"
+    },
+    {
+      "machineId": "gtceu:greenhouse",
+      "recipeId": "tfg:tfc_wood_sapling_pine/1",
+      "position": {
+        "x": -506.58713965399977,
+        "y": 40.989487959162304
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 48,
+      "id": "node_36",
+      "voltageTier": "MV"
+    },
+    {
+      "machineId": "gtceu:distillation_tower",
+      "recipeId": "gtceu:distill_wood_tar",
+      "position": {
+        "x": 878.2620076138514,
+        "y": 137.65663791871967
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 1,
+      "id": "node_37",
+      "voltageTier": "EV"
+    },
+    {
+      "machineId": "gtceu:large_chemical_reactor",
+      "recipeId": "tfg:aromatic_feedstock@lcr",
+      "position": {
+        "x": 1471.731688525914,
+        "y": 135.29075081927377
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 16,
+      "id": "node_44",
+      "voltageTier": "LV"
+    },
+    {
+      "machineId": "gtceu:large_chemical_reactor",
+      "recipeId": "tfg:electrolyze_syngas@lcr",
+      "position": {
+        "x": 1467.828438315172,
+        "y": -143.11530099834718
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 16,
+      "id": "node_49",
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_51",
+      "machineId": "gtceu:distillation_tower",
+      "recipeId": "tfg:methanol_distil_propylene",
+      "position": {
+        "x": 1951.1444636887502,
+        "y": -114.31775132765937
+      },
+      "machineCount": 1,
+      "overclock": 1,
+      "parallel": 1,
+      "voltageTier": "HV"
+    },
+    {
+      "id": "node_56",
+      "position": {
+        "x": -794.6448816351668,
+        "y": 19.766133343607038
+      },
+      "itemId": "tfc:wood/sapling/pine",
+      "capacity": 0,
+      "kind": "start_buffer",
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true,
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_60",
+      "position": {
+        "x": 2141.7425048062905,
+        "y": 469.40201479320143
+      },
+      "fluidId": "gtceu:steam",
+      "capacity": 0,
+      "kind": "start_buffer",
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true,
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_62",
+      "position": {
+        "x": 1603.579282916559,
+        "y": 492.7874089368533
+      },
+      "itemId": "gtceu:tiny_rhenium_dust",
+      "capacity": 0,
+      "kind": "start_buffer",
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true,
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_64",
+      "position": {
+        "x": 2989.678143285175,
+        "y": 214.37597491539242
+      },
+      "fluidId": "tfg:reformate_gas",
+      "capacity": 0,
+      "kind": "end_buffer",
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_66",
+      "position": {
+        "x": 1199.3065662461383,
+        "y": 461.18302014902787
+      },
+      "fluidId": "gtceu:steam",
+      "capacity": 0,
+      "kind": "start_buffer",
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true,
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "machineId": "gtceu:pyrolyse_oven",
+      "recipeId": "tfg:pyrolyse_oven/log_to_creosote_nitrogen",
+      "position": {
+        "x": 311.68431431568604,
+        "y": -108.31195961948131
+      },
+      "overclock": 1,
+      "parallel": 1,
+      "machineCount": 2,
+      "id": "node_72",
+      "voltageTier": "HV"
+    },
+    {
+      "id": "node_93",
+      "position": {
+        "x": -29.687060604406952,
+        "y": -172.12684968103255
+      },
+      "fluidId": "gtceu:nitrogen",
+      "capacity": 0,
+      "kind": "start_buffer",
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true,
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_96",
+      "machineId": "gtceu:large_chemical_reactor",
+      "recipeId": "tfg:reformed_aromatic_feedstock@lcr",
+      "position": {
+        "x": 1999.3349913131628,
+        "y": 179.09170241305947
+      },
+      "machineCount": 4,
+      "overclock": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_104",
+      "position": {
+        "x": -29.01102259451001,
+        "y": 77.81107843432547
+      },
+      "itemId": "tfc:wood/log/pine",
+      "capacity": 13880,
+      "kind": "intermediate_buffer"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_45",
+      "source": "node_24",
+      "target": "node_44",
+      "sourcePort": "out_2",
+      "targetPort": "in_0",
+      "fluidId": "tfg:raw_aromatic_mix"
+    },
+    {
+      "id": "edge_46",
+      "source": "node_37",
+      "target": "node_44",
+      "sourcePort": "out_2",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:benzene"
+    },
+    {
+      "id": "edge_52",
+      "source": "node_49",
+      "sourcePort": "out_0",
+      "target": "node_51",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:methanol"
+    },
+    {
+      "id": "edge_57",
+      "source": "node_56",
+      "sourcePort": "out_0",
+      "target": "node_36",
+      "targetPort": "in_0",
+      "itemId": "tfc:wood/sapling/pine"
+    },
+    {
+      "id": "edge_61",
+      "source": "node_60",
+      "sourcePort": "out_0",
+      "target": "node_30",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:steam"
+    },
+    {
+      "id": "edge_65",
+      "source": "node_30",
+      "sourcePort": "out_1",
+      "target": "node_64",
+      "targetPort": "in_0",
+      "fluidId": "tfg:reformate_gas"
+    },
+    {
+      "id": "edge_67",
+      "source": "node_66",
+      "sourcePort": "out_0",
+      "target": "node_44",
+      "targetPort": "in_2",
+      "fluidId": "gtceu:steam"
+    },
+    {
+      "id": "edge_83",
+      "source": "node_72",
+      "target": "node_24",
+      "sourcePort": "out_0",
+      "targetPort": "in_2",
+      "itemId": "minecraft:charcoal"
+    },
+    {
+      "id": "edge_85",
+      "source": "node_22",
+      "target": "node_24",
+      "sourcePort": "out_0",
+      "targetPort": "in_2",
+      "itemId": "minecraft:charcoal"
+    },
+    {
+      "id": "edge_86",
+      "source": "node_22",
+      "target": "node_37",
+      "sourcePort": "out_1",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:wood_tar"
+    },
+    {
+      "id": "edge_94",
+      "source": "node_93",
+      "sourcePort": "out_0",
+      "target": "node_22",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:nitrogen"
+    },
+    {
+      "id": "edge_95",
+      "source": "node_93",
+      "target": "node_72",
+      "sourcePort": "out_0",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:nitrogen"
+    },
+    {
+      "id": "edge_98",
+      "source": "node_96",
+      "target": "node_30",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "fluidId": "tfg:reformed_aromatic_feedstock"
+    },
+    {
+      "id": "edge_101",
+      "source": "node_72",
+      "target": "node_24",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "itemId": "minecraft:charcoal"
+    },
+    {
+      "id": "edge_102",
+      "source": "node_22",
+      "target": "node_24",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "itemId": "minecraft:charcoal"
+    },
+    {
+      "id": "edge_103",
+      "source": "node_72",
+      "target": "node_24",
+      "sourcePort": "out_1",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:creosote"
+    },
+    {
+      "id": "edge_105",
+      "source": "node_36",
+      "sourcePort": "out_0",
+      "target": "node_104",
+      "targetPort": "in_0",
+      "itemId": "tfc:wood/log/pine"
+    },
+    {
+      "id": "edge_106",
+      "source": "node_36",
+      "target": "node_104",
+      "sourcePort": "out_2",
+      "targetPort": "in_0",
+      "itemId": "tfc:wood/log/pine"
+    },
+    {
+      "id": "edge_107",
+      "source": "node_36",
+      "target": "node_104",
+      "sourcePort": "out_3",
+      "targetPort": "in_0",
+      "itemId": "tfc:wood/log/pine"
+    },
+    {
+      "id": "edge_108",
+      "source": "node_104",
+      "target": "node_72",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "itemId": "tfc:wood/log/pine"
+    },
+    {
+      "id": "edge_109",
+      "source": "node_104",
+      "target": "node_22",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "itemId": "tfc:wood/log/pine"
+    },
+    {
+      "id": "edge_110",
+      "source": "node_44",
+      "target": "node_96",
+      "sourcePort": "out_0",
+      "targetPort": "in_1",
+      "fluidId": "tfg:aromatic_feedstock"
+    },
+    {
+      "id": "edge_111",
+      "source": "node_62",
+      "target": "node_96",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "itemId": "gtceu:tiny_rhenium_dust"
+    },
+    {
+      "id": "edge_112",
+      "source": "node_24",
+      "target": "node_49",
+      "sourcePort": "out_1",
+      "targetPort": "in_1",
+      "fluidId": "tfg:syngas"
+    }
+  ],
+  "groups": [],
+  "targets": []
+}

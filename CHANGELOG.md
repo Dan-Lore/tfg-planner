@@ -21,6 +21,7 @@
 - **build-pack:** chanced I/O preserved via snapshot GT JSON + `sanitizeFlow` (no KubeJS enrich pass).
 - **Холст:** подвисание при drag — селективная перерисовка рёбер (`FlowEdge` + `memo`), изоляция drag в `EditorCanvas`; статичная метка рецепта у машин с большим числом рецептов (теплица) во время drag.
 - CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
+- CI: `check-scheme` test uses committed fixture instead of gitignored `Untitled (29).tfgp`.
 - **Промежуточный буфер:** `capacity` больше не ограничивает скорость выхода; pass-through `min(вход, спрос downstream)`.
 
 ### Added

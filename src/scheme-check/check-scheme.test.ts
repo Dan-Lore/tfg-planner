@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { PackData } from '@/data/types';
 import type { TfgpFile } from '@/schema/tfgp';
@@ -57,6 +58,11 @@ function scheme(overrides: Partial<TfgpFile>): TfgpFile {
     ...overrides,
   };
 }
+
+const AROMATIC_WIRING_FIXTURE = path.join(
+  process.cwd(),
+  'src/scheme-check/fixtures/aromatic-chain-wiring-issues.tfgp',
+);
 
 describe('checkScheme', () => {
   it('flags invalid target port that zeroes upstream output', () => {
@@ -132,9 +138,9 @@ describe('checkScheme', () => {
   });
 
   it(
-    'checks Untitled (29).tfgp for known wiring issues',
+    'checks aromatic-chain fixture for known wiring issues',
     () => {
-    const raw = readFileSync('Untitled (29).tfgp', 'utf8');
+    const raw = readFileSync(AROMATIC_WIRING_FIXTURE, 'utf8');
     const file = parseTfgp(raw);
     const pack = loadTestPack(file.modpack.version);
     const snap = {
