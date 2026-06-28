@@ -58,6 +58,8 @@ export interface MachineNodeData {
   loadTitle?: string;
   /** Unified width for all nodes of the same machineId. */
   layoutWidth?: number;
+  checkSeverity?: 'error' | 'warning';
+  checkTitle?: string;
   [key: string]: unknown;
 }
 
@@ -219,11 +221,13 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
       className={[
         'machine-node',
         selected ? 'selected' : '',
+        d.checkSeverity ? `machine-node--issue-${d.checkSeverity}` : '',
         recipeMenuOpen ? 'machine-node--menu-open' : '',
         dragging ? 'is-dragging' : '',
       ]
         .filter(Boolean)
         .join(' ')}
+      title={d.checkTitle}
       style={
         cardWidth != null
           ? {

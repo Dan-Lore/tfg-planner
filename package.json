@@ -16,7 +16,8 @@
     "bootstrap-snapshot": "node tools/parser/scripts/bootstrap-snapshot-from-pack.mjs",
     "generate-tfg-snapshot": "node tools/parser/scripts/generate-tfg-snapshot.mjs",
     "resume-tfg-server-export": "node tools/parser/scripts/run-tfg-server-export.mjs",
-    "parser:validate": "tsx tools/parser/src/cli.ts validate"
+    "parser:validate": "tsx tools/parser/src/cli.ts validate",
+    "check-scheme": "vite-node --config vitest.config.ts tools/check-scheme.ts"
   },
   "dependencies": {
     "@babel/parser": "^8.0.0",

@@ -20,6 +20,8 @@ export interface BufferNodeData {
   initialStock?: number;
   autoSupplyRate?: boolean;
   pack: PackData;
+  checkSeverity?: 'error' | 'warning';
+  checkTitle?: string;
   inputPorts: PortDisplay[];
   outputPorts: PortDisplay[];
   loadPercent?: number;
@@ -112,7 +114,15 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
   return (
     <div
       ref={rootRef}
-      className={`buffer-node ${selected ? 'buffer-node--selected' : ''} ${dragging ? 'is-dragging' : ''}`}
+      className={[
+        'buffer-node',
+        selected ? 'buffer-node--selected' : '',
+        d.checkSeverity ? `buffer-node--issue-${d.checkSeverity}` : '',
+        dragging ? 'is-dragging' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      title={d.checkTitle}
       style={{ width: BUFFER_NODE_WIDTH, overflow: 'hidden' }}
     >
       <div className="buffer-node__header buffer-node__drag-handle">

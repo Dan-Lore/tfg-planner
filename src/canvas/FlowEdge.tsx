@@ -20,6 +20,8 @@ import { getFlowNodeRect } from '@/canvas/node-bounds';
 export interface FlowEdgeData {
   source?: string;
   target?: string;
+  checkSeverity?: 'error' | 'warning';
+  checkTitle?: string;
   [key: string]: unknown;
 }
 
@@ -49,7 +51,11 @@ function edgePropsEqual(a: EdgeProps, b: EdgeProps): boolean {
   if (a.selected !== b.selected) return false;
   const da = a.data as FlowEdgeData | undefined;
   const db = b.data as FlowEdgeData | undefined;
-  return da?.source === db?.source && da?.target === db?.target;
+  return (
+    da?.source === db?.source &&
+    da?.target === db?.target &&
+    da?.checkSeverity === db?.checkSeverity
+  );
 }
 
 const FlowEdgeComponent = memo(function FlowEdgeComponent({
@@ -71,6 +77,12 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
   const nodes = useNodes();
   const d = (data ?? {}) as FlowEdgeData;
   const emphasized = selected || hovered;
+  const issueStroke =
+    d.checkSeverity === 'error'
+      ? 'var(--issue-error)'
+      : d.checkSeverity === 'warning'
+        ? 'var(--issue-warning)'
+        : undefined;
   const round = (value: number) => Math.round(value);
 
   const endpoints = useMemo(
@@ -130,9 +142,13 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
 
   return (
     <g
+      className={
+        d.checkSeverity ? `flow-edge flow-edge--issue-${d.checkSeverity}` : 'flow-edge'
+      }
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {d.checkTitle ? <title>{d.checkTitle}</title> : null}
       <BaseEdge
         id={id}
         path={routed.path}
@@ -140,8 +156,9 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
         interactionWidth={18}
         style={{
           ...style,
-          strokeWidth: selected ? 2.5 : hovered ? 2 : undefined,
-          stroke: emphasized ? 'var(--accent)' : undefined,
+          strokeWidth: selected ? 2.5 : issueStroke ? 2.25 : hovered ? 2 : undefined,
+          stroke: issueStroke ?? (emphasized ? 'var(--accent)' : undefined),
+          strokeDasharray: d.checkSeverity === 'warning' ? '7 5' : undefined,
           transition: 'stroke 0.15s ease, stroke-width 0.15s ease',
         }}
       />

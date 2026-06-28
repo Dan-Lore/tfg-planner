@@ -15,6 +15,7 @@ const resources = {
         subtitle:
           'Мнемосхемы для модпака TerraFirmaGreg-Modern. Собирайте цепочки, масштабируйте производство, сохраняйте схемы в .tfgp.',
         openEditor: 'Открыть редактор',
+        selectVersionHint: 'Выберите версию modpack — данные рецептов и машин подгрузятся для редактора.',
         selectVersion: 'Выбрать версию модпака',
         modpackLink: 'Репозиторий Modpack-Modern',
         inspiration: 'Вдохновение: Factorio Calculator',
@@ -28,6 +29,9 @@ const resources = {
       },
       editor: {
         title: 'Редактор схемы',
+        elementEditor: 'Редактор элементов',
+        activePack: 'Активная версия modpack',
+        selectPackOnHome: 'Выбрать версию на главной',
         addMachine: 'Добавить машину',
         targetRate: 'Целевая скорость',
         duplicate: 'Дублировать',
@@ -38,7 +42,7 @@ const resources = {
         clearScheme: 'Очистить схему',
         clearSchemeConfirm:
           'Удалить все узлы, связи и цели? Действие нельзя отменить.',
-        noPack: 'Сначала выберите версию модпака в панели слева.',
+        noPack: 'Версия modpack не выбрана. Сначала выберите её на главной странице.',
         machineCount: 'Машин',
         overclock: 'Разгон',
         machinesMeta: 'Машин x{{count}}',
@@ -98,6 +102,16 @@ const resources = {
           addEndBuffer: 'Конечный буфер',
           noRecipes: 'Нет подходящих рецептов',
         },
+        schemeCheck: {
+          title: 'Проверка схемы',
+          ok: 'Замечаний нет',
+          hint: 'Клик по строке — выделить узлы и связь на холсте. Красное — ошибка, оранжевое — предупреждение.',
+          focusHint: 'Показать на схеме',
+          errors: '{{count}} ошибок',
+          warnings: '{{count}} предупр.',
+          errorGroup: 'Ошибки',
+          warningGroup: 'Предупреждения',
+        },
         buffer: {
           kind: {
             start_buffer: 'Стартовый буфер',
@@ -156,6 +170,7 @@ const resources = {
         subtitle:
           'Flowcharts for TerraFirmaGreg-Modern. Build chains, scale production, save schemes as .tfgp.',
         openEditor: 'Open editor',
+        selectVersionHint: 'Pick a modpack version — recipe and machine data will load for the editor.',
         selectVersion: 'Select modpack version',
         modpackLink: 'Modpack-Modern repository',
         inspiration: 'Inspired by: Factorio Calculator',
@@ -169,6 +184,9 @@ const resources = {
       },
       editor: {
         title: 'Scheme editor',
+        elementEditor: 'Element editor',
+        activePack: 'Active modpack version',
+        selectPackOnHome: 'Select version on home',
         addMachine: 'Add machine',
         targetRate: 'Target rate',
         duplicate: 'Duplicate',
@@ -179,7 +197,7 @@ const resources = {
         clearScheme: 'Clear scheme',
         clearSchemeConfirm:
           'Remove all nodes, edges, and targets? This cannot be undone.',
-        noPack: 'Select a modpack version in the sidebar first.',
+        noPack: 'No modpack version selected. Choose one on the home page first.',
         machineCount: 'Machines',
         overclock: 'Overclock',
         machinesMeta: 'Machines x{{count}}',
@@ -238,6 +256,16 @@ const resources = {
           addIntermediateBuffer: 'Intermediate buffer',
           addEndBuffer: 'End buffer',
           noRecipes: 'No matching recipes',
+        },
+        schemeCheck: {
+          title: 'Scheme check',
+          ok: 'No issues found',
+          hint: 'Click a row to select nodes and edge on canvas. Red — error, amber — warning.',
+          focusHint: 'Show on canvas',
+          errors: '{{count}} errors',
+          warnings: '{{count}} warnings',
+          errorGroup: 'Errors',
+          warningGroup: 'Warnings',
         },
         buffer: {
           kind: {

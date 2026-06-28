@@ -12,7 +12,7 @@ export function AppRoutes() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/editor" element={<EditorPage />} />
-          <Route path="/versions" element={<Navigate to="/editor" replace />} />
+          <Route path="/versions" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -26,6 +26,7 @@ import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import type { FlowResult } from '@/calculator/flow-solver';
+import { checkScheme, type SchemeCheckResult } from '@/scheme-check/check-scheme';
 import { usePackStore } from './pack-store';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import {
@@ -70,6 +71,7 @@ interface EditorState {
   selectedEdgeIds: string[];
   flowEdgeData: Record<string, FlowEdgeData>;
   flowResult: FlowResult | null;
+  schemeCheckResult: SchemeCheckResult | null;
   past: EditorSnapshot[];
   future: EditorSnapshot[];
   switchToPack: (modpackVersion: string, dataVersion: number) => void;
@@ -137,6 +139,7 @@ export const useEditorStore = create<EditorState>()(
       selectedEdgeIds: [],
       flowEdgeData: {},
       flowResult: null,
+      schemeCheckResult: null,
       past: [],
       future: [],
 
@@ -159,6 +162,7 @@ export const useEditorStore = create<EditorState>()(
           future: [],
           flowEdgeData: {},
           flowResult: null,
+          schemeCheckResult: null,
           selectedNodeIds: [],
           selectedEdgeIds: [],
         });
@@ -197,6 +201,7 @@ export const useEditorStore = create<EditorState>()(
           future: [],
           flowEdgeData: {},
           flowResult: null,
+          schemeCheckResult: null,
           selectedNodeIds: [],
           selectedEdgeIds: [],
         });
@@ -625,6 +630,7 @@ export const useEditorStore = create<EditorState>()(
         set({
           flowResult: result,
           flowEdgeData,
+          schemeCheckResult: checkScheme(scheme, pack),
           schemesByPack: cacheScheme(
             get().schemesByPack,
             get().activePackKey,
@@ -650,6 +656,7 @@ export const useEditorStore = create<EditorState>()(
           scheme: schemeWithNodes,
           flowResult: result,
           flowEdgeData,
+          schemeCheckResult: checkScheme(schemeWithNodes, pack),
           schemesByPack: cacheScheme(
             get().schemesByPack,
             get().activePackKey,

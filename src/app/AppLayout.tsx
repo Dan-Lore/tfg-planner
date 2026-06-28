@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { VersionSidebar } from '@/components/VersionSidebar';
+import { usePackBootstrap } from '@/hooks/use-pack-bootstrap';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import './layout.css';
 
@@ -8,7 +8,9 @@ export function AppLayout() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const location = useLocation();
-  const flushMain = location.pathname === '/editor';
+  const isEditor = location.pathname === '/editor';
+
+  usePackBootstrap();
 
   return (
     <div className="app-shell">
@@ -41,8 +43,7 @@ export function AppLayout() {
         </div>
       </header>
       <div className="app-body">
-        <VersionSidebar />
-        <main className={`app-main ${flushMain ? 'app-main--flush' : ''}`}>
+        <main className={`app-main ${isEditor ? 'app-main--flush' : ''}`}>
           <Outlet />
         </main>
       </div>

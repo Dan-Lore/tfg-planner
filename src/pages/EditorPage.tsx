@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   useCallback,
   useEffect,
@@ -36,6 +37,12 @@ import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
 import { getMachineName, getRecipesForMachine } from '@/data/pack-registry';
 import { EditorInspector } from '@/editor/EditorInspector';
+import {
+  SchemeIssuesPanel,
+  pickEdgeIssueMeta,
+  pickNodeIssueMeta,
+} from '@/editor/SchemeIssuesPanel';
+import type { SchemeIssue } from '@/scheme-check/check-scheme';
 import {
   filterItemsByQuery,
   resolveMachineId,
@@ -100,9 +107,11 @@ export function EditorPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const pack = usePackStore((s) => s.activePack);
+  const activeEntry = usePackStore((s) => s.activeEntry);
   const scheme = useEditorStore((s) => s.scheme);
   const flowEdgeData = useEditorStore((s) => s.flowEdgeData);
   const flowResult = useEditorStore((s) => s.flowResult);
+  const schemeCheckResult = useEditorStore((s) => s.schemeCheckResult);
   const selectedNodeIds = useEditorStore((s) => s.selectedNodeIds);
   const selectedEdgeIds = useEditorStore((s) => s.selectedEdgeIds);
   const setNodes = useEditorStore((s) => s.setNodes);
@@ -318,6 +327,22 @@ export function EditorPage() {
 
   const closePortMenu = useCallback(() => setPortMenu(null), []);
 
+  const handleFocusIssue = useCallback(
+    (issue: SchemeIssue) => {
+      if (issue.edgeId) {
+        const edge = scheme.edges.find((e) => e.id === issue.edgeId);
+        setSelectedEdgeIds([issue.edgeId]);
+        setSelectedNodeIds(edge ? [edge.source, edge.target] : issue.nodeId ? [issue.nodeId] : []);
+        return;
+      }
+      if (issue.nodeId) {
+        setSelectedNodeIds([issue.nodeId]);
+        setSelectedEdgeIds([]);
+      }
+    },
+    [scheme.edges, setSelectedEdgeIds, setSelectedNodeIds],
+  );
+
   const layoutWidthByNodeId = useMemo(() => {
     if (!pack) return {};
     return buildMachineNodeLayoutWidths({
@@ -365,6 +390,7 @@ export function EditorPage() {
           inLoad,
           outLoad,
         );
+        const nodeIssue = pickNodeIssueMeta(n.id, schemeCheckResult);
         return {
           id: n.id,
           type: 'buffer',
@@ -380,6 +406,8 @@ export function EditorPage() {
             initialStock: n.kind === 'start_buffer' ? n.initialStock : undefined,
             autoSupplyRate: n.kind === 'start_buffer' ? n.autoSupplyRate : undefined,
             pack,
+            checkSeverity: nodeIssue?.severity,
+            checkTitle: nodeIssue?.title,
             inputPorts,
             outputPorts,
             loadPercent,
@@ -431,6 +459,7 @@ export function EditorPage() {
         inputPortLoadMeta,
         outputPortLoadMeta,
       );
+      const nodeIssue = pickNodeIssueMeta(n.id, schemeCheckResult);
       return {
         id: n.id,
         type: 'machine',
@@ -444,6 +473,8 @@ export function EditorPage() {
           parallel: n.parallel,
           voltageTier: n.voltageTier,
           pack,
+          checkSeverity: nodeIssue?.severity,
+          checkTitle: nodeIssue?.title,
           onRecipeChange: (recipeId: string) => handleRecipeChange(n.id, recipeId),
           onMachineCountChange: (machineCount: number) =>
             updateNode(n.id, { machineCount }),
@@ -479,21 +510,30 @@ export function EditorPage() {
           : {}),
       };
     });
-  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, lang, layoutWidthByNodeId, t, handleRecipeChange, handlePortContextMenu, updateNode]);
+  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, schemeCheckResult, lang, layoutWidthByNodeId, t, handleRecipeChange, handlePortContextMenu, updateNode]);
 
   const rfEdges: Edge[] = useMemo(
     () =>
-      scheme.edges.map((e) => ({
-        id: e.id,
-        source: e.source,
-        target: e.target,
-        sourceHandle: e.sourcePort.replace(/^output_/, 'out_').replace(/^input_/, 'in_'),
-        targetHandle: e.targetPort.replace(/^output_/, 'out_').replace(/^input_/, 'in_'),
-        type: 'flow',
-        data: flowEdgeData[e.id],
-        animated: true,
-      })),
-    [scheme.edges, flowEdgeData],
+      scheme.edges.map((e) => {
+        const edgeIssue = pickEdgeIssueMeta(e.id, schemeCheckResult);
+        const baseData = flowEdgeData[e.id] ?? {};
+        return {
+          id: e.id,
+          source: e.source,
+          target: e.target,
+          sourceHandle: e.sourcePort.replace(/^output_/, 'out_').replace(/^input_/, 'in_'),
+          targetHandle: e.targetPort.replace(/^output_/, 'out_').replace(/^input_/, 'in_'),
+          type: 'flow',
+          selected: selectedEdgeIds.includes(e.id),
+          data: {
+            ...baseData,
+            checkSeverity: edgeIssue?.severity,
+            checkTitle: edgeIssue?.title,
+          },
+          animated: !edgeIssue,
+        };
+      }),
+    [scheme.edges, flowEdgeData, schemeCheckResult, selectedEdgeIds],
   );
 
   const onPersistNodePositions = useCallback(
@@ -625,7 +665,12 @@ export function EditorPage() {
   if (!pack) {
     return (
       <div className="editor-page editor-page--empty">
-        <div className="alert editor-empty-alert">{t('editor.noPack')}</div>
+        <div className="alert editor-empty-alert">
+          <p>{t('editor.noPack')}</p>
+          <Link to="/" className="btn">
+            {t('editor.selectPackOnHome')}
+          </Link>
+        </div>
       </div>
     );
   }
@@ -633,6 +678,11 @@ export function EditorPage() {
   return (
     <div className="editor-page">
       <div className="editor-toolbar">
+        {activeEntry && (
+          <span className="editor-toolbar__pack" title={t('editor.activePack')}>
+            {activeEntry.modpackVersion}
+          </span>
+        )}
         <div className="editor-toolbar__add">
           <SearchCombobox
             mode="machine"
@@ -740,8 +790,16 @@ export function EditorPage() {
             onMoveEnd={(vp) => setViewport(vp)}
           />
         </div>
-        <aside className="editor-sidebar">
-          <h3>{t('editor.title')}</h3>
+        <aside className="editor-sidebar editor-element-panel">
+          <h3>{t('editor.elementEditor')}</h3>
+          <SchemeIssuesPanel
+            pack={pack}
+            lang={lang}
+            nodes={scheme.nodes}
+            edges={scheme.edges}
+            schemeCheck={schemeCheckResult}
+            onFocusIssue={handleFocusIssue}
+          />
           <EditorInspector
             pack={pack}
             lang={lang}
