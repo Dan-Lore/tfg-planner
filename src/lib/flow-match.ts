@@ -16,7 +16,6 @@ export function flowsCompatible(
   const bId = flowProductId(b);
   if (!aId || !bId) return false;
   if (aId === bId) return true;
-  if (a.fluidId || b.fluidId) return false;
 
   if (aId.startsWith('#')) {
     return tags.members.get(aId)?.has(bId) ?? false;
@@ -25,6 +24,11 @@ export function flowsCompatible(
     return tags.members.get(bId)?.has(aId) ?? false;
   }
   return false;
+}
+
+function flowWithProductId(flow: Flow, productId: string): Flow {
+  if (flow.fluidId) return { fluidId: productId, amount: flow.amount, chance: flow.chance };
+  return { itemId: productId, amount: flow.amount, chance: flow.chance };
 }
 
 export function flowLookupKeys(
@@ -36,7 +40,7 @@ export function flowLookupKeys(
   const id = flowProductId(flow);
   if (id && !id.startsWith('#')) {
     for (const tagId of tags.tagsForItem.get(id) ?? []) {
-      keys.add(flowKey({ itemId: tagId }));
+      keys.add(flowKey(flowWithProductId(flow, tagId)));
     }
   }
   return [...keys];

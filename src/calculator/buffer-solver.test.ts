@@ -184,7 +184,7 @@ describe('buffer nodes in solveFlows', () => {
     expect(result.edgeFlows.e2?.toNumber()).toBeCloseTo(1, 5);
   });
 
-  it('intermediate buffer throttle limits outflow', () => {
+  it('intermediate buffer capacity does not limit outflow', () => {
     const result = solveFlows({
       pack,
       nodes: [
@@ -243,8 +243,7 @@ describe('buffer nodes in solveFlows', () => {
     });
 
     const out = result.edgeFlows.e2?.toNumber() ?? 0;
-    expect(out).toBeLessThanOrEqual(0.5 + 1e-6);
-    expect(out).toBeGreaterThan(0);
+    expect(out).toBeCloseTo(1, 5);
   });
 
   it('end buffer accepts inflow with no outputs', () => {

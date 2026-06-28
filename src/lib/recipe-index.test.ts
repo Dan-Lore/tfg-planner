@@ -100,4 +100,43 @@ describe('recipe-index', () => {
     );
     expect(candidates.some((c) => c.recipeId === 'tfg:pyrolyse_oven/log_to_creosote')).toBe(true);
   });
+
+  it('finds distillation tower when attaching gtceu:wood_tar from pyrolyse', () => {
+    const pyrolyse: Recipe = {
+      id: 'tfg:pyrolyse_oven/log_to_wood_tar_nitrogen',
+      machineId: 'gtceu:pyrolyse_oven',
+      inputs: [
+        { itemId: '#minecraft:logs_that_burn', amount: 16 },
+        { fluidId: 'gtceu:nitrogen', amount: 1000 },
+      ],
+      outputs: [
+        { itemId: 'minecraft:charcoal', amount: 20 },
+        { fluidId: 'gtceu:wood_tar', amount: 1500 },
+      ],
+      durationTicks: 640,
+    };
+    const distillation: Recipe = {
+      id: 'gtceu:distill_wood_tar',
+      machineId: 'gtceu:distillation_tower',
+      inputs: [{ fluidId: '#forge:wood_tar', amount: 1000 }],
+      outputs: [{ fluidId: 'gtceu:benzene', amount: 350 }],
+      durationTicks: 100,
+    };
+    const fluidPack = miniPack([pyrolyse, distillation]);
+    fluidPack.fluids.push(
+      { id: 'gtceu:wood_tar', names: { ru: 'Wood tar', en: 'Wood tar' } },
+      { id: '#forge:wood_tar', names: { ru: 'Wood tar', en: 'Wood tar' } },
+    );
+    const fluidIndex = buildRecipeFlowIndex(fluidPack);
+    const fluidTags = buildTagIndex(fluidPack);
+    const candidates = findDownstreamCandidates(
+      fluidPack,
+      fluidIndex,
+      { fluidId: 'gtceu:wood_tar', amount: 1500 },
+      'ru',
+      fluidTags,
+    );
+    expect(candidates.some((c) => c.recipeId === 'gtceu:distill_wood_tar')).toBe(true);
+    expect(candidates.find((c) => c.recipeId === 'gtceu:distill_wood_tar')?.portId).toBe('in_0');
+  });
 });

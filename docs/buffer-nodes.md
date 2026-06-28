@@ -7,8 +7,10 @@
 | `kind` | Название | Порты | Солвер |
 |--------|----------|-------|--------|
 | `start_buffer` | Стартовый буфер | `out_0` | Источник: rate (авто = спрос) или stock (`initialStock / 3600` items/s) |
-| `intermediate_buffer` | Промежуточный буфер | `in_0`, `out_0` | Pass-through: `out ≤ min(in, demand, capacity/3600)` |
+| `intermediate_buffer` | Промежуточный буфер | `in_0`, `out_0` | Pass-through: `out ≤ min(in, demand)` |
 | `end_buffer` | Конечный буфер | `in_0` | Sink: неограниченный приём; `capacity` только в UI |
+
+`capacity` у промежуточного буфера сохраняется при создании (`round(flow × 3600)`) и отображается в UI; **на скорость потоков пока не влияет** (задел под моделирование запаса).
 
 Горизонт планирования: **3600 с** (`BUFFER_HORIZON_SEC`).
 

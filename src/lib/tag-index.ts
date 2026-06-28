@@ -27,6 +27,11 @@ function isLogId(id: string): boolean {
   return false;
 }
 
+function productLocalId(id: string): string {
+  const i = id.lastIndexOf(':');
+  return i >= 0 ? id.slice(i + 1) : id;
+}
+
 function matchesTagRule(tagId: string, itemId: string): boolean {
   if (tagId === '#minecraft:logs_that_burn') return isBurnableLogId(itemId);
   if (tagId === '#minecraft:logs') return isLogId(itemId);
@@ -35,6 +40,12 @@ function matchesTagRule(tagId: string, itemId: string): boolean {
   if (forgeDust) {
     const mat = forgeDust[1]!;
     return itemId.endsWith('_dust') && itemId.includes(mat);
+  }
+
+  const forgeSimple = tagId.match(/^#forge:([^/]+)$/);
+  if (forgeSimple) {
+    const mat = forgeSimple[1]!;
+    return productLocalId(itemId) === mat;
   }
 
   const tfcLogs = tagId.match(/^#tfc:(.+)_logs$/);
@@ -46,10 +57,10 @@ function matchesTagRule(tagId: string, itemId: string): boolean {
   return false;
 }
 
-function collectTagIdsFromMeta(meta: Pick<PackMeta, 'items'>): Set<string> {
+function collectTagIdsFromMeta(meta: Pick<PackMeta, 'items' | 'fluids'>): Set<string> {
   const tags = new Set<string>();
-  for (const item of meta.items) {
-    if (item.id.startsWith('#')) tags.add(item.id);
+  for (const def of [...meta.items, ...meta.fluids]) {
+    if (def.id.startsWith('#')) tags.add(def.id);
   }
   return tags;
 }

@@ -121,12 +121,6 @@ export function configuredStartBufferCap(node: SchemeNode): Rational {
   return R.from(node.supplyRate ?? 0);
 }
 
-export function intermediateThrottleCap(node: SchemeNode): Rational {
-  const capacity = node.capacity ?? 0;
-  if (capacity <= 0) return R.from(Number.MAX_SAFE_INTEGER);
-  return R.from(capacity).div(R.from(BUFFER_HORIZON_SEC));
-}
-
 /** Sum of remaining demand on all downstream target ports fed by edges from sourceNodeId. */
 export function computeDownstreamDemand(
   sourceNodeId: string,
@@ -169,7 +163,19 @@ export function computeDownstreamDemand(
       if (isSchemeEndBuffer(targetNode)) {
         targetDemand = R.from(Number.MAX_SAFE_INTEGER);
       } else if (isSchemeIntermediateBuffer(targetNode)) {
-        targetDemand = intermediateThrottleCap(targetNode);
+        const outEdges = allEdges.filter(
+          (e) => e.source === targetId && resolveBufferSourcePort(e) === 'out_0',
+        );
+        targetDemand = computeDownstreamDemand(
+          targetId,
+          outEdges,
+          allEdges,
+          edgeFlows,
+          nodeById,
+          recipes,
+          tags,
+          nodePortOutputRates,
+        );
       }
     } else {
       const targetRecipe = recipes.get(targetNode.recipeId);
@@ -221,15 +227,13 @@ export function computeStartBufferEffectiveOut(
 }
 
 export function computeIntermediateBufferEffectiveOut(
-  node: SchemeNode,
+  _node: SchemeNode,
   inflow: Rational,
   downstreamDemand: Rational,
 ): Rational {
   if (inflow.compare(R.zero) <= 0) return R.zero;
-  const throttle = intermediateThrottleCap(node);
   let out = inflow;
   if (downstreamDemand.compare(out) < 0) out = downstreamDemand;
-  if (throttle.compare(out) < 0) out = throttle;
   return out;
 }
 
@@ -359,12 +363,8 @@ export function buildBufferNodeLoad(
     return outflow.div(cap);
   }
   if (isSchemeIntermediateBuffer(node)) {
-    const throttle = intermediateThrottleCap(node);
     if (outflow.compare(R.zero) <= 0) return R.zero;
-    if (throttle.toNumber() >= Number.MAX_SAFE_INTEGER / 2) {
-      return inflow.compare(R.zero) > 0 ? outflow.div(inflow) : R.zero;
-    }
-    return outflow.div(throttle);
+    return inflow.compare(R.zero) > 0 ? outflow.div(inflow) : R.zero;
   }
   if (isSchemeEndBuffer(node)) {
     return inflow.compare(R.zero) > 0 ? R.from(1) : R.zero;

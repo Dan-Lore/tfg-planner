@@ -21,7 +21,7 @@
 - **build-pack:** chanced I/O preserved via snapshot GT JSON + `sanitizeFlow` (no KubeJS enrich pass).
 - **Холст:** подвисание при drag — селективная перерисовка рёбер (`FlowEdge` + `memo`), изоляция drag в `EditorCanvas`; статичная метка рецепта у машин с большим числом рецептов (теплица) во время drag.
 - CI/Pages: `tsc -b` type errors blocked `npm run build` on GitHub Actions.
-- CI: PR workflow now runs production build with `VITE_BASE_PATH` (same as Pages deploy).
+- **Промежуточный буфер:** `capacity` больше не ограничивает скорость выхода; pass-through `min(вход, спрос downstream)`.
 
 ### Added
 
