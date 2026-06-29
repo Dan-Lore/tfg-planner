@@ -12,7 +12,8 @@ const tagIndexCache = new WeakMap<object, TagIndex>();
 const metaTagIndexCache = new WeakMap<object, TagIndex>();
 const metaTagIndexCacheByKey = new Map<string, TagIndex>();
 
-type MetaTagSource = Pick<PackMeta, 'items' | 'fluids' | 'modpackVersion' | 'dataVersion'>;
+type MetaTagSource = Pick<PackMeta, 'items' | 'fluids'> &
+  Partial<Pick<PackMeta, 'modpackVersion' | 'dataVersion'>>;
 
 function metaTagCacheKey(meta: MetaTagSource): string | null {
   if (!meta.modpackVersion || meta.dataVersion == null) return null;
