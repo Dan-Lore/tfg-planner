@@ -27,6 +27,31 @@ describe('mergeFlowNodes', () => {
     expect(merged[0]?.data).toEqual({ layoutWidth: 248, recipeId: 'updated' });
   });
 
+  it('clears measured when layout width is first assigned', () => {
+    const prev = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: {},
+        measured: { width: 220, height: 120 },
+      },
+    ];
+    const next = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 0, y: 0 },
+        data: { layoutWidth: 340 },
+        width: 340,
+      },
+    ];
+
+    const merged = mergeFlowNodes(prev, next);
+    expect(merged[0]?.width).toBe(340);
+    expect(merged[0]?.measured).toBeUndefined();
+  });
+
   it('clears measured when unified layout width changes', () => {
     const prev = [
       {

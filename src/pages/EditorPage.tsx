@@ -390,7 +390,7 @@ export function EditorPage() {
       connectedOut: connectedPorts.outPorts,
       t,
     });
-  }, [scheme.nodes, pack, lang, flowResult, connectedPorts, t]);
+  }, [scheme.nodes, pack, lang, flowResult, connectedPorts, packDisplayEpoch, t]);
 
   const rfNodes: Node[] = useMemo(() => {
     if (!pack) return [];

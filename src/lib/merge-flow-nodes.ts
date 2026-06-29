@@ -16,8 +16,8 @@ export function mergeFlowNodes(prev: Node[], next: Node[]): Node[] {
     const prevLayoutWidth = nodeLayoutWidth(existing);
     const layoutWidthChanged =
       nextLayoutWidth != null &&
-      prevLayoutWidth != null &&
-      nextLayoutWidth !== prevLayoutWidth;
+      (prevLayoutWidth !== nextLayoutWidth ||
+        existing.measured?.width !== nextLayoutWidth);
 
     return {
       ...rf,
