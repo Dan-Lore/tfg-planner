@@ -4,6 +4,7 @@ import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe, PackData } from '@/data/types';
 import { flowLookupKeys } from '@/lib/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
+import { dedupeAttachCandidates } from '@/lib/recipe-canon';
 import type { TagIndex } from '@/lib/tag-index';
 
 export interface RecipePortRef {
@@ -88,7 +89,7 @@ export function findDownstreamCandidates(
     recipe,
     label: formatRecipeLabel(pack, recipe, lang),
   }));
-  return sortCandidates(pack, candidates, lang);
+  return sortCandidates(pack, dedupeAttachCandidates(candidates), lang);
 }
 
 export function findUpstreamCandidates(
@@ -115,5 +116,5 @@ export function findUpstreamCandidates(
     recipe,
     label: formatRecipeLabel(pack, recipe, lang),
   }));
-  return sortCandidates(pack, candidates, lang);
+  return sortCandidates(pack, dedupeAttachCandidates(candidates), lang);
 }

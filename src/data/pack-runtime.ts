@@ -5,6 +5,7 @@ import type {
   PackMeta,
   PackSlice,
   Recipe,
+  RecipeFlowAttachIndex,
   RecipeShardIndex,
 } from './types';
 import {
@@ -14,6 +15,11 @@ import {
   sliceAsPackData,
 } from './pack-slice';
 import { publicPath } from '@/lib/public-path';
+import { buildRecipeFlowAttachIndex } from '@/lib/recipe-flow-attach-index';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/lib/tag-index';
+import type { Flow } from './types';
+import type { TagIndex } from '@/lib/tag-index';
+import { machineIdsForFlowAttach } from '@/lib/recipe-flow-attach-index';
 import type { TfgpFile } from '@/schema/tfgp';
 
 export type JsonLoader = (url: string) => Promise<unknown>;
@@ -45,6 +51,8 @@ export class PackRuntime {
   private recipeById = new Map<string, Recipe>();
   private machineShardCache = new Map<string, Recipe[]>();
   private loadingShards = new Map<string, Promise<Recipe[]>>();
+  private flowAttachIndex: RecipeFlowAttachIndex | null = null;
+  private flowAttachIndexPromise: Promise<RecipeFlowAttachIndex> | null = null;
 
   private itemById: Map<string, ItemDef>;
   private fluidById: Map<string, ItemDef>;
@@ -176,6 +184,62 @@ export class PackRuntime {
     return mergeRecipeLists([...this.machineShardCache.values()]);
   }
 
+  async getFlowAttachIndex(): Promise<RecipeFlowAttachIndex> {
+    if (this.flowAttachIndex) return this.flowAttachIndex;
+    if (!this.flowAttachIndexPromise) {
+      this.flowAttachIndexPromise = this.loadFlowAttachIndex();
+    }
+    return this.flowAttachIndexPromise;
+  }
+
+  private async loadFlowAttachIndex(): Promise<RecipeFlowAttachIndex> {
+    try {
+      const data = (await this.loadJson(
+        shardUrl(this.recipesRoot, 'flow-index.json'),
+      )) as RecipeFlowAttachIndex;
+      if (data.format !== 'tfg-pack-flow-index' || data.formatVersion !== 1) {
+        throw new Error('Invalid flow-index format');
+      }
+      this.flowAttachIndex = data;
+      return data;
+    } catch (err) {
+      if (!import.meta.env.DEV) {
+        throw new Error(
+          `Missing or invalid flow-index.json under ${this.recipesRoot}`,
+          { cause: err },
+        );
+      }
+      console.warn(
+        '[PackRuntime] flow-index.json missing; building from all shards (dev fallback)',
+      );
+      const machineIds = Object.keys(this.shardIndex.shards);
+      await Promise.all(machineIds.map((id) => this.loadMachineRecipes(id)));
+      const recipes = await this.getAllLoadedRecipes();
+      const tags = buildTagIndexForRecipes(
+        this.meta,
+        recipes,
+        buildTagIndexFromMeta(this.meta),
+      );
+      this.flowAttachIndex = buildRecipeFlowAttachIndex(recipes, tags);
+      return this.flowAttachIndex;
+    }
+  }
+
+  /** Load recipe shards needed for port attach (downstream/upstream) for a product flow. */
+  async ensureRecipesForPortAttach(
+    flow: Flow,
+    direction: 'upstream' | 'downstream',
+    tags: TagIndex,
+  ): Promise<void> {
+    const attachIndex = await this.getFlowAttachIndex();
+    const machineIds = machineIdsForFlowAttach(attachIndex, flow, direction, tags);
+    await Promise.all([...machineIds].map((id) => this.loadMachineRecipes(id)));
+  }
+
+  recipesByIdMap(): Map<string, Recipe> {
+    return new Map(this.recipeById);
+  }
+
   toPackData(recipes: Recipe[]): PackData {
     return sliceAsPackData({ meta: this.meta, recipes });
   }
@@ -282,6 +346,25 @@ export class PackDataRuntime {
 
   async getAllLoadedRecipes(): Promise<Recipe[]> {
     return this.pack.recipes;
+  }
+
+  async getFlowAttachIndex(): Promise<RecipeFlowAttachIndex> {
+    const tags = buildTagIndexForRecipes(
+      this.pack,
+      this.pack.recipes,
+      buildTagIndexFromMeta(this.pack),
+    );
+    return buildRecipeFlowAttachIndex(this.pack.recipes, tags);
+  }
+
+  async ensureRecipesForPortAttach(
+    _flow: Flow,
+    _direction: 'upstream' | 'downstream',
+    _tags: TagIndex,
+  ): Promise<void> {}
+
+  recipesByIdMap(): Map<string, Recipe> {
+    return new Map(this.recipeById);
   }
 
   toPackData(recipes: Recipe[]): PackData {

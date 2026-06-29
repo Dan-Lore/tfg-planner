@@ -1,6 +1,7 @@
 import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
 import type { Recipe } from '@/data/types';
+import { dedupeRecipesForDisplay } from '@/lib/recipe-canon';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipePickerDetail, type RecipePickerDetail } from '@/lib/recipe-picker-detail';
 
@@ -29,6 +30,8 @@ function tagSearchAliases(tagId: string, lang: 'ru' | 'en'): string[] {
     ],
     '#minecraft:logs': ['бревна', 'брёвна', 'logs', 'log', 'wood', 'дерево'],
     '#forge:dusts/copper': ['copper dust', 'медная пыль', 'медь'],
+    '#forge:air': ['air', 'воздух', 'earth air', 'земной воздух'],
+    'gtceu:nitrogen': ['nitrogen', 'азот', 'n2'],
   };
   const list = aliases[tagId] ?? [];
   if (lang === 'en') return list;
@@ -76,10 +79,8 @@ export function buildRecipeIngredientSearchText(
     const id = flow.itemId ?? flow.fluidId;
     if (!id) continue;
     names.add(getItemName(pack, id, lang));
-    if (id.startsWith('#')) {
-      for (const alias of tagSearchAliases(id, lang)) {
-        names.add(alias);
-      }
+    for (const alias of tagSearchAliases(id, lang)) {
+      names.add(alias);
     }
   }
   const tail = recipe.id.includes(':') ? recipe.id.split(':').pop()! : recipe.id;
@@ -96,8 +97,9 @@ export function buildRecipeComboboxItems(
   pack: PackLike,
   recipes: Recipe[],
   lang: 'ru' | 'en',
+  options?: { machineId?: string },
 ): SearchComboboxItem[] {
-  return getCachedRecipeComboboxItems(pack, recipes, lang);
+  return getCachedRecipeComboboxItems(pack, recipes, lang, options?.machineId);
 }
 
 const recipeComboboxCache = new WeakMap<
@@ -109,21 +111,23 @@ function getCachedRecipeComboboxItems(
   pack: PackLike,
   recipes: Recipe[],
   lang: 'ru' | 'en',
+  machineId?: string,
 ): SearchComboboxItem[] {
   if (recipes.length === 0) return [];
+  const displayRecipes = dedupeRecipesForDisplay(recipes, { machineId });
   let byRecipes = recipeComboboxCache.get(pack);
   if (!byRecipes) {
     byRecipes = new WeakMap();
     recipeComboboxCache.set(pack, byRecipes);
   }
-  let byLang = byRecipes.get(recipes);
+  let byLang = byRecipes.get(displayRecipes);
   if (!byLang) {
     byLang = new Map();
-    byRecipes.set(recipes, byLang);
+    byRecipes.set(displayRecipes, byLang);
   }
   const cached = byLang.get(lang);
   if (cached) return cached;
-  const items = sortRecipesForPicker(pack, recipes, lang).map((r) => ({
+  const items = sortRecipesForPicker(pack, displayRecipes, lang).map((r) => ({
     id: r.id,
     label: formatRecipeLabel(pack, r, lang),
     searchText: buildRecipeIngredientSearchText(pack, r, lang),

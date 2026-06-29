@@ -107,7 +107,9 @@ export interface BuildReport {
     goldenMatched?: number;
     goldenMismatched?: number;
     goldenMissing?: number;
+    removedDuplicateRecipes?: number;
   };
+  removedDuplicateRecipeIdsSample?: string[];
   warnings: ParseWarning[];
   warningsByKind?: Partial<Record<WarningKind, number>>;
   unparsedFiles: string[];

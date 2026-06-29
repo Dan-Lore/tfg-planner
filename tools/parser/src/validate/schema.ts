@@ -1,6 +1,8 @@
 import { join } from 'node:path';
 import type { PackData, PackMeta, Recipe, RecipeShardIndex } from '../../../../src/data/types.js';
 import type { BuildReport, ParseWarning, WarningKind } from '../types.js';
+import { buildRecipeFlowAttachIndex } from '../../../../src/lib/recipe-flow-attach-index.js';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/lib/tag-index.js';
 
 export function summarizeWarningsByKind(
   warnings: ParseWarning[],
@@ -88,6 +90,16 @@ export function writeShardedPack(
     fluids: pack.fluids,
   };
 
+  const tagIndex = buildTagIndexForRecipes(
+    meta,
+    pack.recipes,
+    buildTagIndexFromMeta(meta),
+  );
+  writeJson(
+    join(recipesDir, 'flow-index.json'),
+    buildRecipeFlowAttachIndex(pack.recipes, tagIndex),
+  );
+
   const metaErrors = validatePackMeta(meta);
   if (metaErrors.length > 0) {
     throw new Error(`Invalid pack meta: ${metaErrors.join('; ')}`);
@@ -128,6 +140,7 @@ export function buildReportFromPack(
       goldenMatched: extra.goldenMatched,
       goldenMismatched: extra.goldenMismatched,
       goldenMissing: extra.goldenMissing,
+      removedDuplicateRecipes: extra.removedDuplicateRecipes,
     },
     warnings,
     warningsByKind: summarizeWarningsByKind(warnings),

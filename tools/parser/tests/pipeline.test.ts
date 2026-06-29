@@ -140,4 +140,21 @@ describe('recipe pipeline', () => {
     expect(mirrors[0]?.id).toBe('tfg:aromatic_feedstock@lcr');
     expect(mirrors[0]?.machineId).toBe('gtceu:large_chemical_reactor');
   });
+
+  it('mirrorChemReactorToLcr skips mirror when native LCR suffix exists', () => {
+    const chem: RecipeOp = {
+      id: 'gtceu:chemical_reactor/ptfe_from_air',
+      machineId: 'gtceu:chemical_reactor',
+      inputs: [{ fluidId: '#forge:air', amount: 1 }],
+      outputs: [{ fluidId: 'gtceu:polytetrafluoroethylene', amount: 1 }],
+      durationTicks: 100,
+      source: 'substrate',
+    };
+    const lcr: RecipeOp = {
+      ...chem,
+      id: 'gtceu:large_chemical_reactor/ptfe_from_air',
+      machineId: 'gtceu:large_chemical_reactor',
+    };
+    expect(mirrorChemReactorToLcr([chem, lcr])).toHaveLength(0);
+  });
 });

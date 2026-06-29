@@ -1,5 +1,6 @@
 import type { PackData, PackMeta } from '@/data/types';
 import type { Recipe } from '@/data/types';
+import { expandTagAliases, inferTagsForProduct, productMatchesTag } from '@/lib/tag-rules';
 
 export interface TagIndex {
   /** tag id (#namespace:path) → member item/fluid ids */
@@ -39,6 +40,71 @@ function getOrBuildMetaTagIndex(meta: MetaTagSource): TagIndex {
   return index;
 }
 
+function collectTagIdsFromMeta(meta: Pick<PackMeta, 'items' | 'fluids'>): Set<string> {
+  const tags = new Set<string>();
+  for (const def of [...meta.items, ...meta.fluids]) {
+    if (def.id.startsWith('#')) tags.add(def.id);
+  }
+  return tags;
+}
+
+function collectTagIdsFromRecipes(recipes: readonly Recipe[]): Set<string> {
+  const tags = new Set<string>();
+  for (const recipe of recipes) {
+    for (const flow of [...recipe.inputs, ...recipe.outputs]) {
+      const id = flow.itemId ?? flow.fluidId;
+      if (id?.startsWith('#')) tags.add(id);
+    }
+  }
+  return tags;
+}
+
+function addMember(
+  members: Map<string, Set<string>>,
+  tagsForItem: Map<string, Set<string>>,
+  tagId: string,
+  productId: string,
+): void {
+  let set = members.get(tagId);
+  if (!set) {
+    set = new Set<string>();
+    members.set(tagId, set);
+  }
+  set.add(productId);
+  const tagList = tagsForItem.get(productId) ?? new Set<string>();
+  tagList.add(tagId);
+  tagsForItem.set(productId, tagList);
+}
+
+function buildTagIndexCore(
+  tagIds: Set<string>,
+  items: PackMeta['items'],
+  fluids: PackMeta['fluids'],
+): TagIndex {
+  const members = new Map<string, Set<string>>();
+  const tagsForItem = new Map<string, Set<string>>();
+
+  for (const tagId of tagIds) {
+    members.set(tagId, new Set());
+  }
+
+  const productIds = [
+    ...items.map((i) => i.id),
+    ...fluids.map((f) => f.id),
+  ].filter((id) => !id.startsWith('#'));
+
+  for (const productId of productIds) {
+    const inferred = inferTagsForProduct(productId);
+    for (const candidate of inferred) {
+      for (const tagId of expandTagAliases(candidate)) {
+        if (tagIds.has(tagId)) addMember(members, tagsForItem, tagId, productId);
+      }
+    }
+  }
+
+  return { members, tagsForItem };
+}
+
 function mergeExtraTagsIntoIndex(
   base: TagIndex,
   extraTagIds: Iterable<string>,
@@ -61,118 +127,18 @@ function mergeExtraTagsIntoIndex(
     if (members.has(tagId)) continue;
     added = true;
     const set = new Set<string>();
-    for (const productId of productIds) {
-      if (matchesTagRule(tagId, productId)) set.add(productId);
-    }
     members.set(tagId, set);
-    for (const itemId of set) {
-      const list = tagsForItem.get(itemId) ?? new Set<string>();
-      list.add(tagId);
-      tagsForItem.set(itemId, list);
+    for (const productId of productIds) {
+      if (productMatchesTag(tagId, productId)) {
+        set.add(productId);
+        const list = tagsForItem.get(productId) ?? new Set<string>();
+        list.add(tagId);
+        tagsForItem.set(productId, list);
+      }
     }
   }
 
   return added ? { members, tagsForItem } : base;
-}
-
-function isBurnableLogId(id: string): boolean {
-  if (id.startsWith('#')) return false;
-  if (id.startsWith('tfc:wood/log/')) return true;
-  if (id.startsWith('afc:wood/log/')) return true;
-  if (/^minecraft:\w+_log$/.test(id)) return true;
-  if (/^minecraft:stripped_\w+_log$/.test(id)) return true;
-  if (id === 'tfc:stick_bundle') return true;
-  return false;
-}
-
-function isLogId(id: string): boolean {
-  if (id.startsWith('#')) return false;
-  if (isBurnableLogId(id)) return true;
-  if (id.includes('/log/')) return true;
-  return false;
-}
-
-function productLocalId(id: string): string {
-  const i = id.lastIndexOf(':');
-  return i >= 0 ? id.slice(i + 1) : id;
-}
-
-function matchesTagRule(tagId: string, itemId: string): boolean {
-  if (tagId === '#minecraft:logs_that_burn') return isBurnableLogId(itemId);
-  if (tagId === '#minecraft:logs') return isLogId(itemId);
-
-  const forgeDust = tagId.match(/^#forge:dusts\/(.+)$/);
-  if (forgeDust) {
-    const mat = forgeDust[1]!;
-    return itemId.endsWith('_dust') && itemId.includes(mat);
-  }
-
-  const forgeSimple = tagId.match(/^#forge:([^/]+)$/);
-  if (forgeSimple) {
-    const mat = forgeSimple[1]!;
-    return productLocalId(itemId) === mat;
-  }
-
-  const tfcLogs = tagId.match(/^#tfc:(.+)_logs$/);
-  if (tfcLogs) {
-    const wood = tfcLogs[1]!;
-    return itemId.startsWith(`tfc:wood/log/${wood}`);
-  }
-
-  return false;
-}
-
-function collectTagIdsFromMeta(meta: Pick<PackMeta, 'items' | 'fluids'>): Set<string> {
-  const tags = new Set<string>();
-  for (const def of [...meta.items, ...meta.fluids]) {
-    if (def.id.startsWith('#')) tags.add(def.id);
-  }
-  return tags;
-}
-
-function collectTagIdsFromRecipes(recipes: readonly Recipe[]): Set<string> {
-  const tags = new Set<string>();
-  for (const recipe of recipes) {
-    for (const flow of [...recipe.inputs, ...recipe.outputs]) {
-      const id = flow.itemId ?? flow.fluidId;
-      if (id?.startsWith('#')) tags.add(id);
-    }
-  }
-  return tags;
-}
-
-
-function buildTagIndexCore(
-  tagIds: Set<string>,
-  items: PackMeta['items'],
-  fluids: PackMeta['fluids'],
-): TagIndex {
-  const members = new Map<string, Set<string>>();
-  const tagsForItem = new Map<string, Set<string>>();
-  const productIds = [
-    ...items.map((i) => i.id),
-    ...fluids.map((f) => f.id),
-  ].filter((id) => !id.startsWith('#'));
-
-  for (const tagId of tagIds) {
-    const set = new Set<string>();
-    for (const productId of productIds) {
-      if (matchesTagRule(tagId, productId)) {
-        set.add(productId);
-      }
-    }
-    members.set(tagId, set);
-  }
-
-  for (const [tagId, set] of members) {
-    for (const itemId of set) {
-      const list = tagsForItem.get(itemId) ?? new Set<string>();
-      list.add(tagId);
-      tagsForItem.set(itemId, list);
-    }
-  }
-
-  return { members, tagsForItem };
 }
 
 /** Tag index from meta only (no recipe I/O). Recipe tag refs merged via buildTagIndexForRecipes. */

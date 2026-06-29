@@ -96,6 +96,19 @@ export interface RecipeShardIndex {
   shards: Record<string, RecipeShardEntry>;
 }
 
+export interface RecipeFlowAttachRef {
+  machineId: string;
+  recipeId: string;
+  portIndex: number;
+}
+
+export interface RecipeFlowAttachIndex {
+  format: 'tfg-pack-flow-index';
+  formatVersion: 1;
+  byInputKey: Record<string, RecipeFlowAttachRef[]>;
+  byOutputKey: Record<string, RecipeFlowAttachRef[]>;
+}
+
 /** Subset of pack data passed to solver / scheme check. */
 export interface PackSlice {
   meta: PackMeta | PackData;

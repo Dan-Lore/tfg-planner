@@ -7,16 +7,30 @@
 
 ### Added
 
-- **Agent tooling:** `.cursorignore`, scoped `.cursor/rules/` (architecture, calculator, parser, tests); `dependency-cruiser` + `knip` (`lint:arch`, `lint:knip`, `lint:agent`); CI verify step; [docs/agent-tooling-catalog.md](docs/agent-tooling-catalog.md); roadmap **K-013** (Semgrep, depcruise cycles, knip exports).
+- **Recipe canon:** `src/lib/recipe-canon.ts` — `recipeLogicalKey`, `normalizeRecipeCanon`, `dedupeRecipesForDisplay`, `dedupeAttachCandidates`; шаг `normalizeRecipeCanon` в `build-pack` после LCR mirror; `removedDuplicateRecipeIdsSample` в build-report.
+- **Port attach index:** `recipes/flow-index.json` при сборке pack; `PackRuntime.loadFlowAttachIndex` (prod — только flow-index; dev — fallback по шардам с `console.warn`); `npm run generate-flow-index`, `npm run recanonicalize-pack`.
+- **Tag matcher:** универсальный inference forge/mod тегов (`tag-rules.ts`, `tag-index.ts`) для attach по продуктам.
+- CI gate: `pack-artifacts.test.ts` требует `flow-index.json` для pack `0.12.8`.
+- **Agent tooling:** `.cursorignore`, scoped `.cursor/rules/`; `dependency-cruiser` + `knip` (`lint:arch`, `lint:knip`, `lint:agent`); CI verify step; [docs/agent-tooling-catalog.md](docs/agent-tooling-catalog.md); roadmap **K-013**.
 
 ### Removed
 
+- **`dedupe-attach-candidates.ts`** — заменён на `recipe-canon`.
 - Deprecated demo pack `0.12.8-sample` (replaced by inline `src/test-fixtures/minimal-pack.ts` for unit tests).
 - Monolithic `public/data/packs/0.12.8/pack.json` (~40 MiB) — replaced by sharded v2 output.
 
+### Changed
+
+- **Pack 0.12.8:** 57 179 → **56 295** recipes после канонизации (удалены chem/LCR и alias-дубли с идентичным I/O).
+
+### Breaking
+
+- Recipe ids `gtceu:chemical_reactor/{suffix}@lcr` **удалены** из pack, если существует native `gtceu:large_chemical_reactor/{suffix}` с тем же I/O. Старые `.tfgp` с такими id нужно обновить вручную; alias-map не предусмотрен.
+
 ### Fixed
 
-- **RecipeManager export (K-010):** Rhino-safe GTRecipe collection (`isInstance`, `ResourceLocation` ids); CODEC fallback when `recipe.json` null; 0.12.8 snapshot 56 720 recipes (was ~43k GT-only); `RECIPE_SCHEME_ALIASES` maps scheme ids ↔ codec ids (`tfg:greenhouse/8x_…` → `tfg:tfc_wood_sapling_pine/1`).
+- **mirror-lcr:** зеркало создаётся только при отсутствии native LCR с тем же path suffix (не по полному id).
+- **Recipe picker / port attach:** дубли PTFE, PVA, aromatic и др. не показываются после канонизации pack.
 - **Recipe data:** server snapshot as single source of truth — removed `enrich-energy` / `enrich-chances` and auto-bootstrap from `build-pack`; GT JSON export script (I/O + `tickInputs.eu`).
 - **Wiremill / GT circuit:** `circuitConfiguration` field; integrated circuit excluded from product flows; circuit-only broken bootstrap recipes dropped at build.
 - **Tier picker:** hidden when recipe has no `energy`; no fake LV fallback in `allowedTiersForRecipe`.

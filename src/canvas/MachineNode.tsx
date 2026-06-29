@@ -179,8 +179,8 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
       return;
     }
     if ('loadMachineRecipes' in d.pack) {
-      void d.pack.loadMachineRecipes(d.machineId).then((recipes) => {
-        if (!cancelled) setMachineRecipes(recipes);
+      void d.pack.loadMachineRecipes(d.machineId).then(() => {
+        if (!cancelled) setMachineRecipes(getRecipesForMachine(d.pack, d.machineId));
       });
     }
     return () => {
@@ -268,6 +268,7 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
           <RecipePicker
             pack={d.pack}
             recipes={machineRecipes}
+            machineId={d.machineId}
             value={d.recipeId}
             lang={lang}
             dragging={dragging}

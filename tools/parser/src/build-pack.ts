@@ -15,6 +15,7 @@ import { runSmokeChains } from './validate/smoke-chains.js';
 import { loadGolden, diffAgainstGolden } from './validate/golden-diff.js';
 import { expandRecipeSchemeAliases } from './pipeline/recipe-id-aliases.js';
 import { mirrorChemReactorToLcr } from './pipeline/mirror-lcr.js';
+import { normalizeRecipeCanon } from './pipeline/normalize-recipe-canon.js';
 import { isCircuitOnlyBrokenRecipe } from './pipeline/extract-circuit.js';
 import { loadRecipeSnapshot } from './snapshot/load-recipe-snapshot.js';
 import { defaultSnapshotDir } from './snapshot/manifest.js';
@@ -117,6 +118,16 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   });
   recipes = expandRecipeSchemeAliases(recipes);
   recipes = [...recipes, ...mirrorChemReactorToLcr(recipes)];
+  let removedDuplicateRecipeIds: string[] = [];
+  const canon = normalizeRecipeCanon(recipes);
+  recipes = canon.recipes;
+  removedDuplicateRecipeIds = canon.removedIds;
+  if (canon.removedIds.length > 0) {
+    warnings.push({
+      file: 'normalize-recipe-canon',
+      reason: `Removed ${canon.removedIds.length} duplicate recipe variants (chem/LCR mirrors and alias copies)`,
+    });
+  }
   logStage('Sanitizing energy…');
   const energySanitize = sanitizeRecipeEnergy(recipes);
   recipes = energySanitize.recipes;
@@ -221,12 +232,16 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
       ).length,
       recipesMissingOutputs: missingOutputs,
       recipesCircuitOnlyDropped: broken.length,
+      removedDuplicateRecipes: removedDuplicateRecipeIds.length,
     },
     warnings,
     [],
   );
   report.smokeResults = smokeResults;
   report.goldenDiff = goldenDiff;
+  if (removedDuplicateRecipeIds.length > 0) {
+    report.removedDuplicateRecipeIdsSample = removedDuplicateRecipeIds.slice(0, 50);
+  }
   report.commitHint = snapshot.archiveUrl;
   report.snapshotManifestOk = snapshotLoad.manifestOk;
 

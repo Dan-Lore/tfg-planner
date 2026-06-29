@@ -138,7 +138,9 @@ function MachineInspector({
   const allowedTiers = recipe ? allowedTiersForRecipe(recipe) : [];
 
   const recipeItems = useMemo(
-    () => buildRecipeComboboxItems(pack, getRecipesForMachine(pack, node.machineId), lang),
+    () => buildRecipeComboboxItems(pack, getRecipesForMachine(pack, node.machineId), lang, {
+      machineId: node.machineId,
+    }),
     [pack, node.machineId, lang],
   );
 

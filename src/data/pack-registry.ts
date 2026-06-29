@@ -9,6 +9,7 @@ import type {
 } from './types';
 import { PackRuntime, wrapPackData } from './pack-runtime';
 import { publicPath } from '@/lib/public-path';
+import { dedupeRecipesForDisplay } from '@/lib/recipe-canon';
 import { packKey } from '@/lib/pack-key';
 import type { PackBuildManifest } from '@/lib/pack-idb-cache';
 
@@ -132,10 +133,11 @@ export function getRecipesForMachine(
   pack: PackLike,
   machineId: string,
 ): Recipe[] {
-  if ('getCachedRecipesForMachine' in pack) {
-    return pack.getCachedRecipesForMachine(machineId);
-  }
-  return (pack as PackData).recipes.filter((r) => r.machineId === machineId);
+  const raw =
+    'getCachedRecipesForMachine' in pack
+      ? pack.getCachedRecipesForMachine(machineId)
+      : (pack as PackData).recipes.filter((r) => r.machineId === machineId);
+  return dedupeRecipesForDisplay(raw, { machineId });
 }
 
 export function getRecipe(

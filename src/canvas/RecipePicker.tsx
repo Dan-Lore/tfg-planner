@@ -9,6 +9,7 @@ import { SearchCombobox } from '@/components/SearchCombobox';
 interface RecipePickerProps {
   pack: PackLike;
   recipes: Recipe[];
+  machineId: string;
   value: string;
   lang: 'ru' | 'en';
   dragging?: boolean;
@@ -23,6 +24,7 @@ function stopFlow(e: ReactMouseEvent | ReactWheelEvent) {
 export function RecipePicker({
   pack,
   recipes,
+  machineId,
   value,
   lang,
   dragging,
@@ -31,8 +33,8 @@ export function RecipePicker({
 }: RecipePickerProps) {
   const { t } = useTranslation();
   const items = useMemo(
-    () => buildRecipeComboboxItems(pack, recipes, lang),
-    [pack, recipes, lang],
+    () => buildRecipeComboboxItems(pack, recipes, lang, { machineId }),
+    [pack, recipes, lang, machineId],
   );
 
   const displayValue = useMemo(() => {

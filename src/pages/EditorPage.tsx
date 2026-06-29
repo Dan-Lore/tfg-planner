@@ -51,12 +51,11 @@ import { SearchCombobox } from '@/components/SearchCombobox';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { R } from '@/calculator/rational';
 import {
-  buildRecipeFlowIndexFromRecipes,
-  findDownstreamCandidates,
-  findUpstreamCandidates,
   type AttachCandidate,
 } from '@/lib/recipe-index';
 import { buildTagIndexFromMeta, buildTagIndexForRecipes } from '@/lib/tag-index';
+import { findAttachCandidatesFromIndex } from '@/lib/recipe-flow-attach-index';
+import { isPackRuntime } from '@/data/pack-runtime';
 import type { Flow } from '@/data/types';
 import type { ActivePack } from '@/data/pack-runtime';
 import { parsePortId, nodePortFlow, portsMatch } from '@/canvas/ports';
@@ -266,11 +265,6 @@ export function EditorPage() {
           scheme.nodes.filter(isMachineNode).map((n) => n.recipeId),
         );
 
-        const loadedRecipes = await pack.getAllLoadedRecipes();
-
-        const recipeIndex = buildRecipeFlowIndexFromRecipes(loadedRecipes);
-        const flowTagIndex = buildTagIndexForRecipes(pack, loadedRecipes, tagIndex);
-
         const recipe = isMachineNode(node)
           ? getRecipe(pack, node.recipeId)
           : undefined;
@@ -278,10 +272,27 @@ export function EditorPage() {
         if (!flow) return;
 
         const direction: PortAttachDirection = side === 'out' ? 'downstream' : 'upstream';
-        const candidates =
-          direction === 'downstream'
-            ? findDownstreamCandidates(pack, recipeIndex, flow, lang, flowTagIndex)
-            : findUpstreamCandidates(pack, recipeIndex, flow, lang, flowTagIndex);
+
+        if (isPackRuntime(pack)) {
+          await pack.ensureRecipesForPortAttach(flow, direction, tagIndex);
+        }
+
+        const attachIndex = await pack.getFlowAttachIndex();
+        const recipesById = pack.recipesByIdMap();
+        const flowTagIndex = buildTagIndexForRecipes(
+          pack,
+          [...recipesById.values()],
+          tagIndex,
+        );
+        const candidates = findAttachCandidatesFromIndex(
+          pack,
+          attachIndex,
+          recipesById,
+          flow,
+          direction,
+          lang,
+          flowTagIndex,
+        );
 
         setPortMenu({
           x: clientX,
