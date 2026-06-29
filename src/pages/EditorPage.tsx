@@ -63,6 +63,7 @@ import { parsePortId, nodePortFlow, portsMatch } from '@/canvas/ports';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import { preloadSchemeRecipes } from '@/lib/preload-scheme-recipes';
 import { isEntryAlignedWithEditor } from '@/lib/pack-selection';
+import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
 
 import {
   PORT_ROW_HEIGHT,
@@ -779,7 +780,7 @@ export function EditorPage() {
           type="button"
           className="btn btn-secondary"
           onClick={() => {
-            if (!selectedNode || !isMachineNode(selectedNode)) return;
+            if (!pack || !selectedNode || !isMachineNode(selectedNode)) return;
             const recipe = getRecipe(pack, selectedNode.recipeId);
             const out = recipe?.outputs[0];
             const v = prompt(t('editor.ratePrompt'), '1');
@@ -890,23 +891,25 @@ export function EditorPage() {
               schemeCheck={schemeCheckResult}
               onFocusIssue={handleFocusIssue}
             />
-            <EditorInspector
-              pack={pack}
-              lang={lang}
-              nodes={scheme.nodes}
-              edges={scheme.edges}
-              flowResult={flowResult}
-              flowEdgeData={flowEdgeData}
-              selectedNodeIds={selectedNodeIds}
-              selectedEdgeIds={selectedEdgeIds}
-              connectedInByNode={connectedPorts.inPorts}
-              connectedOutByNode={connectedPorts.outPorts}
-              updateNode={updateNode}
-            />
+            {pack && (
+              <EditorInspector
+                pack={pack}
+                lang={lang}
+                nodes={scheme.nodes}
+                edges={scheme.edges}
+                flowResult={flowResult}
+                flowEdgeData={flowEdgeData}
+                selectedNodeIds={selectedNodeIds}
+                selectedEdgeIds={selectedEdgeIds}
+                connectedInByNode={connectedPorts.inPorts}
+                connectedOutByNode={connectedPorts.outPorts}
+                updateNode={updateNode}
+              />
+            )}
           </div>
         </aside>
       </div>
-      {portMenu && (
+      {portMenu && pack && (
         <PortContextMenu
           x={portMenu.x}
           y={portMenu.y}

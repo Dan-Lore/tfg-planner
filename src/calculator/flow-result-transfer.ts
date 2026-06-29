@@ -21,7 +21,11 @@ function isRationalLike(value: unknown): value is RationalLike {
 
 export function reviveRational(value: unknown): Rational {
   if (value instanceof Rational) return value;
-  if (isRationalLike(value)) return new Rational(value.num, value.den);
+  if (isRationalLike(value)) {
+    const num = typeof value.num === 'string' ? BigInt(value.num) : value.num;
+    const den = typeof value.den === 'string' ? BigInt(value.den) : value.den;
+    return new Rational(num, den);
+  }
   throw new Error('Expected Rational value');
 }
 

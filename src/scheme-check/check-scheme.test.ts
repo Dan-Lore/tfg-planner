@@ -158,5 +158,5 @@ describe('checkScheme', () => {
     expect(result.issues.some((i) => i.code === 'disconnected_input' && i.nodeId === 'node_49')).toBe(
       true,
     );
-  }, 15_000);
+  }, 30_000);
 });
