@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware';
 import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
+import { readPersistedEditorSnapshot, type PersistedPackFlowCache } from '@/lib/editor-persist';
+import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
 import {
   allocateEdgeId,
   allocateNodeId,
@@ -37,7 +39,7 @@ import type { ActivePack } from '@/data/pack-runtime';
 import { getRecipe } from '@/data/pack-registry';
 import { debounceFlowUpdate } from '@/lib/debounce-flow-update';
 import { computeFlowsAsync, type FlowComputeMode } from '@/lib/flow-compute';
-import { hydrateFlowResult } from '@/calculator/flow-result-transfer';
+import { hydrateFlowResult, dehydrateFlowResult } from '@/calculator/flow-result-transfer';
 
 const MAX_HISTORY = 50;
 
@@ -72,6 +74,7 @@ interface EditorState {
   scheme: TfgpFile;
   activePackKey: string | null;
   schemesByPack: Record<string, TfgpFile>;
+  flowsByPack: Record<string, PersistedPackFlowCache>;
   selectedNodeIds: string[];
   selectedEdgeIds: string[];
   flowEdgeData: Record<string, FlowEdgeData>;
@@ -121,9 +124,52 @@ interface EditorState {
   setTarget: (target: TfgpTarget) => void;
   /** Refresh port/edge rates from current node settings; does not change machine counts. */
   updateFlows: () => void;
+  /** Rebuild edge labels and layout from restored flowResult after pack/recipes are ready. */
+  refreshFlowDisplay: () => void;
   /** Full scheme solve from targets; updates machine counts across the graph. */
   recalculateScheme: () => void;
   duplicateSelected: () => void;
+}
+
+function cacheFlows(
+  flowsByPack: Record<string, PersistedPackFlowCache>,
+  key: string | null,
+  scheme: TfgpFile,
+  flowResult: FlowResult,
+  flowEdgeData: Record<string, FlowEdgeData>,
+): Record<string, PersistedPackFlowCache> {
+  if (!key) return flowsByPack;
+  return {
+    ...flowsByPack,
+    [key]: {
+      revision: schemeFlowRevision(scheme),
+      flowResult: dehydrateFlowResult(flowResult) as unknown as FlowResult,
+      flowEdgeData,
+    },
+  };
+}
+
+function restoreFlowsForScheme(
+  flowsByPack: Record<string, PersistedPackFlowCache>,
+  key: string | null,
+  scheme: TfgpFile,
+): Pick<EditorState, 'flowResult' | 'flowEdgeData' | 'flowComputeState'> {
+  if (!key) {
+    return { flowResult: null, flowEdgeData: {}, flowComputeState: 'idle' };
+  }
+  const cached = flowsByPack[key];
+  const revision = schemeFlowRevision(scheme);
+  if (!cached) {
+    return { flowResult: null, flowEdgeData: {}, flowComputeState: 'idle' };
+  }
+  if (!cached || cached.revision !== revision) {
+    return { flowResult: null, flowEdgeData: {}, flowComputeState: 'idle' };
+  }
+  return {
+    flowResult: hydrateFlowResult(cached.flowResult),
+    flowEdgeData: cached.flowEdgeData,
+    flowComputeState: 'idle',
+  };
 }
 
 function cacheScheme(
@@ -182,6 +228,13 @@ async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
       flowResult,
       flowEdgeData,
       schemeCheckResult: response.schemeCheckResult,
+      flowsByPack: cacheFlows(
+        binding.get().flowsByPack,
+        binding.get().activePackKey,
+        schemeForEdges,
+        flowResult,
+        flowEdgeData,
+      ),
       ...(mode === 'recalculate' && response.nodes
         ? {
             scheme: schemeForEdges,
@@ -216,23 +269,40 @@ function scheduleFlowUpdate(mode: FlowComputeMode): void {
   debouncedFlowUpdate();
 }
 
+const persistedEditor = readPersistedEditorSnapshot();
+const initialSchemeRaw =
+  persistedEditor.scheme ?? createEmptyTfgp('0.12.8', 1);
+const initialScheme = {
+  ...initialSchemeRaw,
+  nodes: normalizeSchemeNodes(initialSchemeRaw.nodes),
+};
+if (persistedEditor.scheme) {
+  seedIdCounter(initialScheme.nodes, initialScheme.edges);
+}
+const initialFlows = restoreFlowsForScheme(
+  persistedEditor.flowsByPack,
+  persistedEditor.activePackKey,
+  initialScheme,
+);
+
 export const useEditorStore = create<EditorState>()(
   persist(
     (set, get) => ({
-      scheme: createEmptyTfgp('0.12.8', 1),
-      activePackKey: null,
-      schemesByPack: {},
+      scheme: initialScheme,
+      activePackKey: persistedEditor.activePackKey,
+      schemesByPack: persistedEditor.schemesByPack,
+      flowsByPack: persistedEditor.flowsByPack,
       selectedNodeIds: [],
       selectedEdgeIds: [],
-      flowEdgeData: {},
-      flowResult: null,
+      flowEdgeData: initialFlows.flowEdgeData,
+      flowResult: initialFlows.flowResult,
       schemeCheckResult: null,
-      flowComputeState: 'idle',
+      flowComputeState: initialFlows.flowComputeState,
       past: [],
       future: [],
 
       switchToPack: (modpackVersion, dataVersion) => {
-        const { scheme, activePackKey, schemesByPack } = get();
+        const { scheme, activePackKey, schemesByPack, flowsByPack } = get();
         const updatedCache = cacheScheme(schemesByPack, activePackKey, scheme);
         const newKey = packKey(modpackVersion, dataVersion);
         const cached = updatedCache[newKey];
@@ -241,6 +311,7 @@ export const useEditorStore = create<EditorState>()(
           ? { ...cached, nodes: normalizeSchemeNodes(cached.nodes, pack) }
           : createEmptyTfgp(modpackVersion, dataVersion);
         seedIdCounter(nextScheme.nodes, nextScheme.edges);
+        const restoredFlows = restoreFlowsForScheme(flowsByPack, newKey, nextScheme);
 
         set({
           schemesByPack: updatedCache,
@@ -248,14 +319,14 @@ export const useEditorStore = create<EditorState>()(
           scheme: nextScheme,
           past: [],
           future: [],
-          flowEdgeData: {},
-          flowResult: null,
           schemeCheckResult: null,
-          flowComputeState: 'idle',
           selectedNodeIds: [],
           selectedEdgeIds: [],
+          ...restoredFlows,
         });
-        get().updateFlows();
+        if (!restoredFlows.flowResult) {
+          get().updateFlows();
+        }
       },
 
       loadScheme: (file) => {
@@ -706,7 +777,33 @@ export const useEditorStore = create<EditorState>()(
       },
 
       updateFlows: () => {
+        const { scheme, activePackKey, flowsByPack, flowResult, flowComputeState } = get();
+        if (flowComputeState === 'computing') {
+          return;
+        }
+        const revision = schemeFlowRevision(scheme);
+        const cached = activePackKey ? flowsByPack[activePackKey] : undefined;
+        if (flowResult && flowComputeState === 'idle' && cached?.revision === revision) {
+          return;
+        }
         scheduleFlowUpdate('update');
+      },
+
+      refreshFlowDisplay: () => {
+        const pack = usePackStore.getState().activePack;
+        const { scheme, flowResult, activePackKey, flowsByPack } = get();
+        if (!pack || !flowResult) return;
+        const flowEdgeData = buildFlowEdgeData(scheme, pack, flowResult);
+        set({
+          flowEdgeData,
+          flowsByPack: cacheFlows(
+            flowsByPack,
+            activePackKey,
+            scheme,
+            flowResult,
+            flowEdgeData,
+          ),
+        });
       },
 
       recalculateScheme: () => {
@@ -748,7 +845,40 @@ export const useEditorStore = create<EditorState>()(
       partialize: (s) => ({
         schemesByPack: s.schemesByPack,
         activePackKey: s.activePackKey,
+        flowsByPack: s.flowsByPack,
       }),
+      merge: (persisted, current) => {
+        const p = persisted as {
+          activePackKey?: string | null;
+          schemesByPack?: Record<string, TfgpFile>;
+          flowsByPack?: Record<string, PersistedPackFlowCache>;
+        } | undefined;
+        if (!p) return current;
+        const pSchemes = p.schemesByPack ?? {};
+        const cSchemes = current.schemesByPack ?? {};
+        if (
+          Object.keys(pSchemes).length === 0 &&
+          Object.keys(cSchemes).length > 0
+        ) {
+          return current;
+        }
+        const schemesByPack =
+          Object.keys(pSchemes).length >= Object.keys(cSchemes).length
+            ? { ...cSchemes, ...pSchemes }
+            : { ...pSchemes, ...cSchemes };
+        const pFlows = p.flowsByPack ?? {};
+        const cFlows = current.flowsByPack ?? {};
+        const flowsByPack =
+          Object.keys(pFlows).length >= Object.keys(cFlows).length
+            ? { ...cFlows, ...pFlows }
+            : { ...pFlows, ...cFlows };
+        return {
+          ...current,
+          schemesByPack,
+          flowsByPack,
+          activePackKey: p.activePackKey ?? current.activePackKey,
+        };
+      },
       onRehydrateStorage: () => (state) => {
         flowComputeBinding = {
           get: useEditorStore.getState,
@@ -775,10 +905,14 @@ export const useEditorStore = create<EditorState>()(
           state.scheme = cached;
           seedIdCounter(cached.nodes, cached.edges);
         }
-        queueMicrotask(() => {
-          const pack = usePackStore.getState().activePack;
-          if (pack) useEditorStore.getState().updateFlows();
-        });
+        const restored = restoreFlowsForScheme(
+          state.flowsByPack ?? {},
+          state.activePackKey,
+          state.scheme,
+        );
+        state.flowResult = restored.flowResult;
+        state.flowEdgeData = restored.flowEdgeData;
+        state.flowComputeState = restored.flowComputeState;
       },
     },
   ),

@@ -17,6 +17,7 @@ const resources = {
         openEditor: 'Открыть редактор',
         openEditorLoading: 'Загрузка pack…',
         openEditorNeedPack: 'Сначала выберите версию modpack',
+        openEditorRestoring: 'Восстановление данных modpack…',
         selectVersionHint: 'Выберите версию modpack — данные рецептов и машин подгрузятся для редактора.',
         selectVersion: 'Выбрать версию модпака',
         modpackLink: 'Репозиторий Modpack-Modern',
@@ -30,6 +31,7 @@ const resources = {
         noPacks: 'Нет доступных версий',
         loadingMeta: 'Загрузка meta…',
         recipesLazy: 'рецепты по запросу',
+        restoringPack: 'восстановление из кэша…',
       },
       editor: {
         title: 'Редактор схемы',
@@ -47,6 +49,7 @@ const resources = {
         clearSchemeConfirm:
           'Удалить все узлы, связи и цели? Действие нельзя отменить.',
         noPack: 'Версия modpack не выбрана. Сначала выберите её на главной странице.',
+        restoringPack: 'Восстановление данных modpack {{version}}',
         machineCount: 'Машин',
         overclock: 'Разгон',
         machinesMeta: 'Машин x{{count}}',
@@ -180,6 +183,7 @@ const resources = {
         openEditor: 'Open editor',
         openEditorLoading: 'Loading pack…',
         openEditorNeedPack: 'Select a modpack version first',
+        openEditorRestoring: 'Restoring modpack data…',
         selectVersionHint: 'Pick a modpack version — recipe and machine data will load for the editor.',
         selectVersion: 'Select modpack version',
         modpackLink: 'Modpack-Modern repository',
@@ -193,6 +197,7 @@ const resources = {
         noPacks: 'No versions available',
         loadingMeta: 'Loading meta…',
         recipesLazy: 'recipes on demand',
+        restoringPack: 'restoring from cache…',
       },
       editor: {
         title: 'Scheme editor',
@@ -210,6 +215,7 @@ const resources = {
         clearSchemeConfirm:
           'Remove all nodes, edges, and targets? This cannot be undone.',
         noPack: 'No modpack version selected. Choose one on the home page first.',
+        restoringPack: 'Restoring modpack {{version}}',
         machineCount: 'Machines',
         overclock: 'Overclock',
         machinesMeta: 'Machines x{{count}}',

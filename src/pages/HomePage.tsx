@@ -9,6 +9,7 @@ export function HomePage() {
   const activePack = usePackStore((s) => s.activePack);
   const loading = usePackStore((s) => s.loading);
   const error = usePackStore((s) => s.error);
+  const isRestoring = Boolean(activeEntry && !activePack);
   const canOpenEditor = Boolean(activePack && activeEntry);
 
   return (
@@ -27,9 +28,9 @@ export function HomePage() {
           <span
             className="btn btn--disabled"
             aria-disabled="true"
-            title={error ?? (loading ? t('home.openEditorLoading') : t('home.openEditorNeedPack'))}
+            title={error ?? (isRestoring || loading ? t('home.openEditorRestoring') : t('home.openEditorNeedPack'))}
           >
-            {loading ? t('home.openEditorLoading') : t('home.openEditor')}
+            {isRestoring || loading ? t('home.openEditorRestoring') : t('home.openEditor')}
           </span>
         )}
       </div>

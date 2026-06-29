@@ -48,13 +48,17 @@ export function PackVersionPanel() {
                 <span className="version-item__name">{entry.modpackVersion}</span>
                 <span className="version-item__meta">
                   {entry.status}
-                  {isActive && ` · ${t('versions.active')}`}
+                  {isActive && activePack && ` · ${t('versions.active')}`}
+                  {isActive && !activePack && ` · ${t('versions.restoringPack')}`}
                 </span>
               </button>
             </li>
           );
         })}
       </ul>
+      {activeEntry && !activePack && (
+        <p className="pack-version-panel__muted">{t('versions.restoringPack')}</p>
+      )}
       {activePack && activeEntry && (
         <p className="pack-version-panel__muted pack-version-panel__stats">
           {recipeCount(activePack)} recipes · {activePack.machines.length} machines

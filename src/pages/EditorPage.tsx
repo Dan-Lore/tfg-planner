@@ -61,7 +61,8 @@ import type { Flow } from '@/data/types';
 import type { ActivePack } from '@/data/pack-runtime';
 import { parsePortId, nodePortFlow, portsMatch } from '@/canvas/ports';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
-import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
+import { preloadSchemeRecipes } from '@/lib/preload-scheme-recipes';
+import { isEntryAlignedWithEditor } from '@/lib/pack-selection';
 
 import {
   PORT_ROW_HEIGHT,
@@ -109,6 +110,7 @@ export function EditorPage() {
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const pack = usePackStore((s) => s.activePack);
   const activeEntry = usePackStore((s) => s.activeEntry);
+  const packError = usePackStore((s) => s.error);
   const scheme = useEditorStore((s) => s.scheme);
   const flowEdgeData = useEditorStore((s) => s.flowEdgeData);
   const flowResult = useEditorStore((s) => s.flowResult);
@@ -133,7 +135,10 @@ export function EditorPage() {
   const clearScheme = useEditorStore((s) => s.clearScheme);
   const setSelectedNodeIds = useEditorStore((s) => s.setSelectedNodeIds);
   const setSelectedEdgeIds = useEditorStore((s) => s.setSelectedEdgeIds);
+  const activePackKey = useEditorStore((s) => s.activePackKey);
   const updateFlows = useEditorStore((s) => s.updateFlows);
+  const refreshFlowDisplay = useEditorStore((s) => s.refreshFlowDisplay);
+  const [packDisplayEpoch, setPackDisplayEpoch] = useState(0);
   const flowComputeState = useEditorStore((s) => s.flowComputeState);
   const colorTheme = useThemeStore((s) => s.theme);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -182,9 +187,27 @@ export function EditorPage() {
     [pack],
   );
 
+  const packSelectionAligned = isEntryAlignedWithEditor(activeEntry, activePackKey);
+  const canDeferPackLoad = packSelectionAligned && scheme.nodes.length > 0;
+
   useEffect(() => {
-    if (pack) updateFlows();
-  }, [pack, updateFlows]);
+    if (!pack) return;
+    let cancelled = false;
+    void (async () => {
+      const { scheme, flowResult } = useEditorStore.getState();
+      await preloadSchemeRecipes(pack, scheme);
+      if (cancelled) return;
+      if (flowResult) {
+        refreshFlowDisplay();
+      } else if (scheme.nodes.length > 0) {
+        updateFlows();
+      }
+      setPackDisplayEpoch((epoch) => epoch + 1);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [pack, updateFlows, refreshFlowDisplay]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -522,7 +545,7 @@ export function EditorPage() {
           : {}),
       };
     });
-  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, schemeCheckResult, lang, layoutWidthByNodeId, t, handleRecipeChange, handlePortContextMenu, updateNode]);
+  }, [scheme.nodes, pack, selectedNodeIds, connectedPorts, flowResult, schemeCheckResult, lang, layoutWidthByNodeId, packDisplayEpoch, t, handleRecipeChange, handlePortContextMenu, updateNode]);
 
   const rfEdges: Edge[] = useMemo(
     () =>
@@ -676,7 +699,40 @@ export function EditorPage() {
     e.target.value = '';
   };
 
-  if (!pack) {
+  if (!pack && !canDeferPackLoad) {
+    if (activeEntry && packError) {
+      return (
+        <div className="editor-page editor-page--empty">
+          <div className="alert editor-empty-alert">
+            <p>{packError}</p>
+            <Link to="/" className="btn">
+              {t('editor.selectPackOnHome')}
+            </Link>
+          </div>
+        </div>
+      );
+    }
+    if (activeEntry && !packSelectionAligned) {
+      return (
+        <div className="editor-page editor-page--empty">
+          <div className="alert editor-empty-alert">
+            <p>{t('editor.noPack')}</p>
+            <Link to="/" className="btn">
+              {t('editor.selectPackOnHome')}
+            </Link>
+          </div>
+        </div>
+      );
+    }
+    if (activeEntry) {
+      return (
+        <div className="editor-page editor-page--empty">
+          <div className="alert editor-empty-alert">
+            <p>{t('editor.restoringPack', { version: activeEntry.modpackVersion })}</p>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="editor-page editor-page--empty">
         <div className="alert editor-empty-alert">
@@ -793,6 +849,16 @@ export function EditorPage() {
       </div>
       <div className="editor-body">
         <div className="editor-canvas-wrap">
+          {!pack && activeEntry && canDeferPackLoad && (
+            <div className="editor-canvas-notice" role="status" aria-live="polite">
+              {t('editor.restoringPack', { version: activeEntry.modpackVersion })}
+              <span className="editor-canvas-notice__dots" aria-hidden="true">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </span>
+            </div>
+          )}
           <EditorCanvas
             rfNodes={rfNodes}
             rfEdges={rfEdges}

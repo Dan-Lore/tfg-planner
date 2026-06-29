@@ -2,8 +2,8 @@ import type { FlowResult } from '@/calculator/flow-solver';
 import { Rational } from '@/calculator/rational';
 
 interface RationalLike {
-  num: bigint;
-  den: bigint;
+  num: bigint | string;
+  den: bigint | string;
 }
 
 function isRationalLike(value: unknown): value is RationalLike {
@@ -12,8 +12,10 @@ function isRationalLike(value: unknown): value is RationalLike {
     value !== null &&
     'num' in value &&
     'den' in value &&
-    typeof (value as RationalLike).num === 'bigint' &&
-    typeof (value as RationalLike).den === 'bigint'
+    (typeof (value as RationalLike).num === 'bigint' ||
+      typeof (value as RationalLike).num === 'string') &&
+    (typeof (value as RationalLike).den === 'bigint' ||
+      typeof (value as RationalLike).den === 'string')
   );
 }
 
@@ -21,6 +23,67 @@ export function reviveRational(value: unknown): Rational {
   if (value instanceof Rational) return value;
   if (isRationalLike(value)) return new Rational(value.num, value.den);
   throw new Error('Expected Rational value');
+}
+
+function dehydrateRational(value: Rational): { num: string; den: string } {
+  return { num: value.num.toString(), den: value.den.toString() };
+}
+
+function dehydrateRationalMap(map: Record<string, Rational>): Record<string, { num: string; den: string }> {
+  const out: Record<string, { num: string; den: string }> = {};
+  for (const [key, value] of Object.entries(map)) {
+    out[key] = dehydrateRational(value);
+  }
+  return out;
+}
+
+function dehydrateNestedRationalMap(
+  map: Record<string, Record<string, Rational>>,
+): Record<string, Record<string, { num: string; den: string }>> {
+  const out: Record<string, Record<string, { num: string; den: string }>> = {};
+  for (const [nodeId, inner] of Object.entries(map)) {
+    out[nodeId] = dehydrateRationalMap(inner);
+  }
+  return out;
+}
+
+/** JSON-safe copy for localStorage (bigint → string). */
+export function dehydrateFlowResult(result: FlowResult): FlowResult {
+  return {
+    edgeFlows: dehydrateRationalMap(result.edgeFlows) as unknown as FlowResult['edgeFlows'],
+    edgeTargetFlows: dehydrateRationalMap(result.edgeTargetFlows) as unknown as FlowResult['edgeTargetFlows'],
+    nodeOutputRates: dehydrateNestedRationalMap(result.nodeOutputRates) as unknown as FlowResult['nodeOutputRates'],
+    nodePortOutputRates: dehydrateNestedRationalMap(
+      result.nodePortOutputRates,
+    ) as unknown as FlowResult['nodePortOutputRates'],
+    nodeInputRates: dehydrateNestedRationalMap(result.nodeInputRates) as unknown as FlowResult['nodeInputRates'],
+    nodePortDeficit: dehydrateNestedRationalMap(result.nodePortDeficit) as unknown as FlowResult['nodePortDeficit'],
+    nodePortInLoad: dehydrateNestedRationalMap(result.nodePortInLoad) as unknown as FlowResult['nodePortInLoad'],
+    nodePortOutRecipeLoad: dehydrateNestedRationalMap(
+      result.nodePortOutRecipeLoad,
+    ) as unknown as FlowResult['nodePortOutRecipeLoad'],
+    nodePortOutConsumerLoad: dehydrateNestedRationalMap(
+      result.nodePortOutConsumerLoad,
+    ) as unknown as FlowResult['nodePortOutConsumerLoad'],
+    nodePortDownstreamDemand: dehydrateNestedRationalMap(
+      result.nodePortDownstreamDemand,
+    ) as unknown as FlowResult['nodePortDownstreamDemand'],
+    nodeInputLimitedPortOutputRates: dehydrateNestedRationalMap(
+      result.nodeInputLimitedPortOutputRates,
+    ) as unknown as FlowResult['nodeInputLimitedPortOutputRates'],
+    nodeEffectivePortOutputRates: dehydrateNestedRationalMap(
+      result.nodeEffectivePortOutputRates,
+    ) as unknown as FlowResult['nodeEffectivePortOutputRates'],
+    nodePortOutCapacityLoad: dehydrateNestedRationalMap(
+      result.nodePortOutCapacityLoad,
+    ) as unknown as FlowResult['nodePortOutCapacityLoad'],
+    nodePortOutLoad: dehydrateNestedRationalMap(result.nodePortOutLoad) as unknown as FlowResult['nodePortOutLoad'],
+    nodeMaxLoad: dehydrateRationalMap(result.nodeMaxLoad) as unknown as FlowResult['nodeMaxLoad'],
+    nodeCurrentLoad: dehydrateRationalMap(result.nodeCurrentLoad) as unknown as FlowResult['nodeCurrentLoad'],
+    nodeLoad: dehydrateRationalMap(result.nodeLoad) as unknown as FlowResult['nodeLoad'],
+    nodeSurplus: dehydrateNestedRationalMap(result.nodeSurplus) as unknown as FlowResult['nodeSurplus'],
+    nodeMachineCounts: result.nodeMachineCounts,
+  };
 }
 
 function reviveRationalMap(map: Record<string, unknown>): Record<string, Rational> {

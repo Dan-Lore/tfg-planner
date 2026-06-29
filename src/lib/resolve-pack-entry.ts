@@ -1,5 +1,6 @@
 import type { PackManifestEntry } from '@/data/types';
 import type { ActivePack } from '@/data/pack-runtime';
+import { peekSessionCachedPack } from '@/data/pack-registry';
 
 /** Map persisted selection onto current manifest (path/recipesRoot may have changed). */
 export function resolvePackEntry(
@@ -23,6 +24,7 @@ export function packEntryNeedsLoad(
   activePack: ActivePack | null,
   activeEntry: PackManifestEntry | null,
 ): boolean {
+  if (peekSessionCachedPack(entry)) return false;
   if (!activePack) return true;
   if (!activeEntry) return true;
   if (activeEntry.modpackVersion !== entry.modpackVersion) return true;

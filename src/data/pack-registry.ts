@@ -1,9 +1,43 @@
 import type { ActivePack } from './pack-runtime';
-import type { PackData, PackManifest, PackManifestEntry, Recipe } from './types';
+import type {
+  PackData,
+  PackManifest,
+  PackManifestEntry,
+  PackMeta,
+  Recipe,
+  RecipeShardIndex,
+} from './types';
 import { PackRuntime, wrapPackData } from './pack-runtime';
 import { publicPath } from '@/lib/public-path';
+import { packKey } from '@/lib/pack-key';
+import type { PackBuildManifest } from '@/lib/pack-idb-cache';
 
 export type PackLike = ActivePack | PackData;
+
+const sessionCache = new Map<string, ActivePack>();
+
+async function fetchJson<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
+  return res.json() as Promise<T>;
+}
+
+function indexUrl(recipesRoot: string): string {
+  const root = recipesRoot.endsWith('/') ? recipesRoot : `${recipesRoot}/`;
+  return `${root}index.json`;
+}
+
+function buildManifestUrl(modpackVersion: string): string {
+  return publicPath(`/data/packs/${modpackVersion}/manifest.json`);
+}
+
+async function loadPackBuildManifest(modpackVersion: string): Promise<PackBuildManifest> {
+  return fetchJson<PackBuildManifest>(buildManifestUrl(modpackVersion));
+}
+
+export function peekSessionCachedPack(entry: PackManifestEntry): ActivePack | null {
+  return sessionCache.get(packKey(entry.modpackVersion, entry.dataVersion)) ?? null;
+}
 
 export async function loadManifest(): Promise<PackManifest> {
   const res = await fetch(publicPath('/data/packs/manifest.json'));
@@ -17,20 +51,44 @@ export async function loadPackData(path: string): Promise<PackData> {
   return res.json() as Promise<PackData>;
 }
 
-export async function loadActivePack(entry: PackManifestEntry): Promise<ActivePack> {
-  const res = await fetch(publicPath(entry.path));
-  if (!res.ok) throw new Error(`Failed to load pack: ${entry.path}`);
-  const header = (await res.json()) as PackData | { formatVersion: number };
+async function loadV2Pack(entry: PackManifestEntry): Promise<ActivePack> {
+  if (!entry.recipesRoot) {
+    throw new Error(`Pack ${entry.modpackVersion} is v2 but manifest missing recipesRoot`);
+  }
+  const recipesRoot = publicPath(entry.recipesRoot);
+  const buildManifest = await loadPackBuildManifest(entry.modpackVersion);
 
-  if (header.formatVersion === 2) {
-    if (!entry.recipesRoot) {
-      throw new Error(`Pack ${entry.modpackVersion} is v2 but manifest missing recipesRoot`);
-    }
-    return PackRuntime.fromManifestEntry(entry.path, entry.recipesRoot);
+  const meta = await fetchJson<PackMeta>(publicPath(entry.path));
+  if (meta.formatVersion !== 2) {
+    throw new Error(`Expected pack format v2 at ${entry.path}`);
+  }
+  if (
+    meta.generatedAt !== buildManifest.generatedAt ||
+    meta.modpackVersion !== buildManifest.modpackVersion ||
+    meta.dataVersion !== buildManifest.dataVersion
+  ) {
+    throw new Error(
+      `Pack ${entry.modpackVersion} build manifest mismatch (generatedAt or version)`,
+    );
+  }
+  const shardIndex = await fetchJson<RecipeShardIndex>(publicPath(indexUrl(entry.recipesRoot)));
+
+  return new PackRuntime(meta, recipesRoot, shardIndex);
+}
+
+export async function loadActivePack(entry: PackManifestEntry): Promise<ActivePack> {
+  const key = packKey(entry.modpackVersion, entry.dataVersion);
+  const cached = sessionCache.get(key);
+  if (cached) {
+    return cached;
   }
 
-  const pack = header as PackData;
-  return wrapPackData(pack);
+  const pack = entry.recipesRoot
+    ? await loadV2Pack(entry)
+    : wrapPackData(await fetchJson<PackData>(publicPath(entry.path)));
+
+  sessionCache.set(key, pack);
+  return pack;
 }
 
 export function getItemName(
