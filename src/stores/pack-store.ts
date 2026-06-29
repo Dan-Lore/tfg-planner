@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { PackManifestEntry } from '@/data/types';
 import type { ActivePack, PackLoadStage } from '@/data/pack-runtime';
 import { loadManifest, loadActivePack } from '@/data/pack-registry';
+import { buildTagIndexFromMeta } from '@/lib/tag-index';
 
 interface PackState {
   manifest: PackManifestEntry[];
@@ -42,6 +43,9 @@ export const usePackStore = create<PackState>()(
         set({ loading: true, error: null, loadStage: 'meta' });
         try {
           const pack = await loadActivePack(entry);
+          queueMicrotask(() => {
+            buildTagIndexFromMeta(pack);
+          });
           set({
             activePack: pack,
             activeEntry: entry,

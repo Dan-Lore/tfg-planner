@@ -97,12 +97,32 @@ export function buildRecipeComboboxItems(
   recipes: Recipe[],
   lang: 'ru' | 'en',
 ): SearchComboboxItem[] {
-  return sortRecipesForPicker(pack, recipes, lang).map((r) => ({
+  return getCachedRecipeComboboxItems(pack, recipes, lang);
+}
+
+const recipeComboboxCache = new WeakMap<readonly Recipe[], Map<string, SearchComboboxItem[]>>();
+
+function getCachedRecipeComboboxItems(
+  pack: PackLike,
+  recipes: Recipe[],
+  lang: 'ru' | 'en',
+): SearchComboboxItem[] {
+  if (recipes.length === 0) return [];
+  let byLang = recipeComboboxCache.get(recipes);
+  if (!byLang) {
+    byLang = new Map();
+    recipeComboboxCache.set(recipes, byLang);
+  }
+  const cached = byLang.get(lang);
+  if (cached) return cached;
+  const items = sortRecipesForPicker(pack, recipes, lang).map((r) => ({
     id: r.id,
     label: formatRecipeLabel(pack, r, lang),
     searchText: buildRecipeIngredientSearchText(pack, r, lang),
     recipeDetail: buildRecipePickerDetail(pack, r, lang),
   }));
+  byLang.set(lang, items);
+  return items;
 }
 
 export function sortRecipesForPicker(
