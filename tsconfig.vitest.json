@@ -4,6 +4,7 @@
     "noEmit": true
   },
   "include": [
+    "src/vite-env.d.ts",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "tools/parser/tests/**/*.test.ts"

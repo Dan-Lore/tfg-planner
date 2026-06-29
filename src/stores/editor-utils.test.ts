@@ -1,6 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest';
-import type { FlowResult } from '@/calculator/flow-solver';
-import type { TfgpNode } from '@/schema/tfgp';
+import { isMachineNode } from '@/lib/node-kind';
+import type { TfgpMachineNode } from '@/schema/tfgp';
+import { emptyFlowResult } from '@/test/flow-result-fixture';
 import {
   allocateNodeId,
   applyFlowResult,
@@ -10,7 +11,7 @@ import {
   seedIdCounter,
 } from './editor-utils';
 
-const node: TfgpNode = {
+const node: TfgpMachineNode = {
   id: 'n1',
   machineId: 'm1',
   recipeId: 'r1',
@@ -21,29 +22,19 @@ const node: TfgpNode = {
   parallel: 1,
 };
 
-const result: FlowResult = {
-  edgeFlows: {},
-  edgeTargetFlows: {},
-  nodeOutputRates: {},
-  nodePortOutputRates: {},
-  nodeInputRates: {},
-  nodePortDeficit: {},
-  nodePortInLoad: {},
-  nodePortOutLoad: {},
-  nodeLoad: {},
-  nodeSurplus: {},
+const result = emptyFlowResult({
   nodeMachineCounts: { n1: 9 },
-};
+});
 
 describe('applyFlowResult', () => {
   it('preserve mode keeps manual machine counts', () => {
     const out = applyFlowResult([node], result, 'preserve');
-    expect(out[0]!.machineCount).toBe(4);
+    expect(isMachineNode(out[0]) && out[0].machineCount).toBe(4);
   });
 
   it('full mode applies solver machine counts across scheme', () => {
     const out = applyFlowResult([node], result, 'full');
-    expect(out[0]!.machineCount).toBe(9);
+    expect(isMachineNode(out[0]) && out[0].machineCount).toBe(9);
   });
 });
 
@@ -51,7 +42,7 @@ describe('nextId', () => {
   beforeEach(() => resetIdCounter());
 
   it('seeds counter from existing scheme ids after reload', () => {
-    const nodes: TfgpNode[] = [
+    const nodes: TfgpMachineNode[] = [
       { ...node, id: 'node_19' },
     ];
     const edges = [{ id: 'edge_20', source: 'node_19', sourcePort: 'out_0', target: 'node_19', targetPort: 'in_0' }];
@@ -60,7 +51,7 @@ describe('nextId', () => {
   });
 
   it('skips ids already taken in the scheme', () => {
-    const existing: TfgpNode[] = [
+    const existing: TfgpMachineNode[] = [
       { ...node, id: 'node_3' },
     ];
     seedIdCounter(existing, []);
@@ -81,13 +72,14 @@ describe('dedupeNodeIds', () => {
       voltageTier: 'LV' as const,
       parallel: 1,
     };
-    const nodes: TfgpNode[] = [
+    const nodes: TfgpMachineNode[] = [
       { id: 'node_3', ...base, machineId: 'reactor' },
       { id: 'node_3', ...base, machineId: 'tower' },
     ];
     const out = dedupeNodeIds(nodes, []);
     expect(out.map((n) => n.id)).toEqual(['node_3', 'node_4']);
-    expect(out[1]!.machineId).toBe('tower');
+    const tower = out[1];
+    expect(isMachineNode(tower) && tower.machineId).toBe('tower');
   });
 });
 
@@ -101,8 +93,8 @@ describe('normalizeSchemeNodes', () => {
       machineCount: 1,
       overclock: 1,
       parallel: 1,
-    } as TfgpNode;
+    } as TfgpMachineNode;
     const [normalized] = normalizeSchemeNodes([legacy]);
-    expect(normalized.voltageTier).toBe('LV');
+    expect(isMachineNode(normalized) && normalized.voltageTier).toBe('LV');
   });
 });

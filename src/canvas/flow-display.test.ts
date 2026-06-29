@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { R } from '@/calculator/rational';
 import { buildEdgeFlowData, buildNodeBalanceLines, buildOutputPortLoadMeta } from '@/canvas/flow-display';
 import type { PackData } from '@/data/types';
-import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
+import type { TfgpEdge, TfgpMachineNode } from '@/schema/tfgp';
+import { emptyFlowResult } from '@/test/flow-result-fixture';
 
 const pack: PackData = {
   format: 'tfg-pack-data',
@@ -28,7 +29,7 @@ const pack: PackData = {
   ],
 };
 
-const mixer: TfgpNode = {
+const mixer: TfgpMachineNode = {
   id: 'mixer1',
   machineId: 'mixer',
   recipeId: 'mix',
@@ -68,7 +69,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         e1: R.from(4),
         e2: R.from(2),
@@ -90,7 +91,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [mixer], pack, result);
 
@@ -122,7 +123,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         e1: R.from(4),
         e2: R.from(2),
@@ -142,7 +143,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [mixer], pack, result);
 
@@ -163,7 +164,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: { e1: R.from(4) },
       edgeTargetFlows: {},
       nodeOutputRates: { srcA: { a: R.from(4) } },
@@ -175,14 +176,14 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [mixer], pack, result);
     expect(data.e1?.target).toBe('4.00/s');
   });
 
   it('dedupes source labels to the central outgoing edge at convergence', () => {
-    const source: TfgpNode = {
+    const source: TfgpMachineNode = {
       id: 'src',
       machineId: 'mixer',
       recipeId: 'mix',
@@ -212,7 +213,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         o1: R.from(4),
         o2: R.from(4),
@@ -229,7 +230,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { src: 1 },
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [source], pack, result);
 
@@ -239,7 +240,7 @@ describe('buildEdgeFlowData', () => {
   });
 
   it('keeps target on each distinct ingredient when two feeders converge on one machine', () => {
-    const autoclave: TfgpNode = {
+    const autoclave: TfgpMachineNode = {
       id: 'auto',
       machineId: 'autoclave',
       recipeId: 'mix',
@@ -249,7 +250,7 @@ describe('buildEdgeFlowData', () => {
       voltageTier: 'LV',
       parallel: 1,
     };
-    const mixer1: TfgpNode = {
+    const mixer1: TfgpMachineNode = {
       id: 'mixer1',
       machineId: 'mixer',
       recipeId: 'mix',
@@ -259,7 +260,7 @@ describe('buildEdgeFlowData', () => {
       voltageTier: 'LV',
       parallel: 1,
     };
-    const mixer2: TfgpNode = {
+    const mixer2: TfgpMachineNode = {
       id: 'mixer2',
       machineId: 'mixer',
       recipeId: 'mix',
@@ -289,7 +290,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         m1a: R.from(6),
         m2a: R.from(4),
@@ -309,7 +310,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 1, mixer2: 1, auto: 1 },
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [mixer1, mixer2, autoclave], pack, result);
 
@@ -339,7 +340,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         m1a: R.from(8),
         m2a: R.from(8),
@@ -359,7 +360,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: {},
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [], pack, result);
 
@@ -369,7 +370,7 @@ describe('buildEdgeFlowData', () => {
   });
 
   it('keeps source on each parallel output port when the same product leaves on separate handles', () => {
-    const greenhouse: TfgpNode = {
+    const greenhouse: TfgpMachineNode = {
       id: 'gh',
       machineId: 'gtceu:greenhouse',
       recipeId: 'tfg:tfc_wood_sapling_pine/1',
@@ -379,7 +380,7 @@ describe('buildEdgeFlowData', () => {
       voltageTier: 'LV',
       parallel: 1,
     };
-    const pyro: TfgpNode = {
+    const pyro: TfgpMachineNode = {
       id: 'pyro',
       machineId: 'gtceu:pyrolyse_oven',
       recipeId: 'mix',
@@ -417,7 +418,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         e0: R.from(64 / 600),
         e2: R.from(16 / 600),
@@ -444,7 +445,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { gh: 1, pyro: 1 },
-    };
+    });
 
     const data = buildEdgeFlowData(edges, [greenhouse, pyro], pack, result);
 
@@ -458,7 +459,7 @@ describe('buildEdgeFlowData', () => {
   });
 
   it('sums source on one port across targets even when edge itemId differs', () => {
-    const greenhouse: TfgpNode = {
+    const greenhouse: TfgpMachineNode = {
       id: 'gh',
       machineId: 'gtceu:greenhouse',
       recipeId: 'tfg:tfc_wood_sapling_pine/1',
@@ -468,7 +469,7 @@ describe('buildEdgeFlowData', () => {
       voltageTier: 'LV',
       parallel: 1,
     };
-    const pyro1: TfgpNode = {
+    const pyro1: TfgpMachineNode = {
       id: 'pyro1',
       machineId: 'gtceu:pyrolyse_oven',
       recipeId: 'mix',
@@ -478,7 +479,7 @@ describe('buildEdgeFlowData', () => {
       voltageTier: 'LV',
       parallel: 1,
     };
-    const pyro2: TfgpNode = {
+    const pyro2: TfgpMachineNode = {
       id: 'pyro2',
       machineId: 'gtceu:pyrolyse_oven',
       recipeId: 'mix',
@@ -508,7 +509,7 @@ describe('buildEdgeFlowData', () => {
       },
     ];
 
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {
         e1: R.from(3),
         e2: R.from(5),
@@ -525,7 +526,7 @@ describe('buildEdgeFlowData', () => {
       nodeLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { gh: 1 },
-    };
+    });
 
     const data = buildEdgeFlowData(
       edges,
@@ -543,7 +544,7 @@ describe('buildEdgeFlowData', () => {
 describe('buildNodeBalanceLines', () => {
   it('shows deficit for unconnected inputs and surplus for unused outputs', () => {
     const recipe = pack.recipes[0]!;
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: {},
       edgeTargetFlows: {},
       nodeOutputRates: { mixer1: { out: R.from(2) } },
@@ -559,7 +560,7 @@ describe('buildNodeBalanceLines', () => {
       nodePortOutLoad: {},
       nodeSurplus: { mixer1: { out: R.from(0.5) } },
       nodeMachineCounts: { mixer1: 2 },
-    };
+    });
     const connectedIn = new Set(['in_0']);
 
     const lines = buildNodeBalanceLines(
@@ -579,7 +580,7 @@ describe('buildNodeBalanceLines', () => {
 
   it('shows deficit on connected inputs when upstream supply is insufficient', () => {
     const recipe = pack.recipes[0]!;
-    const result = {
+    const result = emptyFlowResult({
       edgeFlows: { e1: R.from(2) },
       edgeTargetFlows: {},
       nodeOutputRates: { mixer1: { out: R.from(4) } },
@@ -590,7 +591,7 @@ describe('buildNodeBalanceLines', () => {
       nodePortOutLoad: {},
       nodeSurplus: {},
       nodeMachineCounts: { mixer1: 2 },
-    };
+    });
 
     const lines = buildNodeBalanceLines(
       'mixer1',
@@ -611,12 +612,12 @@ describe('buildOutputPortLoadMeta', () => {
     `${key}:${JSON.stringify(opts ?? {})}`;
 
   it('shows recipe throughput on the port and consumer demand in the tooltip', () => {
-    const result = {
+    const result = emptyFlowResult({
       nodePortOutRecipeLoad: { mixer1: { out_0: R.from(0.5) } },
       nodePortOutConsumerLoad: { mixer1: { out_0: R.from(0.96) } },
       nodePortDownstreamDemand: { mixer1: { out_0: R.from(4) } },
       nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
-    } as import('@/calculator/flow-solver').FlowResult;
+    });
 
     const meta = buildOutputPortLoadMeta(
       'mixer1',

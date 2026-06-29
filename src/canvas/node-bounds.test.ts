@@ -8,6 +8,7 @@ import {
   getMachineNodeRect,
   PORT_ROW_HEIGHT,
 } from '@/canvas/node-bounds';
+import { emptyPackData } from '@/test/pack-fixture';
 import type { PackData } from '@/data/types';
 
 const pack = {
@@ -100,7 +101,7 @@ describe('getFlowNodeRect', () => {
       data: {
         bufferKind: 'intermediate_buffer',
         capacity: 100,
-        pack: { recipes: [], machines: [], items: [], fluids: [] } as PackData,
+        pack: emptyPackData(),
         inputPorts: [],
         outputPorts: [],
         onCapacityChange: () => {},

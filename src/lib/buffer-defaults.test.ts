@@ -1,23 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { estimateBufferDefaults } from '@/lib/buffer-defaults';
 import { R } from '@/calculator/rational';
-import type { FlowResult } from '@/calculator/flow-solver';
+import { emptyFlowResult } from '@/test/flow-result-fixture';
 
 describe('estimateBufferDefaults', () => {
   it('derives capacity from port flow rate × 3600', () => {
-    const flowResult: FlowResult = {
+    const flowResult = emptyFlowResult({
       edgeFlows: { e1: R.from(2.5) },
-      edgeTargetFlows: {},
-      nodeOutputRates: {},
-      nodePortOutputRates: {},
-      nodeInputRates: {},
-      nodePortDeficit: {},
-      nodePortInLoad: {},
-      nodePortOutLoad: {},
-      nodeLoad: {},
-      nodeSurplus: {},
-      nodeMachineCounts: {},
-    };
+    });
     const defaults = estimateBufferDefaults(
       'n1',
       'out_0',
