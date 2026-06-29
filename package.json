@@ -17,7 +17,10 @@
     "generate-tfg-snapshot": "node tools/parser/scripts/generate-tfg-snapshot.mjs",
     "resume-tfg-server-export": "node tools/parser/scripts/run-tfg-server-export.mjs",
     "parser:validate": "tsx tools/parser/src/cli.ts validate",
-    "check-scheme": "vite-node --config vitest.config.ts tools/check-scheme.ts"
+    "check-scheme": "vite-node --config vitest.config.ts tools/check-scheme.ts",
+    "lint:arch": "depcruise src tools/parser/src --config .dependency-cruiser.cjs",
+    "lint:knip": "knip --include files,dependencies,duplicates",
+    "lint:agent": "npm run lint:arch && npm run lint:knip"
   },
   "dependencies": {
     "@babel/parser": "^8.0.0",
@@ -40,6 +43,8 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "dependency-cruiser": "^18.0.0",
+    "knip": "^6.23.0",
     "tsx": "^4.19.4",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",

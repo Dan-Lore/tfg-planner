@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- **Agent tooling:** `.cursorignore`, scoped `.cursor/rules/` (architecture, calculator, parser, tests); `dependency-cruiser` + `knip` (`lint:arch`, `lint:knip`, `lint:agent`); CI verify step; [docs/agent-tooling-catalog.md](docs/agent-tooling-catalog.md); roadmap **K-013** (Semgrep, depcruise cycles, knip exports).
+
 ### Removed
 
 - Deprecated demo pack `0.12.8-sample` (replaced by inline `src/test-fixtures/minimal-pack.ts` for unit tests).

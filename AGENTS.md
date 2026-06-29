@@ -56,3 +56,18 @@ Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`
 
 При фиче: `specification.md` + `kanban.md` (закрыть карточку) + `CHANGELOG.md`.  
 При новой версии pack data: `docs/versions.md`.
+
+## Инструменты контекста для агента
+
+| Инструмент | Назначение | Команда |
+|------------|------------|---------|
+| `.cursor/rules/*.mdc` | Scoped-правила (architecture, calculator, parser, tests) | авто по globs |
+| `.cursorignore` | Исключения из индекса Cursor (pack shards, `.cache`, lock) | — |
+| `dependency-cruiser` | Граф импортов, циклы, calculator/parser без React | `npm run lint:arch` |
+| `knip` | Неиспользуемые файлы и зависимости | `npm run lint:knip` |
+| `AGENTS.md` + `docs/architecture.md` | Точки входа и границы модулей | читать перед задачей |
+| [docs/agent-tooling-catalog.md](docs/agent-tooling-catalog.md) | Полный справочник инструментов + статус интеграции | при выборе tooling |
+
+Перед рефакторингом: `npm run lint:agent`. Не добавлять React-импорты в `src/calculator/` и `tools/parser/`.
+
+**Roadmap tooling (фаза 2):** [kanban K-013](docs/kanban.md) — Semgrep, depcruise `no-circular`, полный knip в CI.

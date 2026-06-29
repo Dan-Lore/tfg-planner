@@ -1,0 +1,24 @@
+---
+description: Vitest — соглашения по тестам calculator и parser
+globs: "**/*.test.ts"
+alwaysApply: false
+---
+
+# Tests (Vitest)
+
+- Runner: `npm test` / `npm run test:watch`
+- Config: `vitest.config.ts`, alias `@/` → `src/`
+- Environment: `node` (без jsdom по умолчанию)
+
+## Расположение
+
+- Calculator/UI lib: `src/**/*.test.ts` рядом с кодом
+- Parser: `tools/parser/tests/*.test.ts`
+- Pack fixtures: `src/test-fixtures/`, `src/test/pack-fixture.ts`
+
+## Правила
+
+- Тестировать **поведение**, не implementation details.
+- Flow/calculator: линейные цепочки, разветвления, ceil rounding, chanced I/O.
+- Parser: golden diff, smoke chains, snapshot manifest gates.
+- Не добавлять тесты-заглушки (`expect(true).toBe(true)`).

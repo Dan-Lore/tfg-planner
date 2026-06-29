@@ -1,0 +1,28 @@
+---
+description: Калькулятор продуктовых потоков — flow-solver, rounding, energy
+globs: src/calculator/**
+alwaysApply: false
+---
+
+# Calculator
+
+Модуль **без React**. Unit-тесты обязательны (`*.test.ts` рядом с кодом).
+
+## Ключевые файлы
+
+- `flow-solver.ts` — двусторонний баланс по графу
+- `rounding.ts` — `ceilMachineCount`, min 1
+- `energy.ts` — EU/t, effective duration (overclock → duration, не EU/t)
+- `buffer-solver.ts` — pass-through буферов
+- `rational.ts` — рациональная арифметика
+
+## Правила
+
+- Любое изменение целевой/промежуточной скорости → **полный пересчёт** графа.
+- Не создавать узлы на холсте автоматически (кроме ручного режима A в редакторе).
+- Не подбирать количество машин за пользователя — только пересчёт по топологии.
+- Byproducts и chanced I/O учитывать через `@/lib/flow-chance`.
+
+## Тесты
+
+Vitest, environment `node`. Фикстуры pack: `src/test-fixtures/minimal-pack.ts`.

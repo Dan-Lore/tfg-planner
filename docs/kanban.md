@@ -218,6 +218,27 @@
 
 ---
 
+### K-013 · Agent tooling — фаза 2
+
+| Поле | Значение |
+|------|----------|
+| Статус | `backlog` |
+| Приоритет | P2 |
+| Зависит от | — (knip exports — после зачистки legacy в parser) |
+| См. также | [agent-tooling-catalog.md](agent-tooling-catalog.md) § Roadmap |
+
+**Контекст:** фаза 1 закрыта (`.cursor/rules`, `.cursorignore`, dependency-cruiser React-границы, knip files/deps, CI `lint:agent`). Ниже — осознанно отложено: либо нужен рефакторинг, либо зачистка legacy.
+
+**Scope:**
+
+- [ ] **Semgrep** — CI-правила «нет `TODO: implement` / fake UI / placeholder data» (инвариант [AGENTS.md](../AGENTS.md)); `.semgrep.yml` + шаг в `verify.yml`
+- [ ] **dependency-cruiser `no-circular`** — включить после переноса `src/canvas/ports.ts` → `src/lib/`, разрыва циклов calculator ↔ schema (`flow-solver` → `pack-registry` → `tfgp` → …)
+- [ ] **knip exports в CI** — расширить `lint:knip` на unused exports после удаления legacy: `enrich-energy.ts`, `gtceu-yaml.ts`, duplicate re-exports в `recipe-id-aliases.ts` / `manifest.ts`, неиспользуемый `js-yaml`
+
+**Критерий закрытия:** `npm run lint:agent` включает Semgrep и полный knip (exports); `depcruise` с `no-circular` проходит без waivers для canvas/calculator.
+
+---
+
 ## Заблокировано / ждёт решения
 
 | ID | Вопрос | Статус |

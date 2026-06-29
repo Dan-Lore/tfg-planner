@@ -1,0 +1,30 @@
+# Dependencies & build
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+
+# Lock files (noise for semantic search)
+package-lock.json
+
+# Env & secrets
+.env
+.env.*
+
+# Parser cache & heavy generated data
+.cache/
+tools/parser/substrate-dumps/
+tools/parser/snapshots/**/recipes.json
+tools/parser/snapshots/**/kubejs/
+
+# Pack data shards (large JSON; use manifest + build-report for context)
+public/data/packs/**/recipes/
+data/packs/**/recipes/
+
+# User schemes & debug attachments
+*.tfgp
+*.png
+
+
+

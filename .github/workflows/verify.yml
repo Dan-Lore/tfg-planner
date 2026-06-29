@@ -32,6 +32,9 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Architecture & dead-code lint
+        run: npm run lint:agent
+
       - name: Build
         run: npm run build
         env:

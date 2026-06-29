@@ -1,0 +1,39 @@
+---
+description: TFG parser — snapshot pipeline, KubeJS AST, build-pack
+globs: tools/parser/**
+alwaysApply: false
+---
+
+# Parser (`tools/parser`)
+
+Детали: `docs/parser.md`. Данные **только** из Modpack-Modern, не vanilla GT dumps.
+
+## Pipeline
+
+```
+git tag → generate-tfg-snapshot → snapshots/<ver>/
+       → build-pack → public/data/packs/<ver>/ → manifest
+```
+
+## Ключевые модули
+
+- `src/build-pack.ts` — сборка pack из snapshot + lang
+- `src/snapshot/` — загрузка RecipeManager export
+- `src/kubejs/` — AST-парсер KubeJS скриптов
+- `src/pipeline/` — normalize, sanitize, aliases
+- `src/validate/` — schema, smoke chains, golden diff
+
+## Правила
+
+- `build-pack --strict-snapshot` — единственный путь для production pack.
+- Без `enrich-energy` / auto-bootstrap в build (snapshot = source of truth).
+- `Recipe.energy` optional; парсер не подставляет fake values.
+- Тесты: `tools/parser/tests/*.test.ts` (Vitest).
+
+## CLI
+
+```bash
+npm run build-pack -- --version 0.12.8
+npm run parser:validate
+npm run generate-tfg-snapshot
+```

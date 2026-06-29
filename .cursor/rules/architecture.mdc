@@ -1,0 +1,40 @@
+---
+description: Границы модулей, точки входа и потоки данных TFG Planner — читать при рефакторинге и новых фичах
+alwaysApply: false
+---
+
+# Архитектура (кратко)
+
+Полная схема: `docs/architecture.md`. Kanban: `docs/kanban.md`.
+
+## Слои
+
+| Слой | Путь | Зависимости |
+|------|------|-------------|
+| Parser CLI | `tools/parser/` | Node, Babel AST; **без React** |
+| Calculator | `src/calculator/` | `@/data`, `@/lib`; **без React** |
+| Canvas / Editor | `src/canvas/`, `src/editor/`, `src/stores/` | React Flow, Zustand |
+| Pack runtime | `src/data/`, `public/data/packs/` | IndexedDB cache |
+| Schema I/O | `src/schema/` | `.tfgp` serialize/deserialize |
+
+## Точки входа
+
+- SPA: `src/main.tsx`
+- Parser: `tools/parser/src/cli.ts` (`build-pack`, `validate`)
+- Scheme check: `tools/check-scheme.ts`
+
+## Инварианты
+
+- Optional поля в pack data **отсутствуют**, не `null` / `0`.
+- Незавершённые фичи — **нет UI**, карточка в kanban.
+- `machineCount` = ceil, полный пересчёт потоков (режим C).
+- Энергия только при `recipe.energy` в pack data.
+
+## Проверки
+
+```bash
+npm run lint:arch    # dependency-cruiser — слои и циклы
+npm run lint:knip    # knip — мёртвые файлы и зависимости
+```
+
+Справочник инструментов: `docs/agent-tooling-catalog.md`.
