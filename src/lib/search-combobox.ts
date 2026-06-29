@@ -100,7 +100,10 @@ export function buildRecipeComboboxItems(
   return getCachedRecipeComboboxItems(pack, recipes, lang);
 }
 
-const recipeComboboxCache = new WeakMap<readonly Recipe[], Map<string, SearchComboboxItem[]>>();
+const recipeComboboxCache = new WeakMap<
+  PackLike,
+  WeakMap<readonly Recipe[], Map<string, SearchComboboxItem[]>>
+>();
 
 function getCachedRecipeComboboxItems(
   pack: PackLike,
@@ -108,10 +111,15 @@ function getCachedRecipeComboboxItems(
   lang: 'ru' | 'en',
 ): SearchComboboxItem[] {
   if (recipes.length === 0) return [];
-  let byLang = recipeComboboxCache.get(recipes);
+  let byRecipes = recipeComboboxCache.get(pack);
+  if (!byRecipes) {
+    byRecipes = new WeakMap();
+    recipeComboboxCache.set(pack, byRecipes);
+  }
+  let byLang = byRecipes.get(recipes);
   if (!byLang) {
     byLang = new Map();
-    recipeComboboxCache.set(recipes, byLang);
+    byRecipes.set(recipes, byLang);
   }
   const cached = byLang.get(lang);
   if (cached) return cached;

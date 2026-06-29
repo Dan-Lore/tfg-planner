@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { PackData, Recipe } from '@/data/types';
 import {
+  buildRecipeComboboxItems,
   buildRecipeIngredientSearchText,
   filterItemsByQuery,
   getPrefixAutocompleteSuffix,
@@ -78,6 +79,65 @@ describe('search-combobox', () => {
     expect(resolveMachineId(null, filtered)).toBe('a');
     expect(resolveMachineId('missing', filtered)).toBe('a');
     expect(resolveMachineId(null, [])).toBeNull();
+  });
+
+  it('caches recipe combobox items per pack and recipes array', () => {
+    const recipe: Recipe = {
+      id: 'test:mix',
+      machineId: 'gtceu:mixer',
+      inputs: [{ itemId: 'minecraft:copper_ingot', amount: 1 }],
+      outputs: [{ itemId: 'gtceu:copper_dust', amount: 1 }],
+      durationTicks: 20,
+    };
+    const recipes = [recipe];
+    const packA: PackData = {
+      format: 'tfg-pack-data',
+      formatVersion: 1,
+      modpackVersion: 'test-a',
+      dataVersion: 1,
+      generatedAt: '',
+      machines: [],
+      recipes,
+      items: [
+        {
+          id: 'minecraft:copper_ingot',
+          names: { ru: 'Медный слиток A', en: 'Copper ingot A' },
+        },
+        {
+          id: 'gtceu:copper_dust',
+          names: { ru: 'Медная пыль A', en: 'Copper dust A' },
+        },
+      ],
+      fluids: [],
+    };
+    const packB: PackData = {
+      format: 'tfg-pack-data',
+      formatVersion: 1,
+      modpackVersion: 'test-b',
+      dataVersion: 1,
+      generatedAt: '',
+      machines: [],
+      recipes,
+      items: [
+        {
+          id: 'minecraft:copper_ingot',
+          names: { ru: 'Медный слиток B', en: 'Copper ingot B' },
+        },
+        {
+          id: 'gtceu:copper_dust',
+          names: { ru: 'Медная пыль B', en: 'Copper dust B' },
+        },
+      ],
+      fluids: [],
+    };
+
+    const itemsA = buildRecipeComboboxItems(packA, recipes, 'ru');
+    const itemsB = buildRecipeComboboxItems(packB, recipes, 'ru');
+
+    expect(itemsA[0]?.label).toContain('Медный слиток A');
+    expect(itemsB[0]?.label).toContain('Медный слиток B');
+    expect(itemsA[0]?.searchText).toContain('Медная пыль A');
+    expect(itemsB[0]?.searchText).toContain('Медная пыль B');
   });
 
   it('matches recipe by ingredient not label', () => {

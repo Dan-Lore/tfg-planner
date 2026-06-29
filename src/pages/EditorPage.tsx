@@ -792,7 +792,7 @@ export function EditorPage() {
               ratePerSecond: Number(v),
             });
           }}
-          disabled={!selectedNode || !isMachineNode(selectedNode)}
+          disabled={!pack || !selectedNode || !isMachineNode(selectedNode)}
         >
           {t('editor.targetRate')}
         </button>
