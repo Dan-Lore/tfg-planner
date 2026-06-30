@@ -129,6 +129,7 @@ interface EditorState {
   /** Full scheme solve from targets; updates machine counts across the graph. */
   recalculateScheme: () => void;
   duplicateSelected: () => void;
+  setSchemeName: (name: string) => void;
 }
 
 function cacheFlows(
@@ -838,6 +839,19 @@ export const useEditorStore = create<EditorState>()(
           };
         });
         get().updateFlows();
+      },
+
+      setSchemeName: (name) => {
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            meta: { ...s.scheme.meta, name },
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
       },
     }),
     {

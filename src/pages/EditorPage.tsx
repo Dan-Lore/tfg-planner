@@ -35,6 +35,7 @@ import {
 import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
 import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
+import { schemeNameFromFilename } from '@/lib/tfgp-filename';
 import { getMachineName, getRecipe, getMachineRecipeCount } from '@/data/pack-registry';
 import { EditorInspector } from '@/editor/EditorInspector';
 import {
@@ -133,6 +134,7 @@ export function EditorPage() {
   const duplicateSelected = useEditorStore((s) => s.duplicateSelected);
   const loadScheme = useEditorStore((s) => s.loadScheme);
   const clearScheme = useEditorStore((s) => s.clearScheme);
+  const setSchemeName = useEditorStore((s) => s.setSchemeName);
   const setSelectedNodeIds = useEditorStore((s) => s.setSelectedNodeIds);
   const setSelectedEdgeIds = useEditorStore((s) => s.setSelectedEdgeIds);
   const activePackKey = useEditorStore((s) => s.activePackKey);
@@ -695,6 +697,14 @@ export function EditorPage() {
     clearScheme();
   };
 
+  const handleSchemeNameBlur = () => {
+    const trimmed = scheme.meta.name.trim();
+    const normalized = trimmed || 'Untitled';
+    if (normalized !== scheme.meta.name) {
+      setSchemeName(normalized);
+    }
+  };
+
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -702,7 +712,11 @@ export function EditorPage() {
     reader.onload = () => {
       try {
         const parsed = parseTfgp(reader.result as string);
-        loadScheme(parsed);
+        const nameFromFile = schemeNameFromFilename(file.name);
+        loadScheme({
+          ...parsed,
+          meta: { ...parsed.meta, name: nameFromFile },
+        });
       } catch (err) {
         alert(err instanceof Error ? err.message : 'Import failed');
       }
@@ -889,35 +903,56 @@ export function EditorPage() {
             onMoveEnd={(vp) => setViewport(vp)}
           />
         </div>
-        <aside className="editor-sidebar editor-element-panel">
-          <div className="editor-element-panel__header">
-            <h3>{t('editor.elementEditor')}</h3>
-          </div>
-          <div className="editor-element-panel__body">
-            <SchemeIssuesPanel
-              pack={pack}
-              lang={lang}
-              nodes={scheme.nodes}
-              edges={scheme.edges}
-              schemeCheck={schemeCheckResult}
-              onFocusIssue={handleFocusIssue}
-            />
-            {pack && (
-              <EditorInspector
+        <aside className="editor-sidebar editor-sidebar-panel">
+          <section className="editor-sidebar-section editor-sidebar-section--scheme">
+            <div className="editor-sidebar-section__header">
+              <h3>{t('editor.schemeEditor')}</h3>
+            </div>
+            <div className="editor-sidebar-section__body">
+              <div className="editor-scheme-name">
+                <label htmlFor="scheme-name-input">{t('editor.schemeName')}</label>
+                <input
+                  id="scheme-name-input"
+                  type="text"
+                  value={scheme.meta.name}
+                  onChange={(e) => setSchemeName(e.target.value)}
+                  onBlur={handleSchemeNameBlur}
+                  placeholder={t('editor.schemeNamePlaceholder')}
+                  spellCheck={false}
+                />
+              </div>
+              <SchemeIssuesPanel
                 pack={pack}
                 lang={lang}
                 nodes={scheme.nodes}
                 edges={scheme.edges}
-                flowResult={flowResult}
-                flowEdgeData={flowEdgeData}
-                selectedNodeIds={selectedNodeIds}
-                selectedEdgeIds={selectedEdgeIds}
-                connectedInByNode={connectedPorts.inPorts}
-                connectedOutByNode={connectedPorts.outPorts}
-                updateNode={updateNode}
+                schemeCheck={schemeCheckResult}
+                onFocusIssue={handleFocusIssue}
               />
-            )}
-          </div>
+            </div>
+          </section>
+          <section className="editor-sidebar-section editor-sidebar-section--element">
+            <div className="editor-sidebar-section__header">
+              <h3>{t('editor.elementEditor')}</h3>
+            </div>
+            <div className="editor-sidebar-section__body">
+              {pack && (
+                <EditorInspector
+                  pack={pack}
+                  lang={lang}
+                  nodes={scheme.nodes}
+                  edges={scheme.edges}
+                  flowResult={flowResult}
+                  flowEdgeData={flowEdgeData}
+                  selectedNodeIds={selectedNodeIds}
+                  selectedEdgeIds={selectedEdgeIds}
+                  connectedInByNode={connectedPorts.inPorts}
+                  connectedOutByNode={connectedPorts.outPorts}
+                  updateNode={updateNode}
+                />
+              )}
+            </div>
+          </section>
         </aside>
       </div>
       {portMenu && pack && (

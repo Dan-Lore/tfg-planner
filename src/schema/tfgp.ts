@@ -1,4 +1,5 @@
 import { normalizeNodeScaling } from '@/lib/node-scaling';
+import { tfgpFilenameFromSchemeName } from '@/lib/tfgp-filename';
 import type { VoltageTier } from '@/data/types';
 
 export interface TfgpMeta {
@@ -155,7 +156,7 @@ export function downloadTfgp(file: TfgpFile, filename?: string): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename ?? `${file.meta.name || 'scheme'}.tfgp`;
+  a.download = filename ?? tfgpFilenameFromSchemeName(file.meta.name);
   a.click();
   URL.revokeObjectURL(url);
 }

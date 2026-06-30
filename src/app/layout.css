@@ -407,6 +407,54 @@ a {
   white-space: nowrap;
 }
 
+.editor-scheme-name {
+  margin-bottom: 0.75rem;
+}
+
+.editor-sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.editor-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-sidebar-section--scheme {
+  flex: 0 1 auto;
+  max-height: 45%;
+}
+
+.editor-sidebar-section--element {
+  flex: 1 1 0;
+  border-top: 1px solid var(--border);
+}
+
+.editor-sidebar-section__header {
+  flex-shrink: 0;
+  padding: 1rem 1rem 0;
+}
+
+.editor-sidebar-section__header h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+}
+
+.editor-sidebar-section__body {
+  padding: 0 1rem 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.editor-sidebar-section--element .editor-sidebar-section__body {
+  flex: 1;
+  min-height: 0;
+}
+
 .editor-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -509,29 +557,8 @@ a {
   min-height: 0;
 }
 
-.editor-element-panel {
-  display: flex;
-  flex-direction: column;
+.editor-sidebar.editor-sidebar-panel {
   padding: 0;
-  overflow: hidden;
-}
-
-.editor-element-panel__header {
-  flex-shrink: 0;
-  padding: 1rem 1rem 0;
-}
-
-.editor-element-panel__header h3 {
-  margin: 0 0 0.75rem;
-  font-size: 0.95rem;
-}
-
-.editor-element-panel__body {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 1rem 1rem;
 }
 
 .editor-sidebar label {
@@ -1851,9 +1878,7 @@ a {
 }
 
 .scheme-issues {
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
 }
 
 .scheme-issues--ok {

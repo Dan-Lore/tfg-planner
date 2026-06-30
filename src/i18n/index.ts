@@ -35,7 +35,10 @@ const resources = {
       },
       editor: {
         title: 'Редактор схемы',
+        schemeEditor: 'Редактор мнемосхемы',
         elementEditor: 'Редактор элементов',
+        schemeName: 'Название',
+        schemeNamePlaceholder: 'Без названия',
         activePack: 'Активная версия modpack',
         selectPackOnHome: 'Выбрать версию на главной',
         addMachine: 'Добавить машину',
@@ -201,7 +204,10 @@ const resources = {
       },
       editor: {
         title: 'Scheme editor',
+        schemeEditor: 'Flowchart editor',
         elementEditor: 'Element editor',
+        schemeName: 'Name',
+        schemeNamePlaceholder: 'Untitled',
         activePack: 'Active modpack version',
         selectPackOnHome: 'Select version on home',
         addMachine: 'Add machine',
