@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type ChangeEvent,
+  type DragEvent,
 } from 'react';
 import {
   type Connection,
@@ -34,8 +35,8 @@ import {
 } from '@/canvas/PortContextMenu';
 import { buildInputPortLoadMeta, buildNodeBalanceLines, buildNodeLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
 import { buildMachineNodeLayoutWidths } from '@/canvas/machine-node-layout';
-import { downloadTfgp, parseTfgp } from '@/schema/tfgp';
-import { schemeNameFromFilename } from '@/lib/tfgp-filename';
+import { downloadTfgp } from '@/schema/tfgp';
+import { pickTfgpFile, readTfgpFile } from '@/lib/read-tfgp-file';
 import { getMachineName, getRecipe, getMachineRecipeCount } from '@/data/pack-registry';
 import { EditorInspector } from '@/editor/EditorInspector';
 import {
@@ -144,6 +145,8 @@ export function EditorPage() {
   const flowComputeState = useEditorStore((s) => s.flowComputeState);
   const colorTheme = useThemeStore((s) => s.theme);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const canvasDragDepthRef = useRef(0);
+  const [isCanvasDragOver, setIsCanvasDragOver] = useState(false);
 
   const nodeTypes = useNodeTypes();
   const edgeTypes = useEdgeTypes();
@@ -692,6 +695,17 @@ export function EditorPage() {
     })();
   };
 
+  const importTfgpFile = useCallback(
+    async (file: File) => {
+      try {
+        loadScheme(await readTfgpFile(file));
+      } catch (err) {
+        alert(err instanceof Error ? err.message : t('editor.importFailed'));
+      }
+    },
+    [loadScheme, t],
+  );
+
   const handleClearScheme = () => {
     if (!window.confirm(t('editor.clearSchemeConfirm'))) return;
     clearScheme();
@@ -708,21 +722,42 @@ export function EditorPage() {
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const parsed = parseTfgp(reader.result as string);
-        const nameFromFile = schemeNameFromFilename(file.name);
-        loadScheme({
-          ...parsed,
-          meta: { ...parsed.meta, name: nameFromFile },
-        });
-      } catch (err) {
-        alert(err instanceof Error ? err.message : 'Import failed');
-      }
-    };
-    reader.readAsText(file);
+    void importTfgpFile(file);
     e.target.value = '';
+  };
+
+  const hasFileDrag = (e: DragEvent) => e.dataTransfer.types.includes('Files');
+
+  const handleCanvasDragEnter = (e: DragEvent<HTMLDivElement>) => {
+    if (!hasFileDrag(e)) return;
+    e.preventDefault();
+    canvasDragDepthRef.current += 1;
+    setIsCanvasDragOver(true);
+  };
+
+  const handleCanvasDragOver = (e: DragEvent<HTMLDivElement>) => {
+    if (!hasFileDrag(e)) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  };
+
+  const handleCanvasDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    if (!hasFileDrag(e)) return;
+    e.preventDefault();
+    canvasDragDepthRef.current -= 1;
+    if (canvasDragDepthRef.current <= 0) {
+      canvasDragDepthRef.current = 0;
+      setIsCanvasDragOver(false);
+    }
+  };
+
+  const handleCanvasDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    canvasDragDepthRef.current = 0;
+    setIsCanvasDragOver(false);
+    const file = pickTfgpFile(e.dataTransfer.files);
+    if (!file) return;
+    void importTfgpFile(file);
   };
 
   if (!pack && !canDeferPackLoad) {
@@ -874,7 +909,18 @@ export function EditorPage() {
         />
       </div>
       <div className="editor-body">
-        <div className="editor-canvas-wrap">
+        <div
+          className={`editor-canvas-wrap${isCanvasDragOver ? ' editor-canvas-wrap--drop-target' : ''}`}
+          onDragEnter={handleCanvasDragEnter}
+          onDragOver={handleCanvasDragOver}
+          onDragLeave={handleCanvasDragLeave}
+          onDrop={handleCanvasDrop}
+        >
+          {isCanvasDragOver && (
+            <div className="editor-canvas-drop-overlay" aria-hidden="true">
+              {t('editor.dropScheme')}
+            </div>
+          )}
           {!pack && activeEntry && canDeferPackLoad && (
             <div className="editor-canvas-notice" role="status" aria-live="polite">
               {t('editor.restoringPack', { version: activeEntry.modpackVersion })}

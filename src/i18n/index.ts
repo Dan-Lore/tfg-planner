@@ -48,6 +48,8 @@ const resources = {
         redo: 'Повторить',
         export: 'Сохранить .tfgp',
         import: 'Загрузить .tfgp',
+        importFailed: 'Не удалось загрузить .tfgp',
+        dropScheme: 'Отпустите файл .tfgp для открытия',
         clearScheme: 'Очистить схему',
         clearSchemeConfirm:
           'Удалить все узлы, связи и цели? Действие нельзя отменить.',
@@ -217,6 +219,8 @@ const resources = {
         redo: 'Redo',
         export: 'Save .tfgp',
         import: 'Load .tfgp',
+        importFailed: 'Failed to load .tfgp',
+        dropScheme: 'Drop a .tfgp file to open',
         clearScheme: 'Clear scheme',
         clearSchemeConfirm:
           'Remove all nodes, edges, and targets? This cannot be undone.',

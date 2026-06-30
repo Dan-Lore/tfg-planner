@@ -482,6 +482,28 @@ a {
   --minimap-viewport-stroke: var(--accent);
 }
 
+.editor-canvas-wrap--drop-target .react-flow {
+  pointer-events: none;
+}
+
+.editor-canvas-drop-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+  border: 2px dashed var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  pointer-events: none;
+}
+
 .editor-canvas-notice {
   position: absolute;
   top: 0.75rem;
