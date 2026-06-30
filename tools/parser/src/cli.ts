@@ -10,8 +10,13 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildPack } from './build-pack.js';
-import { buildReportFromPack } from './validate/schema.js';
-import type { PackData } from '../../../src/data/types.js';
+import {
+  buildReportFromPack,
+  buildReportFromShardedMeta,
+  validatePackMeta,
+  validatePackSchema,
+} from './validate/schema.js';
+import type { PackData, PackMeta, RecipeShardIndex } from '../../../src/data/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -82,11 +87,38 @@ function cmdValidate(args: Args): void {
   const packPath = resolve(
     args.pack ?? 'public/data/packs/0.12.8/pack.meta.json',
   );
+  const packDir = dirname(packPath);
   const raw = readFileSync(packPath, 'utf-8');
-  const pack = JSON.parse(raw) as PackData;
+  const data = JSON.parse(raw) as PackData | PackMeta;
 
-  const report = buildReportFromPack(pack, pack.modpackVersion);
-  const outPath = packPath.replace(/pack\.json$/, 'build-report.json');
+  let report;
+  if (data.formatVersion === 2) {
+    const meta = data as PackMeta;
+    const errors = validatePackMeta(meta);
+    if (errors.length > 0) {
+      throw new Error(`Pack validation failed:\n${errors.join('\n')}`);
+    }
+    const indexPath = join(packDir, 'recipes', 'index.json');
+    const flowIndexPath = join(packDir, 'recipes', 'flow-index.json');
+    if (!existsSync(indexPath)) {
+      throw new Error(`Missing recipe shard index: ${indexPath}`);
+    }
+    if (!existsSync(flowIndexPath)) {
+      throw new Error(`Missing flow attach index: ${flowIndexPath}`);
+    }
+    const index = JSON.parse(readFileSync(indexPath, 'utf-8')) as RecipeShardIndex;
+    const recipeCount = Object.values(index.shards).reduce((sum, shard) => sum + shard.count, 0);
+    report = buildReportFromShardedMeta(meta, meta.modpackVersion, recipeCount);
+  } else {
+    const pack = data as PackData;
+    const errors = validatePackSchema(pack);
+    if (errors.length > 0) {
+      throw new Error(`Pack validation failed:\n${errors.join('\n')}`);
+    }
+    report = buildReportFromPack(pack, pack.modpackVersion);
+  }
+
+  const outPath = join(packDir, 'build-report.json');
   writeFileSync(outPath, JSON.stringify(report, null, 2));
   console.log(`Pack OK: ${packPath}`);
   console.log(`Report: ${outPath}`);
@@ -97,7 +129,7 @@ function printHelp(): void {
 
 Commands:
   build-pack   Build pack.json from server recipe snapshot + lang bundle
-  validate     Validate existing pack.json and write build-report.json
+  validate     Validate pack.meta.json (v2) or pack.json (v1) and write build-report.json
 
 Options:
   --tag <ver>              Modpack release tag (default: 0.12.8)

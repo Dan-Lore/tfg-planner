@@ -110,6 +110,33 @@ export function writeShardedPack(
   return { metaPath, recipesDir, shardCount: byMachine.size };
 }
 
+export function buildReportFromShardedMeta(
+  meta: PackMeta,
+  tag: string,
+  recipeCount: number,
+): BuildReport {
+  return {
+    modpackVersion: meta.modpackVersion,
+    tag,
+    generatedAt: new Date().toISOString(),
+    stats: {
+      snapshotRecipes: recipeCount,
+      snapshotFiles: 0,
+      snapshotParsed: recipeCount,
+      snapshotSkipped: 0,
+      finalRecipes: recipeCount,
+      machines: meta.machines.length,
+      items: meta.items.length,
+      fluids: meta.fluids.length,
+      recipesWithEnergy: 0,
+      recipesWithChance: 0,
+    },
+    warnings: [],
+    warningsByKind: {},
+    unparsedFiles: [],
+  };
+}
+
 export function buildReportFromPack(
   pack: PackData,
   tag: string,
