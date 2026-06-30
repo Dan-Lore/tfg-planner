@@ -1183,6 +1183,7 @@ a {
 
 .react-flow__node:has(> .machine-node) {
   box-sizing: border-box;
+  min-width: 200px;
 }
 
 .machine-node {

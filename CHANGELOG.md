@@ -5,6 +5,38 @@
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-06-30
+
+### Fixed
+- Import `.tfgp`: dedupe duplicate node IDs with edge/target remapping
+- Canvas: machine card width stuck at min after pack shard load — layout width cache now busts on `packDisplayEpoch` and recipe hydration
+- Canvas: port labels empty on first open — recipe/edge stubs before flow tick
+- Canvas: full-scheme freeze on width recompute — incremental per-`machineId` layout store + stable `rfNodes` identity; `internalsKey` no longer includes card width
+- `parseTfgp`: shape validation, file size limit, import error handling
+- Target rate prompt: reject NaN/non-positive input
+- Flow compute race: pending queue + scheme revision guard during worker compute
+- Undo restores node positions when not dragging (merge-flow-nodes)
+- Canvas: React Flow #008 (edge/handle race) — `useNodesInitialized` gate, atomic nodes/edges sync, structural `updateNodeInternals` only
+
+### Changed
+- Architecture: split `flow-solver` into `flow-convergence`, `flow-machine-counts`, `flow-rates`, `flow-result-metrics`, `flow-edge-assignment` (orchestrator ~380 lines)
+- Store: `flowEdgeData` derived in EditorPage; `flowsByPack` persist only `flowResult` + revision; layout width cache
+- depcruise: `no-circular-lib`, `no-stores-canvas`; lib cycle fixes (`edge-geometry`, `tfgp-types`, `recipe-attach-types`)
+- Canvas: controlled viewport for undo sync; `nonConverged` UI warning
+- Edge inspector: rate edit → downstream target + full recalc (K-002 partial)
+- `primaryOutputIndex` on machine nodes + solver backward pass
+- Legacy port IDs normalized in connected-port maps
+- knip exports in CI; Semgrep strict in CI (pip install)
+- Architecture: `lib/ports`, `calculator/format`, `port-resolution`, `scheme-solver`, `flow-solver-types`, `flow-graph`, `flow-display-pipeline`, `tfgp-types`
+- Performance: `useShallow` store selectors, FNV scheme revision hash, `nonConverged` flow flag, MiniMap hidden during drag, Vite manualChunks
+- Canvas K-014: `NodeDisplayContext` / `EditorNodeActionsContext`; obstacle routing from scheme store; `FlowEdge` without per-edge `useNodes()`
+- Removed legacy parser files (`enrich-energy`, `gtceu-yaml`, `load-json`, `apply-replaces`); dropped `js-yaml` dependency
+- CI: `parser:validate`, Semgrep, parser typecheck via `tsconfig.parser.json`
+
+### Backlog (unchanged scope)
+- K-002 full bidirectional edge rate editing (solver pins edge flows)
+- Primary output: remaining solver paths still using `out_0` heuristics in convergence metrics
+
 ### Added
 
 - **Recipe canon:** `src/lib/recipe-canon.ts` — `recipeLogicalKey`, `normalizeRecipeCanon`, `dedupeRecipesForDisplay`, `dedupeAttachCandidates`; шаг `normalizeRecipeCanon` в `build-pack` после LCR mirror; `removedDuplicateRecipeIdsSample` в build-report.
@@ -124,6 +156,7 @@
 
 - Спецификация и документация проекта.
 
-[Unreleased]: https://github.com/your-org/tfg-planner/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/your-org/tfg-planner/releases/tag/v0.1.0
+[Unreleased]: https://github.com/dan-lore/tfg-planner/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/dan-lore/tfg-planner/releases/tag/v0.2.0
+[0.1.0]: https://github.com/dan-lore/tfg-planner/releases/tag/v0.1.0
 [0.0.0]: https://github.com/your-org/tfg-planner/releases/tag/v0.0.0

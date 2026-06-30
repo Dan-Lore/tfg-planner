@@ -3,7 +3,6 @@ import {
   BaseEdge,
   EdgeLabelRenderer,
   getBezierPath,
-  useNodes,
   type EdgeProps,
 } from '@xyflow/react';
 import {
@@ -15,15 +14,10 @@ import {
   getRoutedSmoothStepPath,
   type EdgeRouteEndpoints,
 } from '@/lib/edge-routing';
-import { getFlowNodeRect } from '@/canvas/node-bounds';
+import { useObstacleRects } from '@/canvas/obstacle-rects-context';
+import type { FlowEdgeData } from '@/lib/flow-edge-types';
 
-export interface FlowEdgeData {
-  source?: string;
-  target?: string;
-  checkSeverity?: 'error' | 'warning';
-  checkTitle?: string;
-  [key: string]: unknown;
-}
+export type { FlowEdgeData } from '@/lib/flow-edge-types';
 
 type RoutedPath = {
   path: string;
@@ -74,7 +68,7 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
   selected,
 }: EdgeProps) {
   const [hovered, setHovered] = useState(false);
-  const nodes = useNodes();
+  const { obstacles, skipObstacleRouting } = useObstacleRects();
   const d = (data ?? {}) as FlowEdgeData;
   const emphasized = selected || hovered;
   const issueStroke =
@@ -102,19 +96,11 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
     [source, target],
   );
 
-  const obstacles = useMemo(
-    () =>
-      nodes
-        .filter((node) => node.type === 'machine' || node.type === 'buffer')
-        .map((node) => ({
-          nodeId: node.id,
-          rect: getFlowNodeRect(node),
-        })),
-    [nodes],
-  );
-
   const routed = useMemo(() => {
-    if (!edgePathNeedsObstacleRouting(endpoints, obstacles, routingOptions)) {
+    if (
+      skipObstacleRouting ||
+      !edgePathNeedsObstacleRouting(endpoints, obstacles, routingOptions)
+    ) {
       return buildBezierRoute(endpoints, d.source, d.target);
     }
 
@@ -138,7 +124,14 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
         d.target,
       ),
     };
-  }, [endpoints, obstacles, routingOptions, d.source, d.target]);
+  }, [
+    endpoints,
+    obstacles,
+    routingOptions,
+    skipObstacleRouting,
+    d.source,
+    d.target,
+  ]);
 
   return (
     <g

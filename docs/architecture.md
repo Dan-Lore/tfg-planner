@@ -1,6 +1,6 @@
 # Архитектура
 
-> **Статус:** v0.2 · 2026-06-17
+> **Статус:** v0.2.0 · 2026-06-30
 
 ## 1. Обзор
 
@@ -45,7 +45,7 @@
 ### 2.2. Version Manager
 
 - UI: отдельное меню выбора версии.
-- Локальный кэш pack data (IndexedDB).
+- Локальный кэш pack data (session Map + localStorage persist для схем).
 - Манифест версий: `data/packs/manifest.json`.
 
 ### 2.3. Config Registry
@@ -63,8 +63,11 @@
 - Узлы: машина + рецепт + **ручные** overclock / parallel.
 - Рёбра: `item` | `fluid` (energy edge — когда K-003 готов).
 - React Flow; drag-позиции живут в `EditorCanvas`, в store пишутся на `dragEnd`.
-- **Маршрутизация рёбер:** obstacle routing (`edge-routing.ts`); `FlowEdge` + `memo` — перерисовываются только рёбра с изменившимися координатами портов. Остаточный jank drag — [kanban K-011](kanban.md).
-- **History stack** (undo/redo): снимки графа + параметров расчёта; Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Shift+Z на macOS).
+- **Слои данных:** static `rfNodes` (топология, scaling, callbacks через `EditorNodeActionsContext`); dynamic display (rates, load, balance) — `NodeDisplayContext` keyed by `nodeId`; flow tick не пересобирает callbacks.
+- **Ширина карточек:** единая на `machineId` = max natural width в группе; инкрементальный `layout-width-store` (пересчёт только dirty-групп); `stable-rf-nodes` сохраняет identity `Node` вне изменённых групп; bust кэша по `packDisplayEpoch` и гидратации рецептов; подписи портов — `port-label-stubs` до первого flow tick.
+- **Edge readiness:** `useNodesInitialized` + rAF gate перед показом рёбер; nodes/edges merge атомарно в `useLayoutEffect` — устраняет React Flow #008 (гонка handles).
+- **Маршрутизация рёбер:** obstacle rects из позиций scheme store (`scheme-obstacles.ts`); на drag — simple bezier (`skipObstacleRouting`); `FlowEdge` + `memo` без `useNodes()`. Остаточный jank — [kanban K-014](kanban.md).
+- **History stack** (undo/redo): снимки графа + параметров расчёта; controlled `viewport`; Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Shift+Z на macOS).
 - **Масштабирование UI:**
   - A — clipboard duplicate (топология);
   - C — панель целевой скорости на выходном узле / в `targets`.

@@ -1,4 +1,4 @@
-import { flowKey } from '@/canvas/ports';
+import { flowKey } from '@/lib/ports';
 import type { Flow } from '@/data/types';
 import type { TagIndex } from './tag-index';
 

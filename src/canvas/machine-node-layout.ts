@@ -8,14 +8,15 @@ import {
   formatEuPerTick,
 } from '@/calculator/energy';
 import type { VoltageTier } from '@/calculator/gt-voltage';
-import { buildPortDisplays, type MachineNodeData, type PortDisplay } from '@/canvas/MachineNode';
-import { buildNodeBalanceLines, buildInputPortLoadMeta, buildOutputPortLoadMeta, rateMapToStrings } from '@/canvas/flow-display';
+import type { MachineNodeData, PortDisplay } from '@/canvas/MachineNode';
+import { buildMachinePortDisplaysForNode } from '@/canvas/port-label-stubs';
 import { MACHINE_NODE_MIN_WIDTH } from '@/canvas/node-bounds';
 import type { PackLike } from '@/data/pack-registry';
 import { getMachineName, getMachineRecipeCount, getRecipe } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
-import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
+import type { TfgpEdge, TfgpMachineNode, TfgpNode } from '@/schema/tfgp';
+import { normalizePortId } from '@/lib/ports';
 import { isMachineNode } from '@/lib/node-kind';
 
 export function buildConnectedPortMaps(edges: TfgpEdge[]): {
@@ -27,8 +28,8 @@ export function buildConnectedPortMaps(edges: TfgpEdge[]): {
   for (const edge of edges) {
     if (!connectedOut.has(edge.source)) connectedOut.set(edge.source, new Set());
     if (!connectedIn.has(edge.target)) connectedIn.set(edge.target, new Set());
-    connectedOut.get(edge.source)!.add(edge.sourcePort);
-    connectedIn.get(edge.target)!.add(edge.targetPort);
+    connectedOut.get(edge.source)!.add(normalizePortId(edge.sourcePort));
+    connectedIn.get(edge.target)!.add(normalizePortId(edge.targetPort));
   }
   return { connectedIn, connectedOut };
 }
@@ -131,12 +132,12 @@ export function estimateMachineNodeLayoutWidth(
     : 0;
 
   let metaW = 0;
-  for (const line of data.balanceLines) {
+  for (const line of data.balanceLines ?? []) {
     metaW = Math.max(metaW, measureTextWidth(line.text, 0.65, 600) + HEADER_PAD_X);
   }
 
-  const inCol = portColumnWidth(data.inputPorts);
-  const outCol = portColumnWidth(data.outputPorts);
+  const inCol = portColumnWidth(data.inputPorts ?? []);
+  const outCol = portColumnWidth(data.outputPorts ?? []);
   const portsW = inCol + PORTS_COL_GAP + outCol + HEADER_PAD_X;
 
   return Math.ceil(
@@ -146,12 +147,100 @@ export function estimateMachineNodeLayoutWidth(
 
 export interface BuildMachineNodeLayoutWidthsInput {
   nodes: TfgpNode[];
+  edges?: TfgpEdge[];
   pack: PackLike;
   lang: 'ru' | 'en';
   flowResult?: FlowResult;
   connectedIn: Map<string, Set<string>>;
   connectedOut: Map<string, Set<string>>;
   t: TFunction;
+}
+
+export function computeNaturalLayoutWidthForMachineNode(
+  node: TfgpMachineNode,
+  input: BuildMachineNodeLayoutWidthsInput,
+): number {
+  const recipe = getRecipe(input.pack, node.recipeId);
+  const edges = input.edges ?? [];
+  const { inputPorts, outputPorts, balanceLines } = buildMachinePortDisplaysForNode(
+    node,
+    edges,
+    input.pack,
+    input.lang,
+    input.connectedIn.get(node.id) ?? new Set(),
+    input.connectedOut.get(node.id) ?? new Set(),
+    input.flowResult,
+    input.t,
+  );
+
+  const stubData: MachineNodeData = {
+    machineId: node.machineId,
+    recipeId: node.recipeId,
+    machineCount: node.machineCount,
+    overclock: node.overclock,
+    parallel: node.parallel,
+    voltageTier: node.voltageTier as VoltageTier,
+    pack: input.pack,
+    inputPorts,
+    outputPorts,
+    balanceLines,
+  };
+
+  let width = estimateMachineNodeLayoutWidth(stubData, input.lang);
+
+  if (recipe) {
+    const allowedTiers = allowedTiersForRecipe(recipe);
+    const metaParts = [
+      input.t('editor.machinesMeta', { count: node.machineCount }),
+      input.t('editor.overclockMeta', {
+        value: formatOverclock(node.overclock),
+      }),
+    ];
+    if (allowedTiers.length > 0) {
+      metaParts.push(input.t('editor.tierMeta', { value: node.voltageTier }));
+    }
+    const ticks = effectiveDurationTicks(
+      recipe,
+      node.voltageTier as VoltageTier,
+      node.overclock,
+    );
+    const duration = formatRecipeDuration(ticks, input.lang);
+    if (duration) metaParts.push(duration);
+
+    const metaW = measureTextWidth(metaParts.join(' · '), 0.7) + HEADER_PAD_X;
+    width = Math.max(width, metaW);
+
+    const euPerTick = effectiveEuPerTick(recipe, node.voltageTier as VoltageTier);
+    if (euPerTick != null) {
+      const totalEu = effectiveTotalEu(
+        recipe,
+        node.voltageTier as VoltageTier,
+        node.overclock,
+      );
+      const energyLine =
+        input.t('editor.energyMeta', { value: formatEuPerTick(euPerTick) }) +
+        (totalEu != null
+          ? ` · ${input.t('editor.totalEuMeta', { value: formatTotalEu(totalEu) })}`
+          : '');
+      width = Math.max(width, measureTextWidth(energyLine, 0.7) + HEADER_PAD_X);
+    }
+  }
+
+  return width;
+}
+
+/** Max natural width for nodes sharing one machineId. */
+export function computeGroupLayoutWidth(
+  machineId: string,
+  nodesInGroup: TfgpNode[],
+  input: BuildMachineNodeLayoutWidthsInput,
+): number {
+  let max = MACHINE_NODE_MIN_WIDTH;
+  for (const node of nodesInGroup) {
+    if (!isMachineNode(node) || node.machineId !== machineId) continue;
+    max = Math.max(max, computeNaturalLayoutWidthForMachineNode(node, input));
+  }
+  return max;
 }
 
 /** Same width for every node sharing a machineId — max natural width in that group. */
@@ -162,118 +251,7 @@ export function buildMachineNodeLayoutWidths(
 
   for (const node of input.nodes) {
     if (!isMachineNode(node)) continue;
-    const recipe = getRecipe(input.pack, node.recipeId);
-    const inputRates = rateMapToStrings(input.flowResult?.nodeInputRates[node.id]);
-    const outputRates = rateMapToStrings(input.flowResult?.nodeOutputRates[node.id]);
-    const outputPortRateRationals = input.flowResult?.nodePortOutputRates[node.id];
-    const connectedIn = input.connectedIn.get(node.id) ?? new Set();
-    const connectedOut = input.connectedOut.get(node.id) ?? new Set();
-    const inputPortLoadMeta = input.flowResult
-      ? buildInputPortLoadMeta(
-          node.id,
-          recipe,
-          connectedIn,
-          input.flowResult,
-          input.t,
-        )
-      : undefined;
-    const outputPortLoadMeta = input.flowResult
-      ? buildOutputPortLoadMeta(
-          node.id,
-          recipe,
-          connectedOut,
-          input.flowResult,
-          input.t,
-        )
-      : undefined;
-    const { inputPorts, outputPorts } = buildPortDisplays(
-      recipe,
-      input.pack,
-      input.lang,
-      connectedIn,
-      connectedOut,
-      inputRates,
-      outputRates,
-      outputPortRateRationals,
-      inputPortLoadMeta,
-      outputPortLoadMeta,
-    );
-    const balanceLines = input.flowResult
-      ? buildNodeBalanceLines(
-          node.id,
-          recipe,
-          input.connectedIn.get(node.id) ?? new Set(),
-          input.flowResult,
-          input.pack,
-          input.lang,
-        )
-      : [];
-
-    const stubData: MachineNodeData = {
-      machineId: node.machineId,
-      recipeId: node.recipeId,
-      machineCount: node.machineCount,
-      overclock: node.overclock,
-      parallel: node.parallel,
-      voltageTier: node.voltageTier as VoltageTier,
-      pack: input.pack,
-      onRecipeChange: () => {},
-      onMachineCountChange: () => {},
-      onOverclockChange: () => {},
-      onVoltageTierChange: () => {},
-      onPortContextMenu: () => {},
-      inputPorts,
-      outputPorts,
-      balanceLines,
-    };
-
-    let width = estimateMachineNodeLayoutWidth(stubData, input.lang);
-
-    if (recipe) {
-      const allowedTiers = allowedTiersForRecipe(recipe);
-      const metaParts = [
-        input.t('editor.machinesMeta', { count: node.machineCount }),
-        input.t('editor.overclockMeta', {
-          value: formatOverclock(node.overclock),
-        }),
-      ];
-      if (allowedTiers.length > 0) {
-        metaParts.push(
-          input.t('editor.tierMeta', { value: node.voltageTier }),
-        );
-      }
-      const ticks = effectiveDurationTicks(
-        recipe,
-        node.voltageTier as VoltageTier,
-        node.overclock,
-      );
-      const duration = formatRecipeDuration(ticks, input.lang);
-      if (duration) metaParts.push(duration);
-
-      const metaW =
-        measureTextWidth(metaParts.join(' · '), 0.7) + HEADER_PAD_X;
-      width = Math.max(width, metaW);
-
-      const euPerTick = effectiveEuPerTick(recipe, node.voltageTier as VoltageTier);
-      if (euPerTick != null) {
-        const totalEu = effectiveTotalEu(
-          recipe,
-          node.voltageTier as VoltageTier,
-          node.overclock,
-        );
-        const energyLine =
-          input.t('editor.energyMeta', { value: formatEuPerTick(euPerTick) }) +
-          (totalEu != null
-            ? ` · ${input.t('editor.totalEuMeta', { value: formatTotalEu(totalEu) })}`
-            : '');
-        width = Math.max(
-          width,
-          measureTextWidth(energyLine, 0.7) + HEADER_PAD_X,
-        );
-      }
-    }
-
-    naturalByNode.set(node.id, width);
+    naturalByNode.set(node.id, computeNaturalLayoutWidthForMachineNode(node, input));
   }
 
   const byMachineId = new Map<string, number>();

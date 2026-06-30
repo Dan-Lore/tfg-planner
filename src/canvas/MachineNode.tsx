@@ -1,5 +1,5 @@
-import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
-import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
+import { memo, useEffect, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe } from '@/data/types';
@@ -22,6 +22,11 @@ import type { Rational } from '@/calculator/rational';
 import { R } from '@/calculator/rational';
 import { formatFlowRateLabel, isChancedFlow } from '@/lib/flow-chance';
 import { loadGradientStyle } from '@/lib/load-gradient';
+import { MACHINE_NODE_MIN_WIDTH, resolveMachineCardWidth } from '@/canvas/node-bounds';
+import { useNodeDisplay } from '@/canvas/node-display-context';
+import { useEditorNodeActions } from '@/canvas/editor-node-actions-context';
+import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
+import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
 export interface PortDisplay {
   portId: string;
   label: string;
@@ -41,26 +46,19 @@ export interface MachineNodeData {
   parallel: number;
   voltageTier: VoltageTier;
   pack: PackLike;
-  onRecipeChange: (recipeId: string) => void;
-  onMachineCountChange: (count: number) => void;
-  onOverclockChange: (overclock: number) => void;
-  onVoltageTierChange: (tier: VoltageTier) => void;
-  onPortContextMenu: (
-    portId: string,
-    side: 'in' | 'out',
-    clientX: number,
-    clientY: number,
-  ) => void;
-  inputPorts: PortDisplay[];
-  outputPorts: PortDisplay[];
-  balanceLines: NodeBalanceLine[];
+  inputPorts?: PortDisplay[];
+  outputPorts?: PortDisplay[];
+  balanceLines?: NodeBalanceLine[];
   loadPercent?: number;
   loadLabel?: string;
   loadTitle?: string;
-  /** Unified width for all nodes of the same machineId. */
-  layoutWidth?: number;
+  /** Port ids for handle topology — rates/loads come from NodeDisplayContext. */
+  inputPortIds?: string[];
+  outputPortIds?: string[];
   checkSeverity?: 'error' | 'warning';
   checkTitle?: string;
+  /** Unified width for all nodes of the same machineId. */
+  layoutWidth?: number;
   [key: string]: unknown;
 }
 
@@ -161,11 +159,11 @@ function formatLoadPercentDisplay(percent: number): string {
 }
 
 function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps) {
-  const updateNodeInternals = useUpdateNodeInternals();
-  const rootRef = useRef<HTMLDivElement>(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
+  const display = useNodeDisplay(id);
+  const actions = useEditorNodeActions();
   const [recipeMenuOpen, setRecipeMenuOpen] = useState(false);
   const [machineRecipes, setMachineRecipes] = useState<Recipe[]>(() =>
     getRecipesForMachine(d.pack, d.machineId),
@@ -214,32 +212,29 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
     return effectiveTotalEu(recipe, d.voltageTier, d.overclock);
   }, [recipe, d.voltageTier, d.overclock]);
   const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
-  const cardWidth = width ?? d.layoutWidth;
+  const cardWidth = resolveMachineCardWidth(d.layoutWidth, width);
 
-  useLayoutEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
+  const inputPorts = resolvePortDisplays(
+    d.inputPortIds,
+    display.inputPorts,
+    d.inputPorts,
+  );
+  const outputPorts = resolvePortDisplays(
+    d.outputPortIds,
+    display.outputPorts,
+    d.outputPorts,
+  );
+  const balanceLines =
+    display.balanceLines.length > 0 ? display.balanceLines : (d.balanceLines ?? []);
+  const loadLabel = display.loadLabel ?? d.loadLabel;
+  const loadPercent = display.loadPercent ?? d.loadPercent;
+  const loadTitle = display.loadTitle ?? d.loadTitle;
 
-    updateNodeInternals(id);
-    const observer = new ResizeObserver(() => {
-      updateNodeInternals(id);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [
-    id,
-    cardWidth,
-    d.inputPorts.length,
-    d.outputPorts.length,
-    d.balanceLines.length,
-    d.loadLabel,
-    d.recipeId,
-    updateNodeInternals,
-  ]);
+  const internalsKey = `${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}|${d.recipeId}`;
+  useNodeInternalsSync(id, internalsKey);
 
   return (
     <div
-      ref={rootRef}
       className={[
         'machine-node',
         selected ? 'selected' : '',
@@ -250,15 +245,11 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
         .filter(Boolean)
         .join(' ')}
       title={d.checkTitle}
-      style={
-        cardWidth != null
-          ? {
-              width: cardWidth,
-              minWidth: cardWidth,
-              boxSizing: 'border-box',
-            }
-          : undefined
-      }
+      style={{
+        width: cardWidth,
+        minWidth: Math.max(cardWidth, MACHINE_NODE_MIN_WIDTH),
+        boxSizing: 'border-box',
+      }}
     >
       <div className="machine-node__drag-handle machine-node__header">
         <div className="title" title={title}>
@@ -272,7 +263,7 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
             value={d.recipeId}
             lang={lang}
             dragging={dragging}
-            onChange={d.onRecipeChange}
+            onChange={(recipeId) => actions.onRecipeChange(id, recipeId)}
             onOpenChange={setRecipeMenuOpen}
           />
         )}
@@ -292,7 +283,8 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
             onWheel={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              d.onMachineCountChange(
+              actions.onMachineCountChange(
+                id,
                 adjustByWheel(d.machineCount, e.deltaY, 1, 1),
               );
             }}
@@ -307,7 +299,8 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
             onWheel={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              d.onOverclockChange(
+              actions.onOverclockChange(
+                id,
                 adjustByWheel(d.overclock, e.deltaY, 0.1, 0.1),
               );
             }}
@@ -322,7 +315,8 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
                 onWheel={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  d.onVoltageTierChange(
+                  actions.onVoltageTierChange(
+                    id,
                     adjustVoltageTier(d.voltageTier, allowedTiers, e.deltaY),
                   );
                 }}
@@ -351,16 +345,16 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
             )}
           </div>
         )}
-        {d.loadLabel != null && (
+        {loadLabel != null && (
           <div
             className="machine-node__load"
-            style={loadGradientStyle(d.loadPercent ?? 0)}
-            title={d.loadTitle}
+            style={loadGradientStyle(loadPercent ?? 0)}
+            title={loadTitle}
           >
-            {d.loadLabel}
+            {loadLabel}
           </div>
         )}
-        {d.balanceLines.map((line) => (
+        {balanceLines.map((line) => (
           <div
             key={line.text}
             className={`machine-node__balance machine-node__balance--${line.kind}`}
@@ -372,27 +366,27 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
       </div>
       <div className="machine-node__ports">
         <div className="machine-node__ports-col machine-node__ports-col--in">
-          {d.inputPorts.map((port) => (
+          {inputPorts.map((port) => (
             <PortRow
               key={port.portId}
               port={port}
               type="target"
               side="left"
               onContextMenu={(portId, side, e) =>
-                d.onPortContextMenu(portId, side, e.clientX, e.clientY)
+                actions.onPortContextMenu(id, portId, side, e.clientX, e.clientY)
               }
             />
           ))}
         </div>
         <div className="machine-node__ports-col machine-node__ports-col--out">
-          {d.outputPorts.map((port) => (
+          {outputPorts.map((port) => (
             <PortRow
               key={port.portId}
               port={port}
               type="source"
               side="right"
               onContextMenu={(portId, side, e) =>
-                d.onPortContextMenu(portId, side, e.clientX, e.clientY)
+                actions.onPortContextMenu(id, portId, side, e.clientX, e.clientY)
               }
             />
           ))}

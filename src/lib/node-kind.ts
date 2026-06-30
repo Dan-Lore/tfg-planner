@@ -5,7 +5,7 @@ import type {
   TfgpNode,
   TfgpNodeKind,
   TfgpStartBufferNode,
-} from '@/schema/tfgp';
+} from '@/schema/tfgp-types';
 
 export function getNodeKind(node: TfgpNode): TfgpNodeKind {
   return node.kind ?? 'machine';

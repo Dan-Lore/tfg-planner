@@ -16,7 +16,7 @@ describe('mergeFlowNodes', () => {
       {
         id: 'node_1',
         type: 'machine',
-        position: { x: 0, y: 0 },
+        position: { x: 10, y: 20 },
         data: { layoutWidth: 248, recipeId: 'updated' },
       },
     ];
@@ -25,6 +25,50 @@ describe('mergeFlowNodes', () => {
     expect(merged[0]?.measured).toEqual({ width: 248, height: 196 });
     expect(merged[0]?.position).toEqual({ x: 10, y: 20 });
     expect(merged[0]?.data).toEqual({ layoutWidth: 248, recipeId: 'updated' });
+  });
+
+  it('applies store position after undo when node is not dragging', () => {
+    const prev = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 400, y: 220 },
+        data: {},
+      },
+    ];
+    const next = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: {},
+      },
+    ];
+
+    const merged = mergeFlowNodes(prev, next);
+    expect(merged[0]?.position).toEqual({ x: 10, y: 20 });
+  });
+
+  it('keeps drag position while node is dragging', () => {
+    const prev = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 400, y: 220 },
+        data: {},
+      },
+    ];
+    const next = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: {},
+      },
+    ];
+
+    const merged = mergeFlowNodes(prev, next, new Set(['node_1']));
+    expect(merged[0]?.position).toEqual({ x: 400, y: 220 });
   });
 
   it('clears measured when layout width is first assigned', () => {
@@ -41,24 +85,23 @@ describe('mergeFlowNodes', () => {
       {
         id: 'node_1',
         type: 'machine',
-        position: { x: 0, y: 0 },
+        position: { x: 10, y: 20 },
         data: { layoutWidth: 340 },
-        width: 340,
       },
     ];
 
     const merged = mergeFlowNodes(prev, next);
-    expect(merged[0]?.width).toBe(340);
+    expect(merged[0]?.data).toEqual({ layoutWidth: 340 });
     expect(merged[0]?.measured).toBeUndefined();
   });
 
-  it('clears measured when unified layout width changes', () => {
+  it('clears measured when port topology changes via inputPortIds', () => {
     const prev = [
       {
         id: 'node_1',
         type: 'machine',
         position: { x: 10, y: 20 },
-        data: { layoutWidth: 220 },
+        data: { layoutWidth: 220, inputPortIds: ['in_0'], outputPortIds: ['out_0'] },
         measured: { width: 220, height: 120 },
       },
     ];
@@ -66,14 +109,39 @@ describe('mergeFlowNodes', () => {
       {
         id: 'node_1',
         type: 'machine',
-        position: { x: 0, y: 0 },
-        data: { layoutWidth: 340 },
+        position: { x: 10, y: 20 },
+        data: {
+          layoutWidth: 220,
+          inputPortIds: ['in_0', 'in_1'],
+          outputPortIds: ['out_0'],
+        },
       },
     ];
 
     const merged = mergeFlowNodes(prev, next);
-    expect(merged[0]?.width).toBe(340);
     expect(merged[0]?.measured).toBeUndefined();
-    expect(merged[0]?.position).toEqual({ x: 10, y: 20 });
+  });
+
+  it('preserves measured when layout width changes within epsilon', () => {
+    const prev = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: { layoutWidth: 220.2 },
+        measured: { width: 220, height: 120 },
+      },
+    ];
+    const next = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: { layoutWidth: 220.4 },
+      },
+    ];
+
+    const merged = mergeFlowNodes(prev, next);
+    expect(merged[0]?.measured).toEqual({ width: 220, height: 120 });
   });
 });

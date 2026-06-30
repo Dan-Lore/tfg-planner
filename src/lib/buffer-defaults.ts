@@ -1,6 +1,6 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
-import type { TfgpEdge, TfgpFile } from '@/schema/tfgp';
+import type { TfgpEdge, TfgpFile } from '@/schema/tfgp-types';
 import { BUFFER_HORIZON_SEC } from '@/calculator/buffer-solver';
 
 export function flowRateAtPort(

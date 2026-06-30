@@ -2,7 +2,7 @@ import type { FlowResult } from '@/calculator/flow-solver';
 import { checkScheme, type SchemeCheckResult } from '@/scheme-check/check-scheme';
 import { sliceAsPackData } from '@/data/pack-slice';
 import type { PackSlice } from '@/data/types';
-import { runSolver, type EditorSnapshot } from '@/stores/editor-utils';
+import { runSolver, type EditorSnapshot } from '@/lib/scheme-solver';
 import type { TfgpFile } from '@/schema/tfgp';
 
 export type FlowComputeMode = 'update' | 'recalculate';

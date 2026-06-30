@@ -1,4 +1,4 @@
-import type { TfgpNode } from '@/schema/tfgp';
+import type { TfgpNode } from '@/schema/tfgp-types';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { normalizeNodeVoltage } from '@/lib/node-voltage';
 import { isBufferNode } from '@/lib/node-kind';

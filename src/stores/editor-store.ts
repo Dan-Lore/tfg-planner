@@ -8,20 +8,13 @@ import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
 import {
   allocateEdgeId,
   allocateNodeId,
-  dedupeNodeIds,
+  dedupeSchemeTopology,
   normalizeSchemeNodes,
   seedIdCounter,
   type EditorSnapshot,
 } from './editor-utils';
-import type { FlowEdgeData } from '@/canvas/FlowEdge';
-import {
-  buildEdgeFlowData,
-} from '@/canvas/flow-display';
-import {
-  buildConnectedPortMaps,
-  buildMachineNodeLayoutWidths,
-} from '@/canvas/machine-node-layout';
-import i18n from 'i18next';
+import { normalizeNodeScaling } from '@/lib/node-scaling';
+import { shouldApplyFlowResult } from '@/lib/flow-compute-guard';
 import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
@@ -35,40 +28,15 @@ import {
 } from '@/lib/buffer-defaults';
 import type { TfgpBufferKind } from '@/schema/tfgp';
 import { normalizeBufferNode } from '@/lib/node-scaling';
-import type { ActivePack } from '@/data/pack-runtime';
 import { getRecipe } from '@/data/pack-registry';
 import { debounceFlowUpdate } from '@/lib/debounce-flow-update';
+import { mergePendingFlowUpdateMode } from '@/lib/flow-compute-queue';
 import { computeFlowsAsync, type FlowComputeMode } from '@/lib/flow-compute';
 import { hydrateFlowResult, dehydrateFlowResult } from '@/calculator/flow-result-transfer';
 
 const MAX_HISTORY = 50;
 
 export type FlowComputeState = 'idle' | 'computing' | 'stale';
-
-function buildFlowEdgeData(
-  scheme: TfgpFile,
-  pack: ActivePack,
-  result: FlowResult,
-): Record<string, FlowEdgeData> {
-  const lang = i18n.language === 'en' ? 'en' : 'ru';
-  const { connectedIn, connectedOut } = buildConnectedPortMaps(scheme.edges);
-  const nodeWidths = buildMachineNodeLayoutWidths({
-    nodes: scheme.nodes,
-    pack,
-    lang,
-    flowResult: result,
-    connectedIn,
-    connectedOut,
-    t: i18n.t.bind(i18n),
-  });
-  return buildEdgeFlowData(
-    scheme.edges,
-    scheme.nodes,
-    pack,
-    result,
-    nodeWidths,
-  );
-}
 
 interface EditorState {
   scheme: TfgpFile;
@@ -77,7 +45,6 @@ interface EditorState {
   flowsByPack: Record<string, PersistedPackFlowCache>;
   selectedNodeIds: string[];
   selectedEdgeIds: string[];
-  flowEdgeData: Record<string, FlowEdgeData>;
   flowResult: FlowResult | null;
   schemeCheckResult: SchemeCheckResult | null;
   flowComputeState: FlowComputeState;
@@ -124,7 +91,7 @@ interface EditorState {
   setTarget: (target: TfgpTarget) => void;
   /** Refresh port/edge rates from current node settings; does not change machine counts. */
   updateFlows: () => void;
-  /** Rebuild edge labels and layout from restored flowResult after pack/recipes are ready. */
+  /** @deprecated No-op — edge labels are derived in EditorPage from flowResult. */
   refreshFlowDisplay: () => void;
   /** Full scheme solve from targets; updates machine counts across the graph. */
   recalculateScheme: () => void;
@@ -137,7 +104,6 @@ function cacheFlows(
   key: string | null,
   scheme: TfgpFile,
   flowResult: FlowResult,
-  flowEdgeData: Record<string, FlowEdgeData>,
 ): Record<string, PersistedPackFlowCache> {
   if (!key) return flowsByPack;
   return {
@@ -145,7 +111,6 @@ function cacheFlows(
     [key]: {
       revision: schemeFlowRevision(scheme),
       flowResult: dehydrateFlowResult(flowResult) as unknown as FlowResult,
-      flowEdgeData,
     },
   };
 }
@@ -154,21 +119,20 @@ function restoreFlowsForScheme(
   flowsByPack: Record<string, PersistedPackFlowCache>,
   key: string | null,
   scheme: TfgpFile,
-): Pick<EditorState, 'flowResult' | 'flowEdgeData' | 'flowComputeState'> {
+): Pick<EditorState, 'flowResult' | 'flowComputeState'> {
   if (!key) {
-    return { flowResult: null, flowEdgeData: {}, flowComputeState: 'idle' };
+    return { flowResult: null, flowComputeState: 'idle' };
   }
   const cached = flowsByPack[key];
   const revision = schemeFlowRevision(scheme);
   if (!cached) {
-    return { flowResult: null, flowEdgeData: {}, flowComputeState: 'idle' };
+    return { flowResult: null, flowComputeState: 'idle' };
   }
   if (!cached || cached.revision !== revision) {
-    return { flowResult: null, flowEdgeData: {}, flowComputeState: 'idle' };
+    return { flowResult: null, flowComputeState: 'idle' };
   }
   return {
     flowResult: hydrateFlowResult(cached.flowResult),
-    flowEdgeData: cached.flowEdgeData,
     flowComputeState: 'idle',
   };
 }
@@ -187,6 +151,14 @@ let flowComputeBinding: {
   get: () => EditorState;
   set: (partial: Partial<EditorState> | ((s: EditorState) => Partial<EditorState>)) => void;
 } | null = null;
+let pendingFlowUpdateMode: FlowComputeMode | null = null;
+
+function flushPendingFlowUpdate(): void {
+  const mode = pendingFlowUpdateMode;
+  if (!mode) return;
+  pendingFlowUpdateMode = null;
+  scheduleFlowUpdate(mode);
+}
 
 async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
   const binding = flowComputeBinding;
@@ -196,6 +168,7 @@ async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
 
   binding.set({ flowComputeState: 'computing' });
   const { scheme } = binding.get();
+  const revisionAtStart = schemeFlowRevision(scheme);
   const snap = binding.get().snapshot();
 
   try {
@@ -208,6 +181,14 @@ async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
     });
     if (!response) {
       binding.set({ flowComputeState: 'stale' });
+      flushPendingFlowUpdate();
+      return;
+    }
+
+    const currentRevision = schemeFlowRevision(binding.get().scheme);
+    if (!shouldApplyFlowResult(revisionAtStart, currentRevision)) {
+      binding.set({ flowComputeState: 'stale' });
+      flushPendingFlowUpdate();
       return;
     }
 
@@ -218,23 +199,15 @@ async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
         ? { ...scheme, nodes: response.nodes }
         : scheme;
 
-    const flowEdgeData = buildFlowEdgeData(
-      schemeForEdges,
-      pack,
-      flowResult,
-    );
-
     binding.set({
       flowComputeState: 'idle',
       flowResult,
-      flowEdgeData,
       schemeCheckResult: response.schemeCheckResult,
       flowsByPack: cacheFlows(
         binding.get().flowsByPack,
         binding.get().activePackKey,
         schemeForEdges,
         flowResult,
-        flowEdgeData,
       ),
       ...(mode === 'recalculate' && response.nodes
         ? {
@@ -253,13 +226,24 @@ async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
             ),
           }),
     });
+    flushPendingFlowUpdate();
   } catch (err) {
     console.error('Flow compute failed:', err);
     binding.set({ flowComputeState: 'idle' });
+    flushPendingFlowUpdate();
   }
 }
 
+function queueFlowUpdateWhileBusy(mode: FlowComputeMode): void {
+  pendingFlowUpdateMode = mergePendingFlowUpdateMode(pendingFlowUpdateMode, mode);
+  flowComputeBinding?.set({ flowComputeState: 'stale' });
+}
+
 function scheduleFlowUpdate(mode: FlowComputeMode): void {
+  if (flowComputeBinding?.get().flowComputeState === 'computing') {
+    queueFlowUpdateWhileBusy(mode);
+    return;
+  }
   if (mode === 'recalculate') {
     debouncedFlowUpdate?.cancel();
     void runFlowCompute('recalculate');
@@ -295,7 +279,6 @@ export const useEditorStore = create<EditorState>()(
       flowsByPack: persistedEditor.flowsByPack,
       selectedNodeIds: [],
       selectedEdgeIds: [],
-      flowEdgeData: initialFlows.flowEdgeData,
       flowResult: initialFlows.flowResult,
       schemeCheckResult: null,
       flowComputeState: initialFlows.flowComputeState,
@@ -332,8 +315,13 @@ export const useEditorStore = create<EditorState>()(
 
       loadScheme: (file) => {
         const pack = usePackStore.getState().activePack;
-        const nodes = dedupeNodeIds(normalizeSchemeNodes(file.nodes, pack), file.edges);
-        const normalized = { ...file, nodes };
+        const normalizedNodes = normalizeSchemeNodes(file.nodes, pack);
+        const { nodes, edges, targets } = dedupeSchemeTopology(
+          normalizedNodes,
+          file.edges,
+          file.targets,
+        );
+        const normalized = { ...file, nodes, edges, targets };
         seedIdCounter(normalized.nodes, normalized.edges);
         const key = packKey(normalized.modpack.version, normalized.modpack.dataVersion);
         set((s) => ({
@@ -360,7 +348,6 @@ export const useEditorStore = create<EditorState>()(
           schemesByPack: cacheScheme(schemesByPack, activePackKey, cleared),
           past: [],
           future: [],
-          flowEdgeData: {},
           flowResult: null,
           schemeCheckResult: null,
           selectedNodeIds: [],
@@ -530,6 +517,9 @@ export const useEditorStore = create<EditorState>()(
               }
               if (!isMachineNode(n)) return n;
               let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
+              if ('parallel' in patch && patch.parallel != null) {
+                next = normalizeNodeScaling(next) as TfgpMachineNode;
+              }
               if ('recipeId' in patch && patch.recipeId && pack) {
                 const recipe = getRecipe(pack, patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };
@@ -780,6 +770,7 @@ export const useEditorStore = create<EditorState>()(
       updateFlows: () => {
         const { scheme, activePackKey, flowsByPack, flowResult, flowComputeState } = get();
         if (flowComputeState === 'computing') {
+          queueFlowUpdateWhileBusy('update');
           return;
         }
         const revision = schemeFlowRevision(scheme);
@@ -791,20 +782,7 @@ export const useEditorStore = create<EditorState>()(
       },
 
       refreshFlowDisplay: () => {
-        const pack = usePackStore.getState().activePack;
-        const { scheme, flowResult, activePackKey, flowsByPack } = get();
-        if (!pack || !flowResult) return;
-        const flowEdgeData = buildFlowEdgeData(scheme, pack, flowResult);
-        set({
-          flowEdgeData,
-          flowsByPack: cacheFlows(
-            flowsByPack,
-            activePackKey,
-            scheme,
-            flowResult,
-            flowEdgeData,
-          ),
-        });
+        /* Edge labels derived in EditorPage from flowResult + scheme. */
       },
 
       recalculateScheme: () => {
@@ -925,7 +903,6 @@ export const useEditorStore = create<EditorState>()(
           state.scheme,
         );
         state.flowResult = restored.flowResult;
-        state.flowEdgeData = restored.flowEdgeData;
         state.flowComputeState = restored.flowComputeState;
       },
     },

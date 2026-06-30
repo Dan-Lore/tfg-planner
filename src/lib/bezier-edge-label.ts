@@ -1,6 +1,6 @@
 import { Position, type XYPosition } from '@xyflow/react';
 import { flowEdgeLabelCenterOffset } from '@/lib/flow-edge-label-metrics';
-import { pointOnPolyline } from '@/lib/edge-routing';
+import { pointOnPolyline } from '@/lib/edge-geometry';
 
 interface BezierEndpoints {
   sourceX: number;

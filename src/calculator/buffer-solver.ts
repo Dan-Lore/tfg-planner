@@ -1,20 +1,13 @@
 import type { Recipe } from '@/data/types';
-import type { SchemeEdge, SchemeNode } from '@/calculator/flow-solver';
+import type { SchemeEdge, SchemeNode } from '@/calculator/flow-solver-types';
 import { R, type Rational } from '@/calculator/rational';
 import type { TagIndex } from '@/lib/tag-index';
-import { recipeInputMatchesProduct } from '@/lib/flow-match';
-import { normalizePortId, parsePortId } from '@/canvas/ports';
-
-function portInputDemandRate(
-  recipe: Recipe,
-  inputIndex: number,
-  primaryOutputRate: Rational,
-): Rational {
-  const inp = recipe.inputs[inputIndex];
-  const primaryOut = recipe.outputs[0];
-  if (!inp || !primaryOut) return R.zero;
-  return primaryOutputRate.mul(R.from(inp.amount)).div(R.from(primaryOut.amount));
-}
+import { normalizePortId, parsePortId } from '@/lib/ports';
+import {
+  portInputDemandRate,
+  resolveSourceOutputPort,
+  resolveTargetInputPort,
+} from '@/calculator/port-resolution';
 
 export const BUFFER_HORIZON_SEC = 3600;
 
@@ -62,34 +55,11 @@ function resolveMachineTargetInputPort(
   recipe: Recipe,
   tags: TagIndex,
 ): string | null {
-  if (edge.targetPort) {
-    const portId = normalizePortId(edge.targetPort);
-    const parsed = parsePortId(portId);
-    if (parsed?.kind === 'in') return portId;
-  }
-  const key = edge.itemId ?? edge.fluidId ?? '';
-  if (!key) return null;
-  for (let i = 0; i < recipe.inputs.length; i++) {
-    const inKey = recipe.inputs[i]!.itemId ?? recipe.inputs[i]!.fluidId ?? '';
-    if (inKey === key || recipeInputMatchesProduct(inKey, key, tags)) {
-      return `in_${i}`;
-    }
-  }
-  return null;
+  return resolveTargetInputPort(edge, recipe, tags);
 }
 
 function resolveMachineSourceOutputPort(edge: SchemeEdge, recipe: Recipe): string | null {
-  if (edge.sourcePort) {
-    const portId = normalizePortId(edge.sourcePort);
-    const parsed = parsePortId(portId);
-    if (parsed?.kind === 'out') return portId;
-  }
-  const key = edge.itemId ?? edge.fluidId ?? '';
-  if (!key) return null;
-  const index = recipe.outputs.findIndex(
-    (o) => (o.itemId ?? o.fluidId ?? '') === key,
-  );
-  return index >= 0 ? `out_${index}` : null;
+  return resolveSourceOutputPort(edge, recipe);
 }
 
 export function collectBufferInflows(

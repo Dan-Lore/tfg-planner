@@ -8,6 +8,26 @@ import type { TfgpBufferKind } from '@/schema/tfgp';
 export const MACHINE_NODE_WIDTH = 220;
 export const MACHINE_NODE_MIN_WIDTH = 200;
 export const BUFFER_NODE_WIDTH = 200;
+
+/** React Flow node.style — use instead of node.width with onlyRenderVisibleElements. */
+export function machineNodeRfStyle(
+  layoutWidth: number | undefined,
+): { width: number; minWidth: number } | undefined {
+  if (layoutWidth == null || layoutWidth <= 0) return undefined;
+  return { width: layoutWidth, minWidth: layoutWidth };
+}
+
+/** Prefer computed layout width; ignore stale small React Flow measurements. */
+export function resolveMachineCardWidth(
+  layoutWidth: number | undefined,
+  measuredWidth: number | undefined,
+): number {
+  if (typeof layoutWidth === 'number' && layoutWidth > 0) return layoutWidth;
+  if (typeof measuredWidth === 'number' && measuredWidth >= MACHINE_NODE_MIN_WIDTH) {
+    return measuredWidth;
+  }
+  return MACHINE_NODE_MIN_WIDTH;
+}
 /** Matches `.machine-port` min-height (1.35rem) + column gap (~0.2rem). */
 export const PORT_ROW_HEIGHT = 24;
 export const PORT_SECTION_PADDING = 6;
@@ -63,7 +83,11 @@ export function estimateMachineNodeHeightFromPorts(
 }
 
 export function estimateMachineNodeHeight(data: MachineNodeData): number {
-  const portCount = Math.max(data.inputPorts.length, data.outputPorts.length, 1);
+  const portCount = Math.max(
+    data.inputPorts?.length ?? 0,
+    data.outputPorts?.length ?? 0,
+    1,
+  );
   return estimateMachineNodeHeightFromPorts(
     data.pack,
     data.machineId,

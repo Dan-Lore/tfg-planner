@@ -1,4 +1,4 @@
-import { flowKey, inputPortId, outputPortId } from '@/canvas/ports';
+import { flowKey, inputPortId, outputPortId } from '@/lib/ports';
 import { getMachineName } from '@/data/pack-registry';
 import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe, PackData } from '@/data/types';
@@ -6,6 +6,10 @@ import { flowLookupKeys } from '@/lib/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { dedupeAttachCandidates } from '@/lib/recipe-canon';
 import type { TagIndex } from '@/lib/tag-index';
+import type { RecipeFlowAttachIndex } from '@/data/types';
+import type { AttachCandidate } from '@/lib/recipe-attach-types';
+
+export type { AttachCandidate } from '@/lib/recipe-attach-types';
 
 export interface RecipePortRef {
   recipe: Recipe;
@@ -15,14 +19,6 @@ export interface RecipePortRef {
 export interface RecipeFlowIndex {
   byInputKey: Map<string, RecipePortRef[]>;
   byOutputKey: Map<string, RecipePortRef[]>;
-}
-
-export interface AttachCandidate {
-  machineId: string;
-  recipeId: string;
-  portId: string;
-  recipe: Recipe;
-  label: string;
 }
 
 export function buildRecipeFlowIndex(pack: PackData): RecipeFlowIndex {
@@ -117,4 +113,43 @@ export function findUpstreamCandidates(
     label: formatRecipeLabel(pack, recipe, lang),
   }));
   return sortCandidates(pack, dedupeAttachCandidates(candidates), lang);
+}
+
+export function findAttachCandidatesFromIndex(
+  pack: PackLike,
+  attachIndex: RecipeFlowAttachIndex,
+  recipesById: Map<string, Recipe>,
+  flow: Flow,
+  direction: 'upstream' | 'downstream',
+  lang: 'ru' | 'en',
+  tags: TagIndex,
+): AttachCandidate[] {
+  const map =
+    direction === 'downstream' ? attachIndex.byInputKey : attachIndex.byOutputKey;
+  const portIdFn = direction === 'downstream' ? inputPortId : outputPortId;
+  const seen = new Set<string>();
+  const candidates: AttachCandidate[] = [];
+
+  for (const key of flowLookupKeys(flow, tags)) {
+    for (const ref of map[key] ?? []) {
+      const dedupe = `${ref.recipeId}:${ref.portIndex}`;
+      if (seen.has(dedupe)) continue;
+      seen.add(dedupe);
+      const recipe = recipesById.get(ref.recipeId);
+      if (!recipe) continue;
+      candidates.push({
+        machineId: ref.machineId,
+        recipeId: ref.recipeId,
+        portId: portIdFn(ref.portIndex),
+        recipe,
+        label: formatRecipeLabel(pack, recipe, lang),
+      });
+    }
+  }
+
+  return dedupeAttachCandidates(candidates).sort((a, b) => {
+    const cmp = a.label.localeCompare(b.label, lang);
+    if (cmp !== 0) return cmp;
+    return a.recipeId.localeCompare(b.recipeId, lang);
+  });
 }

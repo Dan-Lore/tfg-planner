@@ -1,5 +1,5 @@
 import type { Recipe } from '@/data/types';
-import type { TfgpMachineNode } from '@/schema/tfgp';
+import type { TfgpMachineNode } from '@/schema/tfgp-types';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { isVoltageTier } from '@/calculator/gt-voltage';
 import { clampVoltageTier, defaultVoltageTierForRecipe } from '@/calculator/energy';

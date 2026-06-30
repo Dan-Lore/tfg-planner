@@ -1,5 +1,5 @@
-import { memo, useLayoutEffect, useMemo, useRef, type MouseEvent as ReactMouseEvent } from 'react';
-import { Handle, Position, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
+import { memo, useMemo, type MouseEvent as ReactMouseEvent } from 'react';
+import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackLike } from '@/data/pack-registry';
 import type { TfgpBufferKind, TfgpSupplyMode } from '@/schema/tfgp';
@@ -9,6 +9,10 @@ import { R } from '@/calculator/rational';
 import { loadGradientStyle } from '@/lib/load-gradient';
 import type { PortDisplay } from '@/canvas/MachineNode';
 import { BUFFER_NODE_WIDTH } from '@/canvas/node-bounds';
+import { useNodeDisplay } from '@/canvas/node-display-context';
+import { useEditorNodeActions } from '@/canvas/editor-node-actions-context';
+import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
+import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
 
 export interface BufferNodeData {
   bufferKind: TfgpBufferKind;
@@ -27,16 +31,8 @@ export interface BufferNodeData {
   loadPercent?: number;
   loadLabel?: string;
   loadTitle?: string;
-  onCapacityChange: (value: number) => void;
-  onSupplyModeChange: (mode: TfgpSupplyMode) => void;
-  onSupplyRateChange: (value: number) => void;
-  onInitialStockChange: (value: number) => void;
-  onPortContextMenu: (
-    portId: string,
-    side: 'in' | 'out',
-    clientX: number,
-    clientY: number,
-  ) => void;
+  inputPortIds?: string[];
+  outputPortIds?: string[];
   [key: string]: unknown;
 }
 
@@ -93,27 +89,38 @@ function BufferPortRow({
 }
 
 function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
-  const updateNodeInternals = useUpdateNodeInternals();
-  const rootRef = useRef<HTMLDivElement>(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as BufferNodeData;
+  const display = useNodeDisplay(id);
+  const actions = useEditorNodeActions();
+
+  const inputPorts = resolvePortDisplays(
+    d.inputPortIds,
+    display.inputPorts,
+    d.inputPorts,
+  );
+  const outputPorts = resolvePortDisplays(
+    d.outputPortIds,
+    display.outputPorts,
+    d.outputPorts,
+  );
+  const loadLabel = display.loadLabel ?? d.loadLabel;
+  const loadTitle = display.loadTitle ?? d.loadTitle;
+
+  const internalsKey = `${d.bufferKind}|${d.capacity}|${d.supplyMode ?? ''}|${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}`;
+  useNodeInternalsSync(id, internalsKey);
 
   const productLabel = useMemo(() => {
-    const id = d.itemId ?? d.fluidId;
-    if (!id) return t('editor.buffer.unknownProduct');
+    const productId = d.itemId ?? d.fluidId;
+    if (!productId) return t('editor.buffer.unknownProduct');
     return flowLabel({ itemId: d.itemId, fluidId: d.fluidId, amount: 1 }, d.pack, lang);
   }, [d.itemId, d.fluidId, d.pack, lang, t]);
 
   const kindLabel = t(`editor.buffer.kind.${d.bufferKind}`);
 
-  useLayoutEffect(() => {
-    updateNodeInternals(id);
-  }, [id, updateNodeInternals, d.bufferKind, d.capacity, d.supplyMode]);
-
   return (
     <div
-      ref={rootRef}
       className={[
         'buffer-node',
         selected ? 'buffer-node--selected' : '',
@@ -130,34 +137,38 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
         <div className="buffer-node__product" title={productLabel}>
           {productLabel}
         </div>
-        {d.loadLabel && (
-          <span className="buffer-node__load-chip" title={d.loadTitle ?? d.loadLabel}>
-            {d.loadLabel}
+        {loadLabel && (
+          <span className="buffer-node__load-chip" title={loadTitle ?? loadLabel}>
+            {loadLabel}
           </span>
         )}
       </div>
       <div className="buffer-node__fields nodrag nowheel">
-        <label className="buffer-node__field">
+        <label className="buffer-node__field" htmlFor={`${id}-capacity`}>
           <span>{t('editor.buffer.capacity')}</span>
           <input
+            id={`${id}-capacity`}
+            name={`${id}-capacity`}
             type="number"
             min={0}
             step={1}
             value={d.capacity}
             onChange={(e) =>
-              d.onCapacityChange(Math.max(0, Math.round(Number(e.target.value) || 0)))
+              actions.onCapacityChange(id, Math.max(0, Math.round(Number(e.target.value) || 0)))
             }
             onMouseDown={(e) => e.stopPropagation()}
           />
         </label>
         {d.bufferKind === 'start_buffer' && (
           <>
-            <label className="buffer-node__field">
+            <label className="buffer-node__field" htmlFor={`${id}-supply-mode`}>
               <span>{t('editor.buffer.supplyMode')}</span>
               <select
+                id={`${id}-supply-mode`}
+                name={`${id}-supply-mode`}
                 value={d.supplyMode ?? 'rate'}
                 onChange={(e) =>
-                  d.onSupplyModeChange(e.target.value as TfgpSupplyMode)
+                  actions.onSupplyModeChange(id, e.target.value as TfgpSupplyMode)
                 }
                 onMouseDown={(e) => e.stopPropagation()}
               >
@@ -166,15 +177,18 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
               </select>
             </label>
             {d.supplyMode === 'stock' ? (
-              <label className="buffer-node__field">
+              <label className="buffer-node__field" htmlFor={`${id}-initial-stock`}>
                 <span>{t('editor.buffer.initialStock')}</span>
                 <input
+                  id={`${id}-initial-stock`}
+                  name={`${id}-initial-stock`}
                   type="number"
                   min={0}
                   step={1}
                   value={d.initialStock ?? 0}
                   onChange={(e) =>
-                    d.onInitialStockChange(
+                    actions.onInitialStockChange(
+                      id,
                       Math.max(0, Math.round(Number(e.target.value) || 0)),
                     )
                   }
@@ -182,15 +196,18 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
                 />
               </label>
             ) : (
-              <label className="buffer-node__field">
+              <label className="buffer-node__field" htmlFor={`${id}-supply-rate`}>
                 <span>{t('editor.buffer.supplyRate')}</span>
                 <input
+                  id={`${id}-supply-rate`}
+                  name={`${id}-supply-rate`}
                   type="number"
                   min={0}
                   step={1}
                   value={d.supplyRate ?? 0}
                   onChange={(e) =>
-                    d.onSupplyRateChange(
+                    actions.onSupplyRateChange(
+                      id,
                       Math.max(0, Math.round(Number(e.target.value) || 0)),
                     )
                   }
@@ -206,27 +223,27 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
       </div>
       <div className="buffer-node__ports">
         <div className="buffer-node__ports-col buffer-node__ports-col--in">
-          {d.inputPorts.map((port) => (
+          {inputPorts.map((port) => (
             <BufferPortRow
               key={port.portId}
               port={port}
               type="target"
               side="left"
               onContextMenu={(portId, side, e) =>
-                d.onPortContextMenu(portId, side, e.clientX, e.clientY)
+                actions.onPortContextMenu(id, portId, side, e.clientX, e.clientY)
               }
             />
           ))}
         </div>
         <div className="buffer-node__ports-col buffer-node__ports-col--out">
-          {d.outputPorts.map((port) => (
+          {outputPorts.map((port) => (
             <BufferPortRow
               key={port.portId}
               port={port}
               type="source"
               side="right"
               onContextMenu={(portId, side, e) =>
-                d.onPortContextMenu(portId, side, e.clientX, e.clientY)
+                actions.onPortContextMenu(id, portId, side, e.clientX, e.clientY)
               }
             />
           ))}

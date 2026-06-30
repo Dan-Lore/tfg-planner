@@ -67,7 +67,9 @@ export function SearchCombobox({
   closeOnDrag = false,
 }: SearchComboboxProps) {
   const { t } = useTranslation();
-  const listId = useId();
+  const baseId = useId();
+  const listId = `${baseId}-list`;
+  const inputId = `${baseId}-input`;
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const optionRefs = useRef(new Map<string, HTMLButtonElement>());
@@ -276,6 +278,8 @@ export function SearchCombobox({
         )}
         <input
           ref={inputRef}
+          id={inputId}
+          name={inputId}
           type="text"
           className="search-combobox__input"
           role="combobox"

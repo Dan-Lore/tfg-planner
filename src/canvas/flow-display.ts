@@ -1,7 +1,7 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { formatLoadPercent, formatRate, portInputDemandRate } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
-import type { FlowEdgeData } from '@/canvas/FlowEdge';
+import type { FlowEdgeData } from '@/lib/flow-edge-types';
 import type { PackLike } from '@/data/pack-registry';
 import { getRecipe } from '@/data/pack-registry';
 import type { Recipe } from '@/data/types';

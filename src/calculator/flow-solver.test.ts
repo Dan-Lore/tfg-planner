@@ -73,6 +73,8 @@ describe('solveFlows', () => {
           id: 'e1',
           source: 'a',
           target: 'b',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
           itemId: 'crushed',
         },
       ],

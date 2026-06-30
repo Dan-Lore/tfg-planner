@@ -3,9 +3,9 @@ import type { PackData, Recipe } from '@/data/types';
 import { buildTagIndexFromMeta } from '@/lib/tag-index';
 import {
   buildRecipeFlowAttachIndex,
-  findAttachCandidatesFromIndex,
   machineIdsForFlowAttach,
 } from '@/lib/recipe-flow-attach-index';
+import { findAttachCandidatesFromIndex } from '@/lib/recipe-index';
 
 function miniPack(recipes: Recipe[], fluids: PackData['fluids']): PackData {
   return {

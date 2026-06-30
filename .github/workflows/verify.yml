@@ -32,8 +32,14 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Install Semgrep
+        run: pip install semgrep
+
       - name: Architecture & dead-code lint
         run: npm run lint:agent
+
+      - name: Parser validate
+        run: npm run parser:validate
 
       - name: Build
         run: npm run build

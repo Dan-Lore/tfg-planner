@@ -98,6 +98,9 @@ const resources = {
         parallel: 'Параллель',
         apply: 'Применить',
         ratePrompt: 'Скорость в секунду',
+        rateInvalid: 'Введите положительное число',
+        flowNonConverged:
+          'Потоки не сошлись за 50 итераций — значения могут быть неточными.',
         selectNode: 'Выберите узел на схеме',
         recipe: 'Рецепт',
         recipeIn: 'Вход',
@@ -269,6 +272,9 @@ const resources = {
         parallel: 'Parallel',
         apply: 'Apply',
         ratePrompt: 'Rate per second',
+        rateInvalid: 'Enter a positive number',
+        flowNonConverged:
+          'Flows did not converge within 50 iterations — values may be inaccurate.',
         selectNode: 'Select a node on the canvas',
         recipe: 'Recipe',
         recipeIn: 'In',

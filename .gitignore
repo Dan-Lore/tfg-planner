@@ -40,3 +40,6 @@ _i18n.py
 
 # Test
 coverage/
+
+# Dev profiling (large binary dumps)
+*.heapsnapshot

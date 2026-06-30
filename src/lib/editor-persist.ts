@@ -1,5 +1,4 @@
 import type { TfgpFile } from '@/schema/tfgp';
-import type { FlowEdgeData } from '@/canvas/FlowEdge';
 import type { FlowResult } from '@/calculator/flow-solver';
 
 const EDITOR_STORE_KEY = 'tfg-editor-store';
@@ -7,7 +6,6 @@ const EDITOR_STORE_KEY = 'tfg-editor-store';
 export interface PersistedPackFlowCache {
   revision: string;
   flowResult: FlowResult;
-  flowEdgeData: Record<string, FlowEdgeData>;
 }
 
 export interface PersistedEditorSnapshot {

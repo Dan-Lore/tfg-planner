@@ -1,12 +1,12 @@
 {
   "name": "tfg-planner",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Production flowchart planner for TerraFirmaGreg-Modern modpack",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "typecheck": "tsc -b",
+    "typecheck": "tsc -b && tsc -p tsconfig.parser.json",
     "build": "npm run typecheck && vite build",
     "build:pages": "npm run typecheck && vite build --mode pages",
     "preview": "vite preview",
@@ -20,17 +20,14 @@
     "parser:validate": "tsx tools/parser/src/cli.ts validate",
     "check-scheme": "vite-node --config vitest.config.ts tools/check-scheme.ts",
     "lint:arch": "depcruise src tools/parser/src --config .dependency-cruiser.cjs",
-    "lint:knip": "knip --include files,dependencies,duplicates",
-    "lint:agent": "npm run lint:arch && npm run lint:knip"
+    "lint:knip": "knip --include files,dependencies,duplicates,exports",
+    "lint:semgrep": "semgrep --config .semgrep.yml --error --quiet src tools/parser/src",
+    "lint:agent": "npm run lint:arch && npm run lint:knip && npm run lint:semgrep"
   },
   "dependencies": {
-    "@babel/parser": "^8.0.0",
-    "@babel/traverse": "^8.0.0",
-    "@babel/types": "^8.0.0",
     "@xyflow/react": "^12.6.0",
     "adm-zip": "^0.5.17",
     "i18next": "^25.2.1",
-    "js-yaml": "^4.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.5.2",
@@ -38,8 +35,10 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@babel/parser": "^8.0.0",
+    "@babel/traverse": "^8.0.0",
+    "@babel/types": "^8.0.0",
     "@types/adm-zip": "^0.5.8",
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

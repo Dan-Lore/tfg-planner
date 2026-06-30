@@ -6,6 +6,7 @@ import {
   allocateNodeId,
   applyFlowResult,
   dedupeNodeIds,
+  dedupeSchemeTopology,
   normalizeSchemeNodes,
   resetIdCounter,
   seedIdCounter,
@@ -56,6 +57,70 @@ describe('nextId', () => {
     ];
     seedIdCounter(existing, []);
     expect(allocateNodeId(existing, [])).toBe('node_4');
+  });
+});
+
+describe('dedupeSchemeTopology', () => {
+  beforeEach(() => resetIdCounter());
+
+  it('remaps edges when a sole node id is reassigned', () => {
+    const base = {
+      machineId: 'm',
+      recipeId: 'r',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV' as const,
+      parallel: 1,
+    };
+    const nodes = [
+      { id: 'node_3', ...base, machineId: 'reactor' },
+      { id: 'node_3', ...base, machineId: 'tower' },
+    ];
+    const edges = [
+      {
+        id: 'edge_1',
+        source: 'node_3',
+        sourcePort: 'out_0',
+        target: 'node_5',
+        targetPort: 'in_0',
+      },
+    ];
+    const targets = [{ nodeId: 'node_3', itemId: 'ingot', ratePerSecond: 1 }];
+    const out = dedupeSchemeTopology(nodes, edges, targets);
+    expect(out.nodes.map((n) => n.id)).toEqual(['node_3', 'node_4']);
+    expect(out.edges[0]?.source).toBe('node_3');
+    expect(out.edges[0]?.target).toBe('node_5');
+    expect(out.targets[0]?.nodeId).toBe('node_3');
+  });
+
+  it('remaps endpoints that uniquely identify a renamed node', () => {
+    const base = {
+      machineId: 'm',
+      recipeId: 'r',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV' as const,
+      parallel: 1,
+    };
+    const nodes = [
+      { id: 'node_1', ...base },
+      { id: 'node_1', ...base, machineId: 'tower' },
+    ];
+    const edges = [
+      {
+        id: 'edge_1',
+        source: 'node_1',
+        sourcePort: 'out_0',
+        target: 'node_9',
+        targetPort: 'in_0',
+        itemId: 'ingot',
+      },
+    ];
+    const out = dedupeSchemeTopology(nodes, edges);
+    expect(out.nodes[1]?.id).toBe('node_2');
+    expect(out.edges[0]?.source).toBe('node_1');
   });
 });
 

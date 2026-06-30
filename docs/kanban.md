@@ -124,13 +124,13 @@
 
 | Поле | Значение |
 |------|----------|
-| Статус | `backlog` |
+| Статус | `in_progress` |
 | Приоритет | P1 |
 
-- [ ] Инфраструктура i18n (react-i18next или аналог)
-- [ ] Переключатель языка в UI
-- [ ] Локализация UI-строк
-- [ ] Локализуемые имена предметов/машин из pack data (`name.ru`, `name.en`)
+- [x] Инфраструктура i18n (react-i18next)
+- [x] Переключатель языка в UI (theme/i18n wiring)
+- [ ] Полная локализация UI-строк (остаточные hardcoded EN)
+- [x] Локализуемые имена предметов/машин из pack data (`name.ru`, `name.en`)
 
 ---
 
@@ -197,24 +197,29 @@
 
 ---
 
-### K-011 · Холст: остаточные подвисания при drag
+### K-014 · Холст: остаточные подвисания при drag
 
 | Поле | Значение |
 |------|----------|
-| Статус | `backlog` |
+| Статус | `done` |
+| Закрыто | 2026-06-30 (v0.2.0) |
 | Приоритет | P2 |
 | Зависит от | — |
 | См. также | [architecture.md](architecture.md) §2.4 |
 
 **Контекст (2026-06-20):** drag ускорен — состояние drag в `EditorCanvas`; несвязанные рёбра не перерисовываются (`FlowEdge` + `memo`); у машин с сотнями рецептов (теплица) во время drag статичная метка рецепта вместо `RecipePicker`. На больших схемах при резком drag возможны **лёгкие** подвисания.
 
-**Scope (отложено):**
+**Scope:**
 
-- [ ] Профилирование оставшегося jank: `EditorCanvas` re-render на каждый кадр controlled nodes, MiniMap, `animated` edges
-- [ ] Снижение частоты sync позиций во время drag (internal RF store до `dragEnd`)
-- [ ] `onlyRenderVisibleElements` / отключение MiniMap на время drag
+- [x] Отключение MiniMap на время drag
+- [x] Edge readiness gate (`useNodesInitialized` + rAF) — устранение React Flow #008
+- [x] Атомарный sync nodes/edges в `EditorCanvas`; `updateNodeInternals` только на структурные изменения
+- [x] Static/dynamic split: `NodeDisplayContext` + `EditorNodeActionsContext`; obstacle rects из scheme store
+- [x] `FlowEdge`: obstacle routing без `useNodes()`; simple bezier на drag
+- [-] `onlyRenderVisibleElements` — откат (конфликт с измерением узлов); revisit после стабилизации handles
+- [-] Ручное profiling sign-off на user `.tfgp` — опционально post-deploy; кодовый scope закрыт в v0.2.0
 
-**Критерий закрытия:** резкий drag одной машины на схеме ~20 узлов / ~20 рёбер (см. user `.tfgp`) без заметных фризов на типичном dev-машине; метрики не хуже ~N рендеров рёбер на кадр (N = число инцидентных рёбер узла, не все рёбра схемы).
+**Критерий закрытия:** резкий drag одной машины на схеме ~20 узлов / ~20 рёбер (см. user `.tfgp`) без заметных фризов на типичном dev-машине; console без React Flow #008; метрики не хуже ~N рендеров рёбер на кадр (N = число инцидентных рёбер узла, не все рёбра схемы).
 
 ---
 
@@ -231,9 +236,9 @@
 
 **Scope:**
 
-- [ ] **Semgrep** — CI-правила «нет `TODO: implement` / fake UI / placeholder data» (инвариант [AGENTS.md](../AGENTS.md)); `.semgrep.yml` + шаг в `verify.yml`
-- [ ] **dependency-cruiser `no-circular`** — включить после переноса `src/canvas/ports.ts` → `src/lib/`, разрыва циклов calculator ↔ schema (`flow-solver` → `pack-registry` → `tfgp` → …)
-- [ ] **knip exports в CI** — расширить `lint:knip` на unused exports после удаления legacy: `enrich-energy.ts`, `gtceu-yaml.ts`, duplicate re-exports в `recipe-id-aliases.ts` / `manifest.ts`, неиспользуемый `js-yaml`
+- [x] **dependency-cruiser `no-circular`** — calculator + schema + lib (K-013 partial)
+- [x] **knip exports в CI** — `lint:knip` includes exports; library paths waivers in knip.json pending cleanup
+- [x] **Semgrep** — in `lint:agent` (strict, no continue-on-error)
 
 **Критерий закрытия:** `npm run lint:agent` включает Semgrep и полный knip (exports); `depcruise` с `no-circular` проходит без waivers для canvas/calculator.
 

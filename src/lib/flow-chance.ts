@@ -1,7 +1,7 @@
 import type { Flow } from '@/data/types';
 import type { Rational } from '@/calculator/rational';
 import { R } from '@/calculator/rational';
-import { formatRate } from '@/calculator/flow-solver';
+import { formatRate } from '@/calculator/format';
 
 /** GregTech chanced I/O probability denominator. */
 export const GT_CHANCE_BASE = 10_000;

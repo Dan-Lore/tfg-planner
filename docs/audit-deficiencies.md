@@ -213,7 +213,7 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 | 45 | Нет тестов `editor-store.ts` (~566 строк) | только `editor-utils.test.ts` |
 | 46 | Нет тестов `prune-edges`, `pack-store` | — |
 | 47 | Solver: нет тестов cycles, byproducts, разветвления (spec §3.3) | `flow-solver.test.ts` — базовые кейсы |
-| 48 | CI: только `npm test` + `build`; нет `parser:validate`, lint, audit, coverage, E2E | `.github/workflows/ci.yml` |
+| 48 | CI: `npm test` + `build` + `lint:agent` (arch, knip, semgrep) + `parser:validate`; нет coverage gate, E2E | `.github/workflows/verify.yml` |
 | 49 | Vitest `environment: 'node'` — UI не тестируется в CI | `vitest.config.ts` |
 
 ---
@@ -223,10 +223,10 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 | # | Документ | Реальность |
 |---|----------|------------|
 | 50 | `README.md`: «2436 рецептов» | `build-report.json`: **6727** |
-| 51 | `architecture.md`: IndexedDB cache | в `src/` IndexedDB нет |
+| 51 | `architecture.md`: IndexedDB cache | session cache + localStorage persist; `pack-build-manifest.ts` |
 | 52 | `schema-format.md`: migration/warning при несовпадении версии | не реализовано |
 | 53 | `schema-format.md`: visual `groups` | нет в editor |
-| 54 | `kanban.md`: дублирующийся ID `K-011`; K-004 «i18n не начата» при рабочем RU/EN | docs устарели |
+| 54 | `kanban.md`: дублирующийся ID K-011; K-004 «i18n не начата» | K-011 deficit закрыт; drag jank → K-014; K-004 in_progress |
 | 55 | `specification.md` §3.2–3.3: большинство чекбоксов `[ ]` | соответствует фактическим пробелам |
 
 ---

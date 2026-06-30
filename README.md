@@ -16,8 +16,8 @@ npm run dev
 
 Откройте http://localhost:5173
 
-1. **Версии** — выберите `0.12.8` (парсер KubeJS-effective) или `0.12.8-sample` (демо, deprecated).
-2. **Редактор** — добавьте машины, соедините, задайте целевую скорость или умножьте выходы.
+1. **Версии** — выберите `0.12.8` (server snapshot, ~56k рецептов, sharded pack).
+2. **Редактор** — добавьте машины, соедините, задайте целевую скорость на выходе.
 3. **Ctrl+Z / Ctrl+Y** — отмена и повтор.
 4. Сохраните схему как `.tfgp` или загрузите с диска.
 
@@ -66,15 +66,15 @@ npm run preview
 | [docs/kanban.md](docs/kanban.md) | Недоделки |
 | [CHANGELOG.md](CHANGELOG.md) | История версий |
 
-## Статус v0.1.0
+## Статус v0.2.0
 
-- Редактор мнемосхем (React Flow)
-- Калькулятор потоков с `ceil(machineCount)`
-- Import/export `.tfgp`
+- Редактор мнемосхем (React Flow) с оптимизированным drag (K-014)
+- Калькулятор потоков с `ceil(machineCount)` в Web Worker
+- Import/export `.tfgp` с валидацией и dedupe node IDs
 - i18n RU / EN
-- Pack data `0.12.8` (2436 рецептов, парсер KubeJS)
-- Демо `0.12.8-sample` (deprecated)
+- Pack data `0.12.8` (~56k рецептов, sharded v2, server snapshot pipeline)
 - Контекстное меню на портах (добавление машин по ПКМ)
+- CI: typecheck, tests, `lint:agent` (depcruise, knip, Semgrep), `parser:validate`
 
 ## Лицензия
 

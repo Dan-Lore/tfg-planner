@@ -1,4 +1,5 @@
 import { parseTfgp, type TfgpFile } from '@/schema/tfgp';
+import { TFGP_MAX_BYTES } from '@/schema/tfgp-validate';
 import { schemeNameFromFilename } from '@/lib/tfgp-filename';
 
 export function isTfgpDropFile(file: File): boolean {
@@ -17,6 +18,9 @@ export function pickTfgpFile(fileList: FileList): File | null {
 }
 
 export function readTfgpFile(file: File): Promise<TfgpFile> {
+  if (file.size > TFGP_MAX_BYTES) {
+    return Promise.reject(new Error('File too large'));
+  }
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {

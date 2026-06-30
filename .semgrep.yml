@@ -1,0 +1,18 @@
+rules:
+  - id: no-todo-implement
+    languages: [typescript, javascript]
+    message: TODO implement stubs are forbidden (AGENTS.md)
+    severity: ERROR
+    pattern-either:
+      - pattern: "// TODO: implement"
+      - pattern: "// TODO implement"
+      - pattern: "// FIXME: implement"
+
+  - id: no-fake-return-null-placeholder
+    languages: [typescript]
+    message: Placeholder return null in runtime code
+    severity: ERROR
+    paths:
+      exclude:
+        - '*.test.ts'
+    pattern: return null; // placeholder

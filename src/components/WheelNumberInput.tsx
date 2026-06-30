@@ -1,4 +1,4 @@
-import type { WheelEvent } from 'react';
+import { useId, type WheelEvent } from 'react';
 import { adjustByWheel } from '@/lib/wheel-adjust';
 
 interface WheelNumberInputProps {
@@ -21,6 +21,7 @@ export function WheelNumberInput({
   className = '',
   inputProps,
 }: WheelNumberInputProps) {
+  const defaultInputId = useId();
   const handleWheel = (e: WheelEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -30,6 +31,8 @@ export function WheelNumberInput({
   return (
     <input
       type="number"
+      id={inputProps?.id ?? defaultInputId}
+      name={inputProps?.name ?? defaultInputId}
       className={className}
       value={value}
       min={min}

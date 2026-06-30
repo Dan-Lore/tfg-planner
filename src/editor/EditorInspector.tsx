@@ -1,4 +1,4 @@
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { FlowResult } from '@/calculator/flow-solver';
 import {
@@ -11,7 +11,8 @@ import {
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { R } from '@/calculator/rational';
 import { buildBufferPortDisplays, formatBufferRate } from '@/canvas/BufferNode';
-import type { FlowEdgeData } from '@/canvas/FlowEdge';
+import type { FlowEdgeData } from '@/lib/flow-edge-types';
+import { parsePositiveRate } from '@/lib/parse-positive-rate';
 import {
   buildInputPortLoadMeta,
   buildNodeBalanceLines,
@@ -209,26 +210,36 @@ function MachineInspector({
           resetKey={node.recipeId}
           onChange={(recipeId) => updateNode(node.id, { recipeId })}
         />
-        <label>{t('editor.machineCount')}</label>
+        <label htmlFor={`${node.id}-machine-count`}>{t('editor.machineCount')}</label>
         <WheelNumberInput
           min={1}
           step={1}
           value={node.machineCount}
+          inputProps={{
+            id: `${node.id}-machine-count`,
+            name: `${node.id}-machine-count`,
+          }}
           onChange={(machineCount) =>
             updateNode(node.id, { machineCount: Math.max(1, machineCount) })
           }
         />
-        <label>{t('editor.overclock')}</label>
+        <label htmlFor={`${node.id}-overclock`}>{t('editor.overclock')}</label>
         <WheelNumberInput
           min={0.1}
           step={0.1}
           value={node.overclock}
+          inputProps={{
+            id: `${node.id}-overclock`,
+            name: `${node.id}-overclock`,
+          }}
           onChange={(overclock) => updateNode(node.id, { overclock })}
         />
         {allowedTiers.length > 0 && (
           <>
-            <label>{t('editor.voltageTier')}</label>
+            <label htmlFor={`${node.id}-voltage-tier`}>{t('editor.voltageTier')}</label>
             <select
+              id={`${node.id}-voltage-tier`}
+              name={`${node.id}-voltage-tier`}
               className="editor-sidebar__select"
               value={node.voltageTier}
               onChange={(e) =>
@@ -367,8 +378,10 @@ function BufferInspector({
         <label>{t('editor.inspector.product')}</label>
         <p className="editor-inspector__readonly">{productLabel}</p>
 
-        <label>{t('editor.buffer.capacity')}</label>
+        <label htmlFor={`${node.id}-capacity`}>{t('editor.buffer.capacity')}</label>
         <input
+          id={`${node.id}-capacity`}
+          name={`${node.id}-capacity`}
           type="number"
           min={0}
           step={1}
@@ -382,8 +395,10 @@ function BufferInspector({
 
         {node.kind === 'start_buffer' && (
           <>
-            <label>{t('editor.buffer.supplyMode')}</label>
+            <label htmlFor={`${node.id}-supply-mode`}>{t('editor.buffer.supplyMode')}</label>
             <select
+              id={`${node.id}-supply-mode`}
+              name={`${node.id}-supply-mode`}
               value={node.supplyMode ?? 'rate'}
               onChange={(e) =>
                 updateNode(node.id, { supplyMode: e.target.value as TfgpSupplyMode })
@@ -395,8 +410,12 @@ function BufferInspector({
 
             {node.supplyMode === 'stock' ? (
               <>
-                <label>{t('editor.buffer.initialStock')}</label>
+                <label htmlFor={`${node.id}-initial-stock`}>
+                  {t('editor.buffer.initialStock')}
+                </label>
                 <input
+                  id={`${node.id}-initial-stock`}
+                  name={`${node.id}-initial-stock`}
                   type="number"
                   min={0}
                   step={1}
@@ -410,8 +429,10 @@ function BufferInspector({
               </>
             ) : (
               <>
-                <label>{t('editor.buffer.supplyRate')}</label>
+                <label htmlFor={`${node.id}-supply-rate`}>{t('editor.buffer.supplyRate')}</label>
                 <input
+                  id={`${node.id}-supply-rate`}
+                  name={`${node.id}-supply-rate`}
                   type="number"
                   min={0}
                   step={1}
@@ -460,14 +481,17 @@ function EdgeInspector({
   pack,
   lang,
   flowEdgeData,
+  onEdgeRateApply,
 }: {
   edge: TfgpEdge;
   nodes: TfgpNode[];
   pack: PackLike;
   lang: 'ru' | 'en';
   flowEdgeData: Record<string, FlowEdgeData>;
+  onEdgeRateApply: (edge: TfgpEdge, rate: number) => void;
 }) {
   const { t } = useTranslation();
+  const [rateInput, setRateInput] = useState('');
   const sourceNode = nodes.find((n) => n.id === edge.source);
   const targetNode = nodes.find((n) => n.id === edge.target);
   const edgeData = flowEdgeData[edge.id];
@@ -516,6 +540,32 @@ function EdgeInspector({
         {!edgeData?.source && !edgeData?.target && (
           <p className="editor-inspector__hint">{t('editor.inspector.noFlow')}</p>
         )}
+        {targetNode && isMachineNode(targetNode) && (
+          <div className="editor-inspector__field">
+            <label htmlFor={`edge-rate-${edge.id}`}>{t('editor.ratePrompt')}</label>
+            <input
+              id={`edge-rate-${edge.id}`}
+              name={`edge-rate-${edge.id}`}
+              type="text"
+              inputMode="decimal"
+              value={rateInput}
+              placeholder={edgeData?.target ?? edgeData?.source ?? ''}
+              onChange={(e) => setRateInput(e.target.value)}
+            />
+            <button
+              type="button"
+              className="editor-inspector__apply"
+              onClick={() => {
+                const rate = parsePositiveRate(rateInput);
+                if (rate == null) return;
+                onEdgeRateApply(edge, rate);
+                setRateInput('');
+              }}
+            >
+              {t('editor.apply')}
+            </button>
+          </div>
+        )}
       </InspectorSection>
     </div>
   );
@@ -533,6 +583,7 @@ export interface EditorInspectorProps {
   connectedInByNode: Map<string, Set<string>>;
   connectedOutByNode: Map<string, Set<string>>;
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
+  onEdgeRateApply: (edge: TfgpEdge, rate: number) => void;
 }
 
 export function EditorInspector({
@@ -547,6 +598,7 @@ export function EditorInspector({
   connectedInByNode,
   connectedOutByNode,
   updateNode,
+  onEdgeRateApply,
 }: EditorInspectorProps) {
   const { t } = useTranslation();
 
@@ -604,6 +656,7 @@ export function EditorInspector({
         pack={pack}
         lang={lang}
         flowEdgeData={flowEdgeData}
+        onEdgeRateApply={onEdgeRateApply}
       />
     );
   }

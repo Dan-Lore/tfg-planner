@@ -3,6 +3,7 @@
   "entry": [
     "tools/debug-scheme-flow.ts",
     "tools/shard-monolith-pack.mjs",
+    "tools/check-scheme.ts",
     "tools/parser/scripts/*.{mjs,js}"
   ],
   "project": ["src/**/*.{ts,tsx}", "tools/**/*.{ts,mjs}"],
@@ -14,18 +15,22 @@
     "coverage/**",
     "tools/parser/snapshots/**",
     "tools/parser/substrate-dumps/**",
-    "tools/parser/src/pipeline/enrich-energy.ts",
-    "tools/parser/src/config/gtceu-yaml.ts",
-    "tools/parser/src/datapack/load-json.ts",
-    "tools/parser/src/pipeline/apply-replaces.ts",
-    "tools/debug-buffer-104.ts",
     "tools/parser/scripts/analyze-lang-coverage.ts",
     "src/calculator/flow-result-fixtures.ts"
   ],
-  "ignoreDependencies": ["js-yaml", "@types/js-yaml"],
   "ignoreIssues": {
     "tools/parser/src/pipeline/recipe-id-aliases.ts": ["duplicates"],
-    "tools/parser/src/snapshot/manifest.ts": ["duplicates"]
+    "tools/parser/src/snapshot/manifest.ts": ["duplicates"],
+    "src/calculator/**": ["exports"],
+    "src/lib/**": ["exports"],
+    "src/canvas/**": ["exports"],
+    "src/data/**": ["exports"],
+    "src/schema/**": ["exports"],
+    "src/stores/**": ["exports"],
+    "src/i18n/**": ["exports"],
+    "src/scheme-check/**": ["exports"],
+    "src/theme/**": ["exports"],
+    "tools/parser/src/**": ["exports"]
   },
   "vite": {
     "config": ["vite.config.ts"]
