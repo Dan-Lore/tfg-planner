@@ -65,9 +65,10 @@ Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`
 | `.cursorignore` | Исключения из индекса Cursor (pack shards, `.cache`, lock) | — |
 | `dependency-cruiser` | Граф импортов, циклы, calculator/parser без React | `npm run lint:arch` |
 | `knip` | Неиспользуемые файлы и зависимости | `npm run lint:knip` |
+| `verify:ci` | Полный прогон как в CI (перед push / tag) | `npm run verify:ci` |
 | `AGENTS.md` + `docs/architecture.md` | Точки входа и границы модулей | читать перед задачей |
 | [docs/agent-tooling-catalog.md](docs/agent-tooling-catalog.md) | Полный справочник инструментов + статус интеграции | при выборе tooling |
 
-Перед рефакторингом: `npm run lint:agent`. Не добавлять React-импорты в `src/calculator/` и `tools/parser/`.
+Перед рефакторингом: `npm run lint:agent`. Перед **push или git tag**: `npm run verify:ci` (typecheck, test, lint:agent, parser:validate, build + Pages). Не добавлять React-импорты в `src/calculator/` и `tools/parser/`.
 
 **Roadmap tooling (фаза 2):** [kanban K-013](docs/kanban.md) — Semgrep, depcruise `no-circular`, полный knip в CI.

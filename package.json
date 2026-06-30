@@ -21,8 +21,9 @@
     "check-scheme": "vite-node --config vitest.config.ts tools/check-scheme.ts",
     "lint:arch": "depcruise src tools/parser/src --config .dependency-cruiser.cjs",
     "lint:knip": "knip --include files,dependencies,duplicates,exports",
-    "lint:semgrep": "semgrep --config .semgrep.yml --error --quiet src tools/parser/src",
-    "lint:agent": "npm run lint:arch && npm run lint:knip && npm run lint:semgrep"
+    "lint:semgrep": "node scripts/run-semgrep.mjs",
+    "lint:agent": "npm run lint:arch && npm run lint:knip && npm run lint:semgrep",
+    "verify:ci": "npm run typecheck && npm run test && npm run lint:agent && npm run parser:validate && npm run build && vite build --mode pages"
   },
   "dependencies": {
     "@xyflow/react": "^12.6.0",

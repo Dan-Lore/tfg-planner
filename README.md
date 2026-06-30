@@ -29,6 +29,8 @@ npm run dev
 | `npm run build` | Production-сборка (корень `/`, для своего хостинга) |
 | `npm run build:pages` | Сборка для GitHub Pages (`/tfg-planner/`, см. `.env.pages`) |
 | `npm test` | Unit-тесты |
+| `npm run verify:ci` | Полный прогон как в CI (перед push / релизом) |
+| `npm run lint:agent` | Архитектура, knip, Semgrep |
 | `npm run build-pack -- --tag 0.12.8` | Сборка pack data из Modpack-Modern |
 | `npm run parser:validate` | Валидация pack JSON |
 
