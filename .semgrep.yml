@@ -3,10 +3,10 @@ rules:
     languages: [typescript, javascript]
     message: TODO implement stubs are forbidden (AGENTS.md)
     severity: ERROR
+    # Use regex: semgrep `pattern:` treats `//` as division, not a line comment.
     pattern-either:
-      - pattern: "// TODO: implement"
-      - pattern: "// TODO implement"
-      - pattern: "// FIXME: implement"
+      - pattern-regex: '//\s*TODO:?\s*implement\b'
+      - pattern-regex: '//\s*FIXME:?\s*implement\b'
 
   - id: no-fake-return-null-placeholder
     languages: [typescript]
@@ -15,4 +15,4 @@ rules:
     paths:
       exclude:
         - '*.test.ts'
-    pattern: return null; // placeholder
+    pattern-regex: 'return\s+null;\s*//\s*placeholder\b'
