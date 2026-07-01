@@ -24,12 +24,26 @@ export type SchemeIssueCode =
   | 'tag_input_unverified'
   | 'edge_source_product_mismatch';
 
+export interface SchemeIssueContext {
+  portId?: string;
+  productId?: string;
+  srcProductId?: string;
+  tgtProductId?: string;
+  edgeProductId?: string;
+  recipeId?: string;
+  machineId?: string;
+  outputCount?: string;
+  inputCount?: string;
+  theoreticalRate?: string;
+}
+
 export interface SchemeIssue {
   severity: SchemeIssueSeverity;
   code: SchemeIssueCode;
   message: string;
   edgeId?: string;
   nodeId?: string;
+  context?: SchemeIssueContext;
 }
 
 export interface SchemeCheckSummary {
@@ -114,6 +128,11 @@ function recipeMapFromPack(pack: PackData): Map<string, Recipe> {
   return new Map(pack.recipes.map((r) => [r.id, r]));
 }
 
+function machineContext(node: TfgpNode): SchemeIssueContext | undefined {
+  if (!isMachineNode(node)) return undefined;
+  return { machineId: node.machineId, recipeId: node.recipeId };
+}
+
 function nodeLabel(node: TfgpNode): string {
   if (isMachineNode(node)) {
     return `${node.id} (${node.machineId}, ${node.recipeId})`;
@@ -155,6 +174,7 @@ function checkEdge(
       code: 'missing_node',
       message: `Связь ${edge.id}: источник «${edge.source}» не найден`,
       edgeId: edge.id,
+      context: { productId: edge.source },
     });
     return issues;
   }
@@ -164,6 +184,7 @@ function checkEdge(
       code: 'missing_node',
       message: `Связь ${edge.id}: приёмник «${edge.target}» не найден`,
       edgeId: edge.id,
+      context: { productId: edge.target },
     });
     return issues;
   }
@@ -178,6 +199,7 @@ function checkEdge(
       message: `Узел ${nodeLabel(src)}: рецепт «${src.recipeId}» отсутствует в pack ${pack.modpackVersion}`,
       nodeId: src.id,
       edgeId: edge.id,
+      context: { ...machineContext(src), recipeId: src.recipeId },
     });
   }
   if (isMachineNode(tgt) && !tgtRecipe) {
@@ -187,6 +209,7 @@ function checkEdge(
       message: `Узел ${nodeLabel(tgt)}: рецепт «${tgt.recipeId}» отсутствует в pack ${pack.modpackVersion}`,
       nodeId: tgt.id,
       edgeId: edge.id,
+      context: { ...machineContext(tgt), recipeId: tgt.recipeId },
     });
   }
 
@@ -200,6 +223,11 @@ function checkEdge(
       message: `${edgeLabel(edge)}: порт ${edge.sourcePort} не существует у рецепта (выходов: ${srcRecipe.outputs.length})`,
       edgeId: edge.id,
       nodeId: src.id,
+      context: {
+        ...machineContext(src),
+        portId: edge.sourcePort,
+        outputCount: String(srcRecipe.outputs.length),
+      },
     });
   } else if (isMachineNode(src) && srcRecipe && !srcFlow) {
     issues.push({
@@ -208,6 +236,7 @@ function checkEdge(
       message: `${edgeLabel(edge)}: не удалось определить продукт на ${edge.sourcePort}`,
       edgeId: edge.id,
       nodeId: src.id,
+      context: { ...machineContext(src), portId: edge.sourcePort },
     });
   }
 
@@ -218,6 +247,11 @@ function checkEdge(
       message: `${edgeLabel(edge)} → ${edge.targetPort}: порт не существует (входов: ${tgtRecipe.inputs.length}). Такая связь обнуляет выход апстрима в расчёте потоков`,
       edgeId: edge.id,
       nodeId: tgt.id,
+      context: {
+        ...machineContext(tgt),
+        portId: edge.targetPort,
+        inputCount: String(tgtRecipe.inputs.length),
+      },
     });
   } else if (isMachineNode(tgt) && tgtRecipe && !tgtFlow) {
     issues.push({
@@ -226,6 +260,7 @@ function checkEdge(
       message: `${edgeLabel(edge)} → ${edge.targetPort}: не удалось определить продукт на входе`,
       edgeId: edge.id,
       nodeId: tgt.id,
+      context: { ...machineContext(tgt), portId: edge.targetPort },
     });
   }
 
@@ -238,6 +273,7 @@ function checkEdge(
         message: `${edgeLabel(edge)}: у буфера-источника ожидается out-порт, указан ${edge.sourcePort}`,
         edgeId: edge.id,
         nodeId: src.id,
+        context: { portId: edge.sourcePort },
       });
     }
   }
@@ -250,6 +286,7 @@ function checkEdge(
         message: `${edgeLabel(edge)}: у буфера-приёмника ожидается in-порт, указан ${edge.targetPort}`,
         edgeId: edge.id,
         nodeId: tgt.id,
+        context: { portId: edge.targetPort },
       });
     }
   }
@@ -266,6 +303,12 @@ function checkEdge(
         message: `${edgeLabel(edge)}: на ${edge.sourcePort} рецепт отдаёт «${srcKey}», а в связи указано «${edgeKey}»`,
         edgeId: edge.id,
         nodeId: src.id,
+        context: {
+          ...machineContext(src),
+          portId: edge.sourcePort,
+          srcProductId: srcKey,
+          edgeProductId: edgeKey,
+        },
       });
     } else if (tgtKey.startsWith('#') && edgeKey === srcKey) {
       issues.push({
@@ -274,6 +317,13 @@ function checkEdge(
         message: `${edgeLabel(edge)}: вход — тег ${tgtKey}; совместимость тега не верифицируется pack data`,
         edgeId: edge.id,
         nodeId: tgt.id,
+        context: {
+          ...machineContext(tgt),
+          portId: edge.targetPort,
+          tgtProductId: tgtKey,
+          srcProductId: srcKey,
+          edgeProductId: edgeKey,
+        },
       });
     } else {
       issues.push({
@@ -281,6 +331,11 @@ function checkEdge(
         code: 'product_mismatch',
         message: `${edgeLabel(edge)}: несовместимые продукты — ${srcKey} → ${tgtKey} (${edge.sourcePort} → ${edge.targetPort})`,
         edgeId: edge.id,
+        context: {
+          portId: `${edge.sourcePort} → ${edge.targetPort}`,
+          srcProductId: srcKey,
+          tgtProductId: tgtKey,
+        },
       });
     }
   } else if (srcFlow) {
@@ -293,6 +348,12 @@ function checkEdge(
         message: `${edgeLabel(edge)}: на ${edge.sourcePort} рецепт отдаёт «${srcKey}», а в связи указано «${edgeKey}»`,
         edgeId: edge.id,
         nodeId: src.id,
+        context: {
+          ...machineContext(src),
+          portId: edge.sourcePort,
+          srcProductId: srcKey,
+          edgeProductId: edgeKey,
+        },
       });
     }
   }
@@ -327,6 +388,11 @@ function checkDisconnectedInputs(
         code: 'disconnected_input',
         message: `${nodeLabel(node)}: вход ${portId} (${productKey(inp)}) не подключён`,
         nodeId: node.id,
+        context: {
+          ...machineContext(node),
+          portId,
+          productId: productKey(inp),
+        },
       });
     }
   }
@@ -347,6 +413,7 @@ function checkTargets(
         severity: 'warning',
         code: 'target_missing_node',
         message: `Цель производства: узел «${target.nodeId}» не найден`,
+        context: { productId: target.nodeId },
       });
       continue;
     }
@@ -356,6 +423,7 @@ function checkTargets(
         code: 'target_on_buffer',
         message: `Цель на буфере ${nodeLabel(node)} игнорируется солвером — задайте цель на машине`,
         nodeId: node.id,
+        context: machineContext(node),
       });
     }
   }
@@ -389,6 +457,10 @@ function checkStalledMachines(
       code: 'stalled_machine',
       message: `${nodeLabel(node)}: теоретический выход ${theoretical.toNumber().toFixed(4)}/s, но эффективная нагрузка 0% — проверьте входы и исходящие связи`,
       nodeId: node.id,
+      context: {
+        ...machineContext(node),
+        theoreticalRate: theoretical.toNumber().toFixed(4),
+      },
     });
   }
 

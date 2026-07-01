@@ -187,6 +187,7 @@ export function EditorPage() {
         useEditorStore.getState().setSelectedEdgeIds(...args),
       updateFlows: () => useEditorStore.getState().updateFlows(),
       refreshFlowDisplay: () => useEditorStore.getState().refreshFlowDisplay(),
+      refreshSchemeCheck: () => useEditorStore.getState().refreshSchemeCheck(),
     }),
     [],
   );
@@ -212,6 +213,7 @@ export function EditorPage() {
     setSelectedEdgeIds,
     updateFlows,
     refreshFlowDisplay,
+    refreshSchemeCheck,
   } = editorActions;
   const [packDisplayEpoch, setPackDisplayEpoch] = useState(0);
   const colorTheme = useThemeStore((s) => s.theme);
@@ -273,8 +275,9 @@ export function EditorPage() {
       const { scheme, flowResult } = useEditorStore.getState();
       await preloadSchemeRecipes(pack, scheme);
       if (cancelled) return;
+      refreshFlowDisplay();
       if (flowResult) {
-        refreshFlowDisplay();
+        refreshSchemeCheck();
       } else if (scheme.nodes.length > 0) {
         updateFlows();
       }
@@ -283,7 +286,7 @@ export function EditorPage() {
     return () => {
       cancelled = true;
     };
-  }, [pack, updateFlows, refreshFlowDisplay]);
+  }, [pack, updateFlows, refreshFlowDisplay, refreshSchemeCheck]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -654,14 +657,22 @@ export function EditorPage() {
         edges: scheme.edges,
         layoutWidthByNodeId,
       },
-      (id) => pickNodeIssueMeta(id, schemeCheckResult) ?? {},
+      (id) => pickNodeIssueMeta(id, schemeCheckResult, pack, lang, scheme.nodes, scheme.edges, t) ?? {},
     );
-  }, [scheme.nodes, scheme.edges, pack, schemeCheckResult, layoutWidthByNodeId, packDisplayEpoch]);
+  }, [scheme.nodes, scheme.edges, pack, schemeCheckResult, layoutWidthByNodeId, packDisplayEpoch, lang, t]);
 
   const rfEdges: Edge[] = useMemo(
     () =>
       scheme.edges.map((e) => {
-        const edgeIssue = pickEdgeIssueMeta(e.id, schemeCheckResult);
+        const edgeIssue = pickEdgeIssueMeta(
+          e.id,
+          schemeCheckResult,
+          pack,
+          lang,
+          scheme.nodes,
+          scheme.edges,
+          t,
+        );
         const baseData = flowEdgeData[e.id] ?? {};
         return {
           id: e.id,
@@ -678,7 +689,7 @@ export function EditorPage() {
           animated: Boolean(flowEdgeData[e.id]?.source) && !edgeIssue,
         };
       }),
-    [scheme.edges, flowEdgeData, schemeCheckResult],
+    [scheme.edges, flowEdgeData, schemeCheckResult, pack, lang, scheme.nodes, t],
   );
 
   const onPersistNodePositions = useCallback(

@@ -427,6 +427,19 @@ a {
 .editor-sidebar-section--scheme {
   flex: 0 1 auto;
   max-height: 45%;
+  overflow: hidden;
+}
+
+.editor-sidebar-section--scheme .editor-sidebar-section__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.editor-sidebar-section--scheme .editor-scheme-name {
+  flex-shrink: 0;
 }
 
 .editor-sidebar-section--element {
@@ -447,12 +460,12 @@ a {
 .editor-sidebar-section__body {
   padding: 0 1rem 1rem;
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .editor-sidebar-section--element .editor-sidebar-section__body {
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
 }
 
 .editor-toolbar {
@@ -1901,6 +1914,9 @@ a {
 }
 
 .scheme-issues {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   margin-bottom: 0;
 }
 
@@ -1908,13 +1924,74 @@ a {
   margin-bottom: 0.75rem;
 }
 
+.scheme-issues--ok .scheme-issues__title {
+  margin-bottom: 0.35rem;
+}
+
+.scheme-issues__header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.scheme-issues__header:hover {
+  background: var(--surface2);
+}
+
+.scheme-issues__header:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .scheme-issues__title {
-  margin: 0 0 0.35rem;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
   font-size: 0.85rem;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.35rem 0.5rem;
+}
+
+.scheme-issues__chevron {
+  flex-shrink: 0;
+  width: 0;
+  height: 0;
+  margin-top: 0.35rem;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--muted);
+  transition: transform 0.15s ease;
+}
+
+.scheme-issues--expanded {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scheme-issues--expanded .scheme-issues__chevron {
+  transform: rotate(180deg);
+  border-top-color: var(--accent);
+}
+
+.scheme-issues__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 0.35rem;
 }
 
 .scheme-issues__counts {

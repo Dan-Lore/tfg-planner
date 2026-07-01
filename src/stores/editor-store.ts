@@ -20,6 +20,8 @@ import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import type { FlowResult } from '@/calculator/flow-solver';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
+import { runSchemeCheck } from '@/scheme-check/run-scheme-check';
+import { sliceAsPackData } from '@/data/pack-slice';
 import { usePackStore } from './pack-store';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import {
@@ -95,6 +97,8 @@ interface EditorState {
   refreshFlowDisplay: () => void;
   /** Full scheme solve from targets; updates machine counts across the graph. */
   recalculateScheme: () => void;
+  /** Run scheme validation without recomputing flows (uses cached flowResult when present). */
+  refreshSchemeCheck: () => void;
   duplicateSelected: () => void;
   setSchemeName: (name: string) => void;
 }
@@ -158,6 +162,26 @@ function flushPendingFlowUpdate(): void {
   if (!mode) return;
   pendingFlowUpdateMode = null;
   scheduleFlowUpdate(mode);
+}
+
+async function refreshSchemeCheck(): Promise<void> {
+  const binding = flowComputeBinding;
+  if (!binding) return;
+  const pack = usePackStore.getState().activePack;
+  if (!pack) return;
+
+  const { scheme, flowResult } = binding.get();
+  const revisionAtStart = schemeFlowRevision(scheme);
+
+  try {
+    const packSlice = await pack.getSchemeSlice(scheme);
+    const packData = sliceAsPackData(packSlice);
+    const result = runSchemeCheck(scheme, packData, flowResult);
+    if (schemeFlowRevision(binding.get().scheme) !== revisionAtStart) return;
+    binding.set({ schemeCheckResult: result });
+  } catch (err) {
+    console.error('Scheme check failed:', err);
+  }
 }
 
 async function runFlowCompute(mode: FlowComputeMode): Promise<void> {
@@ -310,6 +334,8 @@ export const useEditorStore = create<EditorState>()(
         });
         if (!restoredFlows.flowResult) {
           get().updateFlows();
+        } else {
+          void refreshSchemeCheck();
         }
       },
 
@@ -330,6 +356,8 @@ export const useEditorStore = create<EditorState>()(
           schemesByPack: cacheScheme(s.schemesByPack, key, normalized),
           past: [],
           future: [],
+          flowResult: null,
+          schemeCheckResult: null,
           selectedNodeIds: [],
           selectedEdgeIds: [],
         }));
@@ -776,9 +804,14 @@ export const useEditorStore = create<EditorState>()(
         const revision = schemeFlowRevision(scheme);
         const cached = activePackKey ? flowsByPack[activePackKey] : undefined;
         if (flowResult && flowComputeState === 'idle' && cached?.revision === revision) {
+          void refreshSchemeCheck();
           return;
         }
         scheduleFlowUpdate('update');
+      },
+
+      refreshSchemeCheck: () => {
+        void refreshSchemeCheck();
       },
 
       refreshFlowDisplay: () => {
@@ -904,6 +937,11 @@ export const useEditorStore = create<EditorState>()(
         );
         state.flowResult = restored.flowResult;
         state.flowComputeState = restored.flowComputeState;
+        if (restored.flowResult) {
+          queueMicrotask(() => {
+            void refreshSchemeCheck();
+          });
+        }
       },
     },
   ),

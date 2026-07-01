@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 import {
@@ -6,6 +6,10 @@ import {
   type SchemeCheckResult,
   type SchemeIssue,
 } from '@/scheme-check/check-scheme';
+import {
+  formatSchemeIssueDetail,
+  formatSchemeIssueSummary,
+} from '@/scheme-check/format-scheme-issue';
 import { isMachineNode } from '@/lib/node-kind';
 import type { ActivePack } from '@/data/pack-runtime';
 import { getMachineName } from '@/data/pack-registry';
@@ -54,6 +58,7 @@ export function SchemeIssuesPanel({
   onFocusIssue,
 }: SchemeIssuesPanelProps) {
   const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
   const grouped = useMemo(() => {
     if (!schemeCheck) return null;
     const errors = schemeCheck.issues.filter((i) => i.severity === 'error');
@@ -82,12 +87,14 @@ export function SchemeIssuesPanel({
                 type="button"
                 className={`scheme-issues__item scheme-issues__item--${issue.severity}`}
                 onClick={() => onFocusIssue(issue)}
-                title={t('editor.schemeCheck.focusHint')}
+                title={formatSchemeIssueDetail(issue, pack, lang, nodes, edges, t)}
               >
                 <span className="scheme-issues__item-ref">
                   {issueRefLabel(issue, nodes, edges, pack, lang)}
                 </span>
-                <span className="scheme-issues__item-msg">{issue.message}</span>
+                <span className="scheme-issues__item-msg">
+                  {formatSchemeIssueSummary(issue, pack, lang, nodes, edges, t)}
+                </span>
               </button>
             </li>
           ))}
@@ -97,32 +104,50 @@ export function SchemeIssuesPanel({
   };
 
   return (
-    <section className="scheme-issues" aria-live="polite">
-      <h4 className="scheme-issues__title">
-        {t('editor.schemeCheck.title')}
-        <span className="scheme-issues__counts">
-          {schemeCheck.summary.errorCount > 0 && (
-            <span className="scheme-issues__count scheme-issues__count--error">
-              {t('editor.schemeCheck.errors', { count: schemeCheck.summary.errorCount })}
-            </span>
+    <section
+      className={`scheme-issues${expanded ? ' scheme-issues--expanded' : ' scheme-issues--collapsed'}`}
+      aria-live="polite"
+    >
+      <button
+        type="button"
+        className="scheme-issues__header"
+        onClick={() => setExpanded((open) => !open)}
+        aria-expanded={expanded}
+        aria-label={
+          expanded ? t('editor.schemeCheck.collapseList') : t('editor.schemeCheck.expandList')
+        }
+      >
+        <h4 className="scheme-issues__title">
+          {t('editor.schemeCheck.title')}
+          <span className="scheme-issues__counts">
+            {schemeCheck.summary.errorCount > 0 && (
+              <span className="scheme-issues__count scheme-issues__count--error">
+                {t('editor.schemeCheck.errors', { count: schemeCheck.summary.errorCount })}
+              </span>
+            )}
+            {schemeCheck.summary.warningCount > 0 && (
+              <span className="scheme-issues__count scheme-issues__count--warning">
+                {t('editor.schemeCheck.warnings', { count: schemeCheck.summary.warningCount })}
+              </span>
+            )}
+          </span>
+        </h4>
+        <span className="scheme-issues__chevron" aria-hidden />
+      </button>
+      {expanded && (
+        <div className="scheme-issues__body">
+          <p className="scheme-issues__hint">{t('editor.schemeCheck.hint')}</p>
+          {renderGroup(
+            t('editor.schemeCheck.errorGroup'),
+            grouped!.errors,
+            'error',
           )}
-          {schemeCheck.summary.warningCount > 0 && (
-            <span className="scheme-issues__count scheme-issues__count--warning">
-              {t('editor.schemeCheck.warnings', { count: schemeCheck.summary.warningCount })}
-            </span>
+          {renderGroup(
+            t('editor.schemeCheck.warningGroup'),
+            grouped!.warnings,
+            'warning',
           )}
-        </span>
-      </h4>
-      <p className="scheme-issues__hint">{t('editor.schemeCheck.hint')}</p>
-      {renderGroup(
-        t('editor.schemeCheck.errorGroup'),
-        grouped!.errors,
-        'error',
-      )}
-      {renderGroup(
-        t('editor.schemeCheck.warningGroup'),
-        grouped!.warnings,
-        'warning',
+        </div>
       )}
     </section>
   );
@@ -131,6 +156,11 @@ export function SchemeIssuesPanel({
 export function pickNodeIssueMeta(
   nodeId: string,
   schemeCheck: SchemeCheckResult | null,
+  pack: ActivePack | null,
+  lang: 'ru' | 'en',
+  nodes: TfgpNode[],
+  edges: TfgpEdge[],
+  t: (key: string, opts?: Record<string, string>) => string,
 ): { severity: 'error' | 'warning'; title: string } | undefined {
   if (!schemeCheck) return undefined;
   const index = indexSchemeIssues(schemeCheck);
@@ -138,12 +168,22 @@ export function pickNodeIssueMeta(
   if (!severity || severity === 'info') return undefined;
   const issues = index.byNodeId.get(nodeId) ?? [];
   const first = issues.find((i) => i.severity === severity);
-  return first ? { severity, title: first.message } : undefined;
+  return first
+    ? {
+        severity,
+        title: formatSchemeIssueSummary(first, pack, lang, nodes, edges, t),
+      }
+    : undefined;
 }
 
 export function pickEdgeIssueMeta(
   edgeId: string,
   schemeCheck: SchemeCheckResult | null,
+  pack: ActivePack | null,
+  lang: 'ru' | 'en',
+  nodes: TfgpNode[],
+  edges: TfgpEdge[],
+  t: (key: string, opts?: Record<string, string>) => string,
 ): { severity: 'error' | 'warning'; title: string } | undefined {
   if (!schemeCheck) return undefined;
   const index = indexSchemeIssues(schemeCheck);
@@ -151,5 +191,10 @@ export function pickEdgeIssueMeta(
   if (!severity || severity === 'info') return undefined;
   const issues = index.byEdgeId.get(edgeId) ?? [];
   const first = issues.find((i) => i.severity === severity);
-  return first ? { severity, title: first.message } : undefined;
+  return first
+    ? {
+        severity,
+        title: formatSchemeIssueSummary(first, pack, lang, nodes, edges, t),
+      }
+    : undefined;
 }
