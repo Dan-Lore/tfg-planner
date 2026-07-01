@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   applyFlowEdgeSelection,
   applyFlowNodeSelection,
+  mergeFlowEdges,
   mergeFlowNodes,
 } from '@/lib/merge-flow-nodes';
 
@@ -233,5 +234,30 @@ describe('applyFlowEdgeSelection', () => {
     const result = applyFlowEdgeSelection(edges, ['e2']);
     expect(result[0]?.selected).toBe(false);
     expect(result[1]?.selected).toBe(true);
+  });
+});
+
+describe('mergeFlowEdges', () => {
+  it('preserves selected when edge data refreshes', () => {
+    const prev = [
+      { id: 'e1', source: 'a', target: 'b', selected: true, data: { source: '1/s' } },
+    ];
+    const next = [
+      { id: 'e1', source: 'a', target: 'b', data: { source: '2/s' } },
+    ];
+
+    const merged = mergeFlowEdges(prev, next);
+    expect(merged[0]?.selected).toBe(true);
+    expect(merged[0]?.data).toEqual({ source: '2/s' });
+  });
+
+  it('reapplies store selection after edge data refresh', () => {
+    const prev = [
+      { id: 'e1', source: 'a', target: 'b', selected: true, data: {} },
+    ];
+    const next = [{ id: 'e1', source: 'a', target: 'b', data: { source: '3/s' } }];
+
+    const merged = applyFlowEdgeSelection(mergeFlowEdges(prev, next), ['e1']);
+    expect(merged[0]?.selected).toBe(true);
   });
 });

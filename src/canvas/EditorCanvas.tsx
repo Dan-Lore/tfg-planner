@@ -5,10 +5,12 @@ import {
   Controls,
   MiniMap,
   applyNodeChanges,
+  applyEdgeChanges,
   ConnectionMode,
   useNodesInitialized,
   type Connection,
   type Edge,
+  type EdgeChange,
   type EdgeTypes,
   type Node,
   type NodeChange,
@@ -17,7 +19,7 @@ import {
   type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
-import { mergeFlowNodes, applyFlowNodeSelection, applyFlowEdgeSelection } from '@/lib/merge-flow-nodes';
+import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection } from '@/lib/merge-flow-nodes';
 import {
   NodeInternalsGateProvider,
   useInternalsHold,
@@ -103,6 +105,7 @@ type EditorCanvasBodyProps = {
   edgeTypes: EdgeTypes;
   colorTheme: 'light' | 'dark' | 'system';
   onNodesChange: (changes: NodeChange[]) => void;
+  onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (conn: Connection) => void;
   isValidConnection: (conn: Connection | Edge) => boolean;
   onSelectionChange: (params: OnSelectionChangeParams) => void;
@@ -127,6 +130,7 @@ function EditorCanvasBody({
   edgeTypes,
   colorTheme,
   onNodesChange,
+  onEdgesChange,
   onConnect,
   isValidConnection,
   onSelectionChange,
@@ -157,6 +161,7 @@ function EditorCanvasBody({
         edgeTypes={edgeTypes}
         colorMode={colorTheme}
         onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         isValidConnection={isValidConnection}
         onSelectionChange={onSelectionChange}
@@ -217,8 +222,12 @@ function EditorCanvasComponent({
   onNodeClick,
   onMoveEnd,
 }: EditorCanvasProps) {
-  const [flowNodes, setFlowNodes] = useState<Node[]>(() => rfNodes);
-  const [flowEdges, setFlowEdges] = useState<Edge[]>(() => rfEdges);
+  const [flowNodes, setFlowNodes] = useState<Node[]>(() =>
+    applyFlowNodeSelection(rfNodes, selectedNodeIds),
+  );
+  const [flowEdges, setFlowEdges] = useState<Edge[]>(() =>
+    applyFlowEdgeSelection(rfEdges, selectedEdgeIds),
+  );
   const draggingNodeIdsRef = useRef(new Set<string>());
   const [isDragging, setIsDragging] = useState(false);
   const [flowViewport, setFlowViewport] = useState(viewport);
@@ -239,8 +248,15 @@ function EditorCanvasComponent({
       const merged = mergeFlowNodes(prev, rfNodes, draggingNodeIdsRef.current);
       return applyFlowNodeSelection(merged, selectedNodeIds);
     });
-    setFlowEdges(applyFlowEdgeSelection(rfEdges, selectedEdgeIds));
+    setFlowEdges((prev) => {
+      const merged = mergeFlowEdges(prev, rfEdges);
+      return applyFlowEdgeSelection(merged, selectedEdgeIds);
+    });
   }, [rfNodes, rfEdges, selectedNodeIds, selectedEdgeIds]);
+
+  const onEdgesChange = useCallback((changes: EdgeChange[]) => {
+    setFlowEdges((current) => applyEdgeChanges(changes, current));
+  }, []);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => {
@@ -298,6 +314,7 @@ function EditorCanvasComponent({
         onNodeClick={onNodeClick}
         onMoveEnd={onMoveEnd}
         onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         isDragging={isDragging}
         flowViewport={flowViewport}
         setFlowViewport={setFlowViewport}
