@@ -89,7 +89,7 @@ export function buildMachinePortDisplaysForNode(
     const outputRates = rateMapToStrings(flowResult.nodeOutputRates[node.id]);
     const outputPortRateRationals = flowResult.nodePortOutputRates[node.id];
     const inputPortLoadMeta = buildInputPortLoadMeta(
-      node.id,
+      node,
       recipe,
       connectedIn,
       flowResult,

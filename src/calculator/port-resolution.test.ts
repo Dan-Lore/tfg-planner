@@ -27,8 +27,23 @@ describe('port-resolution', () => {
     expect(resolveSourceOutputPort(edge, recipe)).toBe('out_0');
   });
 
-  it('computes port input demand from primary output rate', () => {
-    const demand = portInputDemandRate(recipe, 0, R.from(2));
-    expect(demand.toNumber()).toBeGreaterThan(0);
+  it('uses non-zero primary output index for demand denominator', () => {
+    const multiOutRecipe = {
+      id: 'multi',
+      machineId: 'm',
+      durationTicks: 100,
+      inputs: [{ itemId: 'a', amount: 2 }],
+      outputs: [
+        { itemId: 'b', amount: 10 },
+        { itemId: 'c', amount: 5 },
+      ],
+    } as typeof recipe;
+    const rateAtPrimary = R.from(4);
+    expect(portInputDemandRate(multiOutRecipe, 0, rateAtPrimary, 0).toNumber()).toBeCloseTo(
+      0.8,
+    );
+    expect(portInputDemandRate(multiOutRecipe, 0, rateAtPrimary, 1).toNumber()).toBeCloseTo(
+      1.6,
+    );
   });
 });

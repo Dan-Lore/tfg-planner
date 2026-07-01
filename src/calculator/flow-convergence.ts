@@ -6,6 +6,7 @@ import {
   type SchemeEdge,
   type SchemeNode,
 } from '@/calculator/flow-solver-types';
+import { primaryOutputIndex as resolvePrimaryOutputIndex } from '@/lib/primary-output';
 import {
   portInputDemandRate,
   resolveSourceOutputPort,
@@ -47,6 +48,7 @@ export function remainingTargetPortDemand(
   targetPort: string,
   targetRecipe: Recipe,
   targetTheoreticalPrimary: Rational,
+  targetPrimaryOutputIndex: number,
   allEdges: SchemeEdge[],
   edgeFlows: Record<string, Rational>,
   tags: TagIndex,
@@ -57,6 +59,7 @@ export function remainingTargetPortDemand(
     targetRecipe,
     portIndex,
     targetTheoreticalPrimary,
+    targetPrimaryOutputIndex,
   );
 
   let otherFlow = R.zero;
@@ -126,12 +129,15 @@ export function computeOutputLimitedScale(
       const targetRecipe = targetNode ? recipes.get(targetNode.recipeId) : undefined;
       if (!targetNode || !targetRecipe) continue;
 
-      const targetTheoretical = nodePortOutputRates[targetId]?.['out_0'] ?? R.zero;
+      const targetPrimaryIdx = resolvePrimaryOutputIndex(targetNode, targetRecipe);
+      const targetTheoretical =
+        nodePortOutputRates[targetId]?.[`out_${targetPrimaryIdx}`] ?? R.zero;
       const remainingDemand = remainingTargetPortDemand(
         targetId,
         targetPort,
         targetRecipe,
         targetTheoretical,
+        targetPrimaryIdx,
         allEdges,
         edgeFlows,
         tags,
@@ -191,9 +197,16 @@ export function computePortDownstreamDemandByOutputPort(
       seenTargets.add(key);
 
       const portIndex = Number.parseInt(targetPort.slice(3), 10);
-      const targetTheoretical = nodePortOutputRates[targetNode.id]?.['out_0'] ?? R.zero;
+      const targetPrimaryIdx = resolvePrimaryOutputIndex(targetNode, targetRecipe);
+      const targetTheoretical =
+        nodePortOutputRates[targetNode.id]?.[`out_${targetPrimaryIdx}`] ?? R.zero;
       totalDemand = totalDemand.add(
-        portInputDemandRate(targetRecipe, portIndex, targetTheoretical),
+        portInputDemandRate(
+          targetRecipe,
+          portIndex,
+          targetTheoretical,
+          targetPrimaryIdx,
+        ),
       );
     }
 
@@ -235,9 +248,11 @@ export function computeEffectivePortRates(
   inflowsByPort: Record<string, Rational>,
   connectedInPorts: Set<string>,
   outputScaleParams?: OutputScaleParams,
+  primaryOutIdx = 0,
 ): Record<string, Rational> {
   const effective: Record<string, Rational> = {};
-  const theoreticalPrimary = theoreticalPortRates['out_0'] ?? R.zero;
+  const primaryPortId = `out_${primaryOutIdx}`;
+  const theoreticalPrimary = theoreticalPortRates[primaryPortId] ?? R.zero;
 
   if (recipe.inputs.length === 0) {
     for (const [portId, rate] of Object.entries(theoreticalPortRates)) {
@@ -253,13 +268,24 @@ export function computeEffectivePortRates(
     return effective;
   }
 
-  const primaryOut = recipe.outputs[0]!;
+  const primaryOut = recipe.outputs[primaryOutIdx];
+  if (!primaryOut) {
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      effective[`out_${i}`] = R.zero;
+    }
+    return effective;
+  }
   let effectivePrimary = theoreticalPrimary;
 
   for (let i = 0; i < recipe.inputs.length; i++) {
     const portId = `in_${i}`;
     const inp = recipe.inputs[i]!;
-    const demandAtTheoretical = portInputDemandRate(recipe, i, theoreticalPrimary);
+    const demandAtTheoretical = portInputDemandRate(
+      recipe,
+      i,
+      theoreticalPrimary,
+      primaryOutIdx,
+    );
     const connected = connectedInPorts.has(portId);
     const inflow = connected
       ? (inflowsByPort[portId] ?? R.zero)
@@ -359,12 +385,15 @@ export function assignOutgoingFromEffectiveRates(
       totalShare = totalShare.add(edgeShares.get(edge.id) ?? R.zero);
     }
 
-    const targetTheoretical = nodePortOutputRates[targetId]?.['out_0'] ?? R.zero;
+    const targetPrimaryIdx = resolvePrimaryOutputIndex(targetNode, targetRecipe);
+    const targetTheoretical =
+      nodePortOutputRates[targetId]?.[`out_${targetPrimaryIdx}`] ?? R.zero;
     const remainingDemand = remainingTargetPortDemand(
       targetId,
       targetPort,
       targetRecipe,
       targetTheoretical,
+      targetPrimaryIdx,
       allEdges,
       edgeFlows,
       tags,
@@ -426,6 +455,7 @@ export function computeConvergedFlows(
 
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
+    const primaryOutIdx = resolvePrimaryOutputIndex(node, recipe);
     const theoretical = nodePortOutputRates[nodeId] ?? {};
     const inflows = collectInflowsByPort(
       recipe,
@@ -449,6 +479,7 @@ export function computeConvergedFlows(
         tags,
         connectedOutPortsByNode,
       ),
+      primaryOutIdx,
     );
     assignOutgoingFromEffectiveRates(
       nodeId,
@@ -510,6 +541,7 @@ export function computeConvergedFlows(
       const recipe = recipes.get(node.recipeId);
       if (!recipe) continue;
 
+      const primaryOutIdx = resolvePrimaryOutputIndex(node, recipe);
       const theoretical = nodePortOutputRates[nodeId] ?? {};
       const inflows = collectInflowsByPort(
         recipe,
@@ -533,6 +565,7 @@ export function computeConvergedFlows(
           tags,
           connectedOutPortsByNode,
         ),
+        primaryOutIdx,
       );
       const delta = assignOutgoingFromEffectiveRates(
         nodeId,
@@ -562,12 +595,15 @@ export function computeEffectivePortRatesBoth(
   inflowsByPort: Record<string, Rational>,
   connectedInPorts: Set<string>,
   outputScaleParams: OutputScaleParams,
+  primaryOutIdx = 0,
 ): { inputLimited: Record<string, Rational>; effective: Record<string, Rational> } {
   const inputLimited = computeEffectivePortRates(
     recipe,
     theoreticalPortRates,
     inflowsByPort,
     connectedInPorts,
+    undefined,
+    primaryOutIdx,
   );
   const effective = computeEffectivePortRates(
     recipe,
@@ -575,6 +611,7 @@ export function computeEffectivePortRatesBoth(
     inflowsByPort,
     connectedInPorts,
     outputScaleParams,
+    primaryOutIdx,
   );
   return { inputLimited, effective };
 }

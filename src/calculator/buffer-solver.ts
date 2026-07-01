@@ -3,6 +3,7 @@ import type { SchemeEdge, SchemeNode } from '@/calculator/flow-solver-types';
 import { R, type Rational } from '@/calculator/rational';
 import type { TagIndex } from '@/lib/tag-index';
 import { normalizePortId, parsePortId } from '@/lib/ports';
+import { primaryOutputIndex } from '@/lib/primary-output';
 import {
   portInputDemandRate,
   resolveSourceOutputPort,
@@ -154,8 +155,15 @@ function computeRemainingTargetPortDemand(
     const targetRecipe = recipes.get(targetNode.recipeId);
     if (!targetRecipe) return R.zero;
     const portIndex = Number.parseInt(targetPort.slice(3), 10);
-    const targetTheoretical = nodePortOutputRates[targetId]?.['out_0'] ?? R.zero;
-    targetDemand = portInputDemandRate(targetRecipe, portIndex, targetTheoretical);
+    const targetPrimaryIdx = primaryOutputIndex(targetNode, targetRecipe);
+    const targetTheoretical =
+      nodePortOutputRates[targetId]?.[`out_${targetPrimaryIdx}`] ?? R.zero;
+    targetDemand = portInputDemandRate(
+      targetRecipe,
+      portIndex,
+      targetTheoretical,
+      targetPrimaryIdx,
+    );
   }
 
   let otherFlow = R.zero;

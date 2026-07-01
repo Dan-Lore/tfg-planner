@@ -1,5 +1,6 @@
 import type { Recipe } from '@/data/types';
 import type { SchemeNode } from '@/calculator/flow-solver-types';
+import { R, type Rational } from '@/calculator/rational';
 import { productKey } from '@/lib/ports';
 
 export function primaryOutputIndex(node: SchemeNode, recipe: Recipe): number {
@@ -17,4 +18,13 @@ export function primaryOutputProductKey(node: SchemeNode, recipe: Recipe): strin
 
 export function primaryOutputPortId(node: SchemeNode, recipe: Recipe): string {
   return `out_${primaryOutputIndex(node, recipe)}`;
+}
+
+export function primaryTheoreticalPortRate(
+  node: SchemeNode,
+  recipe: Recipe,
+  portRates: Record<string, Rational> | undefined,
+): Rational {
+  if (!portRates) return R.zero;
+  return portRates[primaryOutputPortId(node, recipe)] ?? R.zero;
 }

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { primaryOutputIndex, primaryOutputProductKey } from '@/lib/primary-output';
+import { primaryOutputIndex, primaryOutputProductKey, primaryTheoreticalPortRate } from '@/lib/primary-output';
 import type { Recipe } from '@/data/types';
 import type { SchemeNode } from '@/calculator/flow-solver-types';
+import { R } from '@/calculator/rational';
 
 const recipe = {
   id: 'r1',
@@ -33,5 +34,10 @@ describe('primaryOutputIndex', () => {
 
   it('falls back to 0 when index out of range', () => {
     expect(primaryOutputIndex({ ...node, primaryOutputIndex: 9 }, recipe)).toBe(0);
+  });
+
+  it('reads theoretical rate from primary output port', () => {
+    const rates = { out_0: R.from(2), out_1: R.from(7) };
+    expect(primaryTheoreticalPortRate(node, recipe, rates).toNumber()).toBe(7);
   });
 });

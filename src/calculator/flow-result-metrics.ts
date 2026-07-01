@@ -2,6 +2,7 @@ import type { Recipe } from '@/data/types';
 import type { TagIndex } from '@/lib/tag-index';
 import { Rational, R } from '@/calculator/rational';
 import { productKey } from '@/lib/ports';
+import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
 import {
   type SchemeEdge,
   type SchemeNode,
@@ -28,20 +29,30 @@ export function computeNodePortDeficit(
     if (!recipe) continue;
     nodePortDeficit[node.id] = {};
 
-    const theoreticalPrimary = nodePortOutputRates[node.id]?.['out_0'] ?? R.zero;
-    const effectivePrimary = effectivePortRatesByNode[node.id]?.['out_0'] ?? R.zero;
+    const theoreticalPrimary = primaryTheoreticalPortRate(
+      node,
+      recipe,
+      nodePortOutputRates[node.id],
+    );
+    const effectivePrimary = primaryTheoreticalPortRate(
+      node,
+      recipe,
+      effectivePortRatesByNode[node.id],
+    );
 
     for (let i = 0; i < recipe.inputs.length; i++) {
       const portId = `in_${i}`;
       const connected = connectedInPortsByNode[node.id]?.has(portId) ?? false;
+      const primaryOutIdx = primaryOutputIndex(node, recipe);
       const demand = connected
-        ? portInputDemandRate(recipe, i, theoreticalPrimary)
+        ? portInputDemandRate(recipe, i, theoreticalPrimary, primaryOutIdx)
         : portInputDemandRate(
             recipe,
             i,
             effectivePrimary.compare(R.zero) > 0
               ? effectivePrimary
               : theoreticalPrimary,
+            primaryOutIdx,
           );
       if (demand.compare(R.zero) <= 0) continue;
 
@@ -79,11 +90,16 @@ export function computeNodePortInLoad(
     if (!recipe || recipe.inputs.length === 0) continue;
     nodePortInLoad[node.id] = {};
 
-    const theoreticalPrimary = nodePortOutputRates[node.id]?.['out_0'] ?? R.zero;
+    const theoreticalPrimary = primaryTheoreticalPortRate(
+      node,
+      recipe,
+      nodePortOutputRates[node.id],
+    );
+    const primaryOutIdx = primaryOutputIndex(node, recipe);
 
     for (let i = 0; i < recipe.inputs.length; i++) {
       const portId = `in_${i}`;
-      const demand = portInputDemandRate(recipe, i, theoreticalPrimary);
+      const demand = portInputDemandRate(recipe, i, theoreticalPrimary, primaryOutIdx);
       if (demand.compare(R.zero) <= 0) continue;
 
       const connected = connectedInPortsByNode[node.id]?.has(portId) ?? false;
@@ -188,8 +204,17 @@ export function computeNodeMaxLoad(
       continue;
     }
 
-    const theoreticalPrimary = nodePortOutputRates[node.id]?.['out_0'] ?? R.zero;
-    const effectivePrimary = effectivePortRatesByNode[node.id]?.['out_0'] ?? R.zero;
+    const theoreticalPrimary = primaryTheoreticalPortRate(
+      node,
+      recipe,
+      nodePortOutputRates[node.id],
+    );
+    const effectivePrimary = primaryTheoreticalPortRate(
+      node,
+      recipe,
+      effectivePortRatesByNode[node.id],
+    );
+    const primaryOutIdx = primaryOutputIndex(node, recipe);
 
     let minConnectedInLoad = R.from(1);
     let hasConnectedInput = false;
@@ -198,7 +223,7 @@ export function computeNodeMaxLoad(
       const connected = connectedInPortsByNode[node.id]?.has(portId) ?? false;
       if (!connected) continue;
       hasConnectedInput = true;
-      const demand = portInputDemandRate(recipe, i, theoreticalPrimary);
+      const demand = portInputDemandRate(recipe, i, theoreticalPrimary, primaryOutIdx);
       if (demand.compare(R.zero) <= 0) continue;
       const inflow = inflowsByNode[node.id]?.[portId] ?? R.zero;
       const portLoad = capLoadFraction(inflow, demand);

@@ -52,9 +52,10 @@ export function portInputDemandRate(
   recipe: Recipe,
   inputIndex: number,
   primaryOutputRate: Rational,
+  primaryOutputIndex = 0,
 ): Rational {
   const inp = recipe.inputs[inputIndex];
-  const primaryOut = recipe.outputs[0];
+  const primaryOut = recipe.outputs[primaryOutputIndex];
   if (!inp || !primaryOut) return R.zero;
   return primaryOutputRate.mul(R.from(inp.amount)).div(R.from(primaryOut.amount));
 }

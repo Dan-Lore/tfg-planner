@@ -1,13 +1,14 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { formatLoadPercent, formatRate, portInputDemandRate } from '@/calculator/flow-solver';
-import { R } from '@/calculator/rational';
+import { R, type Rational } from '@/calculator/rational';
 import type { FlowEdgeData } from '@/lib/flow-edge-types';
 import type { PackLike } from '@/data/pack-registry';
 import { getRecipe } from '@/data/pack-registry';
 import type { Recipe } from '@/data/types';
 import { getItemName } from '@/data/pack-registry';
 import { normalizePortId, parsePortId, productKey, inputPortId, nodePortFlow } from '@/canvas/ports';
-import type { Rational } from '@/calculator/rational';
+import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
+import type { SchemeNode } from '@/calculator/flow-solver-types';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import {
   formatFlowRateLabel,
@@ -395,7 +396,7 @@ function computeNodeRecipeThroughput(
 }
 
 export function buildInputPortLoadMeta(
-  nodeId: string,
+  node: SchemeNode,
   recipe: Recipe | undefined,
   connectedIn: Set<string>,
   result: FlowResult,
@@ -404,13 +405,17 @@ export function buildInputPortLoadMeta(
   const meta: Record<string, PortLoadMeta> = {};
   if (!recipe || recipe.inputs.length === 0) return meta;
 
-  const theoreticalPrimary =
-    result.nodePortOutputRates[nodeId]?.['out_0'] ?? R.zero;
-  const portLoads = result.nodePortInLoad[nodeId] ?? {};
+  const theoreticalPrimary = primaryTheoreticalPortRate(
+    node,
+    recipe,
+    result.nodePortOutputRates[node.id],
+  );
+  const primaryOutIdx = primaryOutputIndex(node, recipe);
+  const portLoads = result.nodePortInLoad[node.id] ?? {};
 
   for (let i = 0; i < recipe.inputs.length; i++) {
     const portId = inputPortId(i);
-    const demand = portInputDemandRate(recipe, i, theoreticalPrimary);
+    const demand = portInputDemandRate(recipe, i, theoreticalPrimary, primaryOutIdx);
     if (demand.compare(R.zero) <= 0) continue;
 
     const connected = connectedIn.has(portId);

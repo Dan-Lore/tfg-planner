@@ -151,7 +151,7 @@ function MachineInspector({
   const outputRates = rateMapToStrings(flowResult?.nodeOutputRates[node.id]);
   const outputPortRateRationals = flowResult?.nodePortOutputRates[node.id];
   const inputPortLoadMeta = flowResult
-    ? buildInputPortLoadMeta(node.id, recipe, connectedIn, flowResult, t)
+    ? buildInputPortLoadMeta(node, recipe, connectedIn, flowResult, t)
     : undefined;
   const outputPortLoadMeta = flowResult
     ? buildOutputPortLoadMeta(node.id, recipe, connectedOut, flowResult, t)

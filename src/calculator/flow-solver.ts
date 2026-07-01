@@ -183,6 +183,7 @@ export function solveFlows(input: SolverInput): FlowResult {
       tags,
     );
     inflowsByNode[node.id] = inflows;
+    const primaryOutIdx = primaryOutputIndex(node, recipe);
     const { inputLimited, effective } = computeEffectivePortRatesBoth(
       recipe,
       theoretical,
@@ -199,6 +200,7 @@ export function solveFlows(input: SolverInput): FlowResult {
         tags,
         connectedOutPortsByNode,
       ),
+      primaryOutIdx,
     );
     inputLimitedPortRatesByNode[node.id] = inputLimited;
     effectivePortRatesByNode[node.id] = effective;
