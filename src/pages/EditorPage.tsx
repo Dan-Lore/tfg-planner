@@ -1064,6 +1064,8 @@ export function EditorPage() {
               <EditorCanvas
                 rfNodes={rfNodes}
                 rfEdges={rfEdges}
+                selectedNodeIds={selectedNodeIds}
+                selectedEdgeIds={selectedEdgeIds}
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 colorTheme={colorTheme}

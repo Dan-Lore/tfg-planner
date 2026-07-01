@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { mergeFlowNodes } from '@/lib/merge-flow-nodes';
+import {
+  applyFlowEdgeSelection,
+  applyFlowNodeSelection,
+  mergeFlowNodes,
+} from '@/lib/merge-flow-nodes';
 
 describe('mergeFlowNodes', () => {
   it('preserves measured dimensions when store nodes refresh', () => {
@@ -143,5 +147,91 @@ describe('mergeFlowNodes', () => {
 
     const merged = mergeFlowNodes(prev, next);
     expect(merged[0]?.measured).toEqual({ width: 220, height: 120 });
+  });
+
+  it('preserves selected when store node data refreshes', () => {
+    const prev = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        selected: true,
+        data: { machineCount: 1 },
+      },
+    ];
+    const next = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: { machineCount: 2 },
+      },
+    ];
+
+    const merged = mergeFlowNodes(prev, next);
+    expect(merged[0]?.selected).toBe(true);
+    expect(merged[0]?.data).toEqual({ machineCount: 2 });
+  });
+
+  it('reapplies store selection after inspector-like node refresh', () => {
+    const prev = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        selected: true,
+        data: { machineCount: 1, overclock: 1 },
+      },
+    ];
+    const next = [
+      {
+        id: 'node_1',
+        type: 'machine',
+        position: { x: 10, y: 20 },
+        data: { machineCount: 1, overclock: 2 },
+      },
+    ];
+
+    const merged = applyFlowNodeSelection(mergeFlowNodes(prev, next), ['node_1']);
+    expect(merged[0]?.selected).toBe(true);
+    expect(merged[0]?.data).toEqual({ machineCount: 1, overclock: 2 });
+  });
+});
+
+describe('applyFlowNodeSelection', () => {
+  it('sets selected from store ids', () => {
+    const nodes = [
+      { id: 'a', type: 'machine', position: { x: 0, y: 0 }, data: {} },
+      { id: 'b', type: 'machine', position: { x: 0, y: 0 }, data: {} },
+    ];
+    const result = applyFlowNodeSelection(nodes, ['b']);
+    expect(result[0]?.selected).toBe(false);
+    expect(result[1]?.selected).toBe(true);
+  });
+
+  it('clears selection when store ids are empty', () => {
+    const nodes = [
+      {
+        id: 'a',
+        type: 'machine',
+        position: { x: 0, y: 0 },
+        selected: true,
+        data: {},
+      },
+    ];
+    const result = applyFlowNodeSelection(nodes, []);
+    expect(result[0]?.selected).toBe(false);
+  });
+});
+
+describe('applyFlowEdgeSelection', () => {
+  it('sets selected from store ids', () => {
+    const edges = [
+      { id: 'e1', source: 'a', target: 'b' },
+      { id: 'e2', source: 'b', target: 'c' },
+    ];
+    const result = applyFlowEdgeSelection(edges, ['e2']);
+    expect(result[0]?.selected).toBe(false);
+    expect(result[1]?.selected).toBe(true);
   });
 });

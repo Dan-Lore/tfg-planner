@@ -1,4 +1,4 @@
-import type { Node } from '@xyflow/react';
+import type { Edge, Node } from '@xyflow/react';
 import { machineNodeRfStyle } from '@/canvas/node-bounds';
 
 const LAYOUT_WIDTH_EPS = 0.5;
@@ -69,8 +69,33 @@ export function mergeFlowNodes(
     return {
       ...rf,
       position,
+      selected: existing.selected,
       ...(rfStyle ? { style: rfStyle } : {}),
       measured: widthChanged ? undefined : (existing.measured ?? rf.measured),
     };
+  });
+}
+
+/** Apply store selection to React Flow nodes (store is source of truth). */
+export function applyFlowNodeSelection(
+  nodes: Node[],
+  selectedNodeIds: readonly string[],
+): Node[] {
+  const selected = new Set(selectedNodeIds);
+  return nodes.map((node) => {
+    const nextSelected = selected.has(node.id);
+    return node.selected === nextSelected ? node : { ...node, selected: nextSelected };
+  });
+}
+
+/** Apply store selection to React Flow edges (store is source of truth). */
+export function applyFlowEdgeSelection(
+  edges: Edge[],
+  selectedEdgeIds: readonly string[],
+): Edge[] {
+  const selected = new Set(selectedEdgeIds);
+  return edges.map((edge) => {
+    const nextSelected = selected.has(edge.id);
+    return edge.selected === nextSelected ? edge : { ...edge, selected: nextSelected };
   });
 }

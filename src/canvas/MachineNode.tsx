@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState, type MouseEvent as ReactMouseEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { memo, useEffect, useMemo, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import type { PackLike } from '@/data/pack-registry';
@@ -18,6 +18,7 @@ import {
 import { RecipePicker } from './RecipePicker';
 import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
+import { useNonPassiveWheel } from '@/hooks/use-non-passive-wheel';
 import type { Rational } from '@/calculator/rational';
 import { R } from '@/calculator/rational';
 import { formatFlowRateLabel, isChancedFlow } from '@/lib/flow-chance';
@@ -91,12 +92,13 @@ function MetaWheelChip({
   onWheel,
 }: {
   label: string;
-  onWheel: (e: ReactWheelEvent) => void;
+  onWheel: (e: WheelEvent) => void;
 }) {
+  const ref = useNonPassiveWheel<HTMLSpanElement>(onWheel);
   return (
     <span
+      ref={ref}
       className="machine-node__meta-chip nodrag nowheel"
-      onWheel={onWheel}
       onMouseDown={(e) => e.stopPropagation()}
     >
       {label}
@@ -274,10 +276,7 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
             </div>
           </div>
         )}
-        <div
-          className="meta machine-node__meta-row nodrag nowheel"
-          onWheel={(e) => e.stopPropagation()}
-        >
+        <div className="meta machine-node__meta-row nodrag nowheel">
           <MetaWheelChip
             label={t('editor.machinesMeta', { count: d.machineCount })}
             onWheel={(e) => {

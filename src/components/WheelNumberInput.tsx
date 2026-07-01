@@ -1,5 +1,6 @@
-import { useId, type WheelEvent } from 'react';
+import { useCallback, useId } from 'react';
 import { adjustByWheel } from '@/lib/wheel-adjust';
+import { useNonPassiveWheel } from '@/hooks/use-non-passive-wheel';
 
 interface WheelNumberInputProps {
   value: number;
@@ -9,7 +10,7 @@ interface WheelNumberInputProps {
   className?: string;
   inputProps?: Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'onChange' | 'type' | 'onWheel'
+    'value' | 'onChange' | 'type' | 'onWheel' | 'ref'
   >;
 }
 
@@ -22,14 +23,19 @@ export function WheelNumberInput({
   inputProps,
 }: WheelNumberInputProps) {
   const defaultInputId = useId();
-  const handleWheel = (e: WheelEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onChange(adjustByWheel(value, e.deltaY, step, min));
-  };
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onChange(adjustByWheel(value, e.deltaY, step, min));
+    },
+    [value, onChange, step, min],
+  );
+  const wheelRef = useNonPassiveWheel<HTMLInputElement>(handleWheel);
 
   return (
     <input
+      ref={wheelRef}
       type="number"
       id={inputProps?.id ?? defaultInputId}
       name={inputProps?.name ?? defaultInputId}
@@ -37,7 +43,6 @@ export function WheelNumberInput({
       value={value}
       min={min}
       step={step}
-      onWheel={handleWheel}
       onChange={(e) => onChange(Number(e.target.value))}
       {...inputProps}
     />

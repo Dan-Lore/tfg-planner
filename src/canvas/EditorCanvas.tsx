@@ -17,7 +17,7 @@ import {
   type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
-import { mergeFlowNodes } from '@/lib/merge-flow-nodes';
+import { mergeFlowNodes, applyFlowNodeSelection, applyFlowEdgeSelection } from '@/lib/merge-flow-nodes';
 import {
   NodeInternalsGateProvider,
   useInternalsHold,
@@ -42,6 +42,8 @@ function portTopologyKey(nodes: Node[]): string {
 export type EditorCanvasProps = {
   rfNodes: Node[];
   rfEdges: Edge[];
+  selectedNodeIds: string[];
+  selectedEdgeIds: string[];
   nodeTypes: NodeTypes;
   edgeTypes: EdgeTypes;
   colorTheme: 'light' | 'dark' | 'system';
@@ -198,6 +200,8 @@ function EditorCanvasBody({
 function EditorCanvasComponent({
   rfNodes,
   rfEdges,
+  selectedNodeIds,
+  selectedEdgeIds,
   nodeTypes,
   edgeTypes,
   colorTheme,
@@ -231,11 +235,12 @@ function EditorCanvasComponent({
   }, [viewport.x, viewport.y, viewport.zoom]);
 
   useLayoutEffect(() => {
-    setFlowNodes((prev) =>
-      mergeFlowNodes(prev, rfNodes, draggingNodeIdsRef.current),
-    );
-    setFlowEdges(rfEdges);
-  }, [rfNodes, rfEdges]);
+    setFlowNodes((prev) => {
+      const merged = mergeFlowNodes(prev, rfNodes, draggingNodeIdsRef.current);
+      return applyFlowNodeSelection(merged, selectedNodeIds);
+    });
+    setFlowEdges(applyFlowEdgeSelection(rfEdges, selectedEdgeIds));
+  }, [rfNodes, rfEdges, selectedNodeIds, selectedEdgeIds]);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => {
