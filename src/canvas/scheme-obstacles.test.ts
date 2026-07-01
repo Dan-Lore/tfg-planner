@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildSchemeObstacleRects } from '@/canvas/scheme-obstacles';
+import { buildSchemeObstacleRects, shiftObstaclesForDragging } from '@/canvas/scheme-obstacles';
 import type { PackLike } from '@/data/pack-registry';
 import type { TfgpMachineNode } from '@/schema/tfgp-types';
 
@@ -34,5 +34,44 @@ describe('buildSchemeObstacleRects', () => {
     expect(rects[0]?.nodeId).toBe('m1');
     expect(rects[0]?.rect.left).toBeLessThan(100);
     expect(rects[0]?.rect.right).toBeGreaterThan(100 + 200);
+  });
+});
+
+describe('shiftObstaclesForDragging', () => {
+  const obstacles = [
+    {
+      nodeId: 'a',
+      rect: { left: 10, top: 20, right: 110, bottom: 120 },
+    },
+    {
+      nodeId: 'b',
+      rect: { left: 200, top: 20, right: 300, bottom: 120 },
+    },
+  ];
+
+  it('returns the same array when nothing is dragged', () => {
+    const result = shiftObstaclesForDragging(
+      obstacles,
+      [{ id: 'a', position: { x: 50, y: 40 } }],
+      [{ id: 'a', position: { x: 20, y: 30 } }],
+      new Set(),
+    );
+    expect(result).toBe(obstacles);
+  });
+
+  it('shifts only the dragged node obstacle by live-store delta', () => {
+    const result = shiftObstaclesForDragging(
+      obstacles,
+      [{ id: 'a', position: { x: 50, y: 40 } }],
+      [{ id: 'a', position: { x: 20, y: 30 } }],
+      new Set(['a']),
+    );
+    expect(result[0]?.rect).toEqual({
+      left: 40,
+      top: 30,
+      right: 140,
+      bottom: 130,
+    });
+    expect(result[1]).toBe(obstacles[1]);
   });
 });

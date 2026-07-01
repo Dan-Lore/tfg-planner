@@ -8,7 +8,7 @@ export interface ObstacleEntry {
 
 export interface ObstacleRectsContextValue {
   obstacles: ObstacleEntry[];
-  /** When true, edges use simple bezier routing (no obstacle pass). */
+  /** When true, all edges use simple bezier routing (no obstacle pass). */
   skipObstacleRouting: boolean;
 }
 

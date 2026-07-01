@@ -45,7 +45,7 @@ function machineRect(
   };
 }
 
-/** Obstacle boxes from scheme store positions — stable during drag (routing skipped while dragging). */
+/** Obstacle boxes from scheme store positions. */
 export function buildSchemeObstacleRects(
   nodes: TfgpNode[],
   pack: PackLike,
@@ -82,4 +82,39 @@ export function buildSchemeObstacleRects(
     }
   }
   return out;
+}
+
+type NodePosition = { id: string; position: { x: number; y: number } };
+
+/** Shift obstacle rects for nodes being dragged to match live canvas positions. */
+export function shiftObstaclesForDragging(
+  obstacles: SchemeObstacleEntry[],
+  liveNodes: readonly NodePosition[],
+  storeNodes: readonly NodePosition[],
+  draggingNodeIds: ReadonlySet<string>,
+): SchemeObstacleEntry[] {
+  if (draggingNodeIds.size === 0) return obstacles;
+  const liveById = new Map(liveNodes.map((n) => [n.id, n.position]));
+  const storeById = new Map(storeNodes.map((n) => [n.id, n.position]));
+  let changed = false;
+  const next = obstacles.map((entry) => {
+    if (!draggingNodeIds.has(entry.nodeId)) return entry;
+    const live = liveById.get(entry.nodeId);
+    const store = storeById.get(entry.nodeId);
+    if (!live || !store) return entry;
+    const dx = live.x - store.x;
+    const dy = live.y - store.y;
+    if (dx === 0 && dy === 0) return entry;
+    changed = true;
+    return {
+      nodeId: entry.nodeId,
+      rect: {
+        left: entry.rect.left + dx,
+        top: entry.rect.top + dy,
+        right: entry.rect.right + dx,
+        bottom: entry.rect.bottom + dy,
+      },
+    };
+  });
+  return changed ? next : obstacles;
 }

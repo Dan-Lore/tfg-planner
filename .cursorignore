@@ -21,10 +21,3 @@ tools/parser/snapshots/**/kubejs/
 # Pack data shards (large JSON; use manifest + build-report for context)
 public/data/packs/**/recipes/
 data/packs/**/recipes/
-
-# User schemes & debug attachments
-*.tfgp
-*.png
-
-
-

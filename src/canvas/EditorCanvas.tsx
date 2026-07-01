@@ -29,6 +29,7 @@ import {
   type ObstacleRectsContextValue,
 } from '@/canvas/obstacle-rects-context';
 import { edgeHandlesReady } from '@/lib/scheme-port-ids';
+import { shiftObstaclesForDragging } from '@/canvas/scheme-obstacles';
 
 function portTopologyKey(nodes: Node[]): string {
   return nodes
@@ -229,6 +230,9 @@ function EditorCanvasComponent({
     applyFlowEdgeSelection(rfEdges, selectedEdgeIds),
   );
   const draggingNodeIdsRef = useRef(new Set<string>());
+  const [draggingNodeIds, setDraggingNodeIds] = useState<ReadonlySet<string>>(
+    () => new Set(),
+  );
   const [isDragging, setIsDragging] = useState(false);
   const [flowViewport, setFlowViewport] = useState(viewport);
   const [edgesReady, setEdgesReady] = useState(false);
@@ -263,10 +267,14 @@ function EditorCanvasComponent({
       for (const change of changes) {
         if (change.type === 'position' && change.id) {
           if (change.dragging) {
-            draggingNodeIdsRef.current.add(change.id);
-            setIsDragging(true);
-          } else {
+            if (!draggingNodeIdsRef.current.has(change.id)) {
+              draggingNodeIdsRef.current.add(change.id);
+              setDraggingNodeIds(new Set(draggingNodeIdsRef.current));
+              setIsDragging(true);
+            }
+          } else if (draggingNodeIdsRef.current.has(change.id)) {
             draggingNodeIdsRef.current.delete(change.id);
+            setDraggingNodeIds(new Set(draggingNodeIdsRef.current));
             if (draggingNodeIdsRef.current.size === 0) {
               setIsDragging(false);
             }
@@ -289,13 +297,18 @@ function EditorCanvasComponent({
     [onPersistNodePositions],
   );
 
-  const obstacleContext = useMemo<ObstacleRectsContextValue>(
-    () => ({
-      obstacles: obstacleRects.obstacles,
-      skipObstacleRouting: isDragging || obstacleRects.skipObstacleRouting,
-    }),
-    [obstacleRects, isDragging],
-  );
+  const obstacleContext = useMemo<ObstacleRectsContextValue>(() => {
+    const obstacles = shiftObstaclesForDragging(
+      obstacleRects.obstacles,
+      flowNodes,
+      rfNodes,
+      draggingNodeIds,
+    );
+    return {
+      obstacles,
+      skipObstacleRouting: obstacleRects.skipObstacleRouting,
+    };
+  }, [obstacleRects, flowNodes, rfNodes, draggingNodeIds]);
 
   return (
     <NodeInternalsGateProvider>
