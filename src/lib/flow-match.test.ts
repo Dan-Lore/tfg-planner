@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { flowsCompatible, flowLookupKeys } from '@/lib/flow-match';
-import { buildTagIndex } from '@/lib/tag-index';
+import { edgeProductMatchesFlow, flowsCompatible, flowLookupKeys } from '@/lib/flow-match';
+import { buildTagIndex, buildTagIndexFromMeta } from '@/lib/tag-index';
 import type { PackData } from '@/data/types';
 
 const pack: PackData = {
@@ -31,5 +31,49 @@ describe('flow-match fluids + forge tags', () => {
     const keys = flowLookupKeys({ fluidId: 'gtceu:wood_tar', amount: 1 }, tags);
     expect(keys).toContain('fluid:gtceu:wood_tar');
     expect(keys).toContain('fluid:#forge:wood_tar');
+  });
+});
+
+const tagMetaFixture = {
+  items: [
+    { id: 'gtceu:copper_dust', names: { ru: 'x', en: 'x' } },
+    { id: 'tfc:wood/log/oak', names: { ru: 'x', en: 'x' } },
+    { id: '#forge:dusts/copper', names: { ru: 'x', en: 'x' } },
+    { id: '#minecraft:logs_that_burn', names: { ru: 'x', en: 'x' } },
+    { id: '#forge:air', names: { ru: 'x', en: 'x' } },
+  ],
+  fluids: [{ id: 'gtceu:air', names: { ru: 'x', en: 'x' } }],
+};
+
+describe('edgeProductMatchesFlow', () => {
+  const tags = buildTagIndexFromMeta(tagMetaFixture);
+
+  it.each([
+    {
+      label: 'forge air fluid tag',
+      edge: { fluidId: '#forge:air' },
+      flow: { fluidId: 'gtceu:air', amount: 1 },
+      expected: true,
+    },
+    {
+      label: 'minecraft burnable logs tag',
+      edge: { itemId: '#minecraft:logs_that_burn' },
+      flow: { itemId: 'tfc:wood/log/oak', amount: 1 },
+      expected: true,
+    },
+    {
+      label: 'forge copper dust tag',
+      edge: { itemId: '#forge:dusts/copper' },
+      flow: { itemId: 'gtceu:copper_dust', amount: 1 },
+      expected: true,
+    },
+    {
+      label: 'incompatible fluid',
+      edge: { fluidId: '#forge:air' },
+      flow: { fluidId: 'gtceu:steam', amount: 1 },
+      expected: false,
+    },
+  ])('$label', ({ edge, flow, expected }) => {
+    expect(edgeProductMatchesFlow(edge, flow, tags)).toBe(expected);
   });
 });

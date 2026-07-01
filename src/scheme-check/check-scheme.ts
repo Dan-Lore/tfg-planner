@@ -1,6 +1,7 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import type { PackData, Recipe } from '@/data/types';
 import { nodePortFlow, parsePortId, portsMatch, productKey } from '@/canvas/ports';
+import { edgeProductMatchesFlow } from '@/lib/flow-match';
 import { buildTagIndex } from '@/lib/tag-index';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import { normalizeSchemeNodes } from '@/stores/editor-utils';
@@ -258,7 +259,7 @@ function checkEdge(
     const srcKey = productKey(srcFlow);
     const tgtKey = productKey(tgtFlow);
 
-    if (edgeKey && srcKey !== edgeKey) {
+    if (edgeKey && !edgeProductMatchesFlow(edge, srcFlow, tags)) {
       issues.push({
         severity: 'error',
         code: 'edge_source_product_mismatch',
@@ -285,7 +286,7 @@ function checkEdge(
   } else if (srcFlow) {
     const edgeKey = edge.itemId ?? edge.fluidId ?? '';
     const srcKey = productKey(srcFlow);
-    if (edgeKey && srcKey !== edgeKey) {
+    if (edgeKey && !edgeProductMatchesFlow(edge, srcFlow, tags)) {
       issues.push({
         severity: 'error',
         code: 'edge_source_product_mismatch',

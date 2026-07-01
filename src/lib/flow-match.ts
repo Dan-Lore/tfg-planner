@@ -26,6 +26,19 @@ export function flowsCompatible(
   return false;
 }
 
+export function edgeProductMatchesFlow(
+  edge: { itemId?: string; fluidId?: string },
+  flow: Flow,
+  tags: TagIndex,
+): boolean {
+  const edgeId = flowProductId(edge);
+  if (!edgeId) return true;
+  const edgeFlow: Flow = edge.fluidId
+    ? { fluidId: edge.fluidId, amount: 1 }
+    : { itemId: edge.itemId, amount: 1 };
+  return flowsCompatible(flow, edgeFlow, tags);
+}
+
 function flowWithProductId(flow: Flow, productId: string): Flow {
   if (flow.fluidId) return { fluidId: productId, amount: flow.amount, chance: flow.chance };
   return { itemId: productId, amount: flow.amount, chance: flow.chance };
