@@ -1,6 +1,7 @@
 import type { Recipe } from '@/data/types';
 import type { TagIndex } from '@/lib/tag-index';
 import { recipeInputMatchesProduct } from '@/lib/flow-match';
+import { chanceRateMultiplier } from '@/lib/flow-chance';
 import { normalizePortId, parsePortId, productKey } from '@/lib/ports';
 import { R, type Rational } from '@/calculator/rational';
 
@@ -57,5 +58,8 @@ export function portInputDemandRate(
   const inp = recipe.inputs[inputIndex];
   const primaryOut = recipe.outputs[primaryOutputIndex];
   if (!inp || !primaryOut) return R.zero;
-  return primaryOutputRate.mul(R.from(inp.amount)).div(R.from(primaryOut.amount));
+  return primaryOutputRate
+    .mul(R.from(inp.amount))
+    .div(R.from(primaryOut.amount))
+    .mul(chanceRateMultiplier(inp.chance));
 }

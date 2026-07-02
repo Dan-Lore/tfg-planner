@@ -32,6 +32,9 @@ import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipeComboboxItems } from '@/lib/search-combobox';
 import { isBufferNode, isMachineNode } from '@/lib/node-kind';
 import type { TfgpEdge, TfgpNode, TfgpNodeBase, TfgpSupplyMode } from '@/schema/tfgp';
+import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
+import { formatSchemeIssueSummary } from '@/scheme-check/format-scheme-issue';
+import { listNodeIssues } from '@/editor/SchemeIssuesPanel';
 
 function formatLoadPercentDisplay(percent: number): string {
   if (percent >= 99.95) return '100%';
@@ -72,6 +75,41 @@ function InspectorSection({
       <h4 className="editor-inspector__section-title">{title}</h4>
       {children}
     </section>
+  );
+}
+
+function NodeIssuesSection({
+  nodeId,
+  schemeCheck,
+  pack,
+  lang,
+  nodes,
+  edges,
+}: {
+  nodeId: string;
+  schemeCheck: SchemeCheckResult | null;
+  pack: PackLike;
+  lang: 'ru' | 'en';
+  nodes: TfgpNode[];
+  edges: TfgpEdge[];
+}) {
+  const { t } = useTranslation();
+  const issues = listNodeIssues(nodeId, schemeCheck);
+  if (issues.length === 0) return null;
+
+  return (
+    <InspectorSection title={t('editor.schemeCheck.title')}>
+      <ul className="editor-inspector__issue-list">
+        {issues.map((issue, idx) => (
+          <li
+            key={`${issue.code}-${idx}`}
+            className={`editor-inspector__issue editor-inspector__issue--${issue.severity}`}
+          >
+            {formatSchemeIssueSummary(issue, pack, lang, nodes, edges, t)}
+          </li>
+        ))}
+      </ul>
+    </InspectorSection>
   );
 }
 
@@ -125,6 +163,9 @@ function MachineInspector({
   connectedIn,
   connectedOut,
   updateNode,
+  schemeCheck,
+  nodes,
+  edges,
 }: {
   node: TfgpNode & { kind?: 'machine'; machineId: string; recipeId: string };
   pack: PackLike;
@@ -133,6 +174,9 @@ function MachineInspector({
   connectedIn: Set<string>;
   connectedOut: Set<string>;
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
+  schemeCheck: SchemeCheckResult | null;
+  nodes: TfgpNode[];
+  edges: TfgpEdge[];
 }) {
   const { t } = useTranslation();
   const recipe = getRecipe(pack, node.recipeId);
@@ -198,6 +242,15 @@ function MachineInspector({
       <p className="editor-inspector__title">
         <strong>{getMachineName(pack, node.machineId, lang)}</strong>
       </p>
+
+      <NodeIssuesSection
+        nodeId={node.id}
+        schemeCheck={schemeCheck}
+        pack={pack}
+        lang={lang}
+        nodes={nodes}
+        edges={edges}
+      />
 
       <InspectorSection title={t('editor.inspector.settings')}>
         <label>{t('editor.recipe')}</label>
@@ -317,6 +370,9 @@ function BufferInspector({
   connectedIn,
   connectedOut,
   updateNode,
+  schemeCheck,
+  nodes,
+  edges,
 }: {
   node: TfgpNode;
   pack: PackLike;
@@ -325,6 +381,9 @@ function BufferInspector({
   connectedIn: Set<string>;
   connectedOut: Set<string>;
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
+  schemeCheck: SchemeCheckResult | null;
+  nodes: TfgpNode[];
+  edges: TfgpEdge[];
 }) {
   const { t } = useTranslation();
   if (!isBufferNode(node)) return null;
@@ -373,6 +432,15 @@ function BufferInspector({
       <p className="editor-inspector__title">
         <strong>{t(`editor.buffer.kind.${node.kind}`)}</strong>
       </p>
+
+      <NodeIssuesSection
+        nodeId={node.id}
+        schemeCheck={schemeCheck}
+        pack={pack}
+        lang={lang}
+        nodes={nodes}
+        edges={edges}
+      />
 
       <InspectorSection title={t('editor.inspector.settings')}>
         <label>{t('editor.inspector.product')}</label>
@@ -578,6 +646,7 @@ export interface EditorInspectorProps {
   edges: TfgpEdge[];
   flowResult: FlowResult | null;
   flowEdgeData: Record<string, FlowEdgeData>;
+  schemeCheck: SchemeCheckResult | null;
   selectedNodeIds: string[];
   selectedEdgeIds: string[];
   connectedInByNode: Map<string, Set<string>>;
@@ -593,6 +662,7 @@ export function EditorInspector({
   edges,
   flowResult,
   flowEdgeData,
+  schemeCheck,
   selectedNodeIds,
   selectedEdgeIds,
   connectedInByNode,
@@ -625,6 +695,9 @@ export function EditorInspector({
           connectedIn={connectedIn}
           connectedOut={connectedOut}
           updateNode={updateNode}
+          schemeCheck={schemeCheck}
+          nodes={nodes}
+          edges={edges}
         />
       );
     }
@@ -639,6 +712,9 @@ export function EditorInspector({
           connectedIn={connectedIn}
           connectedOut={connectedOut}
           updateNode={updateNode}
+          schemeCheck={schemeCheck}
+          nodes={nodes}
+          edges={edges}
         />
       );
     }

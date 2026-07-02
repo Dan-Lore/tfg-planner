@@ -86,19 +86,16 @@ export function buildSchemeObstacleRects(
 
 type NodePosition = { id: string; position: { x: number; y: number } };
 
-/** Shift obstacle rects for nodes being dragged to match live canvas positions. */
+/** Shift obstacle rects to match live canvas positions when they differ from the store. */
 export function shiftObstaclesForDragging(
   obstacles: SchemeObstacleEntry[],
   liveNodes: readonly NodePosition[],
   storeNodes: readonly NodePosition[],
-  draggingNodeIds: ReadonlySet<string>,
 ): SchemeObstacleEntry[] {
-  if (draggingNodeIds.size === 0) return obstacles;
   const liveById = new Map(liveNodes.map((n) => [n.id, n.position]));
   const storeById = new Map(storeNodes.map((n) => [n.id, n.position]));
   let changed = false;
   const next = obstacles.map((entry) => {
-    if (!draggingNodeIds.has(entry.nodeId)) return entry;
     const live = liveById.get(entry.nodeId);
     const store = storeById.get(entry.nodeId);
     if (!live || !store) return entry;

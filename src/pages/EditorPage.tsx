@@ -28,7 +28,7 @@ import {
   buildBufferPortDisplays,
   formatBufferRate,
 } from '@/canvas/BufferNode';
-import { EditorCanvas } from '@/canvas/EditorCanvas';
+import { EditorCanvas, type EditorCanvasHandle } from '@/canvas/EditorCanvas';
 import { FlowEdge } from '@/canvas/FlowEdge';
 import {
   NodeDisplayProvider,
@@ -63,6 +63,7 @@ import {
   pickNodeIssueMeta,
 } from '@/editor/SchemeIssuesPanel';
 import type { SchemeIssue } from '@/scheme-check/check-scheme';
+import { resolveIssueFocusPoint } from '@/lib/viewport-focus';
 import {
   filterItemsByQuery,
   resolveMachineId,
@@ -128,6 +129,7 @@ function useEdgeTypes() {
 export function EditorPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
+  const canvasRef = useRef<EditorCanvasHandle>(null);
   const pack = usePackStore((s) => s.activePack);
   const activeEntry = usePackStore((s) => s.activeEntry);
   const packError = usePackStore((s) => s.error);
@@ -464,6 +466,18 @@ export function EditorPage() {
       if (issue.nodeId) {
         setSelectedNodeIds([issue.nodeId]);
         setSelectedEdgeIds([]);
+        return;
+      }
+      const nodeIdsRaw = issue.context?.nodeIds;
+      if (nodeIdsRaw) {
+        const ids = nodeIdsRaw
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean);
+        if (ids.length > 0) {
+          setSelectedNodeIds(ids);
+          setSelectedEdgeIds([]);
+        }
       }
     },
     [scheme.edges, setSelectedEdgeIds, setSelectedNodeIds],
@@ -629,6 +643,23 @@ export function EditorPage() {
     t,
   ]);
 
+  const handlePanToIssue = useCallback(
+    (issue: SchemeIssue) => {
+      if (!pack) return;
+      const point = resolveIssueFocusPoint(issue, {
+        nodes: scheme.nodes,
+        edges: scheme.edges,
+        pack,
+        layoutWidthByNodeId,
+        displayById: nodeDisplayById,
+      });
+      if (point) {
+        canvasRef.current?.panToPoint(point.x, point.y);
+      }
+    },
+    [pack, scheme.nodes, scheme.edges, layoutWidthByNodeId, nodeDisplayById],
+  );
+
   const rfNodeCacheRef = useRef(new Map<string, { sig: string; node: Node }>());
 
   const obstacleRects = useMemo(
@@ -657,7 +688,8 @@ export function EditorPage() {
         edges: scheme.edges,
         layoutWidthByNodeId,
       },
-      (id) => pickNodeIssueMeta(id, schemeCheckResult, pack, lang, scheme.nodes, scheme.edges, t) ?? {},
+      (id) =>
+        pickNodeIssueMeta(id, schemeCheckResult, pack, lang, scheme.nodes, scheme.edges, t) ?? {},
     );
   }, [scheme.nodes, scheme.edges, pack, schemeCheckResult, layoutWidthByNodeId, packDisplayEpoch, lang, t]);
 
@@ -1062,6 +1094,7 @@ export function EditorPage() {
           <EditorNodeActionsProvider value={editorNodeActions}>
             <NodeDisplayProvider value={nodeDisplayById}>
               <EditorCanvas
+                ref={canvasRef}
                 rfNodes={rfNodes}
                 rfEdges={rfEdges}
                 selectedNodeIds={selectedNodeIds}
@@ -1110,6 +1143,7 @@ export function EditorPage() {
                 edges={scheme.edges}
                 schemeCheck={schemeCheckResult}
                 onFocusIssue={handleFocusIssue}
+                onPanToIssue={handlePanToIssue}
               />
             </div>
           </section>
@@ -1126,6 +1160,7 @@ export function EditorPage() {
                   edges={scheme.edges}
                   flowResult={flowResult}
                   flowEdgeData={flowEdgeData}
+                  schemeCheck={schemeCheckResult}
                   selectedNodeIds={selectedNodeIds}
                   selectedEdgeIds={selectedEdgeIds}
                   connectedInByNode={connectedPorts.inPorts}

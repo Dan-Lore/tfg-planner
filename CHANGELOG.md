@@ -5,6 +5,17 @@
 
 ## [Unreleased]
 
+### Added
+- Scheme check: cycle analysis (SCC, product net balance, `cycle_not_running`, `catalyst_imbalance`)
+- Scheme check: `target_not_output`, `disconnected_output`, `orphan_start_buffer` issue codes with i18n
+
+### Changed
+- Scheme check: removed `stalled_machine` warnings (covered by `cycle_not_running`, `disconnected_output`, etc.)
+- Scheme check UX: issue list in inspector; minimap highlights selection; double-click issue pans to node (zoom unchanged)
+
+### Fixed
+- Solver: `portInputDemandRate` applies GT chance multiplier on chanced inputs (symmetric with outputs)
+
 ## [0.2.0] — 2026-06-30
 
 ### Fixed

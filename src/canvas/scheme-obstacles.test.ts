@@ -49,22 +49,20 @@ describe('shiftObstaclesForDragging', () => {
     },
   ];
 
-  it('returns the same array when nothing is dragged', () => {
+  it('returns the same array when live and store positions match', () => {
     const result = shiftObstaclesForDragging(
       obstacles,
-      [{ id: 'a', position: { x: 50, y: 40 } }],
       [{ id: 'a', position: { x: 20, y: 30 } }],
-      new Set(),
+      [{ id: 'a', position: { x: 20, y: 30 } }],
     );
     expect(result).toBe(obstacles);
   });
 
-  it('shifts only the dragged node obstacle by live-store delta', () => {
+  it('shifts obstacle by live-store delta when positions differ', () => {
     const result = shiftObstaclesForDragging(
       obstacles,
       [{ id: 'a', position: { x: 50, y: 40 } }],
       [{ id: 'a', position: { x: 20, y: 30 } }],
-      new Set(['a']),
     );
     expect(result[0]?.rect).toEqual({
       left: 40,
@@ -73,5 +71,13 @@ describe('shiftObstaclesForDragging', () => {
       bottom: 130,
     });
     expect(result[1]).toBe(obstacles[1]);
+  });
+
+  it('keeps shifted obstacles after drag ends until store catches up', () => {
+    const live = [{ id: 'a', position: { x: 50, y: 40 } }];
+    const store = [{ id: 'a', position: { x: 20, y: 30 } }];
+    const duringDrag = shiftObstaclesForDragging(obstacles, live, store);
+    const afterDragEnd = shiftObstaclesForDragging(obstacles, live, store);
+    expect(afterDragEnd[0]?.rect).toEqual(duringDrag[0]?.rect);
   });
 });

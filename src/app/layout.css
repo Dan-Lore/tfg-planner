@@ -492,6 +492,7 @@ a {
   --minimap-bg: color-mix(in srgb, var(--surface2) 88%, transparent);
   --minimap-mask: rgba(15, 20, 25, 0.58);
   --minimap-node: rgba(148, 163, 184, 0.45);
+  --minimap-node-selected: color-mix(in srgb, var(--accent) 72%, white);
   --minimap-viewport-stroke: var(--accent);
 }
 
@@ -1857,6 +1858,31 @@ a {
   background: var(--bg);
 }
 
+/* DEBUG: подсветка obstacle rects — удалить вместе с ObstacleDebugOverlay.tsx */
+.obstacle-debug-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.obstacle-debug-overlay__rect {
+  fill: color-mix(in srgb, var(--issue-warning) 18%, transparent);
+  stroke: var(--issue-warning);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+.obstacle-debug-overlay__label {
+  fill: var(--issue-warning);
+  font-size: 10px;
+  font-family: ui-monospace, monospace;
+  pointer-events: none;
+  user-select: none;
+}
+
 .editor-canvas-wrap .react-flow__viewport,
 .editor-canvas-wrap .react-flow__renderer {
   filter: none;
@@ -1911,6 +1937,33 @@ a {
 .machine-node--issue-warning.selected,
 .buffer-node--issue-warning.buffer-node--selected {
   border-color: var(--issue-warning) !important;
+}
+
+.editor-inspector__issue-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.editor-inspector__issue {
+  margin: 0;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  border-radius: 4px;
+}
+
+.editor-inspector__issue--error {
+  background: color-mix(in srgb, var(--issue-error) 14%, var(--surface));
+  color: var(--issue-error);
+}
+
+.editor-inspector__issue--warning {
+  background: color-mix(in srgb, var(--issue-warning) 14%, var(--surface));
+  color: var(--issue-warning);
 }
 
 .scheme-issues {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 import {
@@ -21,7 +21,10 @@ export interface SchemeIssuesPanelProps {
   edges: TfgpEdge[];
   schemeCheck: SchemeCheckResult | null;
   onFocusIssue: (issue: SchemeIssue) => void;
+  onPanToIssue: (issue: SchemeIssue) => void;
 }
+
+const ISSUE_CLICK_DELAY_MS = 250;
 
 function issueRefLabel(
   issue: SchemeIssue,
@@ -56,9 +59,11 @@ export function SchemeIssuesPanel({
   edges,
   schemeCheck,
   onFocusIssue,
+  onPanToIssue,
 }: SchemeIssuesPanelProps) {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const grouped = useMemo(() => {
     if (!schemeCheck) return null;
     const errors = schemeCheck.issues.filter((i) => i.severity === 'error');
@@ -77,6 +82,25 @@ export function SchemeIssuesPanel({
 
   const renderGroup = (title: string, items: SchemeIssue[], severity: 'error' | 'warning') => {
     if (items.length === 0) return null;
+
+    const handleIssueClick = (issue: SchemeIssue) => {
+      if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+      clickTimerRef.current = setTimeout(() => {
+        clickTimerRef.current = null;
+        onFocusIssue(issue);
+      }, ISSUE_CLICK_DELAY_MS);
+    };
+
+    const handleIssueDoubleClick = (issue: SchemeIssue, e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (clickTimerRef.current) {
+        clearTimeout(clickTimerRef.current);
+        clickTimerRef.current = null;
+      }
+      onFocusIssue(issue);
+      onPanToIssue(issue);
+    };
+
     return (
       <div className={`scheme-issues__group scheme-issues__group--${severity}`}>
         <h5 className="scheme-issues__group-title">{title}</h5>
@@ -86,7 +110,8 @@ export function SchemeIssuesPanel({
               <button
                 type="button"
                 className={`scheme-issues__item scheme-issues__item--${issue.severity}`}
-                onClick={() => onFocusIssue(issue)}
+                onClick={() => handleIssueClick(issue)}
+                onDoubleClick={(e) => handleIssueDoubleClick(issue, e)}
                 title={formatSchemeIssueDetail(issue, pack, lang, nodes, edges, t)}
               >
                 <span className="scheme-issues__item-ref">
@@ -151,6 +176,15 @@ export function SchemeIssuesPanel({
       )}
     </section>
   );
+}
+
+export function listNodeIssues(
+  nodeId: string,
+  schemeCheck: SchemeCheckResult | null,
+): SchemeIssue[] {
+  if (!schemeCheck) return [];
+  const index = indexSchemeIssues(schemeCheck);
+  return (index.byNodeId.get(nodeId) ?? []).filter((i) => i.severity !== 'info');
 }
 
 export function pickNodeIssueMeta(

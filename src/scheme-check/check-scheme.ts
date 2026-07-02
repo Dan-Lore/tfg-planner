@@ -1,9 +1,11 @@
 import type { FlowResult } from '@/calculator/flow-solver';
+import { analyzeCycles, isBalancedNet } from '@/calculator/cycle-analysis';
 import type { PackData, Recipe } from '@/data/types';
 import { nodePortFlow, parsePortId, portsMatch, productKey } from '@/canvas/ports';
-import { edgeProductMatchesFlow } from '@/lib/flow-match';
+import { edgeProductMatchesFlow, flowsCompatible } from '@/lib/flow-match';
 import { buildTagIndex } from '@/lib/tag-index';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isEndBufferNode, isIntermediateBufferNode, isMachineNode, isStartBufferNode } from '@/lib/node-kind';
+import { resolveSourceOutputPort } from '@/calculator/port-resolution';
 import { normalizeSchemeNodes } from '@/stores/editor-utils';
 import type { TfgpEdge, TfgpFile, TfgpNode, TfgpTarget } from '@/schema/tfgp';
 
@@ -17,9 +19,15 @@ export type SchemeIssueCode =
   | 'product_mismatch'
   | 'buffer_port_direction'
   | 'disconnected_input'
-  | 'stalled_machine'
+  | 'disconnected_output'
+  | 'orphan_start_buffer'
   | 'target_on_buffer'
+  | 'target_not_output'
   | 'target_missing_node'
+  | 'cycle_product_deficit'
+  | 'cycle_product_surplus'
+  | 'cycle_not_running'
+  | 'catalyst_imbalance'
   | 'pack_version_missing'
   | 'tag_input_unverified'
   | 'edge_source_product_mismatch';
@@ -35,6 +43,10 @@ export interface SchemeIssueContext {
   outputCount?: string;
   inputCount?: string;
   theoreticalRate?: string;
+  netRate?: string;
+  sccIndex?: string;
+  nodeIds?: string;
+  balanceRatio?: string;
 }
 
 export interface SchemeIssue {
@@ -68,9 +80,6 @@ export interface SchemeIssueIndex {
   worstByEdgeId: ReadonlyMap<string, SchemeIssueSeverity>;
   worstByNodeId: ReadonlyMap<string, SchemeIssueSeverity>;
 }
-
-const STALL_LOAD_EPS = 1e-6;
-const STALL_RATE_EPS = 1e-9;
 
 const SEVERITY_RANK: Record<SchemeIssueSeverity, number> = {
   error: 2,
@@ -361,6 +370,171 @@ function checkEdge(
   return issues;
 }
 
+function recipeOutputMatchesTarget(
+  recipe: Recipe,
+  targetKey: string,
+  tags: ReturnType<typeof buildTagIndex>,
+): boolean {
+  for (const output of recipe.outputs) {
+    const outKey = productKey(output);
+    if (outKey === targetKey) return true;
+    if (flowsCompatible(output, { itemId: targetKey, amount: 1 }, tags)) return true;
+    if (flowsCompatible(output, { fluidId: targetKey, amount: 1 }, tags)) return true;
+  }
+  return false;
+}
+
+function checkDisconnectedOutputs(
+  nodes: TfgpNode[],
+  edges: TfgpEdge[],
+  recipes: Map<string, Recipe>,
+  tags: ReturnType<typeof buildTagIndex>,
+): SchemeIssue[] {
+  const issues: SchemeIssue[] = [];
+  const outgoingBySource = new Map<string, TfgpEdge[]>();
+  const nodeById = new Map(nodes.map((n) => [n.id, n]));
+
+  for (const edge of edges) {
+    if (!outgoingBySource.has(edge.source)) outgoingBySource.set(edge.source, []);
+    outgoingBySource.get(edge.source)!.push(edge);
+  }
+
+  for (const node of nodes) {
+    if (!isMachineNode(node)) continue;
+    const recipe = recipeForNode(node, recipes);
+    if (!recipe) continue;
+
+    for (let i = 0; i < recipe.outputs.length; i++) {
+      const portId = `out_${i}`;
+      const output = recipe.outputs[i]!;
+      const outKey = productKey(output);
+      const portEdges = (outgoingBySource.get(node.id) ?? []).filter((edge) => {
+        const resolved = resolveSourceOutputPort(edge, recipe);
+        return resolved === portId;
+      });
+      if (portEdges.length === 0) {
+        issues.push({
+          severity: 'warning',
+          code: 'disconnected_output',
+          message: `${nodeLabel(node)}: выход ${portId} (${outKey}) не подключён`,
+          nodeId: node.id,
+          context: {
+            ...machineContext(node),
+            portId,
+            productId: outKey,
+          },
+        });
+        continue;
+      }
+
+      const hasSink = portEdges.some((edge) => {
+        const target = nodeById.get(edge.target);
+        if (!target) return false;
+        if (isEndBufferNode(target) || isIntermediateBufferNode(target)) return true;
+        if (!isMachineNode(target)) return false;
+        const targetRecipe = recipeForNode(target, recipes);
+        if (!targetRecipe) return false;
+        return edgeProductMatchesFlow(edge, output, tags);
+      });
+      if (!hasSink) {
+        issues.push({
+          severity: 'warning',
+          code: 'disconnected_output',
+          message: `${nodeLabel(node)}: выход ${portId} (${outKey}) не подключён к потребителю`,
+          nodeId: node.id,
+          context: {
+            ...machineContext(node),
+            portId,
+            productId: outKey,
+          },
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
+function checkOrphanStartBuffers(
+  nodes: TfgpNode[],
+  edges: TfgpEdge[],
+): SchemeIssue[] {
+  const issues: SchemeIssue[] = [];
+  const hasOutgoing = new Set(edges.map((e) => e.source));
+
+  for (const node of nodes) {
+    if (!isStartBufferNode(node)) continue;
+    if (hasOutgoing.has(node.id)) continue;
+    const product = node.itemId ?? node.fluidId ?? '?';
+    issues.push({
+      severity: 'info',
+      code: 'orphan_start_buffer',
+      message: `${nodeLabel(node)}: стартовый буфер не подключён к схеме`,
+      nodeId: node.id,
+      context: { productId: product },
+    });
+  }
+
+  return issues;
+}
+
+function checkCycleBalance(
+  scheme: TfgpFile,
+  pack: PackData,
+  flowResult: FlowResult,
+  tags: ReturnType<typeof buildTagIndex>,
+): SchemeIssue[] {
+  const issues: SchemeIssue[] = [];
+  const nodes = normalizeSchemeNodes(scheme.nodes, pack);
+  const analysis = analyzeCycles(nodes, scheme.edges, pack, flowResult, tags);
+  const notRunningSccs = new Set(analysis.notRunning.map((n) => n.sccIndex));
+
+  for (const { sccIndex, nodeIds } of analysis.notRunning) {
+    issues.push({
+      severity: 'warning',
+      code: 'cycle_not_running',
+      message: `Петля ${sccIndex + 1} (${nodeIds.join(', ')}): потоки ≈ 0 при ненулевой теоретической мощности`,
+      context: {
+        sccIndex: String(sccIndex + 1),
+        nodeIds: nodeIds.join(', '),
+      },
+    });
+  }
+
+  for (const balance of analysis.balances) {
+    if (notRunningSccs.has(balance.sccIndex)) continue;
+    if (isBalancedNet(balance.net)) continue;
+    const net = balance.net.toNumber();
+    const code = net < 0 ? 'cycle_product_deficit' : 'cycle_product_surplus';
+    issues.push({
+      severity: 'warning',
+      code,
+      message: `Петля ${balance.sccIndex + 1}: ${balance.productId} net ${net.toFixed(6)}/s`,
+      context: {
+        sccIndex: String(balance.sccIndex + 1),
+        productId: balance.productId,
+        netRate: net.toFixed(6),
+      },
+    });
+  }
+
+  for (const imbalance of analysis.catalystImbalances) {
+    issues.push({
+      severity: 'warning',
+      code: 'catalyst_imbalance',
+      message: `Петля ${imbalance.sccIndex + 1}: катализатор ${imbalance.productId} consume/produce ≈ ${imbalance.ratio.toFixed(3)}`,
+      context: {
+        sccIndex: String(imbalance.sccIndex + 1),
+        productId: imbalance.productId,
+        balanceRatio: imbalance.ratio.toFixed(4),
+        nodeIds: imbalance.nodeIds.join(', '),
+      },
+    });
+  }
+
+  return issues;
+}
+
 function checkDisconnectedInputs(
   nodes: TfgpNode[],
   edges: TfgpEdge[],
@@ -403,6 +577,8 @@ function checkDisconnectedInputs(
 function checkTargets(
   targets: TfgpTarget[],
   nodeById: Map<string, TfgpNode>,
+  recipes: Map<string, Recipe>,
+  tags: ReturnType<typeof buildTagIndex>,
 ): SchemeIssue[] {
   const issues: SchemeIssue[] = [];
   for (const target of targets) {
@@ -425,50 +601,33 @@ function checkTargets(
         nodeId: node.id,
         context: machineContext(node),
       });
+      continue;
+    }
+    if (!isMachineNode(node)) continue;
+    const recipe = recipeForNode(node, recipes);
+    const targetKey = target.itemId ?? target.fluidId ?? '';
+    if (!recipe || !targetKey) continue;
+    if (!recipeOutputMatchesTarget(recipe, targetKey, tags)) {
+      const isInput = recipe.inputs.some(
+        (inp) => productKey(inp) === targetKey || flowsCompatible(inp, { itemId: targetKey, amount: 1 }, tags) || flowsCompatible(inp, { fluidId: targetKey, amount: 1 }, tags),
+      );
+      issues.push({
+        severity: 'warning',
+        code: 'target_not_output',
+        message: `${nodeLabel(node)}: цель ${targetKey} не является выходом рецепта${isInput ? ' (это вход)' : ''}`,
+        nodeId: node.id,
+        context: {
+          ...machineContext(node),
+          productId: targetKey,
+        },
+      });
     }
   }
   return issues;
 }
 
-function checkStalledMachines(
-  scheme: TfgpFile,
-  pack: PackData,
-  flowResult: FlowResult,
-  recipes: Map<string, Recipe>,
-): SchemeIssue[] {
-  const issues: SchemeIssue[] = [];
-  const nodes = normalizeSchemeNodes(scheme.nodes, pack);
-
-  for (const node of nodes) {
-    if (!isMachineNode(node)) continue;
-    const recipe = recipeForNode(node, recipes);
-    if (!recipe || recipe.outputs.length === 0) continue;
-
-    const theoretical = flowResult.nodePortOutputRates[node.id]?.out_0;
-    const effective = flowResult.nodeEffectivePortOutputRates[node.id]?.out_0;
-    const load = flowResult.nodeLoad[node.id];
-
-    if (!theoretical || theoretical.toNumber() <= STALL_RATE_EPS) continue;
-    if (load && load.toNumber() > STALL_LOAD_EPS) continue;
-    if (effective && effective.toNumber() > STALL_RATE_EPS) continue;
-
-    issues.push({
-      severity: 'warning',
-      code: 'stalled_machine',
-      message: `${nodeLabel(node)}: теоретический выход ${theoretical.toNumber().toFixed(4)}/s, но эффективная нагрузка 0% — проверьте входы и исходящие связи`,
-      nodeId: node.id,
-      context: {
-        ...machineContext(node),
-        theoreticalRate: theoretical.toNumber().toFixed(4),
-      },
-    });
-  }
-
-  return issues;
-}
-
 export interface CheckSchemeOptions {
-  /** Reuse solver output to avoid a second runSolver in stalled-machine check. */
+  /** Reuse solver output for cycle-balance checks. */
   flowResult?: FlowResult;
 }
 
@@ -486,11 +645,13 @@ export function checkScheme(
     issues.push(...checkEdge(edge, nodeById, pack, recipes, tags));
   }
   issues.push(...checkDisconnectedInputs(scheme.nodes, scheme.edges, recipes));
-  issues.push(...checkTargets(scheme.targets ?? [], nodeById));
+  issues.push(...checkDisconnectedOutputs(scheme.nodes, scheme.edges, recipes, tags));
+  issues.push(...checkOrphanStartBuffers(scheme.nodes, scheme.edges));
+  issues.push(...checkTargets(scheme.targets ?? [], nodeById, recipes, tags));
 
   const hasStructuralErrors = issues.some((i) => i.severity === 'error');
   if (!hasStructuralErrors && options.flowResult) {
-    issues.push(...checkStalledMachines(scheme, pack, options.flowResult, recipes));
+    issues.push(...checkCycleBalance(scheme, pack, options.flowResult, tags));
   }
 
   const errorCount = issues.filter((i) => i.severity === 'error').length;

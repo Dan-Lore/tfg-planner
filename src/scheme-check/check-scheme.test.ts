@@ -310,4 +310,88 @@ describe('checkScheme', () => {
       result.issues.some((i) => i.code === 'edge_source_product_mismatch' && i.edgeId === 'e_tag'),
     ).toBe(true);
   });
+
+  it('flags target_not_output when target product is a recipe input', () => {
+    const file = scheme({
+      nodes: [
+        {
+          id: 'lcr',
+          machineId: 'lcr',
+          recipeId: 'tower',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          voltageTier: 'LV',
+          position: { x: 0, y: 0 },
+        },
+      ],
+      targets: [{ nodeId: 'lcr', itemId: 'charcoal', ratePerSecond: 1 }],
+    });
+    const result = checkScheme(file, miniPack);
+    expect(result.issues.some((i) => i.code === 'target_not_output')).toBe(true);
+  });
+
+  it('flags disconnected_output when machine output has no edge', () => {
+    const file = scheme({
+      nodes: [
+        {
+          id: 'elec',
+          machineId: 'elec',
+          recipeId: 'recycle',
+          machineCount: 1,
+          overclock: 1,
+          parallel: 1,
+          voltageTier: 'LV',
+          position: { x: 0, y: 0 },
+        },
+      ],
+      edges: [
+        {
+          id: 'e_rh',
+          source: 'elec',
+          target: 'lcr',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'dust',
+        },
+      ],
+    });
+    const recyclePack: PackData = {
+      ...miniPack,
+      recipes: [
+        {
+          id: 'recycle',
+          machineId: 'elec',
+          durationTicks: 90,
+          inputs: [{ fluidId: 'gas', amount: 1000 }],
+          outputs: [
+            { itemId: 'dust', amount: 1 },
+            { fluidId: 'co2', amount: 500 },
+          ],
+        },
+      ],
+    };
+    const result = checkScheme(file, recyclePack);
+    expect(result.issues.some((i) => i.code === 'disconnected_output' && i.nodeId === 'elec')).toBe(
+      true,
+    );
+  });
+
+  it('flags orphan_start_buffer with no outgoing edges', () => {
+    const file = scheme({
+      nodes: [
+        {
+          id: 'buf',
+          kind: 'start_buffer',
+          itemId: 'dust',
+          capacity: 0,
+          supplyMode: 'rate',
+          autoSupplyRate: true,
+          position: { x: 0, y: 0 },
+        },
+      ],
+    });
+    const result = checkScheme(file, miniPack);
+    expect(result.issues.some((i) => i.code === 'orphan_start_buffer')).toBe(true);
+  });
 });

@@ -124,7 +124,7 @@ const resources = {
         schemeCheck: {
           title: 'Проверка схемы',
           ok: 'Замечаний нет',
-          hint: 'Клик по строке — выделить узлы и связь на холсте. Красное — ошибка, оранжевое — предупреждение.',
+          hint: 'Клик — выделить на холсте, двойной клик — плавно показать в центре. Красное — ошибка, оранжевое — предупреждение.',
           focusHint: 'Показать на схеме',
           expandList: 'Показать список замечаний',
           collapseList: 'Свернуть список замечаний',
@@ -139,6 +139,41 @@ const resources = {
               'У входного порта рецепта нет входящей связи — материал не поступает на машину.',
             disconnected_input_detail:
               'Узел: {{nodeId}}\nМашина: {{machineLabel}}\nРецепт: {{recipeId}}\nВходной порт: {{portId}}\nПродукт: {{productLabel}}',
+            disconnected_output: 'Не подключён выход: {{product}}',
+            disconnected_output_reason:
+              'Выходной порт рецепта не ведёт к потребителю или стоку — машина блокируется по выходному bottleneck.',
+            disconnected_output_detail:
+              'Узел: {{nodeId}}\nМашина: {{machineLabel}}\nРецепт: {{recipeId}}\nВыходной порт: {{portId}}\nПродукт: {{productLabel}}',
+            orphan_start_buffer: 'Стартовый буфер не подключён',
+            orphan_start_buffer_reason:
+              'У стартового буфера нет исходящих связей — он не питает схему.',
+            orphan_start_buffer_detail:
+              'Узел: {{nodeId}}\nПродукт: {{productLabel}}',
+            target_not_output: 'Цель не на выходе рецепта: {{product}}',
+            target_not_output_reason:
+              'Целевой продукт не является выходом выбранного рецепта — солвер не масштабирует линию по этой цели.',
+            target_not_output_detail:
+              'Узел: {{nodeId}}\nМашина: {{machineLabel}}\nРецепт: {{recipeId}}\nПродукт цели: {{productLabel}}',
+            cycle_product_deficit: 'Дефицит в петле {{sccIndex}}: {{product}}',
+            cycle_product_deficit_reason:
+              'В замкнутой петле продукт расходуется быстрее, чем производится — нужен внешний источник или буфер.',
+            cycle_product_deficit_detail:
+              'Петля: {{sccIndex}}\nПродукт: {{productLabel}}\nNet: {{netRate}}/s',
+            cycle_product_surplus: 'Избыток в петле {{sccIndex}}: {{product}}',
+            cycle_product_surplus_reason:
+              'В замкнутой петле продукт производится быстрее, чем расходуется — нужен сток или буфер.',
+            cycle_product_surplus_detail:
+              'Петля: {{sccIndex}}\nПродукт: {{productLabel}}\nNet: {{netRate}}/s',
+            cycle_not_running: 'Петля {{sccIndex}} не заводится',
+            cycle_not_running_reason:
+              'Потоки в петле ≈ 0 при ненулевой теоретической мощности — нет bootstrap, заблокированы выходы или неверная цель.',
+            cycle_not_running_detail:
+              'Петля: {{sccIndex}}\nУзлы: {{nodeIds}}',
+            catalyst_imbalance: 'Дисбаланс катализатора {{product}} в петле {{sccIndex}}',
+            catalyst_imbalance_reason:
+              'Ожидаемый расход катализатора не сходится с ожидаемым восстановлением (consume/produce ≠ 1).',
+            catalyst_imbalance_detail:
+              'Петля: {{sccIndex}}\nПродукт: {{productLabel}}\nConsume/produce: {{balanceRatio}}\nУзлы: {{nodeIds}}',
             stalled_machine: 'Машина не работает: нет нагрузки на выходе',
             stalled_machine_reason:
               'Теоретический выход > 0, но эффективная нагрузка и фактический поток на выходе ≈ 0: нет спроса downstream или не хватает входов.',
@@ -367,7 +402,7 @@ const resources = {
         schemeCheck: {
           title: 'Scheme check',
           ok: 'No issues found',
-          hint: 'Click a row to select nodes and edge on canvas. Red — error, amber — warning.',
+          hint: 'Click to select on canvas, double-click to pan to center. Red — error, amber — warning.',
           focusHint: 'Show on canvas',
           expandList: 'Show issue list',
           collapseList: 'Collapse issue list',
@@ -382,6 +417,41 @@ const resources = {
               'The recipe input port has no incoming edge — material does not reach the machine.',
             disconnected_input_detail:
               'Node: {{nodeId}}\nMachine: {{machineLabel}}\nRecipe: {{recipeId}}\nInput port: {{portId}}\nProduct: {{productLabel}}',
+            disconnected_output: 'Output not connected: {{product}}',
+            disconnected_output_reason:
+              'The recipe output port has no consumer or sink — the machine is blocked by an output bottleneck.',
+            disconnected_output_detail:
+              'Node: {{nodeId}}\nMachine: {{machineLabel}}\nRecipe: {{recipeId}}\nOutput port: {{portId}}\nProduct: {{productLabel}}',
+            orphan_start_buffer: 'Start buffer not connected',
+            orphan_start_buffer_reason:
+              'The start buffer has no outgoing edges — it does not feed the scheme.',
+            orphan_start_buffer_detail:
+              'Node: {{nodeId}}\nProduct: {{productLabel}}',
+            target_not_output: 'Target is not a recipe output: {{product}}',
+            target_not_output_reason:
+              'The target product is not an output of the selected recipe — the solver will not scale the line from this target.',
+            target_not_output_detail:
+              'Node: {{nodeId}}\nMachine: {{machineLabel}}\nRecipe: {{recipeId}}\nTarget product: {{productLabel}}',
+            cycle_product_deficit: 'Loop {{sccIndex}} deficit: {{product}}',
+            cycle_product_deficit_reason:
+              'In a closed loop the product is consumed faster than produced — an external source or buffer is needed.',
+            cycle_product_deficit_detail:
+              'Loop: {{sccIndex}}\nProduct: {{productLabel}}\nNet: {{netRate}}/s',
+            cycle_product_surplus: 'Loop {{sccIndex}} surplus: {{product}}',
+            cycle_product_surplus_reason:
+              'In a closed loop the product is produced faster than consumed — a sink or buffer is needed.',
+            cycle_product_surplus_detail:
+              'Loop: {{sccIndex}}\nProduct: {{productLabel}}\nNet: {{netRate}}/s',
+            cycle_not_running: 'Loop {{sccIndex}} not running',
+            cycle_not_running_reason:
+              'Flows in the loop are ≈ 0 while theoretical capacity > 0 — missing bootstrap, blocked outputs, or wrong target.',
+            cycle_not_running_detail:
+              'Loop: {{sccIndex}}\nNodes: {{nodeIds}}',
+            catalyst_imbalance: 'Catalyst imbalance {{product}} in loop {{sccIndex}}',
+            catalyst_imbalance_reason:
+              'Expected catalyst consumption does not match expected recovery (consume/produce ≠ 1).',
+            catalyst_imbalance_detail:
+              'Loop: {{sccIndex}}\nProduct: {{productLabel}}\nConsume/produce: {{balanceRatio}}\nNodes: {{nodeIds}}',
             stalled_machine: 'Machine stalled: no output load',
             stalled_machine_reason:
               'Theoretical output > 0, but effective load and actual output flow ≈ 0: no downstream demand or insufficient inputs.',
