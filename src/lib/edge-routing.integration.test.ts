@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { getMachineNodeRect } from '@/canvas/node-bounds';
-import { computeEdgeRouteCenter, type RoutingObstacle } from '@/lib/edge-routing';
+import {
+  computeEdgeRouteCenter,
+  pathCrossesNodeBody,
+  type RoutingObstacle,
+} from '@/lib/edge-routing';
 import { buildEdgeRoutePlan } from '@/lib/edge-route-plan';
 import { minCorridorSeparation, PARALLEL_EDGE_GAP } from '@/lib/edge-route-lanes';
-import { pathCrossesNodeBody } from '@/lib/edge-routing';
 import {
   buildFixtureGraph,
   horizontalLaneY,

@@ -177,7 +177,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--surface2);
-  color: var(--text-muted);
+  color: var(--muted);
   cursor: pointer;
   font-size: 0.68rem;
   font-weight: 600;

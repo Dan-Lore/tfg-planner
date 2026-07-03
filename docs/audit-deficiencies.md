@@ -1,7 +1,7 @@
 # Аудит недостатков TFG Planner
 
-> **Дата:** 2026-06-17  
-> **Статус:** черновик для последующей работы  
+> **Дата:** 2026-07-03 (обновление закрытых пунктов #1–#4, #44)  
+> **Статус:** черновик, актуализирован по коду  
 > **Метод:** статический анализ кода, docs, CI; `npm test` и `npm run build` проходят на момент аудита.
 
 Только подтверждённые проблемы. Спекуляции и «хотелки» без следов в коде исключены.
@@ -10,33 +10,61 @@
 
 ## Критические (ломают данные или могут уронить приложение)
 
-### 1. Импорт `.tfgp` с дублирующимися ID узлов — рёбра не перепривязываются
+### 1. ~~Импорт `.tfgp` с дублирующимися ID узлов — рёбра не перепривязываются~~ **Исправлено**
 
-**Файлы:** `src/stores/editor-utils.ts` (`dedupeNodeIds`), `src/stores/editor-store.ts` (`loadScheme`)
+**Статус:** исправлено. `dedupeSchemeTopology` ремапит `edges` и `targets` при переназначении ID; `loadScheme` вызывает его.
+
+**Файлы:** `src/stores/editor-utils.ts` (`dedupeSchemeTopology`), `src/stores/editor-store.ts` (`loadScheme`)
+
+<details>
+<summary>Исходное описание (архив)</summary>
 
 При импорте дубликаты `node.id` получают новые ID, но `edges` остаются со **старыми** `source`/`target`. Связи становятся битые.
 
-### 2. Слабая валидация импорта `.tfgp`
+</details>
 
-**Файл:** `src/schema/tfgp.ts` (`parseTfgp`)
+### 2. ~~Слабая валидация импорта `.tfgp`~~ **Исправлено**
+
+**Статус:** исправлено. `assertTfgpShape` проверяет `meta`, `nodes`, `edges` и др.; `readTfgpFile` — лимит размера и `onerror`; тесты в `src/schema/tfgp.test.ts`.
+
+**Файлы:** `src/schema/tfgp.ts`, `src/schema/tfgp-validate.ts`, `src/lib/read-tfgp-file.ts`, `src/schema/tfgp.test.ts`
+
+<details>
+<summary>Исходное описание (архив)</summary>
 
 Проверяется только `format` / `formatVersion`. Нет проверки наличия `nodes`, `edges`, `meta`. Отсутствие `nodes` → падение на `data.nodes.map(...)`. Нет лимита размера файла (`FileReader.readAsText` без `onerror` в `src/pages/EditorPage.tsx`).
 
-### 3. NaN в целевой скорости может уронить solver
+</details>
 
-**Файлы:** `src/pages/EditorPage.tsx` (prompt → `Number(v)`), `src/calculator/flow-solver.ts` (`R.from(target.ratePerSecond)`), `src/calculator/rational.ts` (throw на non-finite)
+### 3. ~~NaN в целевой скорости может уронить solver~~ **Исправлено**
+
+**Статус:** исправлено. `parsePositiveRate` отклоняет NaN, non-finite и неположительные значения; UI показывает `editor.rateInvalid`.
+
+**Файлы:** `src/lib/parse-positive-rate.ts`, `src/pages/EditorPage.tsx`
+
+<details>
+<summary>Исходное описание (архив)</summary>
 
 Невалидный ввод в «Целевая скорость» → необработанное исключение при `recalculateScheme`.
+
+</details>
 
 ---
 
 ## Высокие (функциональные дефекты / spec не выполнен)
 
-### 4. Undo не восстанавливает позиции узлов на канвасе
+### 4. ~~Undo не восстанавливает позиции узлов на канвасе~~ **Исправлено**
 
-**Файлы:** `src/lib/merge-flow-nodes.ts`, `src/lib/merge-flow-nodes.test.ts`, `src/canvas/EditorCanvas.tsx`, `src/stores/editor-store.ts`
+**Статус:** исправлено. `mergeFlowNodes` берёт `position` из store, если узел не в drag; тест «applies store position after undo when node is not dragging».
 
-`mergeFlowNodes` всегда сохраняет `position` из React Flow, а не из store. После Ctrl+Z координаты в store меняются, на экране — нет. Тест явно закрепляет это поведение.
+**Файлы:** `src/lib/merge-flow-nodes.ts`, `src/lib/merge-flow-nodes.test.ts`, `src/canvas/EditorCanvas.tsx`
+
+<details>
+<summary>Исходное описание (архив)</summary>
+
+`mergeFlowNodes` всегда сохраняет `position` из React Flow, а не из store. После Ctrl+Z координаты в store меняются, на экране — нет.
+
+</details>
 
 ### 5. Viewport в undo не применяется к канвасу
 
@@ -216,7 +244,7 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 
 | # | Недостаток | Подтверждение |
 |---|-----------|---------------|
-| 44 | Нет тестов `parseTfgp` / round-trip `.tfgp` | нет `tfgp.test.ts` |
+| 44 | ~~Нет тестов `parseTfgp` / round-trip `.tfgp`~~ **Исправлено:** `src/schema/tfgp.test.ts` (round-trip, reject malformed) | `tfgp.test.ts` |
 | 45 | Нет тестов `editor-store.ts` (~566 строк) | только `editor-utils.test.ts` |
 | 46 | Нет тестов `prune-edges`, `pack-store` | — |
 | 47 | Solver: нет тестов cycles, byproducts, разветвления (spec §3.3) | `flow-solver.test.ts` — базовые кейсы |
@@ -247,6 +275,10 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 | Converged edge flows + balance | **Исправлено** (2026-06-17): `computeConvergedFlows`, `nodePortDeficit`, подписи рёбер из `edgeFlows` |
 | Recipe picker сброс при blur без выбора | **Исправлено** (2026-06-17) |
 | Отсутствие `unified` в FlowEdge | **Исправлено** (2026-06-17) |
+| Import dedupe + remap edges (#1) | **Исправлено:** `dedupeSchemeTopology` |
+| parseTfgp validation + import error handling (#2) | **Исправлено:** `assertTfgpShape`, `readTfgpFile`, `tfgp.test.ts` |
+| NaN guard на target rate (#3) | **Исправлено:** `parsePositiveRate` |
+| Undo positions (#4) | **Исправлено:** `mergeFlowNodes` + drag guard |
 | `gt-multiblock.ts` «мёртвый модуль» | используется **парсером**, не app |
 
 ---
@@ -255,15 +287,13 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 
 ### P0 — критично
 
-1. Import dedupe + remap edges (#1)
-2. parseTfgp validation + import error handling (#2)
-3. NaN guard на target rate (#3)
+_Все пункты закрыты (#1–#3). Актуальные P0 — см. открытые высокие (#5–#11)._
 
 ### P1 — следующий спринт
 
-4. Undo positions (#4)
-5. Legacy port normalization everywhere (#8)
-6. Bidirectional flow editing (#6)
+1. Legacy port normalization everywhere (#8)
+2. Bidirectional flow editing (#6)
+3. Viewport undo (#5)
 
 ### P2 — backlog / polish
 
