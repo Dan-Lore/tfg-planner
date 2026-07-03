@@ -45,7 +45,6 @@ const scheme: TfgpFile = {
       recipeId: 'tower',
       machineCount: 1,
       overclock: 1,
-      parallel: 1,
       voltageTier: 'LV',
       position: { x: 0, y: 0 },
     },

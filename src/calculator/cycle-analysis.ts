@@ -49,7 +49,6 @@ export interface CycleAnalysisNode {
   recipeId?: string;
   machineCount?: number;
   overclock?: number;
-  parallel?: number;
   voltageTier?: VoltageTier;
   itemId?: string;
   fluidId?: string;
@@ -64,7 +63,6 @@ function asSolverNode(node: CycleAnalysisNode): SchemeNode {
     recipeId: node.recipeId ?? '',
     machineCount: node.machineCount ?? 1,
     overclock: node.overclock ?? 1,
-    parallel: node.parallel ?? 1,
     voltageTier: node.voltageTier ?? 'LV',
     itemId: node.itemId,
     fluidId: node.fluidId,

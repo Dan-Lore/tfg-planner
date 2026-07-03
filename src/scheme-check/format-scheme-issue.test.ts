@@ -37,7 +37,6 @@ const nodes = [
     recipeId: 'tfg:electrolyze_syngas@lcr',
     machineCount: 1,
     overclock: 1,
-    parallel: 1,
     voltageTier: 'LV' as const,
     position: { x: 0, y: 0 },
   },

@@ -35,7 +35,6 @@ function machineRfSig(
     n.recipeId,
     n.machineCount,
     n.overclock,
-    n.parallel,
     n.voltageTier,
     inputPortIds.join(','),
     outputPortIds.join(','),
@@ -74,10 +73,9 @@ function buildMachineRfNode(
   n: TfgpNode & {
     machineId: string;
     recipeId: string;
-    machineCount: number;
-    overclock: number;
-    parallel: number;
-    voltageTier: string;
+  machineCount: number;
+  overclock: number;
+  voltageTier: string;
     position: { x: number; y: number };
   },
   ctx: StableRfNodeBuildContext,
@@ -101,7 +99,6 @@ function buildMachineRfNode(
       recipeId: n.recipeId,
       machineCount: n.machineCount,
       overclock: n.overclock,
-      parallel: n.parallel,
       voltageTier: n.voltageTier,
       pack: ctx.pack,
       checkSeverity: ctx.checkSeverity,

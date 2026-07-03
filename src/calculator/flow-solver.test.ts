@@ -56,7 +56,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV' as const,
-          parallel: 1,
         },
         {
           id: 'b',
@@ -65,7 +64,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV' as const,
-          parallel: 1,
         },
       ],
       edges: [
@@ -105,7 +103,6 @@ describe('solveFlows', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV' as const,
-      parallel: 1,
     };
 
     const one = solveFlows({
@@ -149,7 +146,6 @@ describe('solveFlows', () => {
       machineCount: 4,
       overclock: 1,
       voltageTier: 'LV' as const,
-      parallel: 1,
     };
 
     const preserved = solveFlows({
@@ -207,7 +203,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV' as const,
-          parallel: 1,
         },
         {
           id: 'pyro',
@@ -216,7 +211,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV' as const,
-          parallel: 1,
         },
       ],
       edges: [
@@ -280,7 +274,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV' as const,
-          parallel: 1,
         },
       ],
       edges: [],
@@ -301,7 +294,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'b',
@@ -310,7 +302,6 @@ describe('solveFlows', () => {
           machineCount: 3,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -371,7 +362,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'mix',
@@ -380,7 +370,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -413,7 +402,6 @@ describe('solveFlows', () => {
           machineCount: 2,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'b',
@@ -422,7 +410,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -462,7 +449,6 @@ describe('solveFlows', () => {
           machineCount: 2,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'b',
@@ -471,7 +457,6 @@ describe('solveFlows', () => {
           machineCount: 2,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'c',
@@ -480,7 +465,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -540,7 +524,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'loop',
@@ -549,7 +532,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -623,7 +605,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'elec',
@@ -632,7 +613,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'HV',
-          parallel: 1,
         },
         {
           id: 'co2sink',
@@ -641,7 +621,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'h2sink',
@@ -650,7 +629,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'dustsink',
@@ -659,7 +637,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -754,7 +731,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'distill',
@@ -763,7 +739,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'cons',
@@ -772,7 +747,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -842,7 +816,6 @@ describe('solveFlows', () => {
           machineCount: 10,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'elec',
@@ -851,7 +824,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'HV',
-          parallel: 1,
         },
         {
           id: 'co2sink',
@@ -860,7 +832,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'h2sink',
@@ -869,7 +840,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'dustsink',
@@ -878,7 +848,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -984,7 +953,6 @@ describe('solveFlows', () => {
           machineCount: 10,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'proc',
@@ -993,7 +961,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'h2sink',
@@ -1002,7 +969,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'dustsink',
@@ -1011,7 +977,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -1063,7 +1028,6 @@ describe('solveFlows', () => {
           machineCount: 2,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'b',
@@ -1072,7 +1036,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [
@@ -1157,7 +1120,6 @@ describe('solveFlows', () => {
           machineCount: 10,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'elec',
@@ -1166,7 +1128,6 @@ describe('solveFlows', () => {
           machineCount: 1,
           overclock: 1,
           voltageTier: 'HV',
-          parallel: 1,
         },
         {
           id: 'tower',
@@ -1175,7 +1136,6 @@ describe('solveFlows', () => {
           machineCount: 84,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'co2sink',
@@ -1184,7 +1144,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
         {
           id: 'resink',
@@ -1193,7 +1152,6 @@ describe('solveFlows', () => {
           machineCount: 100,
           overclock: 1,
           voltageTier: 'LV',
-          parallel: 1,
         },
       ],
       edges: [

@@ -25,7 +25,6 @@
       "position": { "x": 2456.891791034288, "y": 183.02630446431914 },
       "machineCount": 6,
       "overclock": 1,
-      "parallel": 1,
       "voltageTier": "HV"
     },
     {
@@ -38,7 +37,6 @@
       "supplyRate": 0,
       "autoSupplyRate": true,
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -48,7 +46,6 @@
       "position": { "x": 2021.3349913131628, "y": 185.09170241305947 },
       "machineCount": 1,
       "overclock": 1,
-      "parallel": 1,
       "voltageTier": "HV"
     },
     {
@@ -58,7 +55,6 @@
       "position": { "x": 2464.604468612427, "y": 378.40873801902336 },
       "machineCount": 1,
       "overclock": 1,
-      "parallel": 1,
       "voltageTier": "HV"
     },
     {

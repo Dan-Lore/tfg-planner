@@ -3,12 +3,11 @@ import { isMachineNode } from '@/lib/node-kind';
 import type { TfgpMachineNode } from '@/schema/tfgp';
 import { normalizeNodeScaling, type RawTfgpNode } from './node-scaling';
 
-type LegacyMachineNode = TfgpMachineNode & { outputMultiplier?: number };
+type LegacyMachineNode = TfgpMachineNode & { outputMultiplier?: number; parallel?: number };
 
 function machineInput(overrides: Partial<LegacyMachineNode> & Pick<TfgpMachineNode, 'id' | 'machineId' | 'recipeId' | 'position'>): RawTfgpNode {
   return {
     machineCount: 1,
-    parallel: 1,
     overclock: 1,
     voltageTier: 'LV',
     ...overrides,
@@ -28,7 +27,7 @@ describe('node-scaling', () => {
       }),
     );
     expect(isMachineNode(normalized) && normalized.machineCount).toBe(6);
-    expect(isMachineNode(normalized) && normalized.parallel).toBe(1);
+    expect(normalized).not.toHaveProperty('parallel');
     expect(normalized).not.toHaveProperty('outputMultiplier');
   });
 

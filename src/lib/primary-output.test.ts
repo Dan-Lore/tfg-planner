@@ -21,7 +21,6 @@ const node: SchemeNode = {
   recipeId: 'r1',
   machineCount: 1,
   overclock: 1,
-  parallel: 1,
   voltageTier: 'LV',
   primaryOutputIndex: 1,
 };

@@ -20,7 +20,6 @@ const node: TfgpMachineNode = {
   machineCount: 4,
   overclock: 1,
   voltageTier: 'LV',
-  parallel: 1,
 };
 
 const result = emptyFlowResult({
@@ -71,7 +70,6 @@ describe('dedupeSchemeTopology', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV' as const,
-      parallel: 1,
     };
     const nodes = [
       { id: 'node_3', ...base, machineId: 'reactor' },
@@ -102,7 +100,6 @@ describe('dedupeSchemeTopology', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV' as const,
-      parallel: 1,
     };
     const nodes = [
       { id: 'node_1', ...base },
@@ -135,7 +132,6 @@ describe('dedupeNodeIds', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV' as const,
-      parallel: 1,
     };
     const nodes: TfgpMachineNode[] = [
       { id: 'node_3', ...base, machineId: 'reactor' },
@@ -157,7 +153,6 @@ describe('normalizeSchemeNodes', () => {
       position: { x: 0, y: 0 },
       machineCount: 1,
       overclock: 1,
-      parallel: 1,
     } as TfgpMachineNode;
     const [normalized] = normalizeSchemeNodes([legacy]);
     expect(isMachineNode(normalized) && normalized.voltageTier).toBe('LV');

@@ -95,7 +95,6 @@ const resources = {
         portOutLoadOpenTitle: '{{load}} · порт не подключён, производится {{produced}}',
         voltageTier: 'Tier',
         energyHatchCount: 'Energy hatches',
-        parallel: 'Параллель',
         apply: 'Применить',
         ratePrompt: 'Скорость в секунду',
         rateInvalid: 'Введите положительное число',
@@ -380,7 +379,6 @@ const resources = {
         portOutConsumerDemandTitle:
           'Supplies {{load}} of downstream port demand · {{sent}} of {{demand}}',
         portOutLoadOpenTitle: '{{load}} · port open, produces {{produced}}',
-        parallel: 'Parallel',
         apply: 'Apply',
         ratePrompt: 'Rate per second',
         rateInvalid: 'Enter a positive number',

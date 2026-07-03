@@ -24,7 +24,6 @@ const baseNode: TfgpMachineNode = {
   recipeId: 'r1',
   voltageTier: 'LV',
   overclock: 1,
-  parallel: 1,
   machineCount: 1,
 };
 

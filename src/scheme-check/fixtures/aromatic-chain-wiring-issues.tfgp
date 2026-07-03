@@ -26,7 +26,6 @@
         "y": 109.72248972223679
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 2,
       "id": "node_22",
       "voltageTier": "HV"
@@ -39,7 +38,6 @@
         "y": -123.59028602866115
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 4,
       "id": "node_24",
       "voltageTier": "LV"
@@ -54,7 +52,6 @@
       },
       "machineCount": 2,
       "overclock": 1,
-      "parallel": 1,
       "voltageTier": "MV"
     },
     {
@@ -65,7 +62,6 @@
         "y": 40.989487959162304
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 48,
       "id": "node_36",
       "voltageTier": "MV"
@@ -78,7 +74,6 @@
         "y": 137.65663791871967
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 1,
       "id": "node_37",
       "voltageTier": "EV"
@@ -91,7 +86,6 @@
         "y": 135.29075081927377
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 16,
       "id": "node_44",
       "voltageTier": "LV"
@@ -104,7 +98,6 @@
         "y": -143.11530099834718
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 16,
       "id": "node_49",
       "voltageTier": "LV"
@@ -119,7 +112,6 @@
       },
       "machineCount": 1,
       "overclock": 1,
-      "parallel": 1,
       "voltageTier": "HV"
     },
     {
@@ -135,7 +127,6 @@
       "supplyRate": 0,
       "autoSupplyRate": true,
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -151,7 +142,6 @@
       "supplyRate": 0,
       "autoSupplyRate": true,
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -167,7 +157,6 @@
       "supplyRate": 0,
       "autoSupplyRate": true,
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -180,7 +169,6 @@
       "capacity": 0,
       "kind": "end_buffer",
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -196,7 +184,6 @@
       "supplyRate": 0,
       "autoSupplyRate": true,
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -207,7 +194,6 @@
         "y": -108.31195961948131
       },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 2,
       "id": "node_72",
       "voltageTier": "HV"
@@ -225,7 +211,6 @@
       "supplyRate": 0,
       "autoSupplyRate": true,
       "machineCount": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {
@@ -238,7 +223,6 @@
       },
       "machineCount": 4,
       "overclock": 1,
-      "parallel": 1,
       "voltageTier": "LV"
     },
     {

@@ -7,6 +7,8 @@ import { clampNonNegativeInt } from '@/lib/buffer-defaults';
 /** Raw node from `.tfgp` JSON; may include legacy fields stripped on import. */
 export type RawTfgpNode = TfgpNode & {
   outputMultiplier?: number;
+  /** Legacy: merged into machineCount on import. */
+  parallel?: number;
 };
 
 export function normalizeBufferNode(node: TfgpNode): TfgpNode {
@@ -44,13 +46,12 @@ export function normalizeNodeScaling(node: RawTfgpNode): TfgpNode {
   if (outputMultiplier != null && outputMultiplier !== 1) {
     machineCount = Math.max(1, Math.ceil(machineCount * outputMultiplier));
   }
-  const { outputMultiplier: _om, ...rest } = node;
+  const { outputMultiplier: _om, parallel: _parallel, ...rest } = node;
   const voltageTier: VoltageTier = rest.voltageTier ?? 'LV';
   return normalizeNodeVoltage(
     {
       ...rest,
       machineCount,
-      parallel: 1,
       voltageTier,
     },
     undefined,

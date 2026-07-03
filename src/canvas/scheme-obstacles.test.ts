@@ -26,7 +26,6 @@ describe('buildSchemeObstacleRects', () => {
       recipeId: 'r1',
       machineCount: 1,
       overclock: 1,
-      parallel: 1,
       voltageTier: 'LV',
       position: { x: 100, y: 50 },
     };
@@ -45,7 +44,6 @@ describe('buildSchemeObstacleRects', () => {
       recipeId: 'r1',
       machineCount: 1,
       overclock: 1,
-      parallel: 1,
       voltageTier: 'LV',
       position: { x: 0, y: 0 },
     };
@@ -63,7 +61,6 @@ describe('buildSchemeObstacleRects', () => {
       recipeId: 'r1',
       machineCount: 1,
       overclock: 1,
-      parallel: 1,
       voltageTier: 'LV',
       position: { x: 0, y: 0 },
     };

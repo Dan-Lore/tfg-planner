@@ -27,7 +27,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 2,
       "id": "node_22"
     },
@@ -40,7 +39,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 1,
       "id": "node_23"
     },
@@ -53,7 +51,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 2,
       "id": "node_24"
     },
@@ -102,7 +99,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 1,
       "id": "node_36"
     },
@@ -115,7 +111,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 1,
       "id": "node_37"
     },
@@ -128,7 +123,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 1,
       "id": "node_44"
     },
@@ -141,7 +135,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 1,
       "id": "node_49"
     },
@@ -166,7 +159,6 @@
       },
       "overclock": 1,
       "voltageTier": "LV",
-      "parallel": 1,
       "machineCount": 2,
       "id": "node_53"
     }

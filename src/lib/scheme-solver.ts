@@ -36,7 +36,6 @@ export function runSolver(
           recipeId: '',
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
           itemId: n.itemId,
           fluidId: n.fluidId,
@@ -59,7 +58,6 @@ export function runSolver(
         recipeId: normalized.recipeId,
         machineCount: normalized.machineCount,
         overclock: normalized.overclock,
-        parallel: normalized.parallel,
         voltageTier: normalized.voltageTier,
       };
     }),

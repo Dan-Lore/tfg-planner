@@ -50,11 +50,11 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 
 Есть только «Целевая скорость» (режим C). Нельзя менять скорость на ребре/входе и пересчитать всю схему — ключевое требование spec открыто.
 
-### 7. Поле `parallel` в схеме не участвует в расчётах
+### 7. ~~Поле `parallel` в схеме~~ — удалено
 
-**Файлы:** `src/schema/tfgp.ts`, `src/calculator/flow-solver.ts`
+**Статус:** закрыто. Поле `parallel` убрано из канонической модели узла; масштаб только через `machineCount`. При импорте legacy `.tfgp` значение `parallel` умножает `machineCount` в `normalizeNodeScaling` и не сохраняется в узле.
 
-Поле есть в узле и передаётся в solver input, но внутри `solveFlows` не читается. Масштаб через parallel в runtime не работает.
+**Файлы:** `src/lib/node-scaling.ts`, `src/schema/tfgp-types.ts`
 
 ### 8. Legacy port ID (`input_*` / `output_*`) ломают валидацию и pruning
 

@@ -37,7 +37,6 @@ const mixer: TfgpMachineNode = {
   machineCount: 2,
   overclock: 1,
   voltageTier: 'LV',
-  parallel: 1,
 };
 
 describe('buildEdgeFlowData', () => {
@@ -191,7 +190,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
 
     const edges: TfgpEdge[] = [
@@ -248,7 +246,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
     const mixer1: TfgpMachineNode = {
       id: 'mixer1',
@@ -258,7 +255,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
     const mixer2: TfgpMachineNode = {
       id: 'mixer2',
@@ -268,7 +264,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
 
     const edges: TfgpEdge[] = [
@@ -378,7 +373,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
     const pyro: TfgpMachineNode = {
       id: 'pyro',
@@ -388,7 +382,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
 
     const edges: TfgpEdge[] = [
@@ -467,7 +460,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
     const pyro1: TfgpMachineNode = {
       id: 'pyro1',
@@ -477,7 +469,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
     const pyro2: TfgpMachineNode = {
       id: 'pyro2',
@@ -487,7 +478,6 @@ describe('buildEdgeFlowData', () => {
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
     };
 
     const edges: TfgpEdge[] = [

@@ -28,7 +28,6 @@ describe('pruneInvalidEdges', () => {
         position: { x: 0, y: 0 },
         voltageTier: 'LV' as const,
         overclock: 1,
-        parallel: 1,
         machineCount: 1,
       },
     ];

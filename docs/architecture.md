@@ -60,7 +60,7 @@
 
 ### 2.4. Canvas Editor
 
-- Узлы: машина + рецепт + **ручные** overclock / parallel.
+- Узлы: машина + рецепт + **ручные** overclock / `machineCount`.
 - Рёбра: `item` | `fluid` (energy edge — когда K-003 готов).
 - React Flow; drag-позиции живут в `EditorCanvas`, в store пишутся на `dragEnd`.
 - **Слои данных:** static `rfNodes` (топология, scaling, callbacks через `EditorNodeActionsContext`); dynamic display (rates, load, balance) — `NodeDisplayContext` keyed by `nodeId`; flow tick не пересобирает callbacks.
@@ -81,7 +81,7 @@
          │  User edits:                        │
          │  · target rate (mode C)             │
          │  · rate on any edge                 │
-         │  · recipe / OC / parallel / count   │
+         │  · recipe / OC / machineCount       │
          └─────────────────┬───────────────────┘
                            ▼
               ┌────────────────────────┐

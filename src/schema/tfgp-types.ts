@@ -32,7 +32,6 @@ export interface TfgpMachineNode extends TfgpNodeBase {
   recipeId: string;
   voltageTier: VoltageTier;
   overclock: number;
-  parallel: number;
   machineCount: number;
   /** Output port index (0-based) used for backward machine-count pass; default 0. */
   primaryOutputIndex?: number;

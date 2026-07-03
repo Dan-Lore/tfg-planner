@@ -69,8 +69,8 @@ describe('findCycleComponents', () => {
   it('finds a multi-node SCC', () => {
     const components = findCycleComponents(
       [
-        { id: 'a', machineId: 'm', recipeId: 'pass', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'LV' },
-        { id: 'b', machineId: 'm', recipeId: 'pass', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'LV' },
+        { id: 'a', machineId: 'm', recipeId: 'pass', machineCount: 1, overclock: 1, voltageTier: 'LV' },
+        { id: 'b', machineId: 'm', recipeId: 'pass', machineCount: 1, overclock: 1, voltageTier: 'LV' },
       ],
       [
         { id: 'e1', source: 'a', target: 'b', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'x' },
@@ -84,8 +84,8 @@ describe('findCycleComponents', () => {
   it('includes intermediate buffers in cycle graph', () => {
     const components = findCycleComponents(
       [
-        { id: 'a', machineId: 'm', recipeId: 'pass', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'LV' },
-        { id: 'buf', kind: 'intermediate_buffer', itemId: 'x', machineId: '', recipeId: '', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'LV' },
+        { id: 'a', machineId: 'm', recipeId: 'pass', machineCount: 1, overclock: 1, voltageTier: 'LV' },
+        { id: 'buf', kind: 'intermediate_buffer', itemId: 'x', machineId: '', recipeId: '', machineCount: 1, overclock: 1, voltageTier: 'LV' },
       ],
       [
         { id: 'e1', source: 'a', target: 'buf', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'x' },
@@ -105,7 +105,6 @@ describe('analyzeCycles', () => {
         recipeId: 'reformed',
         machineCount: 1,
         overclock: 1,
-        parallel: 1,
         voltageTier: 'HV' as const,
       },
       {
@@ -114,7 +113,6 @@ describe('analyzeCycles', () => {
         recipeId: 'recycle',
         machineCount: 1,
         overclock: 1,
-        parallel: 1,
         voltageTier: 'HV' as const,
       },
     ];
@@ -128,7 +126,6 @@ describe('analyzeCycles', () => {
           recipeId: 'cracker',
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'HV',
         },
         {
@@ -141,7 +138,6 @@ describe('analyzeCycles', () => {
           recipeId: '',
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
         {
@@ -154,7 +150,6 @@ describe('analyzeCycles', () => {
           recipeId: '',
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
         {
@@ -165,7 +160,6 @@ describe('analyzeCycles', () => {
           recipeId: '',
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
         {
@@ -176,7 +170,6 @@ describe('analyzeCycles', () => {
           recipeId: '',
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
       ],
@@ -196,9 +189,9 @@ describe('analyzeCycles', () => {
     const analysis = analyzeCycles(
       flowResult.nodeMachineCounts
         ? [
-            { id: 'lcr', machineId: 'lcr', recipeId: 'reformed', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'HV' },
-            { id: 'cr', machineId: 'cracker', recipeId: 'cracker', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'HV' },
-            { id: 'el', machineId: 'elec', recipeId: 'recycle', machineCount: 1, overclock: 1, parallel: 1, voltageTier: 'HV' },
+            { id: 'lcr', machineId: 'lcr', recipeId: 'reformed', machineCount: 1, overclock: 1, voltageTier: 'HV' },
+            { id: 'cr', machineId: 'cracker', recipeId: 'cracker', machineCount: 1, overclock: 1, voltageTier: 'HV' },
+            { id: 'el', machineId: 'elec', recipeId: 'recycle', machineCount: 1, overclock: 1, voltageTier: 'HV' },
           ]
         : [],
       [

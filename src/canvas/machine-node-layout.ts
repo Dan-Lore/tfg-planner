@@ -178,7 +178,6 @@ export function computeNaturalLayoutWidthForMachineNode(
     recipeId: node.recipeId,
     machineCount: node.machineCount,
     overclock: node.overclock,
-    parallel: node.parallel,
     voltageTier: node.voltageTier as VoltageTier,
     pack: input.pack,
     inputPorts,

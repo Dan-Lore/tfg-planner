@@ -18,7 +18,6 @@ export interface SchemeNode {
   recipeId: string;
   machineCount: number;
   overclock: number;
-  parallel: number;
   primaryOutputIndex?: number;
   voltageTier: VoltageTier;
   itemId?: string;

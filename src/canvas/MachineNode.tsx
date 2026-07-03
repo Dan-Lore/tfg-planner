@@ -45,7 +45,6 @@ export interface MachineNodeData {
   recipeId: string;
   machineCount: number;
   overclock: number;
-  parallel: number;
   voltageTier: VoltageTier;
   pack: PackLike;
   inputPorts?: PortDisplay[];

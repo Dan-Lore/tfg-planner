@@ -49,7 +49,6 @@ function stubData(
   return {
     machineCount: 1,
     overclock: 1,
-    parallel: 1,
     voltageTier: 'LV',
     pack,
     onRecipeChange: () => {},
@@ -105,7 +104,6 @@ describe('buildMachineNodeLayoutWidths', () => {
           position: { x: 0, y: 0 },
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
         {
@@ -115,7 +113,6 @@ describe('buildMachineNodeLayoutWidths', () => {
           position: { x: 200, y: 0 },
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
         {
@@ -125,7 +122,6 @@ describe('buildMachineNodeLayoutWidths', () => {
           position: { x: 0, y: 200 },
           machineCount: 1,
           overclock: 1,
-          parallel: 1,
           voltageTier: 'LV',
         },
       ],

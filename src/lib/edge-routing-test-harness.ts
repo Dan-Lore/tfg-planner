@@ -19,11 +19,9 @@ import {
   getRoutedSmoothStepPath,
   pathCrossesNodeBody,
   pathHitsThirdPartyObstacles,
-  pathHitsThirdPartyObstacles,
   type EdgeRouteEndpoints,
   type RoutingObstacle,
 } from '@/lib/edge-routing';
-import { buildEdgeRoutePlan } from '@/lib/edge-route-plan';
 import { minCorridorSeparation } from '@/lib/edge-route-lanes';
 import { loadTestPack } from '@/test-fixtures/load-test-pack';
 import type { TfgpBufferKind } from '@/schema/tfgp';
@@ -105,7 +103,6 @@ export function makeMachineNode(
       machineCount: 1,
       overclock: 1,
       voltageTier: 'LV',
-      parallel: 1,
       onRecipeChange: () => {},
       onMachineCountChange: () => {},
       onOverclockChange: () => {},

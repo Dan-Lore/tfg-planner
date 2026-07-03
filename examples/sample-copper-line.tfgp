@@ -20,7 +20,6 @@
       "recipeId": "tfg:macerate_copper_ore",
       "position": { "x": 0, "y": 80 },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 1
     },
     {
@@ -29,7 +28,6 @@
       "recipeId": "tfg:wash_crushed_copper",
       "position": { "x": 280, "y": 80 },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 1
     },
     {
@@ -38,7 +36,6 @@
       "recipeId": "tfg:smelt_purified_copper",
       "position": { "x": 560, "y": 80 },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 1
     }
   ],

@@ -38,7 +38,6 @@
       "recipeId": "gt:ebf_copper",
       "position": { "x": 100, "y": 200 },
       "overclock": 1,
-      "parallel": 1,
       "machineCount": 1,
       "label": ""
     },
@@ -101,10 +100,9 @@
 | `recipeId` | string | Активный рецепт |
 | `position` | `{x, y}` | Координаты на холсте |
 | `overclock` | number | Множитель скорости (если применимо) |
-| `parallel` | number | Параллельность (если применимо) |
 | `machineCount` | integer | Количество машин, которое представляет узел; **≥ 1**, целое после каждого пересчёта |
 
-**Миграция:** при импорте `.tfgp` с устаревшим полем `outputMultiplier` (≠ 1) значение сворачивается в `machineCount` через `ceil(machineCount × outputMultiplier)`; поле удаляется из узла.
+**Миграция:** при импорте `.tfgp` с устаревшим полем `outputMultiplier` (≠ 1) значение сворачивается в `machineCount` через `ceil(machineCount × outputMultiplier)`; поле удаляется из узла. Устаревшее поле `parallel` (≠ 1) умножает `machineCount` и также удаляется из узла.
 
 ### edges
 

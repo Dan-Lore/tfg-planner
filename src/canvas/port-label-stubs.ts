@@ -195,7 +195,6 @@ export function machineNodeLayoutSigFragment(
     node.recipeId,
     node.machineCount,
     node.overclock,
-    node.parallel,
     node.voltageTier,
     recipeReady,
     portLabels,

@@ -34,7 +34,6 @@ describe('buildStableRfNodes', () => {
         position: { x: 0, y: 0 },
         machineCount: 1,
         overclock: 1,
-        parallel: 1,
         voltageTier: 'LV' as const,
       },
       {
@@ -44,7 +43,6 @@ describe('buildStableRfNodes', () => {
         position: { x: 240, y: 0 },
         machineCount: 1,
         overclock: 1,
-        parallel: 1,
         voltageTier: 'LV' as const,
       },
     ];
@@ -71,7 +69,6 @@ describe('buildStableRfNodes', () => {
         position: { x: 0, y: 0 },
         machineCount: 1,
         overclock: 1,
-        parallel: 1,
         voltageTier: 'LV' as const,
       },
       {
@@ -81,7 +78,6 @@ describe('buildStableRfNodes', () => {
         position: { x: 240, y: 0 },
         machineCount: 1,
         overclock: 1,
-        parallel: 1,
         voltageTier: 'LV' as const,
       },
     ];

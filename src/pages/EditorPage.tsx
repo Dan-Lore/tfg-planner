@@ -815,7 +815,6 @@ export function EditorPage() {
         recipeId: firstRecipe.id,
         position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
         overclock: 1,
-        parallel: 1,
         machineCount: 1,
         voltageTier: firstRecipe.energy?.minVoltageTier ?? 'LV',
       });

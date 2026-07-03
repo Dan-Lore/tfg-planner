@@ -12,6 +12,10 @@
 ### Changed
 - Scheme check: removed `stalled_machine` warnings (covered by `cycle_not_running`, `disconnected_output`, etc.)
 - Scheme check UX: issue list in inspector; minimap highlights selection; double-click issue pans to node (zoom unchanged)
+- Node scaling: removed `parallel` from scheme node model; scale only via `machineCount`. Legacy `.tfgp` import merges `parallel` into `machineCount` on load.
+
+### Removed
+- Scheme node field `parallel` (breaking for hand-edited JSON; backward-compatible import via `normalizeNodeScaling`)
 
 ### Fixed
 - Edge routing: obstacle avoidance for buffer + machine cards; parallel lane gap (`PARALLEL_EDGE_GAP = 4`) between edges sharing a route corridor segment (`edge-route-lanes.ts`, batch plan in canvas). Fixtures: `rebra-rhenium-loop.tfgp`, extended `benzene-distillation-lcr-gap` integration tests.

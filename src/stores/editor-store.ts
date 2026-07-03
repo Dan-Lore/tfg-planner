@@ -13,7 +13,6 @@ import {
   seedIdCounter,
   type EditorSnapshot,
 } from './editor-utils';
-import { normalizeNodeScaling } from '@/lib/node-scaling';
 import { shouldApplyFlowResult } from '@/lib/flow-compute-guard';
 import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
@@ -495,7 +494,6 @@ export const useEditorStore = create<EditorState>()(
             id,
             machineCount: partial.machineCount ?? 1,
             overclock: partial.overclock ?? 1,
-            parallel: partial.parallel ?? 1,
             voltageTier:
               partial.voltageTier ??
               (recipe ? defaultVoltageTierForRecipe(recipe) : 'LV'),
@@ -545,9 +543,6 @@ export const useEditorStore = create<EditorState>()(
               }
               if (!isMachineNode(n)) return n;
               let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
-              if ('parallel' in patch && patch.parallel != null) {
-                next = normalizeNodeScaling(next) as TfgpMachineNode;
-              }
               if ('recipeId' in patch && patch.recipeId && pack) {
                 const recipe = getRecipe(pack, patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };
@@ -631,7 +626,6 @@ export const useEditorStore = create<EditorState>()(
             position: params.position,
             machineCount: 1,
             overclock: 1,
-            parallel: 1,
             voltageTier: 'LV',
           },
           usePackStore.getState().activePack
