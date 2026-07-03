@@ -165,6 +165,35 @@ describe('edgePathNeedsObstacleRouting', () => {
 
     expect(edgePathNeedsObstacleRouting(forwardEdge, [distant], routing)).toBe(false);
   });
+
+  it('routes when default path would cut through the target node body', () => {
+    const stackedEdge: EdgeRouteEndpoints = {
+      sourceX: 320,
+      sourceY: 120,
+      targetX: 120,
+      targetY: 280,
+      sourcePosition: Position.Right,
+      targetPosition: Position.Left,
+    };
+    const targetBody = obstacle('tgt', {
+      left: 80,
+      top: 220,
+      right: 280,
+      bottom: 360,
+    });
+
+    expect(edgePathNeedsObstacleRouting(stackedEdge, [targetBody], routing)).toBe(true);
+    const { waypoints } = getRoutedSmoothStepPath(stackedEdge, [targetBody], routing);
+    const horizontalYs = new Set<number>();
+    for (let i = 0; i < waypoints.length - 1; i++) {
+      const a = waypoints[i]!;
+      const b = waypoints[i + 1]!;
+      if (a.y === b.y) horizontalYs.add(a.y);
+    }
+    const routedAbove = [...horizontalYs].some((y) => y <= targetBody.rect.top);
+    const routedBelow = [...horizontalYs].some((y) => y >= targetBody.rect.bottom);
+    expect(routedAbove || routedBelow).toBe(true);
+  });
 });
 
 describe('pointOnPolyline', () => {

@@ -14,6 +14,8 @@
 - Scheme check UX: issue list in inspector; minimap highlights selection; double-click issue pans to node (zoom unchanged)
 
 ### Fixed
+- Edge routing: obstacle avoidance for buffer + machine cards; parallel lane gap (`PARALLEL_EDGE_GAP = 4`) between edges sharing a route corridor segment (`edge-route-lanes.ts`, batch plan in canvas). Fixtures: `rebra-rhenium-loop.tfgp`, extended `benzene-distillation-lcr-gap` integration tests.
+- Edge routing: overlapping source/target cards (e.g. rebra `edge_140`) route above both endpoint bodies, not only above target.
 - Solver: `portInputDemandRate` applies GT chance multiplier on chanced inputs (symmetric with outputs)
 
 ## [0.2.0] — 2026-06-30

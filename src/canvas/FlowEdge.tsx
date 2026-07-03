@@ -11,10 +11,16 @@ import {
 } from '@/lib/bezier-edge-label';
 import {
   edgePathNeedsObstacleRouting,
+  buildSmoothStepRoute,
   getRoutedSmoothStepPath,
+  pathCrossesNodeBody,
+  pathHitsThirdPartyObstacles,
+  DEFAULT_EDGE_OFFSET,
   type EdgeRouteEndpoints,
 } from '@/lib/edge-routing';
+import { applyParallelOffset } from '@/lib/edge-route-plan';
 import { useObstacleRects } from '@/canvas/obstacle-rects-context';
+import { useEdgeRoutePlanEntry } from '@/canvas/use-edge-route-plan';
 import type { FlowEdgeData } from '@/lib/flow-edge-types';
 
 export type { FlowEdgeData } from '@/lib/flow-edge-types';
@@ -69,6 +75,7 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
 }: EdgeProps) {
   const [hovered, setHovered] = useState(false);
   const { obstacles, skipObstacleRouting } = useObstacleRects();
+  const routePlan = useEdgeRoutePlanEntry(id);
   const d = (data ?? {}) as FlowEdgeData;
   const emphasized = selected || hovered;
   const issueStroke =
@@ -97,18 +104,55 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
   );
 
   const routed = useMemo(() => {
-    if (
-      skipObstacleRouting ||
-      !edgePathNeedsObstacleRouting(endpoints, obstacles, routingOptions)
-    ) {
+    if (skipObstacleRouting) {
       return buildBezierRoute(endpoints, d.source, d.target);
     }
 
-    const { path, waypoints } = getRoutedSmoothStepPath(
+    if (!edgePathNeedsObstacleRouting(endpoints, obstacles, routingOptions)) {
+      return buildBezierRoute(endpoints, d.source, d.target);
+    }
+
+    const { center: liveCenter } = getRoutedSmoothStepPath(
       endpoints,
       obstacles,
       routingOptions,
     );
+    let center = liveCenter;
+    if (
+      routePlan?.parallelOffset &&
+      (routePlan.parallelOffset.centerX !== undefined ||
+        routePlan.parallelOffset.centerY !== undefined)
+    ) {
+      const shifted = applyParallelOffset(liveCenter, routePlan.parallelOffset);
+      const routeHits = (candidate: typeof liveCenter) =>
+        pathHitsThirdPartyObstacles(
+          endpoints,
+          candidate,
+          obstacles,
+          DEFAULT_EDGE_OFFSET,
+          routingOptions,
+        ) +
+        pathCrossesNodeBody(
+          endpoints,
+          candidate,
+          source,
+          obstacles,
+          DEFAULT_EDGE_OFFSET,
+          routingOptions,
+        ) +
+        pathCrossesNodeBody(
+          endpoints,
+          candidate,
+          target,
+          obstacles,
+          DEFAULT_EDGE_OFFSET,
+          routingOptions,
+        );
+      if (routeHits(shifted) <= routeHits(liveCenter)) {
+        center = shifted;
+      }
+    }
+    const { path, waypoints } = buildSmoothStepRoute(endpoints, center);
     return {
       path,
       sourceLabel: edgeLabelPositionOnWaypoints(
@@ -129,6 +173,7 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
     obstacles,
     routingOptions,
     skipObstacleRouting,
+    routePlan,
     d.source,
     d.target,
   ]);
@@ -149,7 +194,15 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
         interactionWidth={18}
         style={{
           ...style,
-          strokeWidth: selected ? 2.5 : issueStroke ? 2.25 : hovered ? 2 : undefined,
+          strokeWidth: selected
+            ? 2.5
+            : issueStroke
+              ? hovered
+                ? 2.5
+                : 2.25
+              : hovered
+                ? 2
+                : undefined,
           stroke: issueStroke ?? (emphasized ? 'var(--accent)' : undefined),
           strokeDasharray: d.checkSeverity === 'warning' ? '7 5' : undefined,
           transition: 'stroke 0.15s ease, stroke-width 0.15s ease',

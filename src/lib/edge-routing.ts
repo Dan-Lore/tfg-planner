@@ -305,6 +305,18 @@ function pathHitsNodeObstacle(
   return hits;
 }
 
+/** Interior segments crossing a source/target node card (excluding handle approach). */
+export function pathCrossesNodeBody(
+  params: EdgeRouteEndpoints,
+  center: EdgeRouteCenter,
+  nodeId: string,
+  obstacles: RoutingObstacle[],
+  offset: number,
+  options: EdgeRoutingOptions,
+): number {
+  return pathHitsNodeObstacle(params, center, nodeId, obstacles, offset, options);
+}
+
 function stackedGapHeight(
   params: EdgeRouteEndpoints,
   obstacles: RoutingObstacle[],
@@ -440,6 +452,9 @@ function stackCorridorCenterYs(
   if (gapHeight <= 2) {
     if (params.targetY < params.sourceY) {
       return [lowerRect.bottom + ROUTE_LANE_INSET];
+    }
+    if (params.targetY > params.sourceY) {
+      return [Math.min(sourceRect.top, targetRect.top) - ROUTE_LANE_INSET];
     }
     return [];
   }
@@ -624,6 +639,104 @@ function preferStackedGapLane(
   return null;
 }
 
+function endpointRects(
+  obstacles: RoutingObstacle[],
+  options: EdgeRoutingOptions,
+): { sourceRect: NodeRect; targetRect: NodeRect } | null {
+  const sourceRect = obstacles.find((o) => o.nodeId === options.sourceId)?.rect;
+  const targetRect = obstacles.find((o) => o.nodeId === options.targetId)?.rect;
+  if (!sourceRect || !targetRect) return null;
+  return { sourceRect, targetRect };
+}
+
+function laneAboveBothEndpointsY(
+  sourceRect: NodeRect,
+  targetRect: NodeRect,
+): number {
+  return Math.min(sourceRect.top, targetRect.top) - ROUTE_LANE_INSET;
+}
+
+function endpointBodyHits(
+  params: EdgeRouteEndpoints,
+  center: EdgeRouteCenter,
+  obstacles: RoutingObstacle[],
+  options: EdgeRoutingOptions,
+  offset: number,
+): number {
+  return (
+    pathHitsNodeObstacle(
+      params,
+      center,
+      options.sourceId,
+      obstacles,
+      offset,
+      options,
+    ) +
+    pathHitsNodeObstacle(
+      params,
+      center,
+      options.targetId,
+      obstacles,
+      offset,
+      options,
+    )
+  );
+}
+
+/** Horizontal lane above both endpoint cards when they overlap vertically. */
+function preferOppositeHorizontalAboveLane(
+  params: EdgeRouteEndpoints,
+  obstacles: RoutingObstacle[],
+  options: EdgeRoutingOptions,
+  offset: number,
+): EdgeRouteCenter | null {
+  const rects = endpointRects(obstacles, options);
+  if (!rects) return null;
+
+  const sourcePosition = params.sourcePosition ?? Position.Bottom;
+  const targetPosition = params.targetPosition ?? Position.Top;
+  const oppositeHorizontal =
+    (sourcePosition === Position.Left && targetPosition === Position.Right) ||
+    (sourcePosition === Position.Right && targetPosition === Position.Left);
+  if (!oppositeHorizontal) return null;
+
+  const sourceGapped = gappedHandle(
+    params.sourceX,
+    params.sourceY,
+    sourcePosition,
+    offset,
+  );
+  const targetGapped = gappedHandle(
+    params.targetX,
+    params.targetY,
+    targetPosition,
+    offset,
+  );
+  if (sourceGapped.x <= targetGapped.x) return null;
+
+  const defaultCenter = defaultRouteCenter(params, offset);
+  const defaultEndpointHits = endpointBodyHits(
+    params,
+    defaultCenter,
+    obstacles,
+    options,
+    offset,
+  );
+  if (defaultEndpointHits === 0) return null;
+
+  const aboveY = laneAboveBothEndpointsY(rects.sourceRect, rects.targetRect);
+  const candidate = { centerY: aboveY };
+  if (endpointBodyHits(params, candidate, obstacles, options, offset) > 0) {
+    return null;
+  }
+  if (
+    pathHitsThirdPartyObstacles(params, candidate, obstacles, offset, options) > 0
+  ) {
+    return null;
+  }
+  return candidate;
+}
+
 function routeCandidateScore(
   params: EdgeRouteEndpoints,
   candidate: EdgeRouteCenter,
@@ -650,15 +763,31 @@ function routeCandidateScore(
     offset,
     options,
   );
+  const targetBodyHits = pathHitsNodeObstacle(
+    params,
+    candidate,
+    options.targetId,
+    obstacles,
+    offset,
+    options,
+  );
   const length = polylineLength(smoothStepWaypoints(params, candidate, offset));
   const centerY = candidate.centerY ?? defaults.centerY;
+  const rects = endpointRects(obstacles, options);
+  const aboveBothCards =
+    rects !== null &&
+    centerY !== undefined &&
+    centerY <= laneAboveBothEndpointsY(rects.sourceRect, rects.targetRect);
+  const zeroEndpointBodyHits = sourceBodyHits === 0 && targetBodyHits === 0;
   const outOfBand =
     centerY !== undefined &&
-    (centerY < handleMinY || centerY > handleMaxY);
+    (centerY < handleMinY || centerY > handleMaxY) &&
+    !(zeroEndpointBodyHits && aboveBothCards);
 
   return (
     thirdPartyHits * 1_000_000 +
     sourceBodyHits * 50_000 +
+    targetBodyHits * 50_000 +
     hits * 1_000 +
     (outOfBand ? 10_000 : 0) +
     length
@@ -706,6 +835,14 @@ export function computeEdgeRouteCenter(
     offset,
   );
   if (tightBottomLane) return tightBottomLane;
+
+  const aboveBothLane = preferOppositeHorizontalAboveLane(
+    params,
+    obstacles,
+    options,
+    offset,
+  );
+  if (aboveBothLane) return aboveBothLane;
 
   if (thirdPartyDefaultHits === 0 && !bezierThirdPartyHits && !bezierHits && defaultHits === 0) {
     return null;
@@ -849,7 +986,15 @@ export function edgePathNeedsObstacleRouting(
       offset,
       options,
     );
-    if (sourceBodyDefault === 0) return false;
+    const targetBodyDefault = pathHitsNodeObstacle(
+      params,
+      {},
+      options.targetId,
+      obstacles,
+      offset,
+      options,
+    );
+    if (sourceBodyDefault === 0 && targetBodyDefault === 0) return false;
   }
 
   const gapY = stackedGapLaneCenterY(params, obstacles, options);
@@ -864,13 +1009,82 @@ export function edgePathNeedsObstacleRouting(
   return defaultHits > 0;
 }
 
+function fallbackCenterAvoidingEndpointBodies(
+  params: EdgeRouteEndpoints,
+  center: EdgeRouteCenter,
+  obstacles: RoutingObstacle[],
+  options: EdgeRoutingOptions,
+  offset: number,
+): EdgeRouteCenter {
+  if (endpointBodyHits(params, center, obstacles, options, offset) === 0) {
+    return center;
+  }
+
+  const rects = endpointRects(obstacles, options);
+  if (!rects) return center;
+
+  const { sourceRect, targetRect } = rects;
+  const candidateYs: number[] = [
+    laneAboveBothEndpointsY(sourceRect, targetRect),
+  ];
+
+  if (params.targetY > params.sourceY) {
+    candidateYs.push(
+      Math.max(sourceRect.bottom, targetRect.bottom) + ROUTE_LANE_INSET,
+    );
+  }
+
+  let best: EdgeRouteCenter = center;
+  let bestScore = endpointBodyHits(params, center, obstacles, options, offset) * 50_000;
+  for (const centerY of candidateYs) {
+    const candidate = { centerY };
+    const endpointHits = endpointBodyHits(
+      params,
+      candidate,
+      obstacles,
+      options,
+      offset,
+    );
+    if (endpointHits > 0) continue;
+    const thirdPartyHits = pathHitsThirdPartyObstacles(
+      params,
+      candidate,
+      obstacles,
+      offset,
+      options,
+    );
+    const score = thirdPartyHits * 1_000_000;
+    if (score < bestScore) {
+      best = candidate;
+      bestScore = score;
+    }
+  }
+
+  return best;
+}
+
 export function getRoutedSmoothStepPath(
   params: EdgeRouteEndpoints,
   obstacles: RoutingObstacle[],
   options: EdgeRoutingOptions,
 ): { path: string; waypoints: XYPosition[]; center: EdgeRouteCenter } {
   const offset = params.offset ?? DEFAULT_EDGE_OFFSET;
-  const center = computeEdgeRouteCenter(params, obstacles, options) ?? {};
+  const center = fallbackCenterAvoidingEndpointBodies(
+    params,
+    computeEdgeRouteCenter(params, obstacles, options) ?? {},
+    obstacles,
+    options,
+    offset,
+  );
+  return buildSmoothStepRoute(params, center);
+}
+
+/** Smooth-step path with an explicit route center (e.g. after parallel lane adjustment). */
+export function buildSmoothStepRoute(
+  params: EdgeRouteEndpoints,
+  center: EdgeRouteCenter,
+): { path: string; waypoints: XYPosition[]; center: EdgeRouteCenter } {
+  const offset = params.offset ?? DEFAULT_EDGE_OFFSET;
   const [path] = getSmoothStepPath({
     ...params,
     ...center,

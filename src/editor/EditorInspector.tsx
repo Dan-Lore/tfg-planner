@@ -102,7 +102,7 @@ function NodeIssuesSection({
       <ul className="editor-inspector__issue-list">
         {issues.map((issue, idx) => (
           <li
-            key={`${issue.code}-${idx}`}
+            key={`${issue.code}-${issue.edgeId ?? ''}-${issue.context?.portId ?? ''}-${idx}`}
             className={`editor-inspector__issue editor-inspector__issue--${issue.severity}`}
           >
             {formatSchemeIssueSummary(issue, pack, lang, nodes, edges, t)}

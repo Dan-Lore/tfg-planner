@@ -106,7 +106,7 @@ export function SchemeIssuesPanel({
         <h5 className="scheme-issues__group-title">{title}</h5>
         <ul className="scheme-issues__list">
           {items.map((issue, idx) => (
-            <li key={`${issue.code}-${issue.edgeId ?? ''}-${issue.nodeId ?? ''}-${idx}`}>
+            <li key={`${issue.code}-${issue.edgeId ?? ''}-${issue.nodeId ?? ''}-${issue.context?.portId ?? ''}-${idx}`}>
               <button
                 type="button"
                 className={`scheme-issues__item scheme-issues__item--${issue.severity}`}

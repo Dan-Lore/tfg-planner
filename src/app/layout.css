@@ -27,6 +27,8 @@
   --issue-warning: #f59e0b;
   --issue-error-bg: rgba(239, 68, 68, 0.12);
   --issue-warning-bg: rgba(245, 158, 11, 0.12);
+  --debug-obstacle: #c084fc;
+  --debug-obstacle-bg: rgba(192, 132, 252, 0.14);
   --rf-dots: #334155;
   --font: system-ui, 'Segoe UI', sans-serif;
 }
@@ -59,6 +61,8 @@
   --issue-warning: #d97706;
   --issue-error-bg: rgba(220, 38, 38, 0.1);
   --issue-warning-bg: rgba(217, 119, 6, 0.1);
+  --debug-obstacle: #9333ea;
+  --debug-obstacle-bg: rgba(147, 51, 234, 0.12);
   --rf-dots: #cbd5e1;
 }
 
@@ -164,6 +168,60 @@ a {
 .theme-toggle__icon {
   display: block;
   transform: translateY(-1px);
+}
+
+/* TEMP: routing obstacle debug toggle — remove only when user explicitly asks. */
+.debug-toggle {
+  height: 2rem;
+  padding: 0 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.debug-toggle:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.debug-toggle--active {
+  border-color: color-mix(in srgb, var(--debug-obstacle) 70%, var(--border));
+  background: color-mix(in srgb, var(--debug-obstacle) 16%, var(--surface2));
+  color: var(--debug-obstacle);
+}
+
+.obstacle-debug-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+  overflow: visible;
+}
+
+.obstacle-debug-overlay__rect {
+  fill: color-mix(in srgb, var(--debug-obstacle) 12%, transparent);
+  stroke: var(--debug-obstacle);
+}
+
+.obstacle-debug-overlay__label {
+  fill: var(--debug-obstacle);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  pointer-events: none;
+  user-select: none;
 }
 
 .header-controls {
@@ -1211,6 +1269,8 @@ a {
   cursor: grab;
   display: flex;
   flex-direction: column;
+  --node-ring-color: var(--accent);
+  --node-hover-border: var(--hover-border);
   transition:
     box-shadow 0.22s cubic-bezier(0.34, 1.2, 0.64, 1),
     border-color 0.18s ease;
@@ -1446,19 +1506,33 @@ a {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  --node-ring-color: var(--accent);
+  --node-hover-border: var(--hover-border);
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .buffer-node.is-dragging {
   cursor: grabbing;
 }
 
-.buffer-node__drag-handle {
-  cursor: grab;
+.buffer-node:hover:not(.is-dragging):not(.buffer-node--selected) {
+  border-color: var(--node-hover-border);
+  box-shadow: var(--shadow-sm);
 }
 
-.buffer-node--selected {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
+.buffer-node--selected,
+.buffer-node--selected:hover:not(.is-dragging) {
+  border-style: solid;
+  border-color: var(--node-ring-color);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--node-ring-color) 42%, transparent),
+    var(--shadow-sm);
+}
+
+.buffer-node__drag-handle {
+  cursor: grab;
 }
 
 .buffer-node__header {
@@ -1770,13 +1844,17 @@ a {
   padding: 0 0.15rem;
 }
 
-.machine-node:hover:not(.is-dragging) {
-  border-color: var(--hover-border);
+.machine-node:hover:not(.is-dragging):not(.machine-node--selected) {
+  border-color: var(--node-hover-border);
   box-shadow: var(--shadow-sm);
 }
 
-.machine-node.selected {
-  border-color: var(--accent);
+.machine-node--selected,
+.machine-node--selected:hover:not(.is-dragging) {
+  border-color: var(--node-ring-color);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--node-ring-color) 42%, transparent),
+    var(--shadow-sm);
 }
 
 .machine-node--menu-open {
@@ -1785,10 +1863,10 @@ a {
 
 .machine-node.is-dragging {
   cursor: grabbing;
-  border-color: var(--accent);
+  border-color: var(--node-ring-color);
   box-shadow:
     var(--shadow-drag),
-    0 0 0 1px rgba(59, 130, 246, 0.35);
+    0 0 0 1px color-mix(in srgb, var(--node-ring-color) 35%, transparent);
 }
 
 .react-flow__node.dragging {
@@ -1858,31 +1936,6 @@ a {
   background: var(--bg);
 }
 
-/* DEBUG: подсветка obstacle rects — удалить вместе с ObstacleDebugOverlay.tsx */
-.obstacle-debug-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: visible;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.obstacle-debug-overlay__rect {
-  fill: color-mix(in srgb, var(--issue-warning) 18%, transparent);
-  stroke: var(--issue-warning);
-  stroke-width: 1.5;
-  stroke-dasharray: 6 4;
-}
-
-.obstacle-debug-overlay__label {
-  fill: var(--issue-warning);
-  font-size: 10px;
-  font-family: ui-monospace, monospace;
-  pointer-events: none;
-  user-select: none;
-}
-
 .editor-canvas-wrap .react-flow__viewport,
 .editor-canvas-wrap .react-flow__renderer {
   filter: none;
@@ -1919,24 +1972,18 @@ a {
 
 .machine-node--issue-error,
 .buffer-node--issue-error {
-  border-color: var(--issue-error) !important;
+  --node-ring-color: var(--issue-error);
+  --node-hover-border: color-mix(in srgb, var(--issue-error) 82%, white);
+  border-color: var(--issue-error);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--issue-error) 35%, transparent);
 }
 
 .machine-node--issue-warning,
 .buffer-node--issue-warning {
-  border-color: var(--issue-warning) !important;
+  --node-ring-color: var(--issue-warning);
+  --node-hover-border: color-mix(in srgb, var(--issue-warning) 82%, white);
+  border-color: var(--issue-warning);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--issue-warning) 35%, transparent);
-}
-
-.machine-node--issue-error.selected,
-.buffer-node--issue-error.buffer-node--selected {
-  border-color: var(--issue-error) !important;
-}
-
-.machine-node--issue-warning.selected,
-.buffer-node--issue-warning.buffer-node--selected {
-  border-color: var(--issue-warning) !important;
 }
 
 .editor-inspector__issue-list {

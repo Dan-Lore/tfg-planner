@@ -5,7 +5,6 @@ import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipe, getRecipesForMachine } from '@/data/pack-registry';
 import type { NodeBalanceLine, PortLoadMeta } from '@/canvas/flow-display';
-import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import {
@@ -27,6 +26,8 @@ import { MACHINE_NODE_MIN_WIDTH, resolveMachineCardWidth } from '@/canvas/node-b
 import { useNodeDisplay } from '@/canvas/node-display-context';
 import { useEditorNodeActions } from '@/canvas/editor-node-actions-context';
 import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
+import { useMeasureNodeCard } from '@/canvas/node-card-measure-context';
+import { useNodeSelected } from '@/canvas/selection-context';
 import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
 export interface PortDisplay {
   portId: string;
@@ -166,6 +167,7 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
   const d = data as MachineNodeData;
   const display = useNodeDisplay(id);
   const actions = useEditorNodeActions();
+  const isSelected = useNodeSelected(id) || Boolean(selected);
   const [recipeMenuOpen, setRecipeMenuOpen] = useState(false);
   const [machineRecipes, setMachineRecipes] = useState<Recipe[]>(() =>
     getRecipesForMachine(d.pack, d.machineId),
@@ -192,10 +194,6 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
   const hasRecipePicker = recipeCount > 1;
   const recipe = getRecipe(d.pack, d.recipeId) ?? machineRecipes.find((r) => r.id === d.recipeId);
   const title = getMachineName(d.pack, d.machineId, lang);
-  const recipeLabel = useMemo(
-    () => (recipe ? formatRecipeLabel(d.pack, recipe, lang) : ''),
-    [d.pack, recipe, lang],
-  );
   const recipeDuration = useMemo(() => {
     if (!recipe) return '';
     const ticks = effectiveDurationTicks(recipe, d.voltageTier, d.overclock);
@@ -213,7 +211,6 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
     if (!recipe) return undefined;
     return effectiveTotalEu(recipe, d.voltageTier, d.overclock);
   }, [recipe, d.voltageTier, d.overclock]);
-  const useStaticRecipeDuringDrag = dragging && hasRecipePicker;
   const cardWidth = resolveMachineCardWidth(d.layoutWidth, width);
 
   const inputPorts = resolvePortDisplays(
@@ -234,12 +231,15 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
 
   const internalsKey = `${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}|${d.recipeId}`;
   useNodeInternalsSync(id, internalsKey);
+  const measureKey = `${internalsKey}|${loadLabel ?? ''}|${balanceLines.length}`;
+  const cardMeasureRef = useMeasureNodeCard(id, measureKey);
 
   return (
     <div
+      ref={cardMeasureRef}
       className={[
         'machine-node',
-        selected ? 'selected' : '',
+        isSelected ? 'machine-node--selected' : '',
         d.checkSeverity ? `machine-node--issue-${d.checkSeverity}` : '',
         recipeMenuOpen ? 'machine-node--menu-open' : '',
         dragging ? 'is-dragging' : '',
@@ -257,7 +257,7 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
         <div className="title" title={title}>
           {title}
         </div>
-        {hasRecipePicker && !dragging && (
+        {hasRecipePicker && (
           <RecipePicker
             pack={d.pack}
             recipes={machineRecipes}
@@ -268,13 +268,6 @@ function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps
             onChange={(recipeId) => actions.onRecipeChange(id, recipeId)}
             onOpenChange={setRecipeMenuOpen}
           />
-        )}
-        {useStaticRecipeDuringDrag && (
-          <div className="recipe-picker nodrag" title={recipeLabel}>
-            <div className="recipe-picker__trigger recipe-picker__trigger--static">
-              <span className="recipe-picker__label">{recipeLabel}</span>
-            </div>
-          </div>
         )}
         <div className="meta machine-node__meta-row nodrag nowheel">
           <MetaWheelChip

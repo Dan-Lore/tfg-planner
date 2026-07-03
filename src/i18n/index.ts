@@ -278,6 +278,13 @@ const resources = {
         switchToLight: 'Включить светлую тему',
         switchToDark: 'Включить тёмную тему',
       },
+      debug: {
+        obstacleRects: {
+          label: 'ВРЕМ. debug рамки',
+          title: 'Временная отладка routing-рамок машин и буферов. Не удалять без явного запроса.',
+          ariaLabel: 'Временная отладка: показать routing-рамки',
+        },
+      },
     },
   },
   en: {
@@ -555,6 +562,13 @@ const resources = {
         light: 'Light theme',
         switchToLight: 'Switch to light theme',
         switchToDark: 'Switch to dark theme',
+      },
+      debug: {
+        obstacleRects: {
+          label: 'TEMP debug rects',
+          title: 'Temporary routing obstacle debug overlay. Do not remove without explicit request.',
+          ariaLabel: 'Temporary debug: show routing obstacle rects',
+        },
       },
     },
   },

@@ -1,222 +1,29 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { Position, type Node } from '@xyflow/react';
-import type { MachineNodeData } from '@/canvas/MachineNode';
+import { getMachineNodeRect } from '@/canvas/node-bounds';
+import { computeEdgeRouteCenter, type RoutingObstacle } from '@/lib/edge-routing';
+import { buildEdgeRoutePlan } from '@/lib/edge-route-plan';
+import { minCorridorSeparation, PARALLEL_EDGE_GAP } from '@/lib/edge-route-lanes';
+import { pathCrossesNodeBody } from '@/lib/edge-routing';
 import {
-  MACHINE_NODE_WIDTH,
-  PORT_ROW_HEIGHT,
-  estimateHeaderHeight,
-  estimateMachineNodeHeightFromPorts,
-  getMachineNodeRect,
-} from '@/canvas/node-bounds';
-import { normalizePortId, parsePortId } from '@/canvas/ports';
-import {
-  bezierHitsThirdPartyObstacles,
-  computeEdgeRouteCenter,
-  edgePathNeedsObstacleRouting,
-  getRoutedSmoothStepPath,
-  pathHitsThirdPartyObstacles,
-  type EdgeRouteEndpoints,
-  type RoutingObstacle,
-} from '@/lib/edge-routing';
-import { loadTestPack } from '@/test-fixtures/load-test-pack';
+  buildFixtureGraph,
+  horizontalLaneY,
+  laneRunsThroughGap,
+  loadFixtureGraph,
+  makeMachineNode,
+  sharedCorridorPairs,
+  simulateFlowEdgePath,
+  simulateGraphEdges,
+  type FixtureGraph,
+} from '@/lib/edge-routing-test-harness';
+const BENZENE_GAP_FIXTURE =
+  'src/lib/fixtures/edge-routing/benzene-distillation-lcr-gap.tfgp';
+const REBRA_FIXTURE =
+  'src/lib/fixtures/edge-routing/rebra-rhenium-loop.tfgp';
 
-const BENZENE_GAP_FIXTURE = path.join(
-  process.cwd(),
-  'src/lib/fixtures/edge-routing/benzene-distillation-lcr-gap.tfgp',
-);
+const benzeneGraph = loadFixtureGraph(BENZENE_GAP_FIXTURE);
+const rebraGraph = loadFixtureGraph(REBRA_FIXTURE);
 
-const pack = loadTestPack('0.12.8');
-
-type FixtureGraph = {
-  nodes: Array<{
-    id: string;
-    machineId: string;
-    recipeId: string;
-    position: { x: number; y: number };
-  }>;
-  edges: Array<{
-    id: string;
-    source: string;
-    target: string;
-    sourcePort: string;
-    targetPort: string;
-  }>;
-};
-
-const fixture = JSON.parse(
-  fs.readFileSync(BENZENE_GAP_FIXTURE, 'utf8'),
-) as FixtureGraph;
-
-function estimatePortCenter(
-  node: {
-    position: { x: number; y: number };
-    machineId: string;
-    recipeId: string;
-  },
-  port: string,
-) {
-  const parsed = parsePortId(normalizePortId(port));
-  if (!parsed) return { x: node.position.x, y: node.position.y };
-  const portsTopY =
-    estimateHeaderHeight(pack, node.machineId, node.recipeId) +
-    node.position.y;
-  const y =
-    portsTopY + parsed.index * PORT_ROW_HEIGHT + PORT_ROW_HEIGHT / 2;
-  const x =
-    parsed.kind === 'in'
-      ? node.position.x
-      : node.position.x + MACHINE_NODE_WIDTH;
-  return { x, y };
-}
-
-function makeNode(
-  id: string,
-  machineId: string,
-  recipeId: string,
-  pos: { x: number; y: number },
-): Node {
-  const recipe = pack.recipes.find((r) => r.id === recipeId)!;
-  const portCount = Math.max(recipe.inputs.length, recipe.outputs.length, 1);
-  const height = estimateMachineNodeHeightFromPorts(
-    pack,
-    machineId,
-    recipeId,
-    portCount,
-  );
-  return {
-    id,
-    type: 'machine',
-    position: pos,
-    data: {
-      machineId,
-      recipeId,
-      pack,
-      inputPorts: recipe.inputs.map((_, i) => ({
-        portId: `in_${i}`,
-        label: '',
-        connected: true,
-      })),
-      outputPorts: recipe.outputs.map((_, i) => ({
-        portId: `out_${i}`,
-        label: '',
-        connected: true,
-      })),
-      balanceLines: [],
-      machineCount: 1,
-      overclock: 1,
-      voltageTier: 'LV',
-      parallel: 1,
-      onRecipeChange: () => {},
-      onMachineCountChange: () => {},
-      onOverclockChange: () => {},
-      onPortContextMenu: () => {},
-    },
-    measured: { width: MACHINE_NODE_WIDTH, height },
-  };
-}
-
-function horizontalLaneY(
-  waypoints: { x: number; y: number }[],
-): number | undefined {
-  for (let i = 0; i < waypoints.length - 1; i++) {
-    const a = waypoints[i]!;
-    const b = waypoints[i + 1]!;
-    if (a.y === b.y && Math.abs(a.x - b.x) > 40) return a.y;
-  }
-  return undefined;
-}
-
-function laneRunsThroughGap(
-  laneY: number,
-  upperBottom: number,
-  lowerTop: number,
-): boolean {
-  return laneY > upperBottom && laneY < lowerTop;
-}
-
-function buildGraph(graph: FixtureGraph) {
-  const nodes = new Map(
-    graph.nodes.map((n) => [
-      n.id,
-      makeNode(n.id, n.machineId, n.recipeId, n.position),
-    ]),
-  );
-  const obstacles: RoutingObstacle[] = [...nodes.values()].map((node) => ({
-    nodeId: node.id,
-    rect: getMachineNodeRect(node),
-  }));
-  return { nodes, obstacles };
-}
-
-const { nodes: fixtureNodes, obstacles: fixtureObstacles } =
-  buildGraph(fixture);
-
-function simulateFixtureEdge(edgeId: string) {
-  const edge = fixture.edges.find((e) => e.id === edgeId);
-  if (!edge) throw new Error(`missing ${edgeId}`);
-
-  const sourceNode = fixtureNodes.get(edge.source)!;
-  const targetNode = fixtureNodes.get(edge.target)!;
-  const srcData = sourceNode.data as MachineNodeData;
-  const tgtData = targetNode.data as MachineNodeData;
-  const src = estimatePortCenter(
-    {
-      position: sourceNode.position,
-      machineId: srcData.machineId,
-      recipeId: srcData.recipeId,
-    },
-    edge.sourcePort,
-  );
-  const tgt = estimatePortCenter(
-    {
-      position: targetNode.position,
-      machineId: tgtData.machineId,
-      recipeId: tgtData.recipeId,
-    },
-    edge.targetPort,
-  );
-
-  const endpoints: EdgeRouteEndpoints = {
-    sourceX: src.x,
-    sourceY: src.y,
-    targetX: tgt.x,
-    targetY: tgt.y,
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-  };
-  const routing = { sourceId: edge.source, targetId: edge.target };
-  const needs = edgePathNeedsObstacleRouting(
-    endpoints,
-    fixtureObstacles,
-    routing,
-  );
-  const routeCenter = needs
-    ? computeEdgeRouteCenter(endpoints, fixtureObstacles, routing)
-    : null;
-  const routed = needs
-    ? getRoutedSmoothStepPath(endpoints, fixtureObstacles, routing)
-    : null;
-
-  return {
-    edgeId,
-    endpoints,
-    needs,
-    routeCenter,
-    laneY: routed ? horizontalLaneY(routed.waypoints) : undefined,
-    thirdPartyHits: needs
-      ? pathHitsThirdPartyObstacles(
-          endpoints,
-          routeCenter ?? {},
-          fixtureObstacles,
-          20,
-          routing,
-        )
-      : bezierHitsThirdPartyObstacles(endpoints, fixtureObstacles, routing)
-        ? 1
-        : 0,
-  };
+function simulateFixtureEdge(graph: FixtureGraph, edgeId: string) {  return simulateGraphEdges(graph).find((e) => e.edgeId === edgeId)!;
 }
 
 function simulatePairEdge(
@@ -227,80 +34,74 @@ function simulatePairEdge(
   node37Pos: { x: number; y: number },
   node44Pos: { x: number; y: number },
 ) {
-  const n37 = makeNode(
+  const graph: FixtureGraph = {
+    nodes: [
+      {
+        id: 'node_37',
+        machineId: 'gtceu:distillation_tower',
+        recipeId: 'gtceu:distill_wood_tar',
+        position: node37Pos,
+      },
+      {
+        id: 'node_44',
+        machineId: 'gtceu:large_chemical_reactor',
+        recipeId: 'tfg:aromatic_feedstock@lcr',
+        position: node44Pos,
+      },
+    ],
+    edges: [
+      {
+        id: 'edge_pair',
+        source: sourceId,
+        target: targetId,
+        sourcePort,
+        targetPort,
+      },
+    ],
+  };
+  const s = simulateGraphEdges(graph)[0]!;
+  const n37 = makeMachineNode(
     'node_37',
     'gtceu:distillation_tower',
     'gtceu:distill_wood_tar',
     node37Pos,
   );
-  const n44 = makeNode(
+  const n44 = makeMachineNode(
     'node_44',
     'gtceu:large_chemical_reactor',
     'tfg:aromatic_feedstock@lcr',
     node44Pos,
   );
-  const d37 = n37.data as MachineNodeData;
-  const d44 = n44.data as MachineNodeData;
-  const src = estimatePortCenter(
-    {
-      position: node37Pos,
-      machineId: d37.machineId,
-      recipeId: d37.recipeId,
-    },
-    sourcePort,
-  );
-  const tgt = estimatePortCenter(
-    {
-      position: node44Pos,
-      machineId: d44.machineId,
-      recipeId: d44.recipeId,
-    },
-    targetPort,
-  );
-  const endpoints: EdgeRouteEndpoints = {
-    sourceX: src.x,
-    sourceY: src.y,
-    targetX: tgt.x,
-    targetY: tgt.y,
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-  };
-  const obstacles: RoutingObstacle[] = [
-    { nodeId: 'node_37', rect: getMachineNodeRect(n37) },
-    { nodeId: 'node_44', rect: getMachineNodeRect(n44) },
-  ];
-  const routing = { sourceId, targetId };
-  const routed = getRoutedSmoothStepPath(endpoints, obstacles, routing);
-  const r37 = obstacles[0]!.rect;
-  const r44 = obstacles[1]!.rect;
-  const laneY = horizontalLaneY(routed.waypoints);
+  const r37 = getMachineNodeRect(n37);
+  const r44 = getMachineNodeRect(n44);
   const gapMidY = (r44.bottom + r37.top) / 2;
 
   return {
-    endpoints,
+    endpoints: s.endpoints,
     r37,
     r44,
     gapHeight: r37.top - r44.bottom,
     gapMidY,
-    needs: edgePathNeedsObstacleRouting(endpoints, obstacles, routing),
-    routeCenter: routed.center,
-    laneY,
+    needs: s.needs,
+    routeCenter: s.laneCenter,
+    laneY: s.laneY,
     throughGap:
-      laneY !== undefined &&
-      laneRunsThroughGap(laneY, r44.bottom, r37.top),
-    waypoints: routed.waypoints,
+      s.laneY !== undefined &&
+      laneRunsThroughGap(s.laneY, r44.bottom, r37.top),
+    waypoints: s.waypoints,
   };
 }
 
 describe('edge routing integration (benzene-distillation-lcr-gap fixture)', () => {
   it('edge_46 routes benzene through the gap between node_37 and node_44', () => {
-    const s = simulateFixtureEdge('edge_46');
-    const r37 = getMachineNodeRect(fixtureNodes.get('node_37')!);
-    const r44 = getMachineNodeRect(fixtureNodes.get('node_44')!);
+    const s = simulateFixtureEdge(benzeneGraph, 'edge_46');
+    const { nodes } = buildFixtureGraph(benzeneGraph);
+    const r37 = getMachineNodeRect(nodes.get('node_37')!);
+    const r44 = getMachineNodeRect(nodes.get('node_44')!);
     const gapMidY = (r44.bottom + r37.top) / 2;
 
     expect(s.needs).toBe(true);
-    expect(s.routeCenter).toEqual({ centerY: gapMidY });
+    expect(s.laneCenter).toEqual({ centerY: gapMidY });
     expect(s.laneY).toBeDefined();
     expect(laneRunsThroughGap(s.laneY!, r44.bottom, r37.top)).toBe(true);
     expect(Math.abs(s.laneY! - gapMidY)).toBeLessThan(1);
@@ -308,21 +109,118 @@ describe('edge routing integration (benzene-distillation-lcr-gap fixture)', () =
   });
 
   it('no edge on the fixture graph crosses third-party machine cards', () => {
-    for (const edge of fixture.edges) {
-      const s = simulateFixtureEdge(edge.id);
-      expect(s.thirdPartyHits, edge.id).toBe(0);
+    for (const s of simulateGraphEdges(benzeneGraph)) {
+      expect(s.thirdPartyHits, s.edgeId).toBe(0);
     }
   });
 
   it('short local edges edge_45 and edge_50 stay on bezier routing', () => {
     for (const edgeId of ['edge_45', 'edge_50'] as const) {
-      expect(simulateFixtureEdge(edgeId).needs).toBe(false);
+      expect(simulateFixtureEdge(benzeneGraph, edgeId).needs).toBe(false);
+    }
+  });
+
+  it('parallel edges through node_37↔node_44 gap are separated by at least PARALLEL_EDGE_GAP', () => {
+    const edges = simulateGraphEdges(benzeneGraph);
+    const gapEdges = edges.filter(
+      (e) =>
+        e.needs &&
+        ((e.source === 'node_37' && e.target === 'node_44') ||
+          (e.source === 'node_44' && e.target === 'node_37')),
+    );
+    if (gapEdges.length >= 2) {
+      for (const [a, b] of sharedCorridorPairs(gapEdges)) {
+        const sep = Math.abs((a.laneY ?? 0) - (b.laneY ?? 0));
+        if (sep > 0) expect(sep).toBeGreaterThanOrEqual(PARALLEL_EDGE_GAP);
+      }
     }
   });
 });
 
-describe('edge_46 benzene routing regressions (inline coordinates)', () => {
-  const node44Pos = { x: 1480.8144989315085, y: 223.0615111533882 };
+function horizontalLaneYFromWaypoints(
+  waypoints: { x: number; y: number }[],
+): number | undefined {
+  for (let i = 0; i < waypoints.length - 1; i++) {
+    const a = waypoints[i]!;
+    const b = waypoints[i + 1]!;
+    if (Math.abs(a.y - b.y) < 0.5 && Math.abs(a.x - b.x) > 40) return a.y;
+  }
+  return undefined;
+}
+
+describe('edge routing integration (rebra-rhenium-loop fixture)', () => {
+  it('no edge crosses third-party node cards', () => {
+    for (const s of simulateGraphEdges(rebraGraph)) {
+      expect(s.thirdPartyHits, s.edgeId).toBe(0);
+    }
+  });
+
+  it('edge_132 cracker off-gas does not cut through electrolyzer body', () => {
+    const s = simulateFixtureEdge(rebraGraph, 'edge_132');
+    const { obstacles } = buildFixtureGraph(rebraGraph);
+    expect(s.needs).toBe(true);
+    expect(
+      pathCrossesNodeBody(
+        s.endpoints,
+        s.laneCenter,
+        'node_131',
+        obstacles,
+        20,
+        { sourceId: s.source, targetId: s.target },
+      ),
+    ).toBe(0);
+  });
+
+  it('edge_140 rhenium dust does not cut through Re buffer body (FlowEdge path)', () => {
+    const r = simulateFlowEdgePath(rebraGraph, 'edge_140');
+    expect(r.edge.needs).toBe(true);
+    expect(r.targetBodyHits, r.edge.edgeId).toBe(0);
+    expect(r.sourceBodyHits, r.edge.edgeId).toBe(0);
+    expect(r.thirdPartyHits).toBe(0);
+    const bufRect = r.obstacles.find((o) => o.nodeId === 'node_139')!.rect;
+    const elRect = r.obstacles.find((o) => o.nodeId === 'node_131')!.rect;
+    const laneY = horizontalLaneYFromWaypoints(r.waypoints);
+    expect(laneY).toBeDefined();
+    expect(laneY!).toBeLessThan(bufRect.top);
+    expect(laneY!).toBeLessThan(elRect.top);
+  });
+
+  it('edge_140 avoids buffer and electrolyzer with measured card heights', () => {
+    const { nodes } = buildFixtureGraph(rebraGraph);
+    const elNode = nodes.get('node_131')!;
+    const estimatedElH = elNode.measured?.height ?? 178;
+    const r = simulateFlowEdgePath(rebraGraph, 'edge_140', {
+      node_131: estimatedElH + 18,
+      node_139: 140,
+    });
+    expect(r.sourceBodyHits).toBe(0);
+    expect(r.targetBodyHits).toBe(0);
+    const laneY = horizontalLaneYFromWaypoints(r.waypoints);
+    const elRect = r.obstacles.find((o) => o.nodeId === 'node_131')!.rect;
+    const bufRect = r.obstacles.find((o) => o.nodeId === 'node_139')!.rect;
+    expect(laneY).toBeDefined();
+    expect(laneY!).toBeLessThan(elRect.top);
+    expect(laneY!).toBeLessThan(bufRect.top);
+  });
+
+  it('edge_140 avoids buffer body with measured card height', () => {
+    const r = simulateFlowEdgePath(rebraGraph, 'edge_140', { node_139: 140 });
+    expect(r.targetBodyHits).toBe(0);
+    expect(r.sourceBodyHits).toBe(0);
+  });
+
+  it('parallel edges in shared corridors are separated by at least PARALLEL_EDGE_GAP', () => {
+    const edges = simulateGraphEdges(rebraGraph);
+    for (const [a, b] of sharedCorridorPairs(edges)) {
+      expect(
+        minCorridorSeparation(a.waypoints, b.waypoints),
+        `${a.edgeId} vs ${b.edgeId}`,
+      ).toBeGreaterThanOrEqual(PARALLEL_EDGE_GAP);
+    }
+  });
+});
+
+describe('edge_46 benzene routing regressions (inline coordinates)', () => {  const node44Pos = { x: 1480.8144989315085, y: 223.0615111533882 };
 
   it('routes wide-gap layouts through the vertical gap between cards', () => {
     const wideGap = simulatePairEdge(
@@ -373,63 +271,77 @@ describe('edge_46 benzene routing regressions (inline coordinates)', () => {
       x: 1488.3110787137387,
       y: 566.7952574269908,
     };
-    const n37 = makeNode(
+    const n37 = makeMachineNode(
       'node_37',
       'gtceu:distillation_tower',
       'gtceu:distill_wood_tar',
       node37Pos,
     );
-    const n44 = makeNode(
+    const n44 = makeMachineNode(
       'node_44',
       'gtceu:large_chemical_reactor',
       'tfg:aromatic_feedstock@lcr',
       node44Pos,
     );
-    const d37 = n37.data as MachineNodeData;
-    const d44 = n44.data as MachineNodeData;
-    const src = estimatePortCenter(
-      {
-        position: node37Pos,
-        machineId: d37.machineId,
-        recipeId: d37.recipeId,
-      },
-      'out_2',
-    );
-    const tgt = estimatePortCenter(
-      {
-        position: node44Pos,
-        machineId: d44.machineId,
-        recipeId: d44.recipeId,
-      },
-      'in_1',
-    );
-    const endpoints: EdgeRouteEndpoints = {
-      sourceX: src.x,
-      sourceY: src.y,
-      targetX: tgt.x,
-      targetY: tgt.y,
-      sourcePosition: Position.Right,
-      targetPosition: Position.Left,
+    const graph: FixtureGraph = {
+      nodes: [
+        {
+          id: 'node_37',
+          machineId: 'gtceu:distillation_tower',
+          recipeId: 'gtceu:distill_wood_tar',
+          position: node37Pos,
+        },
+        {
+          id: 'node_44',
+          machineId: 'gtceu:large_chemical_reactor',
+          recipeId: 'tfg:aromatic_feedstock@lcr',
+          position: node44Pos,
+        },
+      ],      edges: [
+        {
+          id: 'edge_46',
+          source: 'node_37',
+          target: 'node_44',
+          sourcePort: 'out_2',
+          targetPort: 'in_1',
+        },
+      ],
     };
+    const { obstacles } = buildFixtureGraph(graph);
+    const s = simulateGraphEdges(graph)[0]!;
     const r37 = getMachineNodeRect(n37);
     const r44 = getMachineNodeRect(n44);
     const expandedSourceTop = r37.top - 80;
     const gapMidY = (r44.bottom + expandedSourceTop) / 2;
-    const obstacles: RoutingObstacle[] = [
+    const obstaclesExpanded: RoutingObstacle[] = [
       {
         nodeId: 'node_37',
         rect: { ...r37, top: expandedSourceTop },
       },
       { nodeId: 'node_44', rect: r44 },
     ];
-    const routing = { sourceId: 'node_37', targetId: 'node_44' };
+    void obstacles;
 
-    expect(computeEdgeRouteCenter(endpoints, obstacles, routing)).toEqual({
+    expect(
+      computeEdgeRouteCenter(s.endpoints, obstaclesExpanded, {
+        sourceId: 'node_37',
+        targetId: 'node_44',
+      }),
+    ).toEqual({
       centerY: gapMidY,
     });
 
-    const { waypoints } = getRoutedSmoothStepPath(endpoints, obstacles, routing);
-    const laneY = horizontalLaneY(waypoints);
+    const plan = buildEdgeRoutePlan(
+      [
+        {
+          edgeId: 'edge_46',
+          endpoints: s.endpoints,
+          routing: { sourceId: 'node_37', targetId: 'node_44' },
+        },
+      ],
+      obstaclesExpanded,
+    );
+    const laneY = horizontalLaneY(plan.get('edge_46')!.waypoints);
     expect(laneY).toBeDefined();
     expect(laneY!).toBeGreaterThan(r44.bottom);
     expect(laneY!).toBeLessThan(expandedSourceTop);

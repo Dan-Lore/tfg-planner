@@ -17,12 +17,22 @@ export interface SchemeObstacleEntry {
   rect: NodeRect;
 }
 
+/** Reject only bloated measurements (e.g. RF wrapper), not taller real cards like start buffers. */
+const MEASURED_HEIGHT_MAX_RATIO = 2.5;
+
+function resolveObstacleCardHeight(estimated: number, measured: number | undefined): number {
+  if (measured == null || measured <= 0) return estimated;
+  if (measured > estimated * MEASURED_HEIGHT_MAX_RATIO) return estimated;
+  return measured;
+}
+
 function machineRect(
   node: TfgpNode & { machineId: string; recipeId: string },
   pack: PackLike,
   layoutWidth: number | undefined,
   display: NodeDynamicDisplay | undefined,
   padding: number,
+  cardHeightsByNodeId?: Readonly<Record<string, number>>,
 ): NodeRect {
   const recipe = getRecipe(pack, node.recipeId);
   const inCount = display?.inputPorts.length ?? recipe?.inputs.length ?? 1;
@@ -30,13 +40,14 @@ function machineRect(
   const portCount = Math.max(inCount, outCount, 1);
   const balanceCount = display?.balanceLines.length ?? 0;
   const width = layoutWidth ?? MACHINE_NODE_WIDTH;
-  const height = estimateMachineNodeHeightFromPorts(
+  const estimated = estimateMachineNodeHeightFromPorts(
     pack,
     node.machineId,
     node.recipeId,
     portCount,
     balanceCount,
   );
+  const height = resolveObstacleCardHeight(estimated, cardHeightsByNodeId?.[node.id]);
   return {
     left: node.position.x - padding,
     top: node.position.y - padding,
@@ -51,12 +62,14 @@ export function buildSchemeObstacleRects(
   pack: PackLike,
   layoutWidthByNodeId: Record<string, number>,
   displayById: Readonly<Record<string, NodeDynamicDisplay>>,
+  cardHeightsByNodeId?: Readonly<Record<string, number>>,
   padding = EDGE_ROUTE_PADDING,
 ): SchemeObstacleEntry[] {
   const out: SchemeObstacleEntry[] = [];
   for (const node of nodes) {
     if (isBufferNode(node)) {
-      const height = estimateBufferNodeHeight(node.kind);
+      const estimated = estimateBufferNodeHeight(node.kind);
+      const height = resolveObstacleCardHeight(estimated, cardHeightsByNodeId?.[node.id]);
       out.push({
         nodeId: node.id,
         rect: {
@@ -77,6 +90,7 @@ export function buildSchemeObstacleRects(
           layoutWidthByNodeId[node.id],
           displayById[node.id],
           padding,
+          cardHeightsByNodeId,
         ),
       });
     }
@@ -86,16 +100,19 @@ export function buildSchemeObstacleRects(
 
 type NodePosition = { id: string; position: { x: number; y: number } };
 
-/** Shift obstacle rects to match live canvas positions when they differ from the store. */
+/** Shift obstacle rects for nodes being dragged to match live canvas positions. */
 export function shiftObstaclesForDragging(
   obstacles: SchemeObstacleEntry[],
   liveNodes: readonly NodePosition[],
   storeNodes: readonly NodePosition[],
+  draggingNodeIds: ReadonlySet<string>,
 ): SchemeObstacleEntry[] {
+  if (draggingNodeIds.size === 0) return obstacles;
   const liveById = new Map(liveNodes.map((n) => [n.id, n.position]));
   const storeById = new Map(storeNodes.map((n) => [n.id, n.position]));
   let changed = false;
   const next = obstacles.map((entry) => {
+    if (!draggingNodeIds.has(entry.nodeId)) return entry;
     const live = liveById.get(entry.nodeId);
     const store = storeById.get(entry.nodeId);
     if (!live || !store) return entry;

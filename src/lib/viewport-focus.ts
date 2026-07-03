@@ -49,7 +49,6 @@ function nodeCenterById(
     pack,
     layoutWidthByNodeId,
     displayById,
-    0,
   );
   const entry = obstacles.find((o) => o.nodeId === nodeId);
   return entry ? rectCenter(entry.rect) : undefined;

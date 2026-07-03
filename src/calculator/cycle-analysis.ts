@@ -147,12 +147,13 @@ function productsInScc(
   const products = new Set<string>();
   for (const nodeId of nodeIds) {
     const node = nodeById.get(nodeId);
-    if (!node || node.kind === 'intermediate_buffer') {
-      const key = node?.itemId ?? node?.fluidId;
+    if (!node) continue;
+    if (node.kind === 'intermediate_buffer') {
+      const key = node.itemId ?? node.fluidId;
       if (key) products.add(key);
       continue;
     }
-    if (!node?.recipeId) continue;
+    if (!node.recipeId) continue;
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
     for (const flow of [...recipe.inputs, ...recipe.outputs]) {

@@ -12,6 +12,8 @@ import { BUFFER_NODE_WIDTH } from '@/canvas/node-bounds';
 import { useNodeDisplay } from '@/canvas/node-display-context';
 import { useEditorNodeActions } from '@/canvas/editor-node-actions-context';
 import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
+import { useMeasureNodeCard } from '@/canvas/node-card-measure-context';
+import { useNodeSelected } from '@/canvas/selection-context';
 import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
 
 export interface BufferNodeData {
@@ -107,9 +109,15 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
   );
   const loadLabel = display.loadLabel ?? d.loadLabel;
   const loadTitle = display.loadTitle ?? d.loadTitle;
+  const isSelected = useNodeSelected(id) || Boolean(selected);
 
-  const internalsKey = `${d.bufferKind}|${d.capacity}|${d.supplyMode ?? ''}|${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}`;
+  const internalsKey = `${d.bufferKind}|${d.capacity}|${d.supplyMode ?? ''}|${d.autoSupplyRate ? 1 : 0}|${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}`;
   useNodeInternalsSync(id, internalsKey);
+  const portMeasureSig = [...inputPorts, ...outputPorts]
+    .map((p) => `${p.rate ?? ''}|${p.loadLabel ?? ''}`)
+    .join(';');
+  const measureKey = `${internalsKey}|${loadLabel ?? ''}|${portMeasureSig}`;
+  const cardMeasureRef = useMeasureNodeCard(id, measureKey);
 
   const productLabel = useMemo(() => {
     const productId = d.itemId ?? d.fluidId;
@@ -121,9 +129,10 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
 
   return (
     <div
+      ref={cardMeasureRef}
       className={[
         'buffer-node',
-        selected ? 'buffer-node--selected' : '',
+        isSelected ? 'buffer-node--selected' : '',
         d.checkSeverity ? `buffer-node--issue-${d.checkSeverity}` : '',
         dragging ? 'is-dragging' : '',
       ]

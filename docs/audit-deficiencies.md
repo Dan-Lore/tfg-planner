@@ -126,14 +126,19 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 | 32 | VersionSidebar: `{n} recipes · {n} machines` без i18n | `src/components/VersionSidebar.tsx` |
 | 33 | Sidebar labels без `htmlFor` / `aria-labelledby` | `src/pages/EditorPage.tsx` |
 | 34 | `aria-selected={selected \|\| highlighted}` — ложное состояние | `src/components/SearchCombobox.tsx` |
-| 56 | **Запланировано:** нет визуального gap между рёбрами, идущими по одному коридору маршрута | см. §56 ниже |
+| 56 | ~~Нет визуального gap между рёбрами по одному коридору маршрута~~ **Исправлено (2026-07-03):** `edge-route-lanes.ts`, batch plan в canvas | см. §56 ниже |
 | 57 | ~~Подписи рёбер: нет суммы на входном порте; fan-out по `itemId` вместо физического порта~~ **Исправлено (2026-06-23):** см. [edge-labels-and-port-load.md](./edge-labels-and-port-load.md) | `src/canvas/flow-display.ts` |
 | 58 | ~~Нет % загрузки на выходных портах~~ **Исправлено (2026-06-23):** `nodePortOutLoad` + UI | `flow-solver.ts`, `MachineNode.tsx` |
 
-### 56. Parallel gap между рёбрами по сегменту маршрута (запланировано)
+### 56. Parallel gap между рёбрами по сегменту маршрута — **исправлено (2026-07-03)**
 
-**Статус:** backlog (прототип 2026-06-17 откатан — группировка по портам/узлам не подходит)  
-**Файлы (целевые):** `src/canvas/FlowEdge.tsx`, `src/lib/edge-routing.ts`, `src/lib/bezier-edge-label.ts`
+**Статус:** исправлено  
+**Файлы:** `src/lib/edge-route-lanes.ts`, `src/lib/edge-route-plan.ts`, `src/lib/flow-edge-route-plan.ts`, `src/canvas/FlowEdge.tsx`, `src/canvas/EditorCanvas.tsx`
+
+Реализовано: batch `buildEdgeRoutePlan` → `extractCorridorSegments` → `computeParallelLaneCenters` (`PARALLEL_EDGE_GAP = 4`). Integration fixtures: `benzene-distillation-lcr-gap.tfgp`, `rebra-rhenium-loop.tfgp`.
+
+<details>
+<summary>Исходная спецификация (архив)</summary>
 
 #### Цель
 
@@ -182,6 +187,8 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 
 - `PARALLEL_EDGE_GAP` — одна константа (по умолчанию 3–4 px; настраиваемо позже).
 - Не смешивать с `DEFAULT_EDGE_OFFSET` (20 px) — это отступ от handle, не lane spacing.
+
+</details>
 
 
 | # | Недостаток | Где |
@@ -261,7 +268,7 @@ Undo/redo меняет `scheme.viewport` в Zustand, но React Flow не пол
 ### P2 — backlog / polish
 
 Пункты #7–#55 по таблицам выше.  
-**#56** — parallel gap по сегменту маршрута (детали в §56).
+**#56** — ~~parallel gap по сегменту маршрута~~ исправлено (§56).
 
 ---
 

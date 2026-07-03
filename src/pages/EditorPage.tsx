@@ -38,7 +38,6 @@ import {
   EditorNodeActionsProvider,
   type EditorNodeActions,
 } from '@/canvas/editor-node-actions-context';
-import { buildSchemeObstacleRects } from '@/canvas/scheme-obstacles';
 import {
   PortContextMenu,
   bufferKindsForPort,
@@ -662,22 +661,6 @@ export function EditorPage() {
 
   const rfNodeCacheRef = useRef(new Map<string, { sig: string; node: Node }>());
 
-  const obstacleRects = useMemo(
-    () =>
-      pack
-        ? {
-            obstacles: buildSchemeObstacleRects(
-              scheme.nodes,
-              pack,
-              layoutWidthByNodeId,
-              nodeDisplayById,
-            ),
-            skipObstacleRouting: false,
-          }
-        : { obstacles: [], skipObstacleRouting: false },
-    [scheme.nodes, pack, layoutWidthByNodeId, nodeDisplayById],
-  );
-
   const rfNodes: Node[] = useMemo(() => {
     if (!pack) return [];
     return buildStableRfNodes(
@@ -1103,7 +1086,10 @@ export function EditorPage() {
                 edgeTypes={edgeTypes}
                 colorTheme={colorTheme}
                 viewport={scheme.viewport}
-                obstacleRects={obstacleRects}
+                pack={pack}
+                schemeNodes={scheme.nodes}
+                layoutWidthByNodeId={layoutWidthByNodeId}
+                nodeDisplayById={nodeDisplayById}
                 onPersistNodePositions={onPersistNodePositions}
                 onConnect={onConnect}
                 isValidConnection={isValidConnection}

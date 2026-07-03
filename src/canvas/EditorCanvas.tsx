@@ -7,6 +7,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type Ref,
 } from 'react';
 import {
   ReactFlow,
@@ -38,8 +39,18 @@ import {
   type ObstacleRectsContextValue,
 } from '@/canvas/obstacle-rects-context';
 import { edgeHandlesReady } from '@/lib/scheme-port-ids';
-import { shiftObstaclesForDragging } from '@/canvas/scheme-obstacles';
 import { ObstacleDebugOverlay } from '@/canvas/ObstacleDebugOverlay';
+import { SelectionProvider } from '@/canvas/selection-context';
+import { buildSchemeObstacleRects, shiftObstaclesForDragging } from '@/canvas/scheme-obstacles';
+import {
+  NodeCardMeasureProvider,
+  useNodeCardHeights,
+} from '@/canvas/node-card-measure-context';
+import { EdgeRoutePlanProvider } from '@/canvas/use-edge-route-plan';
+import { buildFlowEdgeRoutePlan } from '@/lib/flow-edge-route-plan';
+import type { PackLike } from '@/data/pack-registry';
+import type { NodeDynamicDisplay } from '@/canvas/node-display-context';
+import type { TfgpNode } from '@/schema/tfgp-types';
 import {
   animateViewport,
   viewportToCenterOn,
@@ -68,7 +79,10 @@ export type EditorCanvasProps = {
   edgeTypes: EdgeTypes;
   colorTheme: 'light' | 'dark' | 'system';
   viewport: ViewportState;
-  obstacleRects: ObstacleRectsContextValue;
+  pack: PackLike | null;
+  schemeNodes: TfgpNode[];
+  layoutWidthByNodeId: Record<string, number>;
+  nodeDisplayById: Readonly<Record<string, NodeDynamicDisplay>>;
   onPersistNodePositions: (nodes: Node[]) => void;
   onConnect: (conn: Connection) => void;
   isValidConnection: (conn: Connection | Edge) => boolean;
@@ -139,7 +153,6 @@ type EditorCanvasBodyProps = {
   onMoveEnd: (viewport: ViewportState) => void;
   flowViewport: ViewportState;
   setFlowViewport: (vp: ViewportState) => void;
-  isDragging: boolean;
   edgesReady: boolean;
   onEdgesReadyChange: (ready: boolean) => void;
   topologyKey: string;
@@ -165,7 +178,6 @@ function EditorCanvasBody({
   onMoveEnd,
   flowViewport,
   setFlowViewport,
-  isDragging,
   edgesReady,
   onEdgesReadyChange,
   topologyKey,
@@ -175,6 +187,17 @@ function EditorCanvasBody({
   const handlesReady = edgeHandlesReady(flowNodes, flowEdges);
   const visibleEdges =
     edgesReady && !internalsHold && handlesReady ? flowEdges : [];
+
+  const edgeRoutePlan = useMemo(() => {
+    if (visibleEdges.length === 0) {
+      return new Map();
+    }
+    return buildFlowEdgeRoutePlan(
+      flowNodes,
+      visibleEdges,
+      obstacleContext.obstacles,
+    );
+  }, [flowNodes, visibleEdges, obstacleContext.obstacles]);
 
   const selectedSet = useMemo(() => new Set(selectedNodeIds), [selectedNodeIds]);
 
@@ -191,7 +214,9 @@ function EditorCanvasBody({
   );
 
   return (
+    <SelectionProvider selectedNodeIds={selectedNodeIds}>
     <ObstacleRectsProvider value={obstacleContext}>
+      <EdgeRoutePlanProvider plan={edgeRoutePlan}>
       <ReactFlow
         nodes={flowNodes}
         edges={visibleEdges}
@@ -221,203 +246,229 @@ function EditorCanvasBody({
           onReadyChange={onEdgesReadyChange}
         />
         <Background />
-        {/* DEBUG: подсветка obstacle rects — удалить после оценки padding */}
         <ObstacleDebugOverlay />
         <Controls />
-        {!isDragging && (
-          <MiniMap
-            className="editor-minimap"
-            pannable
-            zoomable
-            maskColor="var(--minimap-mask)"
-            maskStrokeColor="var(--minimap-viewport-stroke)"
-            maskStrokeWidth={1.25}
-            nodeColor={minimapNodeColor}
-            nodeStrokeColor={minimapNodeStrokeColor}
-            nodeStrokeWidth={2}
-            bgColor="var(--minimap-bg)"
-          />
-        )}
+        <MiniMap
+          className="editor-minimap"
+          pannable
+          zoomable
+          maskColor="var(--minimap-mask)"
+          maskStrokeColor="var(--minimap-viewport-stroke)"
+          maskStrokeWidth={1.25}
+          nodeColor={minimapNodeColor}
+          nodeStrokeColor={minimapNodeStrokeColor}
+          nodeStrokeWidth={2}
+          bgColor="var(--minimap-bg)"
+        />
       </ReactFlow>
+      </EdgeRoutePlanProvider>
     </ObstacleRectsProvider>
+    </SelectionProvider>
+  );
+}
+
+type EditorCanvasMeasuredProps = Omit<EditorCanvasProps, 'pack' | 'schemeNodes' | 'layoutWidthByNodeId' | 'nodeDisplayById'> & {
+  pack: PackLike | null;
+  schemeNodes: TfgpNode[];
+  layoutWidthByNodeId: Record<string, number>;
+  nodeDisplayById: Readonly<Record<string, NodeDynamicDisplay>>;
+};
+
+function EditorCanvasMeasured({
+  rfNodes,
+  rfEdges,
+  selectedNodeIds,
+  selectedEdgeIds,
+  nodeTypes,
+  edgeTypes,
+  colorTheme,
+  viewport,
+  pack,
+  schemeNodes,
+  layoutWidthByNodeId,
+  nodeDisplayById,
+  onPersistNodePositions,
+  onConnect,
+  isValidConnection,
+  onSelectionChange,
+  onNodesDelete,
+  onEdgesDelete,
+  onPaneClick,
+  onNodeClick,
+  onMoveEnd,
+  canvasRef,
+}: EditorCanvasMeasuredProps & { canvasRef: Ref<EditorCanvasHandle> }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const cardHeights = useNodeCardHeights();
+  const [flowNodes, setFlowNodes] = useState<Node[]>(() =>
+    applyFlowNodeSelection(rfNodes, selectedNodeIds),
+  );
+  const [flowEdges, setFlowEdges] = useState<Edge[]>(() =>
+    applyFlowEdgeSelection(rfEdges, selectedEdgeIds),
+  );
+  const draggingNodeIdsRef = useRef(new Set<string>());
+  const [flowViewport, setFlowViewport] = useState(viewport);
+  const [edgesReady, setEdgesReady] = useState(false);
+  const flowViewportRef = useRef(flowViewport);
+  const panCancelRef = useRef<(() => void) | null>(null);
+
+  flowViewportRef.current = flowViewport;
+
+  const onEdgesReadyChange = useCallback((ready: boolean) => {
+    setEdgesReady(ready);
+  }, []);
+
+  const topologyKey = useMemo(() => portTopologyKey(rfNodes), [rfNodes]);
+
+  useLayoutEffect(() => {
+    setFlowViewport(viewport);
+  }, [viewport.x, viewport.y, viewport.zoom]);
+
+  useLayoutEffect(() => {
+    setFlowNodes((prev) => {
+      const merged = mergeFlowNodes(prev, rfNodes, draggingNodeIdsRef.current);
+      return applyFlowNodeSelection(merged, selectedNodeIds);
+    });
+    setFlowEdges((prev) => {
+      const merged = mergeFlowEdges(prev, rfEdges);
+      return applyFlowEdgeSelection(merged, selectedEdgeIds);
+    });
+  }, [rfNodes, rfEdges, selectedNodeIds, selectedEdgeIds]);
+
+  useImperativeHandle(
+    canvasRef,
+    () => ({
+      panToPoint(x, y, options) {
+        panCancelRef.current?.();
+        const wrap = wrapRef.current;
+        if (!wrap) return;
+        const { width, height } = wrap.getBoundingClientRect();
+        if (width <= 0 || height <= 0) return;
+
+        const from = flowViewportRef.current;
+        const to = viewportToCenterOn(
+          { x, y },
+          from.zoom,
+          width,
+          height,
+        );
+        const duration = options?.duration ?? DEFAULT_PAN_DURATION_MS;
+
+        panCancelRef.current = animateViewport(
+          from,
+          to,
+          duration,
+          (vp) => setFlowViewport(vp),
+          (vp) => {
+            setFlowViewport(vp);
+            onMoveEnd(vp);
+            panCancelRef.current = null;
+          },
+        );
+      },
+    }),
+    [onMoveEnd],
+  );
+
+  const onEdgesChange = useCallback((changes: EdgeChange[]) => {
+    setFlowEdges((current) => applyEdgeChanges(changes, current));
+  }, []);
+
+  const onNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      for (const change of changes) {
+        if (change.type === 'position' && change.id) {
+          if (change.dragging) {
+            draggingNodeIdsRef.current.add(change.id);
+          } else if (draggingNodeIdsRef.current.has(change.id)) {
+            draggingNodeIdsRef.current.delete(change.id);
+          }
+        }
+      }
+
+      setFlowNodes((current) => applyNodeChanges(changes, current));
+
+      const dragEnded = changes.some(
+        (c) => c.type === 'position' && c.dragging === false,
+      );
+      if (!dragEnded) return;
+
+      setFlowNodes((current) => {
+        queueMicrotask(() => onPersistNodePositions(current));
+        return current;
+      });
+    },
+    [onPersistNodePositions],
+  );
+
+  const obstacleContext = useMemo<ObstacleRectsContextValue>(() => {
+    const baseObstacles = pack
+      ? buildSchemeObstacleRects(
+          schemeNodes,
+          pack,
+          layoutWidthByNodeId,
+          nodeDisplayById,
+          cardHeights,
+        )
+      : [];
+    const obstacles = shiftObstaclesForDragging(
+      baseObstacles,
+      flowNodes,
+      rfNodes,
+      draggingNodeIdsRef.current,
+    );
+    return {
+      obstacles,
+      skipObstacleRouting: false,
+    };
+  }, [
+    pack,
+    schemeNodes,
+    layoutWidthByNodeId,
+    nodeDisplayById,
+    cardHeights,
+    flowNodes,
+    rfNodes,
+  ]);
+
+  return (
+    <div ref={wrapRef} className="editor-canvas-flow-host" style={{ width: '100%', height: '100%' }}>
+      <NodeInternalsGateProvider>
+        <EditorCanvasBody
+          flowNodes={flowNodes}
+          flowEdges={flowEdges}
+          selectedNodeIds={selectedNodeIds}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          colorTheme={colorTheme}
+          onConnect={onConnect}
+          isValidConnection={isValidConnection}
+          onSelectionChange={onSelectionChange}
+          onNodesDelete={onNodesDelete}
+          onEdgesDelete={onEdgesDelete}
+          onPaneClick={onPaneClick}
+          onNodeClick={onNodeClick}
+          onMoveEnd={onMoveEnd}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          flowViewport={flowViewport}
+          setFlowViewport={setFlowViewport}
+          edgesReady={edgesReady}
+          onEdgesReadyChange={onEdgesReadyChange}
+          topologyKey={topologyKey}
+          obstacleContext={obstacleContext}
+        />
+      </NodeInternalsGateProvider>
+    </div>
   );
 }
 
 const EditorCanvasComponent = forwardRef<EditorCanvasHandle, EditorCanvasProps>(
-  function EditorCanvasComponent(
-    {
-      rfNodes,
-      rfEdges,
-      selectedNodeIds,
-      selectedEdgeIds,
-      nodeTypes,
-      edgeTypes,
-      colorTheme,
-      viewport,
-      obstacleRects,
-      onPersistNodePositions,
-      onConnect,
-      isValidConnection,
-      onSelectionChange,
-      onNodesDelete,
-      onEdgesDelete,
-      onPaneClick,
-      onNodeClick,
-      onMoveEnd,
-    },
-    ref,
-  ) {
-    const wrapRef = useRef<HTMLDivElement>(null);
-    const [flowNodes, setFlowNodes] = useState<Node[]>(() =>
-      applyFlowNodeSelection(rfNodes, selectedNodeIds),
-    );
-    const [flowEdges, setFlowEdges] = useState<Edge[]>(() =>
-      applyFlowEdgeSelection(rfEdges, selectedEdgeIds),
-    );
-    const draggingNodeIdsRef = useRef(new Set<string>());
-    const [isDragging, setIsDragging] = useState(false);
-    const [flowViewport, setFlowViewport] = useState(viewport);
-    const [edgesReady, setEdgesReady] = useState(false);
-    const flowViewportRef = useRef(flowViewport);
-    const panCancelRef = useRef<(() => void) | null>(null);
-
-    flowViewportRef.current = flowViewport;
-
-    const onEdgesReadyChange = useCallback((ready: boolean) => {
-      setEdgesReady(ready);
-    }, []);
-
-    const topologyKey = useMemo(() => portTopologyKey(rfNodes), [rfNodes]);
-
-    useLayoutEffect(() => {
-      setFlowViewport(viewport);
-    }, [viewport.x, viewport.y, viewport.zoom]);
-
-    useLayoutEffect(() => {
-      setFlowNodes((prev) => {
-        const merged = mergeFlowNodes(prev, rfNodes, draggingNodeIdsRef.current);
-        return applyFlowNodeSelection(merged, selectedNodeIds);
-      });
-      setFlowEdges((prev) => {
-        const merged = mergeFlowEdges(prev, rfEdges);
-        return applyFlowEdgeSelection(merged, selectedEdgeIds);
-      });
-    }, [rfNodes, rfEdges, selectedNodeIds, selectedEdgeIds]);
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        panToPoint(x, y, options) {
-          panCancelRef.current?.();
-          const wrap = wrapRef.current;
-          if (!wrap) return;
-          const { width, height } = wrap.getBoundingClientRect();
-          if (width <= 0 || height <= 0) return;
-
-          const from = flowViewportRef.current;
-          const to = viewportToCenterOn(
-            { x, y },
-            from.zoom,
-            width,
-            height,
-          );
-          const duration = options?.duration ?? DEFAULT_PAN_DURATION_MS;
-
-          panCancelRef.current = animateViewport(
-            from,
-            to,
-            duration,
-            (vp) => setFlowViewport(vp),
-            (vp) => {
-              setFlowViewport(vp);
-              onMoveEnd(vp);
-              panCancelRef.current = null;
-            },
-          );
-        },
-      }),
-      [onMoveEnd],
-    );
-
-    const onEdgesChange = useCallback((changes: EdgeChange[]) => {
-      setFlowEdges((current) => applyEdgeChanges(changes, current));
-    }, []);
-
-    const onNodesChange = useCallback(
-      (changes: NodeChange[]) => {
-        for (const change of changes) {
-          if (change.type === 'position' && change.id) {
-            if (change.dragging) {
-              if (!draggingNodeIdsRef.current.has(change.id)) {
-                draggingNodeIdsRef.current.add(change.id);
-                setIsDragging(true);
-              }
-            } else if (draggingNodeIdsRef.current.has(change.id)) {
-              draggingNodeIdsRef.current.delete(change.id);
-              if (draggingNodeIdsRef.current.size === 0) {
-                setIsDragging(false);
-              }
-            }
-          }
-        }
-
-        setFlowNodes((current) => applyNodeChanges(changes, current));
-
-        const dragEnded = changes.some(
-          (c) => c.type === 'position' && c.dragging === false,
-        );
-        if (!dragEnded) return;
-
-        setFlowNodes((current) => {
-          queueMicrotask(() => onPersistNodePositions(current));
-          return current;
-        });
-      },
-      [onPersistNodePositions],
-    );
-
-    const obstacleContext = useMemo<ObstacleRectsContextValue>(() => {
-      const obstacles = shiftObstaclesForDragging(
-        obstacleRects.obstacles,
-        flowNodes,
-        rfNodes,
-      );
-      return {
-        obstacles,
-        skipObstacleRouting: obstacleRects.skipObstacleRouting,
-      };
-    }, [obstacleRects, flowNodes, rfNodes]);
-
+  function EditorCanvasComponent(props, ref) {
     return (
-      <div ref={wrapRef} className="editor-canvas-flow-host" style={{ width: '100%', height: '100%' }}>
-        <NodeInternalsGateProvider>
-          <EditorCanvasBody
-            flowNodes={flowNodes}
-            flowEdges={flowEdges}
-            selectedNodeIds={selectedNodeIds}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            colorTheme={colorTheme}
-            onConnect={onConnect}
-            isValidConnection={isValidConnection}
-            onSelectionChange={onSelectionChange}
-            onNodesDelete={onNodesDelete}
-            onEdgesDelete={onEdgesDelete}
-            onPaneClick={onPaneClick}
-            onNodeClick={onNodeClick}
-            onMoveEnd={onMoveEnd}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            isDragging={isDragging}
-            flowViewport={flowViewport}
-            setFlowViewport={setFlowViewport}
-            edgesReady={edgesReady}
-            onEdgesReadyChange={onEdgesReadyChange}
-            topologyKey={topologyKey}
-            obstacleContext={obstacleContext}
-          />
-        </NodeInternalsGateProvider>
-      </div>
+      <NodeCardMeasureProvider>
+        <EditorCanvasMeasured {...props} canvasRef={ref} />
+      </NodeCardMeasureProvider>
     );
   },
 );

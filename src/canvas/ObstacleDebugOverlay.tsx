@@ -1,23 +1,29 @@
-// DEBUG: временная подсветка зон obstacle routing для оценки padding — удалить после настройки.
-import { ViewportPortal } from '@xyflow/react';
+/**
+ * TEMP: visualizes routing obstacle rects on the canvas.
+ * Do not remove until the user explicitly asks.
+ */
+import { useViewport } from '@xyflow/react';
 import { useObstacleRects } from '@/canvas/obstacle-rects-context';
-
-/** DEBUG: выключить overlay без удаления файла. */
-export const DEBUG_SHOW_OBSTACLE_RECTS = true;
+import { useDebugStore } from '@/stores/debug-store';
 
 export function ObstacleDebugOverlay() {
-  const { obstacles, skipObstacleRouting } = useObstacleRects();
-  if (!DEBUG_SHOW_OBSTACLE_RECTS || skipObstacleRouting || obstacles.length === 0) {
+  const showObstacleRects = useDebugStore((s) => s.showObstacleRects);
+  const { obstacles } = useObstacleRects();
+  const { x, y, zoom } = useViewport();
+
+  if (!showObstacleRects || obstacles.length === 0) {
     return null;
   }
 
+  const strokeWidth = 2 / zoom;
+  const dash = 4 / zoom;
+
   return (
-    <ViewportPortal>
-      <svg
-        className="obstacle-debug-overlay"
-        aria-hidden
-        // DEBUG: координаты rect уже в flow-space (как у edge routing).
-      >
+    <svg
+      className="obstacle-debug-overlay"
+      aria-hidden="true"
+    >
+      <g transform={`translate(${x}, ${y}) scale(${zoom})`}>
         {obstacles.map(({ nodeId, rect }) => (
           <g key={nodeId}>
             <rect
@@ -26,17 +32,20 @@ export function ObstacleDebugOverlay() {
               width={rect.right - rect.left}
               height={rect.bottom - rect.top}
               className="obstacle-debug-overlay__rect"
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${dash} ${dash}`}
             />
             <text
               x={rect.left + 4}
-              y={rect.top + 12}
+              y={rect.top + 14}
               className="obstacle-debug-overlay__label"
+              fontSize={11 / zoom}
             >
               {nodeId}
             </text>
           </g>
         ))}
-      </svg>
-    </ViewportPortal>
+      </g>
+    </svg>
   );
 }

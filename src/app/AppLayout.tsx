@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { usePackBootstrap } from '@/hooks/use-pack-bootstrap';
+import { ObstacleDebugToggle } from '@/components/ObstacleDebugToggle';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import './layout.css';
 
@@ -23,6 +24,7 @@ export function AppLayout() {
           <NavLink to="/editor">{t('nav.editor')}</NavLink>
         </nav>
         <div className="header-controls">
+          {isEditor && <ObstacleDebugToggle />}
           <ThemeToggle />
           <div className="lang-switch">
             <button

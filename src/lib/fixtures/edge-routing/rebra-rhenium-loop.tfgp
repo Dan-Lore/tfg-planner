@@ -1,0 +1,122 @@
+{
+  "format": "tfg-planner-graph",
+  "formatVersion": 1,
+  "meta": {
+    "name": "rebra-rhenium-loop",
+    "author": "",
+    "createdAt": "2026-06-18T10:33:14.342Z",
+    "updatedAt": "2026-07-03T04:30:52.096Z",
+    "description": "Integration fixture: rhenium loop with steam feed, cracker column, parallel edge corridors (from Ребра (1) layout)."
+  },
+  "modpack": {
+    "version": "0.12.8",
+    "dataVersion": 1
+  },
+  "viewport": {
+    "x": -1746.091997460012,
+    "y": -119.19307451869565,
+    "zoom": 1.0000000000000007
+  },
+  "nodes": [
+    {
+      "id": "node_30",
+      "machineId": "gtceu:cracker",
+      "recipeId": "tfg:reformate_gas_cracker",
+      "position": { "x": 2456.891791034288, "y": 183.02630446431914 },
+      "machineCount": 6,
+      "overclock": 1,
+      "parallel": 1,
+      "voltageTier": "HV"
+    },
+    {
+      "id": "node_60",
+      "position": { "x": 2487.9182718952034, "y": 657.8998282384268 },
+      "fluidId": "gtceu:steam",
+      "capacity": 0,
+      "kind": "start_buffer",
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true,
+      "machineCount": 1,
+      "parallel": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_96",
+      "machineId": "gtceu:large_chemical_reactor",
+      "recipeId": "tfg:reformed_aromatic_feedstock@lcr",
+      "position": { "x": 2021.3349913131628, "y": 185.09170241305947 },
+      "machineCount": 1,
+      "overclock": 1,
+      "parallel": 1,
+      "voltageTier": "HV"
+    },
+    {
+      "id": "node_131",
+      "machineId": "gtceu:electrolyzer",
+      "recipeId": "tfg:cracker_off_gas_recycling",
+      "position": { "x": 2464.604468612427, "y": 378.40873801902336 },
+      "machineCount": 1,
+      "overclock": 1,
+      "parallel": 1,
+      "voltageTier": "HV"
+    },
+    {
+      "id": "node_139",
+      "position": { "x": 2046.9511213028463, "y": 522.3052691678042 },
+      "itemId": "gtceu:tiny_rhenium_dust",
+      "capacity": 300,
+      "kind": "intermediate_buffer"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_61",
+      "source": "node_60",
+      "sourcePort": "out_0",
+      "target": "node_30",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:steam"
+    },
+    {
+      "id": "edge_98",
+      "source": "node_96",
+      "target": "node_30",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "fluidId": "tfg:reformed_aromatic_feedstock"
+    },
+    {
+      "id": "edge_132",
+      "source": "node_30",
+      "sourcePort": "out_1",
+      "target": "node_131",
+      "targetPort": "in_0",
+      "fluidId": "tfg:cracker_off_gas"
+    },
+    {
+      "id": "edge_140",
+      "source": "node_131",
+      "sourcePort": "out_0",
+      "target": "node_139",
+      "targetPort": "in_0",
+      "itemId": "gtceu:tiny_rhenium_dust"
+    },
+    {
+      "id": "edge_141",
+      "source": "node_139",
+      "target": "node_96",
+      "sourcePort": "out_0",
+      "targetPort": "in_0",
+      "itemId": "gtceu:tiny_rhenium_dust"
+    }
+  ],
+  "groups": [],
+  "targets": [
+    {
+      "nodeId": "node_96",
+      "itemId": "gtceu:tiny_rhenium_dust",
+      "ratePerSecond": 1111
+    }
+  ]
+}
