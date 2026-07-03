@@ -5,6 +5,8 @@
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-07-03
+
 ### Added
 - Scheme check: cycle analysis (SCC, product net balance, `cycle_not_running`, `catalyst_imbalance`)
 - Scheme check: `target_not_output`, `disconnected_output`, `orphan_start_buffer` issue codes with i18n
@@ -23,6 +25,7 @@
 ### Fixed
 - Editor: dual persist rehydrate waits for scheme + flow slices (`editor-hydration`); cached flows restored in scheme `onRehydrateStorage` after F5
 - Dev: `run-semgrep.mjs` adds pip Scripts dir to PATH on Windows when invoking `semgrep.exe`
+- Canvas: recipe picker dropdown renders above other machine cards (`react-flow__node` z-index when menu open)
 - Edge routing: obstacle avoidance for buffer + machine cards; parallel lane gap (`PARALLEL_EDGE_GAP = 4`) between edges sharing a route corridor segment (`edge-route-lanes.ts`, batch plan in canvas). Fixtures: `rebra-rhenium-loop.tfgp`, extended `benzene-distillation-lcr-gap` integration tests.
 - Edge routing: overlapping source/target cards (e.g. rebra `edge_140`) route above both endpoint bodies, not only above target.
 - Solver: `portInputDemandRate` applies GT chance multiplier on chanced inputs (symmetric with outputs)
@@ -178,7 +181,8 @@
 
 - Спецификация и документация проекта.
 
-[Unreleased]: https://github.com/dan-lore/tfg-planner/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/dan-lore/tfg-planner/releases/tag/v0.2.0
+[Unreleased]: https://github.com/Dan-Lore/tfg-planner/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/Dan-Lore/tfg-planner/releases/tag/v0.3.0
+[0.2.0]: https://github.com/Dan-Lore/tfg-planner/releases/tag/v0.2.0
 [0.1.0]: https://github.com/dan-lore/tfg-planner/releases/tag/v0.1.0
 [0.0.0]: https://github.com/your-org/tfg-planner/releases/tag/v0.0.0
