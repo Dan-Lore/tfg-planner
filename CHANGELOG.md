@@ -10,6 +10,9 @@
 - Scheme check: `target_not_output`, `disconnected_output`, `orphan_start_buffer` issue codes with i18n
 
 ### Changed
+- Editor: split `EditorPage` into `EditorToolbar`, `EditorSidebar`, `PortAttachMenu`, hooks `useEditorRfGraph` / `useSchemeIssues`
+- Store: `useSchemeStore` + `useFlowStore`; `useEditorStore` facade; combined persist key `tfg-editor-store`; dual persist rehydrate via `editor-hydration` (scheme slice owns `restoreForPack`)
+- Canvas selection: store is sole source of truth (`mergeFlowNodes` no longer preserves RF-local `selected`; nodes use `useNodeSelected` only)
 - Scheme check: removed `stalled_machine` warnings (covered by `cycle_not_running`, `disconnected_output`, etc.)
 - Scheme check UX: issue list in inspector; minimap highlights selection; double-click issue pans to node (zoom unchanged)
 - Node scaling: removed `parallel` from scheme node model; scale only via `machineCount`. Legacy `.tfgp` import merges `parallel` into `machineCount` on load.
@@ -18,6 +21,8 @@
 - Scheme node field `parallel` (breaking for hand-edited JSON; backward-compatible import via `normalizeNodeScaling`)
 
 ### Fixed
+- Editor: dual persist rehydrate waits for scheme + flow slices (`editor-hydration`); cached flows restored in scheme `onRehydrateStorage` after F5
+- Dev: `run-semgrep.mjs` adds pip Scripts dir to PATH on Windows when invoking `semgrep.exe`
 - Edge routing: obstacle avoidance for buffer + machine cards; parallel lane gap (`PARALLEL_EDGE_GAP = 4`) between edges sharing a route corridor segment (`edge-route-lanes.ts`, batch plan in canvas). Fixtures: `rebra-rhenium-loop.tfgp`, extended `benzene-distillation-lcr-gap` integration tests.
 - Edge routing: overlapping source/target cards (e.g. rebra `edge_140`) route above both endpoint bodies, not only above target.
 - Solver: `portInputDemandRate` applies GT chance multiplier on chanced inputs (symmetric with outputs)

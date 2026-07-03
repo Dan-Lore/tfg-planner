@@ -5,7 +5,7 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 const args = ['--config', '.semgrep.yml', '--error', '--quiet', 'src', 'tools/parser/src'];
 
@@ -21,9 +21,15 @@ function semgrepCandidates() {
 }
 
 function run(cmd) {
+  const env = { ...process.env };
+  if (process.platform === 'win32' && cmd.endsWith('.exe')) {
+    const scriptsDir = dirname(cmd);
+    env.PATH = `${scriptsDir};${env.PATH ?? ''}`;
+  }
   return spawnSync(cmd, args, {
     stdio: 'inherit',
     shell: process.platform === 'win32' && !cmd.endsWith('.exe'),
+    env,
   });
 }
 

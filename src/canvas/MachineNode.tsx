@@ -160,13 +160,13 @@ function formatLoadPercentDisplay(percent: number): string {
   return `${Math.round(percent)}%`;
 }
 
-function MachineNodeComponent({ id, data, dragging, selected, width }: NodeProps) {
+function MachineNodeComponent({ id, data, dragging, width }: NodeProps) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as MachineNodeData;
   const display = useNodeDisplay(id);
   const actions = useEditorNodeActions();
-  const isSelected = useNodeSelected(id) || Boolean(selected);
+  const isSelected = useNodeSelected(id);
   const [recipeMenuOpen, setRecipeMenuOpen] = useState(false);
   const [machineRecipes, setMachineRecipes] = useState<Recipe[]>(() =>
     getRecipesForMachine(d.pack, d.machineId),

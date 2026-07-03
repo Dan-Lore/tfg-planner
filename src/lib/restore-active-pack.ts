@@ -1,30 +1,14 @@
 import { usePackStore } from '@/stores/pack-store';
 import { useEditorStore } from '@/stores/editor-store';
-import { packEntryNeedsLoad, resolvePackEntry } from '@/lib/resolve-pack-entry';
+import {
+  onEditorStoresHydrated,
+  waitForEditorHydration,
+} from '@/stores/editor-hydration';
 import { readPersistedActiveEntry } from '@/lib/pack-persist';
 import type { PackManifestEntry } from '@/data/types';
 import { packKey } from '@/lib/pack-key';
 import { isEntryAlignedWithEditor } from '@/lib/pack-selection';
-
-type PersistStore = {
-  persist: {
-    hasHydrated: () => boolean;
-    onFinishHydration: (fn: () => void) => () => void;
-  };
-};
-
-function waitForEditorHydration(): Promise<void> {
-  const store = useEditorStore as unknown as PersistStore;
-  if (store.persist.hasHydrated()) return Promise.resolve();
-  return new Promise((resolve) => {
-    const done = () => {
-      unsub();
-      resolve();
-    };
-    const unsub = store.persist.onFinishHydration(done);
-    if (store.persist.hasHydrated()) done();
-  });
-}
+import { packEntryNeedsLoad, resolvePackEntry } from '@/lib/resolve-pack-entry';
 
 let ensurePromise: Promise<void> | null = null;
 
@@ -122,11 +106,11 @@ export function scheduleRestoreActivePack(source = 'unknown'): void {
 }
 
 export function initPackRestore(): void {
-  useEditorStore.persist.onFinishHydration(() => {
+  onEditorStoresHydrated(() => {
     const { activeEntry, activePack, manifest } = usePackStore.getState();
     if (!activeEntry || !activePack || manifest.length === 0) return;
     const entry = resolvePackEntry(activeEntry, manifest);
     if (entry) void syncEditorToPack(entry);
   });
 }
-
+

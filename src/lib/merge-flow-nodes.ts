@@ -69,7 +69,6 @@ export function mergeFlowNodes(
     return {
       ...rf,
       position,
-      selected: existing.selected,
       ...(rfStyle ? { style: rfStyle } : {}),
       measured: widthChanged ? undefined : (existing.measured ?? rf.measured),
     };
@@ -96,7 +95,6 @@ export function mergeFlowEdges(prev: Edge[], next: Edge[]): Edge[] {
     if (!existing) return edge;
     return {
       ...edge,
-      selected: existing.selected,
     };
   });
 }

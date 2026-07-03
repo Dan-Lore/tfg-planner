@@ -1861,6 +1861,10 @@ a {
   z-index: 1000 !important;
 }
 
+.react-flow__node:has(> .machine-node--menu-open) {
+  z-index: 1000 !important;
+}
+
 .machine-node.is-dragging {
   cursor: grabbing;
   border-color: var(--node-ring-color);

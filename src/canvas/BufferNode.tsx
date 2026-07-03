@@ -90,7 +90,7 @@ function BufferPortRow({
   );
 }
 
-function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
+function BufferNodeComponent({ id, data, dragging }: NodeProps) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const d = data as BufferNodeData;
@@ -109,7 +109,7 @@ function BufferNodeComponent({ id, data, selected, dragging }: NodeProps) {
   );
   const loadLabel = display.loadLabel ?? d.loadLabel;
   const loadTitle = display.loadTitle ?? d.loadTitle;
-  const isSelected = useNodeSelected(id) || Boolean(selected);
+  const isSelected = useNodeSelected(id);
 
   const internalsKey = `${d.bufferKind}|${d.capacity}|${d.supplyMode ?? ''}|${d.autoSupplyRate ? 1 : 0}|${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}`;
   useNodeInternalsSync(id, internalsKey);

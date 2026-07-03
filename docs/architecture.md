@@ -71,6 +71,8 @@
 - **Масштабирование UI:**
   - A — clipboard duplicate (топология);
   - C — панель целевой скорости на выходном узле / в `targets`.
+- **Editor state:** `useSchemeStore` (топология, selection, undo/redo, persist `schemesByPack` + `activePackKey`) + `useFlowStore` (расчёт, `flowResult`, `schemeCheckResult`, persist `flowsByPack`); `useEditorStore` — facade для существующих consumers. Оба slice пишут в один ключ `tfg-editor-store` через `editor-combined-storage`. После F5: `editor-hydration` ждёт rehydrate обоих slice; восстановление cached flow — в scheme `onRehydrateStorage` (`restoreForPack`), `restore-active-pack` использует `waitForEditorHydration`.
+- **Editor UI:** `EditorPage` — оркестратор; `EditorToolbar`, `EditorSidebar`, `PortAttachMenu`; хуки `useEditorRfGraph`, `useSchemeIssues`. Selection: store → `SelectionProvider` → `useNodeSelected`; `mergeFlowNodes` не сохраняет RF-local `selected`.
 
 ### 2.5. Calculator Engine
 

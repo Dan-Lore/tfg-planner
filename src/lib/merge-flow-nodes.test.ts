@@ -150,7 +150,7 @@ describe('mergeFlowNodes', () => {
     expect(merged[0]?.measured).toEqual({ width: 220, height: 120 });
   });
 
-  it('preserves selected when store node data refreshes', () => {
+  it('does not preserve RF-local selected on merge (store applies selection)', () => {
     const prev = [
       {
         id: 'node_1',
@@ -170,7 +170,7 @@ describe('mergeFlowNodes', () => {
     ];
 
     const merged = mergeFlowNodes(prev, next);
-    expect(merged[0]?.selected).toBe(true);
+    expect(merged[0]?.selected).toBeUndefined();
     expect(merged[0]?.data).toEqual({ machineCount: 2 });
   });
 
@@ -238,7 +238,7 @@ describe('applyFlowEdgeSelection', () => {
 });
 
 describe('mergeFlowEdges', () => {
-  it('preserves selected when edge data refreshes', () => {
+  it('does not preserve RF-local selected on merge (store applies selection)', () => {
     const prev = [
       { id: 'e1', source: 'a', target: 'b', selected: true, data: { source: '1/s' } },
     ];
@@ -247,7 +247,7 @@ describe('mergeFlowEdges', () => {
     ];
 
     const merged = mergeFlowEdges(prev, next);
-    expect(merged[0]?.selected).toBe(true);
+    expect(merged[0]?.selected).toBeUndefined();
     expect(merged[0]?.data).toEqual({ source: '2/s' });
   });
 
