@@ -1,10 +1,11 @@
+import { buildRecipeMapForScheme, customMachineRecipeId } from '@/calculator/custom-machine-recipe';
 import type { FlowResult } from '@/calculator/flow-solver';
-import { analyzeCycles, isBalancedNet } from '@/calculator/cycle-analysis';
+import { analyzeCycles, isBalancedNet, type CycleAnalysisNode } from '@/calculator/cycle-analysis';
 import type { PackData, Recipe } from '@/data/types';
 import { nodePortFlow, parsePortId, portsMatch, productKey } from '@/canvas/ports';
 import { edgeProductMatchesFlow, flowsCompatible } from '@/lib/flow-match';
 import { buildTagIndex } from '@/lib/tag-index';
-import { isBufferNode, isEndBufferNode, isIntermediateBufferNode, isMachineNode, isStartBufferNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isEndBufferNode, isFlowMachineNode, isIntermediateBufferNode, isMachineNode, isStartBufferNode } from '@/lib/node-kind';
 import { resolveSourceOutputPort } from '@/calculator/port-resolution';
 import { normalizeSchemeNodes } from '@/stores/editor-utils';
 import type { TfgpEdge, TfgpFile, TfgpNode, TfgpTarget } from '@/schema/tfgp';
@@ -129,12 +130,15 @@ function recipeForNode(
   node: TfgpNode,
   recipes: Map<string, Recipe>,
 ): Recipe | undefined {
+  if (isCustomMachineNode(node)) {
+    return recipes.get(customMachineRecipeId(node.id));
+  }
   if (!isMachineNode(node)) return undefined;
   return recipes.get(node.recipeId);
 }
 
-function recipeMapFromPack(pack: PackData): Map<string, Recipe> {
-  return new Map(pack.recipes.map((r) => [r.id, r]));
+function recipeMapFromPack(pack: PackData, nodes: TfgpNode[]): Map<string, Recipe> {
+  return buildRecipeMapForScheme(pack, nodes);
 }
 
 function machineContext(node: TfgpNode): SchemeIssueContext | undefined {
@@ -143,6 +147,9 @@ function machineContext(node: TfgpNode): SchemeIssueContext | undefined {
 }
 
 function nodeLabel(node: TfgpNode): string {
+  if (isCustomMachineNode(node)) {
+    return `${node.id} (custom_machine)`;
+  }
   if (isMachineNode(node)) {
     return `${node.id} (${node.machineId}, ${node.recipeId})`;
   }
@@ -210,6 +217,14 @@ function checkEdge(
       edgeId: edge.id,
       context: { ...machineContext(src), recipeId: src.recipeId },
     });
+  } else if (isCustomMachineNode(src) && !srcRecipe) {
+    issues.push({
+      severity: 'warning',
+      code: 'missing_recipe',
+      message: `Узел ${nodeLabel(src)}: нет выходов — расчёт потоков невозможен`,
+      nodeId: src.id,
+      edgeId: edge.id,
+    });
   }
   if (isMachineNode(tgt) && !tgtRecipe) {
     issues.push({
@@ -220,12 +235,20 @@ function checkEdge(
       edgeId: edge.id,
       context: { ...machineContext(tgt), recipeId: tgt.recipeId },
     });
+  } else if (isCustomMachineNode(tgt) && !tgtRecipe) {
+    issues.push({
+      severity: 'warning',
+      code: 'missing_recipe',
+      message: `Узел ${nodeLabel(tgt)}: нет выходов — расчёт потоков невозможен`,
+      nodeId: tgt.id,
+      edgeId: edge.id,
+    });
   }
 
   const srcFlow = nodePortFlow(src, edge.sourcePort, srcRecipe);
   const tgtFlow = nodePortFlow(tgt, edge.targetPort, tgtRecipe);
 
-  if (isMachineNode(src) && srcRecipe && !isPortInRange(srcRecipe, edge.sourcePort)) {
+  if ((isMachineNode(src) || isCustomMachineNode(src)) && srcRecipe && !isPortInRange(srcRecipe, edge.sourcePort)) {
     issues.push({
       severity: 'error',
       code: 'invalid_source_port',
@@ -238,7 +261,7 @@ function checkEdge(
         outputCount: String(srcRecipe.outputs.length),
       },
     });
-  } else if (isMachineNode(src) && srcRecipe && !srcFlow) {
+  } else if ((isMachineNode(src) || isCustomMachineNode(src)) && srcRecipe && !srcFlow) {
     issues.push({
       severity: 'error',
       code: 'invalid_source_port',
@@ -249,7 +272,7 @@ function checkEdge(
     });
   }
 
-  if (isMachineNode(tgt) && tgtRecipe && !isPortInRange(tgtRecipe, edge.targetPort)) {
+  if ((isMachineNode(tgt) || isCustomMachineNode(tgt)) && tgtRecipe && !isPortInRange(tgtRecipe, edge.targetPort)) {
     issues.push({
       severity: 'error',
       code: 'invalid_target_port',
@@ -262,7 +285,7 @@ function checkEdge(
         inputCount: String(tgtRecipe.inputs.length),
       },
     });
-  } else if (isMachineNode(tgt) && tgtRecipe && !tgtFlow) {
+  } else if ((isMachineNode(tgt) || isCustomMachineNode(tgt)) && tgtRecipe && !tgtFlow) {
     issues.push({
       severity: 'error',
       code: 'invalid_target_port',
@@ -400,7 +423,7 @@ function checkDisconnectedOutputs(
   }
 
   for (const node of nodes) {
-    if (!isMachineNode(node)) continue;
+    if (!isFlowMachineNode(node)) continue;
     const recipe = recipeForNode(node, recipes);
     if (!recipe) continue;
 
@@ -431,7 +454,7 @@ function checkDisconnectedOutputs(
         const target = nodeById.get(edge.target);
         if (!target) return false;
         if (isEndBufferNode(target) || isIntermediateBufferNode(target)) return true;
-        if (!isMachineNode(target)) return false;
+        if (!isFlowMachineNode(target)) return false;
         const targetRecipe = recipeForNode(target, recipes);
         if (!targetRecipe) return false;
         return edgeProductMatchesFlow(edge, output, tags);
@@ -478,6 +501,45 @@ function checkOrphanStartBuffers(
   return issues;
 }
 
+function toCycleAnalysisNodes(nodes: TfgpNode[]): CycleAnalysisNode[] {
+  return nodes.map((n) => {
+    if (isCustomMachineNode(n)) {
+      return {
+        id: n.id,
+        kind: 'custom_machine' as const,
+        recipeId: customMachineRecipeId(n.id),
+        machineCount: n.machineCount,
+        overclock: n.overclock,
+        durationTicks: n.durationTicks,
+        customInputs: n.inputs,
+        customOutputs: n.outputs,
+        primaryOutputIndex: n.primaryOutputIndex,
+      };
+    }
+    if (isMachineNode(n)) {
+      return {
+        id: n.id,
+        kind: 'machine' as const,
+        machineId: n.machineId,
+        recipeId: n.recipeId,
+        machineCount: n.machineCount,
+        overclock: n.overclock,
+        voltageTier: n.voltageTier,
+        primaryOutputIndex: n.primaryOutputIndex,
+      };
+    }
+    if (isIntermediateBufferNode(n)) {
+      return {
+        id: n.id,
+        kind: 'intermediate_buffer' as const,
+        itemId: n.itemId,
+        fluidId: n.fluidId,
+      };
+    }
+    return { id: n.id, kind: n.kind };
+  });
+}
+
 function checkCycleBalance(
   scheme: TfgpFile,
   pack: PackData,
@@ -485,7 +547,7 @@ function checkCycleBalance(
   tags: ReturnType<typeof buildTagIndex>,
 ): SchemeIssue[] {
   const issues: SchemeIssue[] = [];
-  const nodes = normalizeSchemeNodes(scheme.nodes, pack);
+  const nodes = toCycleAnalysisNodes(normalizeSchemeNodes(scheme.nodes, pack));
   const analysis = analyzeCycles(nodes, scheme.edges, pack, flowResult, tags);
   const notRunningSccs = new Set(analysis.notRunning.map((n) => n.sccIndex));
 
@@ -549,7 +611,7 @@ function checkDisconnectedInputs(
   }
 
   for (const node of nodes) {
-    if (!isMachineNode(node)) continue;
+    if (!isFlowMachineNode(node)) continue;
     const recipe = recipeForNode(node, recipes);
     if (!recipe) continue;
     const ports = connectedIn.get(node.id) ?? new Set<string>();
@@ -603,7 +665,7 @@ function checkTargets(
       });
       continue;
     }
-    if (!isMachineNode(node)) continue;
+    if (!isFlowMachineNode(node)) continue;
     const recipe = recipeForNode(node, recipes);
     const targetKey = target.itemId ?? target.fluidId ?? '';
     if (!recipe || !targetKey) continue;
@@ -637,7 +699,7 @@ export function checkScheme(
   options: CheckSchemeOptions = {},
 ): SchemeCheckResult {
   const nodeById = new Map(scheme.nodes.map((n) => [n.id, n]));
-  const recipes = recipeMapFromPack(pack);
+  const recipes = recipeMapFromPack(pack, scheme.nodes);
   const tags = buildTagIndex(pack);
   const issues: SchemeIssue[] = [];
 
@@ -665,7 +727,7 @@ export function checkScheme(
     summary: {
       nodeCount: scheme.nodes.length,
       edgeCount: scheme.edges.length,
-      machineCount: scheme.nodes.filter(isMachineNode).length,
+      machineCount: scheme.nodes.filter(isFlowMachineNode).length,
       errorCount,
       warningCount,
     },

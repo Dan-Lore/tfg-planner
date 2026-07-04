@@ -6,7 +6,8 @@ import type { ActivePack } from '@/data/pack-runtime';
 import type { PackManifestEntry } from '@/data/types';
 import { filterItemsByQuery, resolveMachineId } from '@/lib/search-combobox';
 import { parsePositiveRate } from '@/lib/parse-positive-rate';
-import { isMachineNode } from '@/lib/node-kind';
+import { isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
+import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
 import { downloadTfgp, type TfgpFile } from '@/schema/tfgp';
 import type { FlowComputeState } from '@/stores/editor-store';
 import type { EditorActions } from '@/editor/editor-actions';
@@ -18,6 +19,7 @@ export interface EditorToolbarProps {
   selectedNodeIds: string[];
   flowComputeState: FlowComputeState;
   addNode: EditorActions['addNode'];
+  addCustomMachine: EditorActions['addCustomMachine'];
   setTarget: EditorActions['setTarget'];
   duplicateSelected: EditorActions['duplicateSelected'];
   undo: EditorActions['undo'];
@@ -34,6 +36,7 @@ export function EditorToolbar({
   selectedNodeIds,
   flowComputeState,
   addNode,
+  addCustomMachine,
   setTarget,
   duplicateSelected,
   undo,
@@ -121,6 +124,14 @@ export function EditorToolbar({
     })();
   };
 
+  const handleAddCustomMachine = () => {
+    const newId = addCustomMachine({
+      x: 120 + scheme.nodes.length * 30,
+      y: 120 + scheme.nodes.length * 20,
+    });
+    setSelectedNodeIds([newId]);
+  };
+
   const handleClearScheme = () => {
     if (!window.confirm(t('editor.clearSchemeConfirm'))) return;
     clearScheme();
@@ -161,13 +172,51 @@ export function EditorToolbar({
         >
           {t('editor.addMachine')}
         </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleAddCustomMachine}
+          disabled={!pack}
+        >
+          {t('editor.addCustomMachine')}
+        </button>
       </div>
       <button
         type="button"
         className="btn btn-secondary"
         onClick={() => {
-          if (!pack || !selectedNode || !isMachineNode(selectedNode)) return;
-          const recipe = getRecipe(pack, selectedNode.recipeId);
+          if (!pack || !selectedNode) return;
+          if (isMachineNode(selectedNode)) {
+            const recipe = getRecipe(pack, selectedNode.recipeId);
+            const out = recipe?.outputs[0];
+            const v = prompt(t('editor.ratePrompt'), '1');
+            if (!v || !out) return;
+            const rate = parsePositiveRate(v);
+            if (rate === null) {
+              alert(t('editor.rateInvalid'));
+              return;
+            }
+            setTarget({
+              nodeId: selectedNode.id,
+              itemId: out.itemId,
+              fluidId: out.fluidId,
+              ratePerSecond: rate,
+            });
+            return;
+          }
+          if (!isCustomMachineNode(selectedNode)) return;
+          const recipe = customMachineAsRecipe({
+            id: selectedNode.id,
+            kind: 'custom_machine',
+            machineId: '__custom__',
+            recipeId: `custom:${selectedNode.id}`,
+            machineCount: selectedNode.machineCount,
+            overclock: selectedNode.overclock,
+            voltageTier: 'LV',
+            durationTicks: selectedNode.durationTicks,
+            customInputs: selectedNode.inputs,
+            customOutputs: selectedNode.outputs,
+          });
           const out = recipe?.outputs[0];
           const v = prompt(t('editor.ratePrompt'), '1');
           if (!v || !out) return;
@@ -183,7 +232,11 @@ export function EditorToolbar({
             ratePerSecond: rate,
           });
         }}
-        disabled={!pack || !selectedNode || !isMachineNode(selectedNode)}
+        disabled={
+          !pack ||
+          !selectedNode ||
+          (!isMachineNode(selectedNode) && !isCustomMachineNode(selectedNode))
+        }
       >
         {t('editor.targetRate')}
       </button>

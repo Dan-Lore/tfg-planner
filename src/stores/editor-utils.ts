@@ -2,9 +2,9 @@ import type { TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
 import type { ActivePack } from '@/data/pack-runtime';
 import type { PackData } from '@/data/types';
 import { getRecipe } from '@/data/pack-registry';
-import { normalizeNodeScaling, normalizeBufferNode, type RawTfgpNode } from '@/lib/node-scaling';
+import { normalizeNodeScaling, normalizeBufferNode, normalizeCustomMachineNode, type RawTfgpNode } from '@/lib/node-scaling';
 import { normalizeNodeVoltage } from '@/lib/node-voltage';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 
 export {
   applyFlowResult,
@@ -21,6 +21,7 @@ export function normalizeSchemeNodes(
 ): TfgpNode[] {
   return nodes.map(normalizeNodeScaling).map((n) => {
     if (isBufferNode(n)) return normalizeBufferNode(n);
+    if (isCustomMachineNode(n)) return normalizeCustomMachineNode(n);
     if (!pack || !isMachineNode(n)) return n;
     const recipe = getRecipe(pack, n.recipeId);
     return normalizeNodeVoltage(n, recipe);

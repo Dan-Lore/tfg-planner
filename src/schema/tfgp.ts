@@ -4,6 +4,8 @@ import { assertTfgpShape } from '@/schema/tfgp-validate';
 
 export type {
   TfgpBufferKind,
+  TfgpCustomMachineNode,
+  TfgpCustomPort,
   TfgpEdge,
   TfgpEndBufferNode,
   TfgpFile,

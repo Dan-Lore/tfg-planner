@@ -11,11 +11,20 @@ export interface TfgpMeta {
 
 export type TfgpNodeKind =
   | 'machine'
+  | 'custom_machine'
   | 'start_buffer'
   | 'intermediate_buffer'
   | 'end_buffer';
 
-export type TfgpBufferKind = Exclude<TfgpNodeKind, 'machine'>;
+export type TfgpBufferKind = Exclude<TfgpNodeKind, 'machine' | 'custom_machine'>;
+
+export interface TfgpCustomPort {
+  /** User-defined port name when no pack product is set. */
+  label?: string;
+  itemId?: string;
+  fluidId?: string;
+  amount: number;
+}
 
 export type TfgpSupplyMode = 'rate' | 'stock';
 
@@ -60,8 +69,19 @@ export interface TfgpEndBufferNode extends TfgpBufferNodeBase {
   kind: 'end_buffer';
 }
 
+export interface TfgpCustomMachineNode extends TfgpNodeBase {
+  kind: 'custom_machine';
+  durationTicks: number;
+  machineCount: number;
+  overclock: number;
+  primaryOutputIndex?: number;
+  inputs: TfgpCustomPort[];
+  outputs: TfgpCustomPort[];
+}
+
 export type TfgpNode =
   | TfgpMachineNode
+  | TfgpCustomMachineNode
   | TfgpStartBufferNode
   | TfgpIntermediateBufferNode
   | TfgpEndBufferNode;

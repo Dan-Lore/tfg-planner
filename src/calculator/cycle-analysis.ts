@@ -1,4 +1,6 @@
 import type { FlowResult, SchemeEdge, SchemeNode, SchemeNodeKind } from '@/calculator/flow-solver-types';
+import type { SchemeCustomPort } from '@/calculator/flow-solver-types';
+import { buildRecipeMap, customMachineRecipeId } from '@/calculator/custom-machine-recipe';
 import { perMachineOutputRateAtIndex } from '@/calculator/flow-rates';
 import { portInputDemandRate } from '@/calculator/port-resolution';
 import { R, type Rational } from '@/calculator/rational';
@@ -53,26 +55,35 @@ export interface CycleAnalysisNode {
   itemId?: string;
   fluidId?: string;
   primaryOutputIndex?: number;
+  durationTicks?: number;
+  customInputs?: SchemeCustomPort[];
+  customOutputs?: SchemeCustomPort[];
 }
 
 function asSolverNode(node: CycleAnalysisNode): SchemeNode {
+  const kind = node.kind ?? 'machine';
   return {
     id: node.id,
-    kind: node.kind,
-    machineId: node.machineId ?? '',
-    recipeId: node.recipeId ?? '',
+    kind,
+    machineId: node.machineId ?? (kind === 'custom_machine' ? '__custom__' : ''),
+    recipeId:
+      node.recipeId ??
+      (kind === 'custom_machine' ? customMachineRecipeId(node.id) : ''),
     machineCount: node.machineCount ?? 1,
     overclock: node.overclock ?? 1,
     voltageTier: node.voltageTier ?? 'LV',
     itemId: node.itemId,
     fluidId: node.fluidId,
     primaryOutputIndex: node.primaryOutputIndex,
+    durationTicks: node.durationTicks,
+    customInputs: node.customInputs,
+    customOutputs: node.customOutputs,
   };
 }
 
 function isCycleGraphNode(node: CycleAnalysisNode): boolean {
   const kind = node.kind ?? 'machine';
-  return kind === 'machine' || kind === 'intermediate_buffer';
+  return kind === 'machine' || kind === 'custom_machine' || kind === 'intermediate_buffer';
 }
 
 /** Strongly connected components among machines and intermediate buffers. */
@@ -342,7 +353,10 @@ export function analyzeCycles(
   flowResult: FlowResult,
   _tags: TagIndex,
 ): CycleAnalysisResult {
-  const recipes = new Map(pack.recipes.map((r) => [r.id, r]));
+  const recipes = buildRecipeMap(
+    pack,
+    nodes.map((n) => asSolverNode(n)),
+  );
   const nodeById = new Map(nodes.map((n) => [n.id, n]));
   const components = findCycleComponents(nodes, edges);
 

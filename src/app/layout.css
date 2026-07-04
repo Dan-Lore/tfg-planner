@@ -1232,6 +1232,73 @@ a {
   font-size: 0.6rem;
 }
 
+.editor-inspector__port-list--editable .editor-inspector__port-row--editable {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.editor-inspector__port-name-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.editor-inspector__port-name-input {
+  width: 100%;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.35rem;
+}
+
+.editor-inspector__port-amount-label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.editor-inspector__port-amount-input {
+  width: 4rem;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.25rem;
+}
+
+.editor-inspector__port-remove {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.2rem;
+}
+
+.editor-inspector__port-remove:hover {
+  color: var(--danger);
+}
+
+.editor-inspector__add-port {
+  display: block;
+  width: 100%;
+  margin: 0.35rem 0 0.75rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.editor-inspector__add-port:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .flow-edge-label {
   position: absolute;
   pointer-events: none;
@@ -1256,6 +1323,10 @@ a {
 .react-flow__node:has(> .machine-node) {
   box-sizing: border-box;
   min-width: 200px;
+}
+
+.react-flow__node:has(> .custom-machine-node) {
+  min-width: 500px;
 }
 
 .machine-node {
@@ -1844,6 +1915,47 @@ a {
   padding: 0 0.15rem;
 }
 
+.machine-port__remove {
+  margin-left: 0.15rem;
+  padding: 0 0.25rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.machine-port__remove:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.machine-port__amount-input {
+  width: 3.25rem;
+  font-size: 0.65rem;
+  padding: 0.05rem 0.2rem;
+  margin-left: 0.15rem;
+  flex-shrink: 0;
+}
+
+.machine-node__add-port {
+  margin-top: 0.15rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.65rem;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 100%;
+}
+
+.machine-node__add-port:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
 .machine-node:hover:not(.is-dragging):not(.machine-node--selected) {
   border-color: var(--node-hover-border);
   box-shadow: var(--shadow-sm);
@@ -1924,6 +2036,189 @@ a {
 
 .machine-node__meta-static {
   padding: 0.05rem 0.2rem;
+}
+
+.machine-node__meta-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.machine-node__duration-input {
+  width: 2.75rem;
+  font-size: 0.65rem;
+  padding: 0.05rem 0.15rem;
+}
+
+.machine-node__meta-duration-label {
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Custom process node — editable ports and distinct card chrome */
+.custom-machine-node {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 4%, var(--surface2)) 0%,
+    var(--surface2) 2.5rem
+  );
+}
+
+.custom-machine-node:hover:not(.is-dragging):not(.machine-node--selected) {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--hover-border));
+}
+
+.custom-machine-node__ports {
+  padding-top: 0.15rem;
+  gap: 0.35rem;
+}
+
+.custom-machine-node__col-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0.4rem 0.15rem;
+  line-height: 1.2;
+}
+
+.custom-machine-node__col-label--out {
+  text-align: right;
+}
+
+.custom-machine-node .machine-port {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-height: auto;
+  padding: 0.2rem 0.35rem;
+  margin: 0 0.05rem;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--border-subtle, var(--border));
+}
+
+.custom-machine-node .machine-port--left {
+  padding-left: 0.55rem;
+  align-items: flex-start;
+}
+
+.custom-machine-node .machine-port--right {
+  flex-direction: column;
+  padding-right: 0.55rem;
+  align-items: flex-end;
+}
+
+.custom-machine-port__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.custom-machine-node .machine-port--right .custom-machine-port__body {
+  align-items: flex-end;
+}
+
+.custom-machine-node .machine-port__label {
+  max-width: 100%;
+  width: 100%;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.custom-machine-port__amount-static {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 0.05rem 0.2rem;
+  border-radius: 3px;
+  background: var(--surface2);
+}
+
+.custom-machine-port__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+}
+
+.custom-machine-node .machine-port--right .custom-machine-port__controls {
+  justify-content: flex-end;
+}
+
+.custom-machine-port__amount {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.05rem 0.2rem;
+  border-radius: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border-subtle, var(--border));
+  font-size: 0.6rem;
+  color: var(--muted);
+  cursor: text;
+}
+
+.custom-machine-port__amount-prefix {
+  font-weight: 700;
+  line-height: 1;
+}
+
+.custom-machine-node .machine-port__amount-input {
+  width: 2.5rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+.custom-machine-node .machine-port__amount-input:focus {
+  outline: none;
+}
+
+.custom-machine-node .machine-node__meta-duration {
+  gap: 0.12rem;
+}
+
+.custom-machine-node .machine-node__duration-input {
+  width: 2.25rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  font-weight: 600;
+  color: inherit;
+  text-align: center;
+}
+
+.custom-machine-node .machine-node__duration-input:focus {
+  outline: none;
+  background: var(--surface);
+  border-radius: 3px;
+}
+
+.custom-machine-node .machine-node__meta-duration-label {
+  font-size: inherit;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.custom-machine-node .machine-node__add-port {
+  max-width: 100%;
+  margin-top: 0.1rem;
 }
 
 .machine-node__duration {

@@ -7,9 +7,16 @@ export const TICKS_PER_SECOND = 20;
 
 export type SchemeNodeKind =
   | 'machine'
+  | 'custom_machine'
   | 'start_buffer'
   | 'intermediate_buffer'
   | 'end_buffer';
+
+export interface SchemeCustomPort {
+  itemId?: string;
+  fluidId?: string;
+  amount: number;
+}
 
 export interface SchemeNode {
   id: string;
@@ -27,6 +34,9 @@ export interface SchemeNode {
   supplyRate?: number;
   initialStock?: number;
   autoSupplyRate?: boolean;
+  durationTicks?: number;
+  customInputs?: SchemeCustomPort[];
+  customOutputs?: SchemeCustomPort[];
 }
 
 export type SchemeEdge = SchemeGraphEdge;

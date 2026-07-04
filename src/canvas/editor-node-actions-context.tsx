@@ -11,6 +11,15 @@ export interface EditorNodeActions {
   onSupplyModeChange: (nodeId: string, mode: TfgpSupplyMode) => void;
   onSupplyRateChange: (nodeId: string, rate: number) => void;
   onInitialStockChange: (nodeId: string, stock: number) => void;
+  onDurationTicksChange: (nodeId: string, ticks: number) => void;
+  onAddCustomPort: (nodeId: string, side: 'in' | 'out') => void;
+  onRemoveCustomPort: (nodeId: string, side: 'in' | 'out', index: number) => void;
+  onCustomPortAmountChange: (
+    nodeId: string,
+    side: 'in' | 'out',
+    index: number,
+    amount: number,
+  ) => void;
   onPortContextMenu: (
     nodeId: string,
     portId: string,
@@ -31,6 +40,10 @@ const defaultActions: EditorNodeActions = {
   onSupplyModeChange: noop,
   onSupplyRateChange: noop,
   onInitialStockChange: noop,
+  onDurationTicksChange: noop,
+  onAddCustomPort: noop,
+  onRemoveCustomPort: noop,
+  onCustomPortAmountChange: noop,
   onPortContextMenu: noop,
 };
 

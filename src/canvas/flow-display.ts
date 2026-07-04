@@ -9,7 +9,7 @@ import { getItemName } from '@/data/pack-registry';
 import { normalizePortId, parsePortId, productKey, inputPortId, nodePortFlow } from '@/canvas/ports';
 import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
 import type { SchemeNode } from '@/calculator/flow-solver-types';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import {
   formatFlowRateLabel,
   isChancedFlow,
@@ -33,14 +33,16 @@ function estimatePortCenter(
   if (!parsed) {
     return { x: node.position.x, y: node.position.y };
   }
-  let portsTopY: number;
+  let portsTopY = node.position.y + 48;
   let effectiveWidth = nodeWidth;
   if (isBufferNode(node)) {
     const header = 56;
     const fields = node.kind === 'start_buffer' ? 88 : 36;
     portsTopY = node.position.y + header + fields;
     effectiveWidth = BUFFER_NODE_WIDTH;
-  } else {
+  } else if (isCustomMachineNode(node)) {
+    portsTopY = node.position.y + 76;
+  } else if (isMachineNode(node)) {
     portsTopY =
       estimateHeaderHeight(pack, node.machineId, node.recipeId) + node.position.y;
   }

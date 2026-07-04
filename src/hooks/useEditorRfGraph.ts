@@ -23,7 +23,9 @@ import { R } from '@/calculator/rational';
 import type { FlowResult } from '@/calculator/flow-solver';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
 import type { ActivePack } from '@/data/pack-runtime';
-import { isBufferNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode } from '@/lib/node-kind';
+import { buildCustomMachinePortDisplaysForNode } from '@/canvas/port-label-stubs';
+import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
 import type { TfgpFile } from '@/schema/tfgp';
 import type { EditorActions } from '@/editor/editor-actions';
 
@@ -35,6 +37,8 @@ export function useEditorRfGraph(params: {
   lang: 'ru' | 'en';
   packDisplayEpoch: number;
   updateNode: EditorActions['updateNode'];
+  addCustomPort: EditorActions['addCustomPort'];
+  removeCustomPort: EditorActions['removeCustomPort'];
   handleRecipeChange: (nodeId: string, recipeId: string) => void;
   handlePortContextMenu: EditorNodeActions['onPortContextMenu'];
 }) {
@@ -46,6 +50,8 @@ export function useEditorRfGraph(params: {
     lang,
     packDisplayEpoch,
     updateNode,
+    addCustomPort,
+    removeCustomPort,
     handleRecipeChange,
     handlePortContextMenu,
   } = params;
@@ -130,9 +136,24 @@ export function useEditorRfGraph(params: {
         updateNode(nodeId, { supplyRate }),
       onInitialStockChange: (nodeId, initialStock) =>
         updateNode(nodeId, { initialStock }),
+      onDurationTicksChange: (nodeId, durationTicks) =>
+        updateNode(nodeId, { durationTicks }),
+      onAddCustomPort: (nodeId, side) => addCustomPort(nodeId, side),
+      onRemoveCustomPort: (nodeId, side, index) =>
+        removeCustomPort(nodeId, side, index),
+      onCustomPortAmountChange: (nodeId, side, index, amount) => {
+        const node = scheme.nodes.find((n) => n.id === nodeId);
+        if (!node || !isCustomMachineNode(node)) return;
+        const key = side === 'in' ? 'inputs' : 'outputs';
+        const ports = [...node[key]];
+        const current = ports[index];
+        if (!current) return;
+        ports[index] = { ...current, amount };
+        updateNode(nodeId, { [key]: ports });
+      },
       onPortContextMenu: handlePortContextMenu,
     }),
-    [handleRecipeChange, handlePortContextMenu, updateNode],
+    [handleRecipeChange, handlePortContextMenu, updateNode, addCustomPort, removeCustomPort, scheme.nodes],
   );
 
   const nodeDisplayById = useMemo(() => {
@@ -185,6 +206,43 @@ export function useEditorRfGraph(params: {
                   value: `${Math.round(loadPercent)}%`,
                 })
               : undefined,
+        };
+        continue;
+      }
+
+      if (isCustomMachineNode(n)) {
+        const bundle = buildCustomMachinePortDisplaysForNode(
+          n,
+          scheme.edges,
+          pack,
+          lang,
+          connectedIn,
+          connectedOut,
+          flowResult ?? undefined,
+          flowResult ? t : undefined,
+        );
+        const recipe = customMachineAsRecipe({
+          id: n.id,
+          kind: 'custom_machine',
+          machineId: '__custom__',
+          recipeId: `custom:${n.id}`,
+          machineCount: n.machineCount,
+          overclock: n.overclock,
+          voltageTier: 'LV',
+          durationTicks: n.durationTicks,
+          customInputs: n.inputs,
+          customOutputs: n.outputs,
+        });
+        const nodeLoadMeta = flowResult && recipe
+          ? buildNodeLoadMeta(n.id, recipe, flowResult, t)
+          : undefined;
+        map[n.id] = {
+          inputPorts: bundle.inputPorts,
+          outputPorts: bundle.outputPorts,
+          balanceLines: bundle.balanceLines,
+          loadPercent: nodeLoadMeta?.currentLoadPercent,
+          loadLabel: nodeLoadMeta?.label,
+          loadTitle: nodeLoadMeta?.title,
         };
         continue;
       }

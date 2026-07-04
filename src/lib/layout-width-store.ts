@@ -1,10 +1,10 @@
 import type { BuildMachineNodeLayoutWidthsInput } from '@/canvas/machine-node-layout';
-import { computeGroupLayoutWidth } from '@/canvas/machine-node-layout';
+import { computeGroupLayoutWidth, computeCustomMachineLayoutWidth } from '@/canvas/machine-node-layout';
 import { MACHINE_NODE_MIN_WIDTH } from '@/canvas/node-bounds';
 import { machineNodeLayoutSigFragment } from '@/canvas/port-label-stubs';
 import { getRecipe } from '@/data/pack-registry';
 import { fnv1aHash } from '@/lib/stable-hash';
-import { isMachineNode } from '@/lib/node-kind';
+import { isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp-types';
 
 export interface LayoutWidthStoreInput extends BuildMachineNodeLayoutWidthsInput {
@@ -93,8 +93,13 @@ export function resolveMachineNodeLayoutWidths(
 
   const result: Record<string, number> = {};
   for (const node of input.nodes) {
-    if (!isMachineNode(node)) continue;
-    result[node.id] = widthByMachineId.get(node.machineId) ?? MACHINE_NODE_MIN_WIDTH;
+    if (isMachineNode(node)) {
+      result[node.id] = widthByMachineId.get(node.machineId) ?? MACHINE_NODE_MIN_WIDTH;
+      continue;
+    }
+    if (isCustomMachineNode(node)) {
+      result[node.id] = computeCustomMachineLayoutWidth(node, input);
+    }
   }
   return result;
 }

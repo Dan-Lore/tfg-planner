@@ -1,5 +1,6 @@
 import type { Node } from '@xyflow/react';
 import type { MachineNodeData } from '@/canvas/MachineNode';
+import type { CustomMachineNodeData } from '@/canvas/CustomMachineNode';
 import type { BufferNodeData } from '@/canvas/BufferNode';
 import type { PackLike } from '@/data/pack-registry';
 import { getMachineRecipeCount, getRecipe } from '@/data/pack-registry';
@@ -7,6 +8,13 @@ import type { TfgpBufferKind } from '@/schema/tfgp';
 
 export const MACHINE_NODE_WIDTH = 220;
 export const MACHINE_NODE_MIN_WIDTH = 200;
+export const CUSTOM_MACHINE_WIDTH_FACTOR = 2.5;
+export const CUSTOM_MACHINE_NODE_MIN_WIDTH = Math.round(
+  MACHINE_NODE_MIN_WIDTH * CUSTOM_MACHINE_WIDTH_FACTOR,
+);
+export const CUSTOM_MACHINE_NODE_WIDTH = Math.round(
+  MACHINE_NODE_WIDTH * CUSTOM_MACHINE_WIDTH_FACTOR,
+);
 export const BUFFER_NODE_WIDTH = 200;
 
 /** React Flow node.style — use instead of node.width with onlyRenderVisibleElements. */
@@ -97,6 +105,29 @@ export function estimateMachineNodeHeight(data: MachineNodeData): number {
   );
 }
 
+export function estimateCustomMachineNodeHeight(data: CustomMachineNodeData): number {
+  const header = 76 + (data.balanceLines?.length ?? 0) * 16;
+  const portCount = Math.max(
+    data.inputPorts?.length ?? 0,
+    data.outputPorts?.length ?? 0,
+    1,
+  );
+  return header + portCount * PORT_ROW_HEIGHT + PORT_SECTION_PADDING + 28;
+}
+
+export function getCustomMachineNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): NodeRect {
+  const data = node.data as CustomMachineNodeData;
+  const width =
+    data.layoutWidth ?? node.measured?.width ?? node.width ?? CUSTOM_MACHINE_NODE_WIDTH;
+  const height = estimateCustomMachineNodeHeight(data);
+  return {
+    left: node.position.x - padding,
+    top: node.position.y - padding,
+    right: node.position.x + width + padding,
+    bottom: node.position.y + height + padding,
+  };
+}
+
 export function estimateBufferNodeHeight(bufferKind: TfgpBufferKind): number {
   const header = 56;
   const fields = bufferKind === 'start_buffer' ? 88 : 36;
@@ -123,6 +154,7 @@ export function getBufferNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): Nod
 /** Rect for edge-routing obstacles (machine or buffer nodes). */
 export function getFlowNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): NodeRect {
   if (node.type === 'buffer') return getBufferNodeRect(node, padding);
+  if (node.type === 'customMachine') return getCustomMachineNodeRect(node, padding);
   return getMachineNodeRect(node, padding);
 }
 

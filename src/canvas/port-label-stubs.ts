@@ -14,7 +14,10 @@ import {
   rateMapToStrings,
   type NodeBalanceLine,
 } from '@/canvas/flow-display';
-import type { TfgpEdge, TfgpMachineNode } from '@/schema/tfgp-types';
+import type { TfgpEdge, TfgpMachineNode, TfgpCustomMachineNode } from '@/schema/tfgp-types';
+import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
+import type { SchemeNode } from '@/calculator/flow-solver-types';
+import { applyCustomPortLabels } from '@/lib/custom-port-label';
 import { mergedNodePortIds } from '@/lib/scheme-port-ids';
 import { normalizePortId } from '@/lib/ports';
 
@@ -200,4 +203,145 @@ export function machineNodeLayoutSigFragment(
     portLabels,
     balance,
   ].join('\0');
+}
+
+export function customNodeAsScheme(node: TfgpCustomMachineNode): SchemeNode {
+  return {
+    id: node.id,
+    kind: 'custom_machine',
+    machineId: '__custom__',
+    recipeId: `custom:${node.id}`,
+    machineCount: node.machineCount,
+    overclock: node.overclock,
+    voltageTier: 'LV',
+    durationTicks: node.durationTicks,
+    customInputs: node.inputs,
+    customOutputs: node.outputs,
+    primaryOutputIndex: node.primaryOutputIndex,
+  };
+}
+
+/** Port labels and flow rates for custom_machine nodes. */
+export function buildCustomMachinePortDisplaysForNode(
+  node: TfgpCustomMachineNode,
+  edges: readonly TfgpEdge[],
+  pack: PackLike,
+  lang: 'ru' | 'en',
+  connectedIn: Set<string>,
+  connectedOut: Set<string>,
+  flowResult?: FlowResult,
+  t?: TFunction,
+  emptyPortLabel = '—',
+): MachinePortDisplayBundle {
+  const schemeNode = customNodeAsScheme(node);
+  const recipe = customMachineAsRecipe(schemeNode);
+  const { inputPortIds, outputPortIds } = mergedNodePortIds(
+    node.id,
+    edges,
+    node.inputs.length,
+    node.outputs.length,
+  );
+
+  const patchLabels = (bundle: MachinePortDisplayBundle): MachinePortDisplayBundle => {
+    applyCustomPortLabels(
+      bundle.inputPorts,
+      node.inputs,
+      edges,
+      node.id,
+      pack,
+      lang,
+      'in',
+      emptyPortLabel,
+    );
+    applyCustomPortLabels(
+      bundle.outputPorts,
+      node.outputs,
+      edges,
+      node.id,
+      pack,
+      lang,
+      'out',
+      emptyPortLabel,
+    );
+    return bundle;
+  };
+
+  if (flowResult && t && recipe) {
+    const inputRates = rateMapToStrings(flowResult.nodeInputRates[node.id]);
+    const outputRates = rateMapToStrings(flowResult.nodeOutputRates[node.id]);
+    const outputPortRateRationals = flowResult.nodePortOutputRates[node.id];
+    const inputPortLoadMeta = buildInputPortLoadMeta(
+      schemeNode,
+      recipe,
+      connectedIn,
+      flowResult,
+      t,
+    );
+    const outputPortLoadMeta = buildOutputPortLoadMeta(
+      node.id,
+      recipe,
+      connectedOut,
+      flowResult,
+      t,
+    );
+    const { inputPorts, outputPorts } = buildPortDisplays(
+      recipe,
+      pack,
+      lang,
+      connectedIn,
+      connectedOut,
+      inputRates,
+      outputRates,
+      outputPortRateRationals,
+      inputPortLoadMeta,
+      outputPortLoadMeta,
+    );
+    return patchLabels({
+      inputPorts,
+      outputPorts,
+      balanceLines: buildNodeBalanceLines(
+        node.id,
+        recipe,
+        connectedIn,
+        flowResult,
+        pack,
+        lang,
+      ),
+    });
+  }
+
+  if (recipe) {
+    const { inputPorts, outputPorts } = buildPortDisplays(
+      recipe,
+      pack,
+      lang,
+      connectedIn,
+      connectedOut,
+      {},
+      {},
+    );
+    return patchLabels({ inputPorts, outputPorts, balanceLines: [] });
+  }
+
+  return patchLabels({
+    inputPorts: stubPortsFromIds(
+      inputPortIds,
+      edges,
+      node.id,
+      pack,
+      lang,
+      connectedIn,
+      'in',
+    ),
+    outputPorts: stubPortsFromIds(
+      outputPortIds,
+      edges,
+      node.id,
+      pack,
+      lang,
+      connectedOut,
+      'out',
+    ),
+    balanceLines: [],
+  });
 }

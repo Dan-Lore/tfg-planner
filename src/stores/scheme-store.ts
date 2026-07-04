@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget, TfgpBufferKind } from '@/schema/tfgp';
+import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget, TfgpBufferKind, TfgpCustomMachineNode } from '@/schema/tfgp';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import { readPersistedEditorSnapshot } from '@/lib/editor-persist';
@@ -16,9 +16,15 @@ import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
 import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import { usePackStore } from './pack-store';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import { estimateBufferDefaults, clampNonNegativeInt } from '@/lib/buffer-defaults';
-import { normalizeBufferNode } from '@/lib/node-scaling';
+import { normalizeBufferNode, normalizeCustomMachineNode } from '@/lib/node-scaling';
+import {
+  createEmptyCustomMachine,
+  ensureCustomPortForHandle,
+  portHasEdge,
+} from '@/lib/custom-machine-ports';
+import { inputPortId, outputPortId } from '@/lib/ports';
 import { getRecipe } from '@/data/pack-registry';
 import { cacheScheme } from '@/stores/editor-store-shared';
 import {
@@ -65,6 +71,22 @@ export interface SchemeState {
   }) => string;
   attachBuffer: (params: {
     bufferKind: TfgpBufferKind;
+    position: { x: number; y: number };
+    anchorNodeId: string;
+    anchorPort: string;
+    direction: 'upstream' | 'downstream';
+    itemId?: string;
+    fluidId?: string;
+  }) => string;
+  addCustomMachine: (position: { x: number; y: number }) => string;
+  addCustomPort: (nodeId: string, side: 'in' | 'out') => void;
+  removeCustomPort: (nodeId: string, side: 'in' | 'out', index: number) => void;
+  ensureCustomPort: (
+    nodeId: string,
+    portId: string,
+    product?: { itemId?: string; fluidId?: string },
+  ) => void;
+  attachCustomMachine: (params: {
     position: { x: number; y: number };
     anchorNodeId: string;
     anchorPort: string;
@@ -336,6 +358,9 @@ export const useSchemeStore = create<SchemeState>()(
                 }
                 return normalizeBufferNode(next);
               }
+              if (isCustomMachineNode(n)) {
+                return normalizeCustomMachineNode({ ...n, ...patch } as typeof n);
+              }
               if (!isMachineNode(n)) return n;
               let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
               if ('recipeId' in patch && patch.recipeId && pack) {
@@ -522,6 +547,154 @@ export const useSchemeStore = create<SchemeState>()(
                 id: edgeId,
                 source: nodeId,
                 sourcePort: bufferOutPort,
+                target: params.anchorNodeId,
+                targetPort: params.anchorPort,
+                itemId: params.itemId,
+                fluidId: params.fluidId,
+              };
+
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            nodes: [...s.scheme.nodes, node],
+            edges: [...s.scheme.edges, edge],
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        getFlowStoreState().updateFlows();
+        return nodeId;
+      },
+
+      addCustomMachine: (position) => {
+        get().pushHistory();
+        const { scheme } = get();
+        const id = allocateNodeId(scheme.nodes, scheme.edges);
+        const node = normalizeCustomMachineNode(createEmptyCustomMachine(id, position));
+        set((s) => {
+          const scheme = { ...s.scheme, nodes: [...s.scheme.nodes, node] };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        getFlowStoreState().updateFlows();
+        return id;
+      },
+
+      addCustomPort: (nodeId, side) => {
+        get().pushHistory();
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            nodes: s.scheme.nodes.map((n) => {
+              if (n.id !== nodeId || !isCustomMachineNode(n)) return n;
+              const next =
+                side === 'in'
+                  ? { ...n, inputs: [...n.inputs, { amount: 1 }] }
+                  : { ...n, outputs: [...n.outputs, { amount: 1 }] };
+              return normalizeCustomMachineNode(next);
+            }),
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        getFlowStoreState().updateFlows();
+      },
+
+      removeCustomPort: (nodeId, side, index) => {
+        const { scheme } = get();
+        const node = scheme.nodes.find((n) => n.id === nodeId);
+        if (!node || !isCustomMachineNode(node)) return;
+        const portId = side === 'in' ? inputPortId(index) : outputPortId(index);
+        if (portHasEdge(nodeId, portId, scheme.edges)) return;
+
+        get().pushHistory();
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            nodes: s.scheme.nodes.map((n) => {
+              if (n.id !== nodeId || !isCustomMachineNode(n)) return n;
+              const next =
+                side === 'in'
+                  ? { ...n, inputs: n.inputs.filter((_, i) => i !== index) }
+                  : { ...n, outputs: n.outputs.filter((_, i) => i !== index) };
+              return normalizeCustomMachineNode(next);
+            }),
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        getFlowStoreState().updateFlows();
+      },
+
+      ensureCustomPort: (nodeId, portId, product) => {
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            nodes: s.scheme.nodes.map((n) => {
+              if (n.id !== nodeId || !isCustomMachineNode(n)) return n;
+              return normalizeCustomMachineNode(ensureCustomPortForHandle(n, portId, product));
+            }),
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+      },
+
+      attachCustomMachine: (params) => {
+        get().pushHistory();
+        const { scheme } = get();
+        const nodeId = allocateNodeId(scheme.nodes, scheme.edges);
+        const edgeId = allocateEdgeId(scheme.nodes, scheme.edges);
+        const product = { itemId: params.itemId, fluidId: params.fluidId };
+        const inPort = inputPortId(0);
+        const outPort = outputPortId(0);
+
+        let node: TfgpCustomMachineNode = normalizeCustomMachineNode(
+          createEmptyCustomMachine(nodeId, params.position),
+        );
+        if (params.direction === 'downstream') {
+          node = normalizeCustomMachineNode(
+            ensureCustomPortForHandle(
+              { ...node, inputs: [{ amount: 1, ...product }] },
+              inPort,
+              product,
+            ),
+          );
+        } else {
+          node = normalizeCustomMachineNode(
+            ensureCustomPortForHandle(
+              { ...node, outputs: [{ amount: 1, ...product }] },
+              outPort,
+              product,
+            ),
+          );
+        }
+
+        const edge: TfgpEdge =
+          params.direction === 'downstream'
+            ? {
+                id: edgeId,
+                source: params.anchorNodeId,
+                sourcePort: params.anchorPort,
+                target: nodeId,
+                targetPort: inPort,
+                itemId: params.itemId,
+                fluidId: params.fluidId,
+              }
+            : {
+                id: edgeId,
+                source: nodeId,
+                sourcePort: outPort,
                 target: params.anchorNodeId,
                 targetPort: params.anchorPort,
                 itemId: params.itemId,

@@ -32,7 +32,7 @@ import { buildTagIndexFromMeta } from '@/lib/tag-index';
 import { pickTfgpFile, readTfgpFile } from '@/lib/read-tfgp-file';
 import { preloadSchemeRecipes } from '@/lib/preload-scheme-recipes';
 import { isEntryAlignedWithEditor } from '@/lib/pack-selection';
-import { isMachineNode } from '@/lib/node-kind';
+import { isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import { useEditorActions } from '@/editor/editor-actions';
 import { EditorToolbar } from '@/editor/EditorToolbar';
 import { EditorSidebar } from '@/editor/EditorSidebar';
@@ -81,6 +81,10 @@ export function EditorPage() {
     addEdge: addEdgeToStore,
     attachMachine,
     attachBuffer,
+    attachCustomMachine,
+    addCustomPort,
+    removeCustomPort,
+    ensureCustomPort,
     pushHistory,
     setTarget,
     loadScheme,
@@ -142,6 +146,7 @@ export function EditorPage() {
     tagIndex,
     attachMachine,
     attachBuffer,
+    attachCustomMachine,
     setSelectedNodeIds,
   });
 
@@ -161,6 +166,8 @@ export function EditorPage() {
     lang,
     packDisplayEpoch,
     updateNode,
+    addCustomPort,
+    removeCustomPort,
     handleRecipeChange,
     handlePortContextMenu,
   });
@@ -198,14 +205,14 @@ export function EditorPage() {
       const srcNode = scheme.nodes.find((n) => n.id === conn.source);
       const tgtNode = scheme.nodes.find((n) => n.id === conn.target);
       if (!srcNode || !tgtNode) return false;
-      const srcRecipe = pack && isMachineNode(srcNode)
-        ? getRecipe(pack, srcNode.recipeId)
-        : undefined;
-      const tgtRecipe = pack && isMachineNode(tgtNode)
-        ? getRecipe(pack, tgtNode.recipeId)
-        : undefined;
+      const srcRecipe =
+        pack && isMachineNode(srcNode) ? getRecipe(pack, srcNode.recipeId) : undefined;
+      const tgtRecipe =
+        pack && isMachineNode(tgtNode) ? getRecipe(pack, tgtNode.recipeId) : undefined;
       const srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
       const tgtFlow = nodePortFlow(tgtNode, conn.targetHandle, tgtRecipe);
+      if (srcFlow && !tgtFlow && isCustomMachineNode(tgtNode)) return true;
+      if (!srcFlow && tgtFlow && isCustomMachineNode(srcNode)) return true;
       return portsMatch(srcFlow, tgtFlow, tagIndex ?? undefined);
     },
     [pack, scheme.nodes, tagIndex],
@@ -218,12 +225,32 @@ export function EditorPage() {
       }
       if (!isValidConnection(conn)) return;
       const srcNode = scheme.nodes.find((n) => n.id === conn.source);
-      if (!srcNode) return;
-      const srcRecipe = pack && isMachineNode(srcNode)
-        ? getRecipe(pack, srcNode.recipeId)
-        : undefined;
-      const srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
+      const tgtNode = scheme.nodes.find((n) => n.id === conn.target);
+      if (!srcNode || !tgtNode) return;
+
+      const srcRecipe =
+        pack && isMachineNode(srcNode) ? getRecipe(pack, srcNode.recipeId) : undefined;
+      const tgtRecipe =
+        pack && isMachineNode(tgtNode) ? getRecipe(pack, tgtNode.recipeId) : undefined;
+      let srcFlow = nodePortFlow(srcNode, conn.sourceHandle, srcRecipe);
+      let tgtFlow = nodePortFlow(tgtNode, conn.targetHandle, tgtRecipe);
+
+      if (isCustomMachineNode(tgtNode) && srcFlow) {
+        ensureCustomPort(tgtNode.id, conn.targetHandle, {
+          itemId: srcFlow.itemId,
+          fluidId: srcFlow.fluidId,
+        });
+        tgtFlow = srcFlow;
+      }
+      if (isCustomMachineNode(srcNode) && tgtFlow) {
+        ensureCustomPort(srcNode.id, conn.sourceHandle, {
+          itemId: tgtFlow.itemId,
+          fluidId: tgtFlow.fluidId,
+        });
+        srcFlow = tgtFlow;
+      }
       if (!srcFlow) return;
+
       addEdgeToStore({
         source: conn.source,
         target: conn.target,
@@ -233,7 +260,7 @@ export function EditorPage() {
         fluidId: srcFlow.fluidId,
       });
     },
-    [pack, scheme.nodes, addEdgeToStore, isValidConnection],
+    [pack, scheme.nodes, addEdgeToStore, isValidConnection, ensureCustomPort],
   );
 
   const onSelectionChange = useCallback(
@@ -370,6 +397,7 @@ export function EditorPage() {
         selectedNodeIds={selectedNodeIds}
         flowComputeState={flowComputeState}
         addNode={editorActions.addNode}
+        addCustomMachine={editorActions.addCustomMachine}
         setTarget={editorActions.setTarget}
         duplicateSelected={editorActions.duplicateSelected}
         undo={editorActions.undo}
@@ -448,6 +476,8 @@ export function EditorPage() {
           connectedOutByNode={connectedPorts.outPorts}
           setSchemeName={setSchemeName}
           updateNode={updateNode}
+          addCustomPort={addCustomPort}
+          removeCustomPort={removeCustomPort}
           onFocusIssue={handleFocusIssue}
           onPanToIssue={handlePanToIssue}
           onEdgeRateApply={handleEdgeRateApply}

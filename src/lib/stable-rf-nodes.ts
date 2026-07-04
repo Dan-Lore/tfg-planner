@@ -1,6 +1,6 @@
 import type { Node } from '@xyflow/react';
 import { machineNodeRfStyle } from '@/canvas/node-bounds';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import { mergedNodePortIds } from '@/lib/scheme-port-ids';
 import type { PackLike } from '@/data/pack-registry';
 import { getRecipe } from '@/data/pack-registry';
@@ -67,6 +67,73 @@ function bufferRfSig(n: TfgpNode, ctx: StableRfNodeBuildContext): string {
     ctx.checkSeverity ?? '',
     ctx.checkTitle ?? '',
   ].join('|');
+}
+
+function customMachineRfSig(n: TfgpNode, ctx: StableRfNodeBuildContext): string {
+  if (!isCustomMachineNode(n)) return '';
+  const { inputPortIds, outputPortIds } = mergedNodePortIds(
+    n.id,
+    ctx.edges,
+    n.inputs.length,
+    n.outputs.length,
+  );
+  const layoutWidth = ctx.layoutWidthByNodeId[n.id] ?? 0;
+  return [
+    n.id,
+    n.position.x,
+    n.position.y,
+    n.durationTicks,
+    n.machineCount,
+    n.overclock,
+    n.label ?? '',
+    inputPortIds.join(','),
+    outputPortIds.join(','),
+    layoutWidth,
+    ctx.checkSeverity ?? '',
+    ctx.checkTitle ?? '',
+  ].join('|');
+}
+
+function buildCustomMachineRfNode(
+  n: TfgpNode & {
+    kind: 'custom_machine';
+    position: { x: number; y: number };
+    durationTicks: number;
+    machineCount: number;
+    overclock: number;
+    inputs: { itemId?: string; fluidId?: string; amount: number }[];
+    outputs: { itemId?: string; fluidId?: string; amount: number }[];
+  },
+  ctx: StableRfNodeBuildContext,
+): Node {
+  const { inputPortIds, outputPortIds } = mergedNodePortIds(
+    n.id,
+    ctx.edges,
+    n.inputs.length,
+    n.outputs.length,
+  );
+  const layoutWidth = ctx.layoutWidthByNodeId[n.id];
+  const rfStyle = machineNodeRfStyle(layoutWidth);
+  return {
+    id: n.id,
+    type: 'customMachine',
+    position: n.position,
+    ...(rfStyle ? { style: rfStyle } : {}),
+    data: {
+      label: n.label,
+      durationTicks: n.durationTicks,
+      machineCount: n.machineCount,
+      overclock: n.overclock,
+      inputs: n.inputs,
+      outputs: n.outputs,
+      pack: ctx.pack,
+      checkSeverity: ctx.checkSeverity,
+      checkTitle: ctx.checkTitle,
+      inputPortIds,
+      outputPortIds,
+      layoutWidth,
+    },
+  };
 }
 
 function buildMachineRfNode(
@@ -171,14 +238,18 @@ export function buildStableRfNodes(
     };
     const sig = isMachineNode(n)
       ? machineRfSig(n, nodeCtx)
-      : bufferRfSig(n, nodeCtx);
+      : isCustomMachineNode(n)
+        ? customMachineRfSig(n, nodeCtx)
+        : bufferRfSig(n, nodeCtx);
 
     const prev = cache.get(n.id);
     if (prev && prev.sig === sig) return prev.node;
 
     const node = isBufferNode(n)
       ? buildBufferRfNode(n, nodeCtx)
-      : buildMachineRfNode(n, nodeCtx);
+      : isCustomMachineNode(n)
+        ? buildCustomMachineRfNode(n, nodeCtx)
+        : buildMachineRfNode(n, nodeCtx);
 
     cache.set(n.id, { sig, node });
     return node;

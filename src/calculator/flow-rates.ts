@@ -3,9 +3,14 @@ import { Rational, R } from '@/calculator/rational';
 import { productKey } from '@/lib/ports';
 import { chanceRateMultiplier } from '@/lib/flow-chance';
 import { effectiveDurationTicks } from '@/calculator/energy';
+import { isSchemeCustomMachine } from '@/calculator/custom-machine-recipe';
 import { TICKS_PER_SECOND, type SchemeNode } from '@/calculator/flow-solver-types';
 
 export function recipeDurationSec(recipe: Recipe, node: SchemeNode): Rational {
+  if (isSchemeCustomMachine(node)) {
+    const oc = Math.max(node.overclock, 0.1);
+    return R.from(recipe.durationTicks).div(R.from(oc)).div(R.from(TICKS_PER_SECOND));
+  }
   return R.from(effectiveDurationTicks(recipe, node.voltageTier, node.overclock)).div(
     R.from(TICKS_PER_SECOND),
   );

@@ -4,7 +4,8 @@ import { solveFlows } from '@/calculator/flow-solver';
 import type { PackData } from '@/data/types';
 import { getRecipe } from '@/data/pack-registry';
 import { normalizeNodeVoltage } from '@/lib/node-voltage';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
+import { customMachineRecipeId } from '@/calculator/custom-machine-recipe';
 
 export interface EditorSnapshot {
   nodes: TfgpNode[];
@@ -44,6 +45,21 @@ export function runSolver(
           supplyRate: n.kind === 'start_buffer' ? n.supplyRate : undefined,
           initialStock: n.kind === 'start_buffer' ? n.initialStock : undefined,
           autoSupplyRate: n.kind === 'start_buffer' ? n.autoSupplyRate : undefined,
+        };
+      }
+      if (isCustomMachineNode(n)) {
+        return {
+          id: n.id,
+          kind: 'custom_machine' as const,
+          machineId: '__custom__',
+          recipeId: customMachineRecipeId(n.id),
+          machineCount: n.machineCount,
+          overclock: n.overclock,
+          voltageTier: 'LV',
+          durationTicks: n.durationTicks,
+          customInputs: n.inputs,
+          customOutputs: n.outputs,
+          primaryOutputIndex: n.primaryOutputIndex,
         };
       }
       if (!isMachineNode(n)) {
@@ -90,10 +106,12 @@ export function applyFlowResult(
     return nodes;
   }
   return nodes.map((n) => {
-    if (!isMachineNode(n)) return n;
-    return {
-      ...n,
-      machineCount: result.nodeMachineCounts[n.id] ?? n.machineCount,
-    };
+    if (isMachineNode(n) || isCustomMachineNode(n)) {
+      return {
+        ...n,
+        machineCount: result.nodeMachineCounts[n.id] ?? n.machineCount,
+      };
+    }
+    return n;
   });
 }

@@ -9,13 +9,17 @@ import {
 } from '@/calculator/energy';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import type { MachineNodeData, PortDisplay } from '@/canvas/MachineNode';
-import { buildMachinePortDisplaysForNode } from '@/canvas/port-label-stubs';
-import { MACHINE_NODE_MIN_WIDTH } from '@/canvas/node-bounds';
+import { buildMachinePortDisplaysForNode, buildCustomMachinePortDisplaysForNode } from '@/canvas/port-label-stubs';
+import {
+  CUSTOM_MACHINE_NODE_MIN_WIDTH,
+  CUSTOM_MACHINE_WIDTH_FACTOR,
+  MACHINE_NODE_MIN_WIDTH,
+} from '@/canvas/node-bounds';
 import type { PackLike } from '@/data/pack-registry';
 import { getMachineName, getMachineRecipeCount, getRecipe } from '@/data/pack-registry';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
-import type { TfgpEdge, TfgpMachineNode, TfgpNode } from '@/schema/tfgp';
+import type { TfgpCustomMachineNode, TfgpEdge, TfgpMachineNode, TfgpNode } from '@/schema/tfgp';
 import { normalizePortId } from '@/lib/ports';
 import { isMachineNode } from '@/lib/node-kind';
 
@@ -226,6 +230,51 @@ export function computeNaturalLayoutWidthForMachineNode(
   }
 
   return width;
+}
+
+/** Layout width for custom_machine — at least 2.5× standard machine card. */
+export function computeCustomMachineLayoutWidth(
+  node: TfgpCustomMachineNode,
+  input: BuildMachineNodeLayoutWidthsInput,
+): number {
+  const edges = input.edges ?? [];
+  const emptyPortLabel = input.t('editor.customMachine.emptyPort');
+  const { inputPorts, outputPorts } = buildCustomMachinePortDisplaysForNode(
+    node,
+    edges,
+    input.pack,
+    input.lang,
+    input.connectedIn.get(node.id) ?? new Set(),
+    input.connectedOut.get(node.id) ?? new Set(),
+    input.flowResult,
+    input.t,
+    emptyPortLabel,
+  );
+
+  const title = node.label?.trim() || input.t('editor.customMachine.title');
+  const titleW = measureTextWidth(title, 0.8, 600) + HEADER_PAD_X;
+  const inCol = portColumnWidth(inputPorts);
+  const outCol = portColumnWidth(outputPorts);
+  const portsW = inCol + PORTS_COL_GAP + outCol + HEADER_PAD_X;
+
+  const effectiveTicks = Math.round(
+    node.durationTicks / Math.max(node.overclock, 0.1),
+  );
+  const duration = formatRecipeDuration(effectiveTicks, input.lang);
+  const metaParts = [
+    input.t('editor.machinesMeta', { count: node.machineCount }),
+    input.t('editor.overclockMeta', { value: formatOverclock(node.overclock) }),
+    duration,
+  ];
+  const metaW = measureTextWidth(metaParts.join(' · '), 0.7) + HEADER_PAD_X;
+
+  const natural = Math.ceil(
+    Math.max(MACHINE_NODE_MIN_WIDTH, titleW, portsW, metaW),
+  );
+  return Math.max(
+    CUSTOM_MACHINE_NODE_MIN_WIDTH,
+    Math.ceil(natural * CUSTOM_MACHINE_WIDTH_FACTOR),
+  );
 }
 
 /** Max natural width for nodes sharing one machineId. */

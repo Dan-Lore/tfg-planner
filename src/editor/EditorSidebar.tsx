@@ -22,6 +22,8 @@ export interface EditorSidebarProps {
   connectedOutByNode: Map<string, Set<string>>;
   setSchemeName: EditorActions['setSchemeName'];
   updateNode: EditorActions['updateNode'];
+  addCustomPort: EditorActions['addCustomPort'];
+  removeCustomPort: EditorActions['removeCustomPort'];
   onFocusIssue: (issue: SchemeIssue) => void;
   onPanToIssue: (issue: SchemeIssue) => void;
   onEdgeRateApply: (edge: TfgpEdge, rate: number) => void;
@@ -40,6 +42,8 @@ export function EditorSidebar({
   connectedOutByNode,
   setSchemeName,
   updateNode,
+  addCustomPort,
+  removeCustomPort,
   onFocusIssue,
   onPanToIssue,
   onEdgeRateApply,
@@ -104,6 +108,8 @@ export function EditorSidebar({
               connectedInByNode={connectedInByNode}
               connectedOutByNode={connectedOutByNode}
               updateNode={updateNode}
+              addCustomPort={addCustomPort}
+              removeCustomPort={removeCustomPort}
               onEdgeRateApply={onEdgeRateApply}
             />
           )}

@@ -47,6 +47,16 @@
       "position": { "x": 400, "y": 200 },
       "fluidId": "gtceu:steam",
       "capacity": 3600
+    },
+    {
+      "id": "cm1",
+      "kind": "custom_machine",
+      "position": { "x": 700, "y": 200 },
+      "durationTicks": 20,
+      "machineCount": 1,
+      "overclock": 1,
+      "inputs": [{ "itemId": "gt:copper_dust", "amount": 1 }],
+      "outputs": [{ "itemId": "gt:copper_ingot", "amount": 1 }]
     }
   ],
   "edges": [

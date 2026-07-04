@@ -23,6 +23,16 @@ export function useEditorActions() {
         useEditorStore.getState().attachMachine(...args),
       attachBuffer: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['attachBuffer']>) =>
         useEditorStore.getState().attachBuffer(...args),
+      attachCustomMachine: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['attachCustomMachine']>) =>
+        useEditorStore.getState().attachCustomMachine(...args),
+      addCustomMachine: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['addCustomMachine']>) =>
+        useEditorStore.getState().addCustomMachine(...args),
+      addCustomPort: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['addCustomPort']>) =>
+        useEditorStore.getState().addCustomPort(...args),
+      removeCustomPort: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['removeCustomPort']>) =>
+        useEditorStore.getState().removeCustomPort(...args),
+      ensureCustomPort: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['ensureCustomPort']>) =>
+        useEditorStore.getState().ensureCustomPort(...args),
       pushHistory: () => useEditorStore.getState().pushHistory(),
       undo: () => useEditorStore.getState().undo(),
       redo: () => useEditorStore.getState().redo(),

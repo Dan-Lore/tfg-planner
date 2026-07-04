@@ -1,5 +1,6 @@
 import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
+import type { TfgpCustomPort } from '@/schema/tfgp-types';
 import type { Flow, Recipe } from '@/data/types';
 import { formatFlowQuantityLabel } from '@/lib/flow-chance';
 import type { TagIndex } from '@/lib/tag-index';
@@ -46,12 +47,32 @@ export function bufferProductFlow(node: {
   return { itemId: node.itemId, fluidId: node.fluidId, amount: 1 };
 }
 
+
 export function nodePortFlow(
-  node: { kind?: string; itemId?: string; fluidId?: string },
+  node: {
+    kind?: string;
+    itemId?: string;
+    fluidId?: string;
+    inputs?: TfgpCustomPort[];
+    outputs?: TfgpCustomPort[];
+  },
   port: string,
   recipe?: Recipe,
 ): Flow | null {
   const kind = node.kind ?? 'machine';
+  if (kind === 'custom_machine') {
+    const parsed = parsePortId(port);
+    if (!parsed) return null;
+    const list = parsed.kind === 'in' ? node.inputs : node.outputs;
+    const portDef = list?.[parsed.index];
+    if (!portDef) return null;
+    if (!portDef.itemId && !portDef.fluidId) return null;
+    return {
+      itemId: portDef.itemId,
+      fluidId: portDef.fluidId,
+      amount: portDef.amount,
+    };
+  }
   if (kind !== 'machine') {
     const parsed = parsePortId(port);
     if (!parsed) return null;

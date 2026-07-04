@@ -1,12 +1,13 @@
 import type {
   TfgpBufferKind,
+  TfgpCustomMachineNode,
   TfgpEndBufferNode,
   TfgpIntermediateBufferNode,
+  TfgpMachineNode,
   TfgpNode,
   TfgpNodeKind,
   TfgpStartBufferNode,
 } from '@/schema/tfgp-types';
-
 export function getNodeKind(node: TfgpNode): TfgpNodeKind {
   return node.kind ?? 'machine';
 }
@@ -15,6 +16,10 @@ export function isMachineNode(
   node: TfgpNode,
 ): node is TfgpNode & { kind?: 'machine'; machineId: string; recipeId: string } {
   return getNodeKind(node) === 'machine';
+}
+
+export function isCustomMachineNode(node: TfgpNode): node is TfgpCustomMachineNode {
+  return getNodeKind(node) === 'custom_machine';
 }
 
 export function isStartBufferNode(node: TfgpNode): node is TfgpStartBufferNode {
@@ -63,4 +68,10 @@ export function bufferHasInputPort(kind: TfgpBufferKind): boolean {
 
 export function bufferHasOutputPort(kind: TfgpBufferKind): boolean {
   return kind === 'start_buffer' || kind === 'intermediate_buffer';
+}
+
+export function isFlowMachineNode(
+  node: TfgpNode,
+): node is TfgpMachineNode | TfgpCustomMachineNode {
+  return isMachineNode(node) || isCustomMachineNode(node);
 }

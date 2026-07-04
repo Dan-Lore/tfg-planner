@@ -5,6 +5,9 @@
 
 ## [Unreleased]
 
+### Added
+- Editor: `custom_machine` node — arbitrary inputs/outputs, `durationTicks`, `machineCount`, `overclock`; synthetic recipe in flow solver ([`docs/custom-machine-nodes.md`](docs/custom-machine-nodes.md))
+
 ## [0.3.0] — 2026-07-03
 
 ### Added

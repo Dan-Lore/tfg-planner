@@ -1,4 +1,3 @@
-import type { PackData, Recipe } from '@/data/types';
 import { R, type Rational } from './rational';
 import { buildTagIndex } from '@/lib/tag-index';
 import { productKey } from '@/lib/ports';
@@ -58,16 +57,14 @@ import {
   isSchemeStartBuffer,
 } from '@/calculator/buffer-solver';
 
-function recipeMap(pack: PackData): Map<string, Recipe> {
-  return new Map(pack.recipes.map((r) => [r.id, r]));
-}
+import { buildRecipeMap } from '@/calculator/custom-machine-recipe';
 
 /**
  * Пересчёт потоков: целевые скорости → ceil(machineCount) → потоки по DAG.
  */
 export function solveFlows(input: SolverInput): FlowResult {
   const preserveCounts = input.preserveManualMachineCounts !== false;
-  const recipes = recipeMap(input.pack);
+  const recipes = buildRecipeMap(input.pack, input.nodes);
   const tags = buildTagIndex(input.pack);
   const nodeById = new Map(input.nodes.map((n) => [n.id, n]));
   const { incoming, outgoing } = buildAdjacency(input.edges);

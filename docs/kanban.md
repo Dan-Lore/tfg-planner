@@ -261,6 +261,7 @@
 | K-001 | 2026-06-17 | Парсер `tools/parser/`: fetch tag, pakku-lock, KubeJS AST, pipeline, pack `0.12.8` (2436 recipes), smoke/golden tests |
 | K-007 | 2026-06-18 | Полнота рецептов: chanced I/O, `global.modifyRecipe`, greenhouse helpers, GT vanilla substrate, LCR mirror; pack `0.12.8` → 2781 recipes, smoke 9/9 |
 | K-015 | 2026-06-30 | Проверка циклов: `cycle-analysis.ts` (SCC, баланс, катализатор); chance на входах; `target_not_output`, `disconnected_output`, `orphan_start_buffer` |
+| K-016 | 2026-07-03 | `custom_machine`: произвольный процесс без рецепта pack; динамические порты; синтетический Recipe в солвере; UI + `.tfgp` |
 | RC-001 | 2026-06-29 | Каноническая модель рецептов: `normalizeRecipeCanon`, `flow-index.json`, dedupe в picker/attach; pack `0.12.8` → 56 295 recipes (−884 дублей); breaking: `@lcr` id при native LCR |
 
 ---

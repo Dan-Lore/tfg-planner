@@ -23,6 +23,7 @@ interface PortContextMenuProps {
   bufferOptions: TfgpBufferKind[];
   candidates: AttachCandidate[];
   onSelectBuffer: (kind: TfgpBufferKind) => void;
+  onSelectCustomMachine: () => void;
   onSelect: (candidate: AttachCandidate) => void;
   onClose: () => void;
 }
@@ -41,6 +42,7 @@ export function PortContextMenu({
   bufferOptions,
   candidates,
   onSelectBuffer,
+  onSelectCustomMachine,
   onSelect,
   onClose,
 }: PortContextMenuProps) {
@@ -106,6 +108,23 @@ export function PortContextMenu({
           <div className="port-context-menu__divider" role="separator" />
         </>
       )}
+      <div className="port-context-menu__title">{t('editor.portMenu.customMachine')}</div>
+      <ul className="port-context-menu__list">
+        <li role="presentation">
+          <button
+            type="button"
+            className="port-context-menu__item"
+            role="menuitem"
+            onClick={() => {
+              onSelectCustomMachine();
+              onClose();
+            }}
+          >
+            {t('editor.portMenu.addCustomMachine')}
+          </button>
+        </li>
+      </ul>
+      <div className="port-context-menu__divider" role="separator" />
       <div className="port-context-menu__title">{t(titleKey)}</div>
       <ul className="port-context-menu__list">
         {candidates.length === 0 ? (

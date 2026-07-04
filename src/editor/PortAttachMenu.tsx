@@ -14,7 +14,7 @@ import { isPackRuntime, type ActivePack } from '@/data/pack-runtime';
 import type { Flow } from '@/data/types';
 import { findAttachCandidatesFromIndex, type AttachCandidate } from '@/lib/recipe-index';
 import { buildTagIndexForRecipes } from '@/lib/tag-index';
-import { isBufferNode, isMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
 import type { TagIndex } from '@/lib/tag-index';
 import type { EditorActions } from '@/editor/editor-actions';
@@ -44,6 +44,9 @@ function anchorPortY(
     const fields = anchor.kind === 'start_buffer' ? 88 : 36;
     return anchor.position.y + header + fields + portIndex * PORT_ROW_HEIGHT;
   }
+  if (isCustomMachineNode(anchor)) {
+    return anchor.position.y + 76 + portIndex * PORT_ROW_HEIGHT;
+  }
   return (
     anchor.position.y +
     estimateHeaderHeight(pack, anchor.machineId, anchor.recipeId) +
@@ -58,6 +61,7 @@ export function usePortAttachMenu(params: {
   tagIndex: TagIndex | null;
   attachMachine: EditorActions['attachMachine'];
   attachBuffer: EditorActions['attachBuffer'];
+  attachCustomMachine: EditorActions['attachCustomMachine'];
   setSelectedNodeIds: EditorActions['setSelectedNodeIds'];
 }): {
   handlePortContextMenu: (
@@ -77,6 +81,7 @@ export function usePortAttachMenu(params: {
     tagIndex,
     attachMachine,
     attachBuffer,
+    attachCustomMachine,
     setSelectedNodeIds,
   } = params;
 
@@ -205,6 +210,29 @@ export function usePortAttachMenu(params: {
     [portMenu, schemeNodes, pack, attachBuffer, setSelectedNodeIds],
   );
 
+  const handlePortCustomMachineSelect = useCallback(() => {
+    if (!portMenu || !pack) return;
+    const anchor = schemeNodes.find((n) => n.id === portMenu.anchorNodeId);
+    if (!anchor) return;
+
+    const portY = anchorPortY(anchor, portMenu.anchorPort, pack);
+    const position =
+      portMenu.direction === 'downstream'
+        ? { x: anchor.position.x + NODE_ATTACH_OFFSET_X, y: portY }
+        : { x: anchor.position.x - NODE_ATTACH_OFFSET_X, y: portY };
+
+    const newId = attachCustomMachine({
+      position,
+      anchorNodeId: portMenu.anchorNodeId,
+      anchorPort: portMenu.anchorPort,
+      direction: portMenu.direction,
+      itemId: portMenu.flow.itemId,
+      fluidId: portMenu.flow.fluidId,
+    });
+    setSelectedNodeIds([newId]);
+    setPortMenu(null);
+  }, [portMenu, schemeNodes, pack, attachCustomMachine, setSelectedNodeIds]);
+
   const menuElement =
     portMenu && pack ? (
       <PortContextMenu
@@ -217,6 +245,7 @@ export function usePortAttachMenu(params: {
         bufferOptions={portMenu.bufferOptions}
         candidates={portMenu.candidates}
         onSelectBuffer={handlePortBufferSelect}
+        onSelectCustomMachine={handlePortCustomMachineSelect}
         onSelect={handlePortMenuSelect}
         onClose={closePortMenu}
       />

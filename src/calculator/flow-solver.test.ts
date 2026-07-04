@@ -1212,4 +1212,82 @@ describe('solveFlows', () => {
     expect(result.nodeSurplus.elec?.['gtceu:carbon_dioxide']!.toNumber()).toBeGreaterThan(0);
     expect(result.nodeSurplus.elec?.['gtceu:tiny_rhenium_dust']).toBeUndefined();
   });
+
+  it('custom_machine between recipe nodes scales with duration and port amounts', () => {
+    const pack: PackData = {
+      ...samplePack,
+      recipes: [
+        {
+          id: 'r1',
+          machineId: 'm1',
+          durationTicks: 20,
+          inputs: [{ itemId: 'ore', amount: 1 }],
+          outputs: [{ itemId: 'crushed', amount: 1 }],
+        },
+        {
+          id: 'r2',
+          machineId: 'm2',
+          durationTicks: 20,
+          inputs: [{ itemId: 'ingot', amount: 1 }],
+          outputs: [{ itemId: 'plate', amount: 1 }],
+        },
+      ],
+    };
+    const result = solveFlows({
+      pack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'custom',
+          kind: 'custom_machine',
+          machineId: '__custom__',
+          recipeId: 'custom:custom',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          durationTicks: 20,
+          customInputs: [{ itemId: 'crushed', amount: 1 }],
+          customOutputs: [{ itemId: 'ingot', amount: 2 }],
+        },
+        {
+          id: 'b',
+          machineId: 'm2',
+          recipeId: 'r2',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'a',
+          target: 'custom',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+        {
+          id: 'e2',
+          source: 'custom',
+          target: 'b',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'ingot',
+        },
+      ],
+      targets: [{ nodeId: 'b', itemId: 'plate', ratePerSecond: 4 }],
+      preserveManualMachineCounts: false,
+    });
+
+    expect(result.nodeMachineCounts['custom']).toBeGreaterThanOrEqual(2);
+    expect(result.edgeFlows['e2'].toNumber()).toBeCloseTo(4, 4);
+  });
 });

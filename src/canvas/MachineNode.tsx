@@ -390,9 +390,13 @@ function MachineNodeComponent({ id, data, dragging, width }: NodeProps) {
 export const MachineNode = memo(MachineNodeComponent);
 
 import { BufferNode } from '@/canvas/BufferNode';
+import { CustomMachineNode } from '@/canvas/CustomMachineNode';
 
 export function useNodeTypes() {
-  return useMemo(() => ({ machine: MachineNode, buffer: BufferNode }), []);
+  return useMemo(
+    () => ({ machine: MachineNode, buffer: BufferNode, customMachine: CustomMachineNode }),
+    [],
+  );
 }
 
 export function buildPortDisplays(
