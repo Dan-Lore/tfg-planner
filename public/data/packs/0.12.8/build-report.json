@@ -1,155 +1,20 @@
 {
   "modpackVersion": "0.12.8",
   "tag": "0.12.8",
-  "generatedAt": "2026-06-27T23:09:49.405Z",
+  "generatedAt": "2026-07-04T01:54:21.773Z",
   "stats": {
-    "snapshotRecipes": 57179,
-    "snapshotFiles": 1,
-    "snapshotParsed": 56715,
-    "snapshotSkipped": 5,
-    "snapshotSha256": "ca5f5571a90c060e70023e73ddeb579fad4e327dc5f5fad836d67013322b4ef7",
+    "snapshotRecipes": 56295,
+    "snapshotFiles": 0,
+    "snapshotParsed": 56295,
+    "snapshotSkipped": 0,
     "finalRecipes": 56295,
     "machines": 86,
     "items": 24551,
     "fluids": 1183,
-    "recipesWithEnergy": 57009,
-    "recipesWithChance": 9884,
-    "goldenMatched": 6,
-    "goldenMismatched": 0,
-    "goldenMissing": 0,
-    "removedDuplicateRecipes": 884
+    "recipesWithEnergy": 0,
+    "recipesWithChance": 0
   },
-  "warnings": [
-    {
-      "file": "snapshot",
-      "reason": "113 recipes have no outputs after snapshot parse",
-      "kind": "substrate"
-    },
-    {
-      "file": "lang",
-      "reason": "Localized 14705/25734 resources (tags: 229/5913, gtceu: 6180/11305, tfg: 1478/1557, minecraft: 464/465, malformed: 0; kubejs: 179 files, jars: 179, mc keys ru/en: 8121/6217, keys ru/en: 61353/62607)"
-    }
-  ],
-  "warningsByKind": {
-    "substrate": 1,
-    "other": 1
-  },
-  "unparsedFiles": [],
-  "smokeResults": [
-    {
-      "id": "greenhouse-pine-sapling",
-      "ok": true
-    },
-    {
-      "id": "pyrolyse-log-wood-tar-nitrogen",
-      "ok": true
-    },
-    {
-      "id": "pyrolyse-log-creosote-nitrogen",
-      "ok": true
-    },
-    {
-      "id": "liquefaction-aromatic-charcoal-hydrogen",
-      "ok": true
-    },
-    {
-      "id": "distill-wood-tar",
-      "ok": true
-    },
-    {
-      "id": "aromatic-feedstock-lcr",
-      "ok": true
-    },
-    {
-      "id": "electrolyze-syngas-lcr",
-      "ok": true
-    },
-    {
-      "id": "reformed-aromatic-lcr",
-      "ok": true
-    },
-    {
-      "id": "reformate-gas-cracker",
-      "ok": true
-    },
-    {
-      "id": "methanol-distil-propylene",
-      "ok": true
-    },
-    {
-      "id": "pyrolyse-log-charcoal-byproducts",
-      "ok": true
-    },
-    {
-      "id": "wiremill-copper-8",
-      "ok": true
-    },
-    {
-      "id": "centrifuge-uranium-separation",
-      "ok": true
-    },
-    {
-      "id": "snow-compressor",
-      "ok": true
-    },
-    {
-      "id": "distill-charcoal-byproducts",
-      "ok": true
-    }
-  ],
-  "goldenDiff": [],
-  "commitHint": "https://github.com/TerraFirmaGreg-Team/Modpack-Modern/archive/refs/tags/0.12.8.zip",
-  "snapshotManifestOk": true,
-  "removedDuplicateRecipeIdsSample": [
-    "ae2:large_chemical_reactor/fluix_pearl",
-    "gtceu:assembler/borderless_lamp_black_1",
-    "gtceu:assembler/borderless_lamp_black_2",
-    "gtceu:assembler/borderless_lamp_black_3",
-    "gtceu:assembler/borderless_lamp_black_4",
-    "gtceu:assembler/borderless_lamp_black_5",
-    "gtceu:assembler/borderless_lamp_black_6",
-    "gtceu:assembler/borderless_lamp_black_7",
-    "gtceu:assembler/borderless_lamp_blue_1",
-    "gtceu:assembler/borderless_lamp_blue_2",
-    "gtceu:assembler/borderless_lamp_blue_3",
-    "gtceu:assembler/borderless_lamp_blue_4",
-    "gtceu:assembler/borderless_lamp_blue_5",
-    "gtceu:assembler/borderless_lamp_blue_6",
-    "gtceu:assembler/borderless_lamp_blue_7",
-    "gtceu:assembler/borderless_lamp_brown_1",
-    "gtceu:assembler/borderless_lamp_brown_2",
-    "gtceu:assembler/borderless_lamp_brown_3",
-    "gtceu:assembler/borderless_lamp_brown_4",
-    "gtceu:assembler/borderless_lamp_brown_5",
-    "gtceu:assembler/borderless_lamp_brown_6",
-    "gtceu:assembler/borderless_lamp_brown_7",
-    "gtceu:assembler/borderless_lamp_cyan_1",
-    "gtceu:assembler/borderless_lamp_cyan_2",
-    "gtceu:assembler/borderless_lamp_cyan_3",
-    "gtceu:assembler/borderless_lamp_cyan_4",
-    "gtceu:assembler/borderless_lamp_cyan_5",
-    "gtceu:assembler/borderless_lamp_cyan_6",
-    "gtceu:assembler/borderless_lamp_cyan_7",
-    "gtceu:assembler/borderless_lamp_gray_1",
-    "gtceu:assembler/borderless_lamp_gray_2",
-    "gtceu:assembler/borderless_lamp_gray_3",
-    "gtceu:assembler/borderless_lamp_gray_4",
-    "gtceu:assembler/borderless_lamp_gray_5",
-    "gtceu:assembler/borderless_lamp_gray_6",
-    "gtceu:assembler/borderless_lamp_gray_7",
-    "gtceu:assembler/borderless_lamp_green_1",
-    "gtceu:assembler/borderless_lamp_green_2",
-    "gtceu:assembler/borderless_lamp_green_3",
-    "gtceu:assembler/borderless_lamp_green_4",
-    "gtceu:assembler/borderless_lamp_green_5",
-    "gtceu:assembler/borderless_lamp_green_6",
-    "gtceu:assembler/borderless_lamp_green_7",
-    "gtceu:assembler/borderless_lamp_light_blue_1",
-    "gtceu:assembler/borderless_lamp_light_blue_2",
-    "gtceu:assembler/borderless_lamp_light_blue_3",
-    "gtceu:assembler/borderless_lamp_light_blue_4",
-    "gtceu:assembler/borderless_lamp_light_blue_5",
-    "gtceu:assembler/borderless_lamp_light_blue_6",
-    "gtceu:assembler/borderless_lamp_light_blue_7"
-  ]
+  "warnings": [],
+  "warningsByKind": {},
+  "unparsedFiles": []
 }

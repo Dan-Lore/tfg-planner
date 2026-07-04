@@ -24,6 +24,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -33,9 +37,13 @@ jobs:
           name: dist
           path: dist
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
-      - uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
         id: deployment
+        uses: actions/deploy-pages@v5
+        retry:
+          max-attempts: 3
+          min-interval-seconds: 45
