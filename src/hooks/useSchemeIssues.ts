@@ -5,7 +5,7 @@ import type { ActivePack } from '@/data/pack-runtime';
 import { resolveIssueFocusPoint } from '@/lib/viewport-focus';
 import type { SchemeIssue } from '@/scheme-check/check-scheme';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
-import type { EditorActions } from '@/editor/editor-actions';
+import type { FocusSelectionParams } from '@/hooks/useEditorSelection';
 
 export function useSchemeIssues(params: {
   schemeNodes: TfgpNode[];
@@ -14,8 +14,7 @@ export function useSchemeIssues(params: {
   layoutWidthByNodeId: Record<string, number>;
   nodeDisplayById: Record<string, NodeDynamicDisplay>;
   canvasRef: RefObject<EditorCanvasHandle | null>;
-  setSelectedNodeIds: EditorActions['setSelectedNodeIds'];
-  setSelectedEdgeIds: EditorActions['setSelectedEdgeIds'];
+  focusSelection: (params: FocusSelectionParams) => void;
 }) {
   const {
     schemeNodes,
@@ -24,23 +23,25 @@ export function useSchemeIssues(params: {
     layoutWidthByNodeId,
     nodeDisplayById,
     canvasRef,
-    setSelectedNodeIds,
-    setSelectedEdgeIds,
+    focusSelection,
   } = params;
 
   const handleFocusIssue = useCallback(
     (issue: SchemeIssue) => {
       if (issue.edgeId) {
         const edge = schemeEdges.find((e) => e.id === issue.edgeId);
-        setSelectedEdgeIds([issue.edgeId]);
-        setSelectedNodeIds(
-          edge ? [edge.source, edge.target] : issue.nodeId ? [issue.nodeId] : [],
-        );
+        focusSelection({
+          nodeIds: edge
+            ? [edge.source, edge.target]
+            : issue.nodeId
+              ? [issue.nodeId]
+              : [],
+          edgeIds: [issue.edgeId],
+        });
         return;
       }
       if (issue.nodeId) {
-        setSelectedNodeIds([issue.nodeId]);
-        setSelectedEdgeIds([]);
+        focusSelection({ nodeIds: [issue.nodeId], edgeIds: [] });
         return;
       }
       const nodeIdsRaw = issue.context?.nodeIds;
@@ -50,12 +51,11 @@ export function useSchemeIssues(params: {
           .map((s) => s.trim())
           .filter(Boolean);
         if (ids.length > 0) {
-          setSelectedNodeIds(ids);
-          setSelectedEdgeIds([]);
+          focusSelection({ nodeIds: ids, edgeIds: [] });
         }
       }
     },
-    [schemeEdges, setSelectedEdgeIds, setSelectedNodeIds],
+    [schemeEdges, focusSelection],
   );
 
   const handlePanToIssue = useCallback(

@@ -3,6 +3,15 @@ import { machineNodeRfStyle } from '@/canvas/node-bounds';
 
 const LAYOUT_WIDTH_EPS = 0.5;
 
+function nodeStyleEqual(
+  a: Node['style'] | undefined,
+  b: Node['style'] | undefined,
+): boolean {
+  if (a === b) return true;
+  if (!a || !b) return !a && !b;
+  return a.width === b.width && a.height === b.height;
+}
+
 function nodeLayoutWidth(node: Node): number | undefined {
   const w = (node.data as { layoutWidth?: number } | undefined)?.layoutWidth;
   return typeof w === 'number' ? w : undefined;
@@ -66,6 +75,17 @@ export function mergeFlowNodes(
     const position = draggingNodeIds.has(rf.id) ? existing.position : rf.position;
     const rfStyle = machineNodeRfStyle(nextLayoutWidth);
 
+    if (
+      !widthChanged &&
+      !draggingNodeIds.has(rf.id) &&
+      position.x === existing.position.x &&
+      position.y === existing.position.y &&
+      rf.data === existing.data &&
+      nodeStyleEqual(existing.style, rfStyle)
+    ) {
+      return existing;
+    }
+
     return {
       ...rf,
       position,
@@ -75,16 +95,28 @@ export function mergeFlowNodes(
   });
 }
 
+function rfSelected(value: boolean | undefined): boolean {
+  return value === true;
+}
+
+export function flowGraphArraysEqual<T>(prev: T[], next: T[]): boolean {
+  return prev.length === next.length && prev.every((item, i) => item === next[i]);
+}
+
 /** Apply store selection to React Flow nodes (store is source of truth). */
 export function applyFlowNodeSelection(
   nodes: Node[],
   selectedNodeIds: readonly string[],
 ): Node[] {
   const selected = new Set(selectedNodeIds);
-  return nodes.map((node) => {
-    const nextSelected = selected.has(node.id);
-    return node.selected === nextSelected ? node : { ...node, selected: nextSelected };
+  let changed = false;
+  const next = nodes.map((node) => {
+    const shouldSelect = selected.has(node.id);
+    if (rfSelected(node.selected) === shouldSelect) return node;
+    changed = true;
+    return { ...node, selected: shouldSelect };
   });
+  return changed ? next : nodes;
 }
 
 /** Merge store-derived edges into React Flow state, preserving in-canvas selection. */
@@ -93,20 +125,32 @@ export function mergeFlowEdges(prev: Edge[], next: Edge[]): Edge[] {
   return next.map((edge) => {
     const existing = prevById.get(edge.id);
     if (!existing) return edge;
-    return {
-      ...edge,
-    };
+    if (
+      edge.source === existing.source &&
+      edge.target === existing.target &&
+      edge.sourceHandle === existing.sourceHandle &&
+      edge.targetHandle === existing.targetHandle &&
+      edge.data === existing.data &&
+      edge.animated === existing.animated
+    ) {
+      return existing;
+    }
+    return edge;
   });
 }
 
-/** Apply store selection to React Flow edges (store is source of truth). */
+/** Apply programmatic edge highlight (issues panel). Not used in canvas sync loop. */
 export function applyFlowEdgeSelection(
   edges: Edge[],
   selectedEdgeIds: readonly string[],
 ): Edge[] {
   const selected = new Set(selectedEdgeIds);
-  return edges.map((edge) => {
-    const nextSelected = selected.has(edge.id);
-    return edge.selected === nextSelected ? edge : { ...edge, selected: nextSelected };
+  let changed = false;
+  const next = edges.map((edge) => {
+    const shouldSelect = selected.has(edge.id);
+    if (rfSelected(edge.selected) === shouldSelect) return edge;
+    changed = true;
+    return { ...edge, selected: shouldSelect };
   });
+  return changed ? next : edges;
 }

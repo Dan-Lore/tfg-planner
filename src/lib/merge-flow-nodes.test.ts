@@ -197,6 +197,19 @@ describe('mergeFlowNodes', () => {
     expect(merged[0]?.selected).toBe(true);
     expect(merged[0]?.data).toEqual({ machineCount: 1, overclock: 2 });
   });
+
+  it('preserves node references when store payload is unchanged', () => {
+    const node = {
+      id: 'node_1',
+      type: 'machine',
+      position: { x: 10, y: 20 },
+      data: { machineCount: 1 },
+    };
+    const prev = [node];
+    const next = [{ ...node }];
+    const merged = mergeFlowNodes(prev, next);
+    expect(merged[0]).toBe(node);
+  });
 });
 
 describe('applyFlowNodeSelection', () => {
@@ -206,7 +219,7 @@ describe('applyFlowNodeSelection', () => {
       { id: 'b', type: 'machine', position: { x: 0, y: 0 }, data: {} },
     ];
     const result = applyFlowNodeSelection(nodes, ['b']);
-    expect(result[0]?.selected).toBe(false);
+    expect(result[0]?.selected).toBeUndefined();
     expect(result[1]?.selected).toBe(true);
   });
 
@@ -223,6 +236,13 @@ describe('applyFlowNodeSelection', () => {
     const result = applyFlowNodeSelection(nodes, []);
     expect(result[0]?.selected).toBe(false);
   });
+
+  it('keeps array reference when undefined selected matches empty store', () => {
+    const nodes = [
+      { id: 'a', type: 'machine', position: { x: 0, y: 0 }, data: {} },
+    ];
+    expect(applyFlowNodeSelection(nodes, [])).toBe(nodes);
+  });
 });
 
 describe('applyFlowEdgeSelection', () => {
@@ -232,8 +252,16 @@ describe('applyFlowEdgeSelection', () => {
       { id: 'e2', source: 'b', target: 'c' },
     ];
     const result = applyFlowEdgeSelection(edges, ['e2']);
-    expect(result[0]?.selected).toBe(false);
+    expect(result[0]?.selected).toBeUndefined();
     expect(result[1]?.selected).toBe(true);
+  });
+
+  it('keeps array reference when undefined selected matches empty store', () => {
+    const edges = [
+      { id: 'e1', source: 'a', target: 'b' },
+      { id: 'e2', source: 'b', target: 'c' },
+    ];
+    expect(applyFlowEdgeSelection(edges, [])).toBe(edges);
   });
 });
 
