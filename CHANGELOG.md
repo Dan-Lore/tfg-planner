@@ -5,6 +5,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Runtime: Node.js 24.18.0 LTS (CI, engines, @types/node)
+
 ## [0.4.1] — 2026-07-06
 
 ### Added

@@ -9,6 +9,8 @@
 
 ## Быстрый старт
 
+**Node.js** ≥ 24.18.0 (LTS). Рекомендуется `nvm use` при наличии `.nvmrc`.
+
 ```bash
 npm install
 npm run dev
