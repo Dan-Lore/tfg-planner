@@ -31,7 +31,7 @@ npm run dev
 | `npm test` | Unit-тесты |
 | `npm run verify:ci` | Полный прогон как в CI (перед push / релизом) |
 | `npm run lint:agent` | Архитектура, knip, Semgrep |
-| `npm run build-pack -- --tag 0.12.8` | Сборка pack data из Modpack-Modern |
+| `npm run build-pack -- --tag 0.12.8` | Сборка pack data из server snapshot (см. ниже) |
 | `npm run parser:validate` | Валидация pack JSON |
 
 ## Публикация на GitHub Pages
@@ -68,13 +68,27 @@ npm run preview
 | [docs/kanban.md](docs/kanban.md) | Недоделки |
 | [CHANGELOG.md](CHANGELOG.md) | История версий |
 
-## Статус v0.2.0
+## Статус v0.3.0
 
 - Редактор мнемосхем (React Flow) с оптимизированным drag (K-014)
 - Калькулятор потоков с `ceil(machineCount)` в Web Worker
 - Import/export `.tfgp` с валидацией и dedupe node IDs
 - i18n RU / EN
 - Pack data `0.12.8` (~56k рецептов, sharded v2, server snapshot pipeline)
+- Scheme check (cycles, wiring issues), `custom_machine` nodes
+
+## Пересборка pack data (maintainer)
+
+**В репозитории (git):** `public/data/packs/<tag>/` — sharded pack (`pack.meta.json`, `recipes/*.json`, `flow-index.json`).
+
+**Не в git:** `tools/parser/snapshots/<tag>/recipes.json` — тяжёлый export из игры (~4 MB+). Генерируется локально:
+
+```bash
+npm run generate-tfg-snapshot -- 0.12.8   # JDK 21+, ~45–90 мин первый раз
+npm run build-pack -- --tag 0.12.8 --strict-snapshot
+```
+
+Подробности: [tools/parser/snapshots/README.md](tools/parser/snapshots/README.md), [docs/parser.md](docs/parser.md).
 - Контекстное меню на портах (добавление машин по ПКМ)
 - CI: typecheck, tests, `lint:agent` (depcruise, knip, Semgrep), `parser:validate`
 

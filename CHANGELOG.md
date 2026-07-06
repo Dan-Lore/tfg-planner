@@ -5,8 +5,40 @@
 
 ## [Unreleased]
 
+## [0.4.1] — 2026-07-06
+
 ### Added
-- Editor: `custom_machine` node — arbitrary inputs/outputs, `durationTicks`, `machineCount`, `overclock`; synthetic recipe in flow solver ([`docs/custom-machine-nodes.md`](docs/custom-machine-nodes.md))
+- `useEditorSelection().focusSelection({ nodeIds, edgeIds })` — единый API программного выделения (store + canvas)
+- Regression-тесты `selection-sync.test.ts` для box-select / `setEdges` loop
+- Направленное рамочное выделение: LTR → `SelectionMode.Full` (сплошная синяя рамка); RTL → `SelectionMode.Partial` (пунктирная зелёная)
+
+### Fixed
+- Editor: `Maximum update depth exceeded` при рамочном выделении узла/ребра — убрана обратная синхронизация `selectedEdgeIds` store → `flowEdges`
+- Programmatic selection: сброс подсветки рёбер при добавлении узла (toolbar, port attach)
+
+### Changed
+- Docs: kanban hygiene (done-карточки в «Закрыто»); K-009 → `blocked` (ждёт спецуказания); roadmap MVP статусы; spec §3.3–3.6
+- Docs: асимметричная модель выделения в `architecture.md`; K-017 закрыт
+
+## [0.4.0] — 2026-07-06
+
+### Added
+- Editor: ЛКМ — рамка выделения; ПКМ drag — панорама; кнопка «?» с подсказками управления
+- Editor: duplicate/copy-paste (Ctrl+C/V) с внутренними рёбрами; целевая скорость в inspector (режим C)
+- Editor: закрепление потока на ребре (`edgeConstraints` в `.tfgp` + inspector)
+- Editor: предупреждение при import/switch версии modpack (`ConfirmDialog`)
+- Editor: суммарное EU/t для выделенных машин
+- `ConfirmDialog` вместо `window.confirm` / `alert` для clear/import
+- CLI `check-scheme`: i18n через `format-scheme-issue` (`--lang=en`)
+- `sumSelectionEnergyEuPerTick` в `src/lib/selection-energy.ts`
+
+### Changed
+- Solver: edge constraints в machine-count и convergence фазах
+- `buildReportFromShardedMeta`: опциональные `recipesWithEnergy` / `recipesWithChance`
+- i18n: `energyHatchCount` (ru), `editor.edgeConstraint.*`, `editor.versionMismatch.*`
+
+### Fixed
+- `MachineInspector` / `TargetRateSection`: типы и `primaryOutputIndex` для machine/custom nodes
 
 ## [0.3.0] — 2026-07-03
 

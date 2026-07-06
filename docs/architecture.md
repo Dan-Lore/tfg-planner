@@ -65,14 +65,23 @@
 - React Flow; drag-позиции живут в `EditorCanvas`, в store пишутся на `dragEnd`.
 - **Слои данных:** static `rfNodes` (топология, scaling, callbacks через `EditorNodeActionsContext`); dynamic display (rates, load, balance) — `NodeDisplayContext` keyed by `nodeId`; flow tick не пересобирает callbacks.
 - **Ширина карточек:** единая на `machineId` = max natural width в группе; инкрементальный `layout-width-store` (пересчёт только dirty-групп); `stable-rf-nodes` сохраняет identity `Node` вне изменённых групп; bust кэша по `packDisplayEpoch` и гидратации рецептов; подписи портов — `port-label-stubs` до первого flow tick.
-- **Edge readiness:** `useNodesInitialized` + rAF gate перед показом рёбер; nodes/edges merge атомарно в `useLayoutEffect` — устраняет React Flow #008 (гонка handles).
+- **Edge readiness:** `useNodesInitialized` + rAF gate перед показом рёбер; nodes/edges merge в отдельных `useLayoutEffect` (данные рёбер без store-selection sync).
+- **Выделение (асимметричная модель, 2026-07-06):**
+  - **Узлы:** store (`selectedNodeIds`) → `applyFlowNodeSelection` в effect; RF → store через `onSelectionChange`. Store — source of truth для inspector / EU/t sum.
+  - **Рёбра:** RF владеет `selected` в `flowEdges` (`onEdgesChange`); store (`selectedEdgeIds`) — зеркало через `onSelectionChange` **без** обратной записи в effect (иначе цикл `setEdges` при рамочном выделении узла с инцидентными рёбрами).
+  - **Программное выделение:** `useEditorSelection().focusSelection({ nodeIds, edgeIds })` — store + `EditorCanvasHandle.focusSelection` (рёбра на RF).
+  - **Риск цикла на узлах:** `applyFlowNodeSelection` в effect — accepted; покрыт тестами `merge-flow-nodes`.
 - **Маршрутизация рёбер:** obstacle rects из позиций scheme store (`scheme-obstacles.ts`); на drag — simple bezier (`skipObstacleRouting`); `FlowEdge` + `memo` без `useNodes()`. Остаточный jank — [kanban K-014](kanban.md).
+- **Выделение и панорама:** `selectionOnDrag` (ЛКМ на pane — рамка); направление drag → `SelectionMode.Full` (LTR, сплошная рамка) / `SelectionMode.Partial` (RTL, пунктир); `panOnDrag={[2]}` (ПКМ drag — панорама); `multiSelectionKeyCode="Shift"`.
+- **Подсказка управления:** `EditorHelpHint` — кнопка «?», popover с горячими клавишами (i18n).
+- **Edge constraints:** `edgeConstraints[]` в `.tfgp` — закрепление потока на ребре (K-002).
+- **Energy selection total:** сумма EU/t выделенных узлов в inspector (K-003).
 - **History stack** (undo/redo): снимки графа + параметров расчёта; controlled `viewport`; Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Shift+Z на macOS).
 - **Масштабирование UI:**
   - A — clipboard duplicate (топология);
   - C — панель целевой скорости на выходном узле / в `targets`.
 - **Editor state:** `useSchemeStore` (топология, selection, undo/redo, persist `schemesByPack` + `activePackKey`) + `useFlowStore` (расчёт, `flowResult`, `schemeCheckResult`, persist `flowsByPack`); `useEditorStore` — facade для существующих consumers. Оба slice пишут в один ключ `tfg-editor-store` через `editor-combined-storage`. После F5: `editor-hydration` ждёт rehydrate обоих slice; восстановление cached flow — в scheme `onRehydrateStorage` (`restoreForPack`), `restore-active-pack` использует `waitForEditorHydration`.
-- **Editor UI:** `EditorPage` — оркестратор; `EditorToolbar`, `EditorSidebar`, `PortAttachMenu`; хуки `useEditorRfGraph`, `useSchemeIssues`. Selection: store → `SelectionProvider` → `useNodeSelected`; `mergeFlowNodes` не сохраняет RF-local `selected`.
+- **Editor UI:** `EditorPage` — оркестратор; `EditorToolbar`, `EditorSidebar`, `PortAttachMenu`; хуки `useEditorRfGraph`, `useSchemeIssues`. Узлы: store → `SelectionProvider` → `useNodeSelected`; `mergeFlowNodes` не сохраняет RF-local `selected` на merge. Рёбра: см. асимметричную модель выделения выше.
 
 ### 2.5. Calculator Engine
 

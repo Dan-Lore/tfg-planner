@@ -18,88 +18,6 @@
 
 ## Активные карточки
 
-### K-002 · Калькулятор потоков продуктов (двусторонний)
-
-| Поле | Значение |
-|------|----------|
-| Статус | `backlog` |
-| Приоритет | P0 |
-| Зависит от | K-001 |
-
-**Scope:**
-
-- [ ] Расчёт скоростей предметов/жидкостей по графу
-- [ ] Триггер пересчёта при изменении целевой скорости **или** любого продуктового потока
-- [ ] Режимы B/C: идеальные `machineCount` → округление → полный пересчёт
-- [ ] Дробные множители и целевые скорости (рациональная арифметика)
-- [ ] Округление: `ceil` в `rounding.ts` → полный пересчёт
-- [ ] Byproducts и разветвление выходов
-
-**Критерий закрытия:** unit-тесты на линейные цепочки и разветвления; согласованность потоков на всех рёбрах.
-
----
-
-### K-011 · Дефицит и баланс потоков на схеме
-
-| Поле | Значение |
-|------|----------|
-| Статус | `done` |
-| Приоритет | P1 |
-| Зависит от | K-002 |
-
-**Scope:**
-
-- [x] На узле: `−` оранжевым для неподключённого входа, `+` зелёным для избытка выхода
-- [x] Единые цвета in/out на портах и карточке (светлая/тёмная тема)
-- [x] Пересчёт потребления и производства по всей схеме (дефicit/propagation upstream)
-
-**Критерий закрытия:** дефицит на узле учитывает реальные потоки по графу, а не только «порт не подключён»; избыток согласован с суммой исходящих рёбер.
-
----
-
-### K-006 · Редактор: undo/redo и масштабирование на холсте
-
-| Поле | Значение |
-|------|----------|
-| Статус | `backlog` |
-| Приоритет | P0 |
-| Зависит от | K-002 (частично) |
-
-**Scope:**
-
-- [ ] Стек истории: Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Shift+Z на macOS)
-- [ ] Режим A: copy/paste / дублирование узлов и связей
-- [ ] Режим C: ввод целевой скорости на выходном узле
-- [ ] Undo включает операции C
-
-**Критерий закрытия:** сценарии из spec §3.2 и §3.5 проходят вручную; undo восстанавливает состояние до масштабирования.
-
----
-
-### K-003 · Энергия (EU/t) на схеме
-
-| Поле | Значение |
-|------|----------|
-| Статус | `in_progress` |
-| Приоритет | P1 |
-| Зависит от | K-001, K-002 |
-
-**Scope (фазы):**
-
-- [x] `Recipe.energy` как EnergyStack (`minVoltageTier`, `voltage`, `amperage`) в pack data
-- [x] Отображение EU/t, duration, total EU на узле при известных данных
-- [x] Tier picker на узле (≥ min tier); **скрыт** если `recipe.energy` отсутствует
-- [ ] ~~multiblock — `energyHatchCount`~~ → см. K-012
-- [x] Парсер: server snapshot + `sanitize-energy` (без KubeJS enrich в build-pack)
-- [x] `calculator/energy.ts` + effective duration в flow-solver (overclock → duration, не EU/t)
-- [ ] Суммарное потребление линии / группы
-
-**Правило:** пока подпункт не закрыт — в UI **нет** соответствующего поля/цифры (не показывать «0 EU» или «—» как будто всё ок).
-
-**Критерий закрытия:** энергия отображается только для рецептов с валидными данными; line/group totals; полное покрытие snapshot или явный backlog по источникам.
-
----
-
 ### K-012 · Multiblock energy input / parallel hatches
 
 | Поле | Значение |
@@ -120,20 +38,6 @@
 
 ---
 
-### K-004 · i18n (RU + EN)
-
-| Поле | Значение |
-|------|----------|
-| Статус | `in_progress` |
-| Приоритет | P1 |
-
-- [x] Инфраструктура i18n (react-i18next)
-- [x] Переключатель языка в UI (theme/i18n wiring)
-- [ ] Полная локализация UI-строк (остаточные hardcoded EN)
-- [x] Локализуемые имена предметов/машин из pack data (`name.ru`, `name.en`)
-
----
-
 ### K-005 · Облако, аккаунты, публичные схемы
 
 | Поле | Значение |
@@ -146,36 +50,16 @@
 
 ---
 
-### K-010 · TFG-native recipe snapshot pipeline
-
-| Поле | Значение |
-|------|----------|
-| Статус | `done` |
-| Приоритет | P0 |
-| Закрыто | 2026-06-28 |
-
-**Scope (rev. 5 — full RecipeManager export):**
-
-- [x] `generate-tfg-snapshot`: pakku + runServer + KubeJS export → `snapshots/<tag>/`
-- [x] `loadRecipeSnapshot()` — GT JSON adapter + flat legacy (tests only)
-- [x] `build-pack`: snapshot only — **без** `enrich-energy` / `enrich-chances` / auto-bootstrap
-- [x] Export script v2: RecipeManager on tick 500/800/1200 + CODEC fallback + quality gate
-- [x] Manifest schema v2: `typeCounts`, `serializeStats`, TFG marker recipes
-- [x] Smoke chains: full aromatic chain (`tfg:*` IDs from modpack)
-- [x] Re-export 0.12.8: 56 720 snapshot recipes (1 869 greenhouse, 10 832 `tfg:*`); pack 57 179; smoke 15/15; `.tfgp` aromatic 10/10
-
-**Критерий закрытия:** `build-pack --strict-snapshot` для 0.12.8; greenhouse/liquefaction/aromatic markers + fluids из aromatic `.tfgp`.
-
----
-
 ### K-009 · Автообновление pack data и мониторинг версий модпака
 
 | Поле | Значение |
 |------|----------|
-| Статус | `backlog` |
+| Статус | `blocked` |
 | Приоритет | P2 |
 | Зависит от | K-001 (парсер), деплой на GitHub Pages |
 | См. также | [roadmap.md](roadmap.md) § «Деплой и обновление данных» |
+
+**Ждёт спецуказания заказчика — не начинать без явного запроса.**
 
 **Контекст:** GitHub Pages — только статика (HTML/JS/CSS). Сайт **не может** сам запускать `build-pack`, Java datagen или клонировать Modpack-Modern. Рецепты обновляются **вне** Pages: dev или CI → commit `pack.json` → push → redeploy.
 
@@ -190,57 +74,10 @@
 
 **Вне scope (не делать на Pages):**
 
-- Парсинг KubeJS / скачивание модпака в браузере (сотни MB трафика, минуты CPU/RAM у пользователя).
+- Парсинг KubeJS / скачивание modpackа в браузере (сотни MB трафика, минуты CPU/RAM у пользователя).
 - Фоновый «живой» rebuild рецептов на клиенте.
 
 **Критерий закрытия:** при публикации нового тега TFG maintainer получает автоматический PR или issue; после merge пользователь на Pages видит новую версию в меню или toast о свежем `checksum`; деплой не требует Java на машине пользователя.
-
----
-
-### K-014 · Холст: остаточные подвисания при drag
-
-| Поле | Значение |
-|------|----------|
-| Статус | `done` |
-| Закрыто | 2026-06-30 (v0.2.0) |
-| Приоритет | P2 |
-| Зависит от | — |
-| См. также | [architecture.md](architecture.md) §2.4 |
-
-**Контекст (2026-06-20):** drag ускорен — состояние drag в `EditorCanvas`; несвязанные рёбра не перерисовываются (`FlowEdge` + `memo`); у машин с сотнями рецептов (теплица) во время drag статичная метка рецепта вместо `RecipePicker`. На больших схемах при резком drag возможны **лёгкие** подвисания.
-
-**Scope:**
-
-- [x] Отключение MiniMap на время drag
-- [x] Edge readiness gate (`useNodesInitialized` + rAF) — устранение React Flow #008
-- [x] Атомарный sync nodes/edges в `EditorCanvas`; `updateNodeInternals` только на структурные изменения
-- [x] Static/dynamic split: `NodeDisplayContext` + `EditorNodeActionsContext`; obstacle rects из scheme store
-- [x] `FlowEdge`: obstacle routing без `useNodes()`; simple bezier на drag
-- [-] `onlyRenderVisibleElements` — откат (конфликт с измерением узлов); revisit после стабилизации handles
-- [-] Ручное profiling sign-off на user `.tfgp` — опционально post-deploy; кодовый scope закрыт в v0.2.0
-
-**Критерий закрытия:** резкий drag одной машины на схеме ~20 узлов / ~20 рёбер (см. user `.tfgp`) без заметных фризов на типичном dev-машине; console без React Flow #008; метрики не хуже ~N рендеров рёбер на кадр (N = число инцидентных рёбер узла, не все рёбра схемы).
-
----
-
-### K-013 · Agent tooling — фаза 2
-
-| Поле | Значение |
-|------|----------|
-| Статус | `backlog` |
-| Приоритет | P2 |
-| Зависит от | — (knip exports — после зачистки legacy в parser) |
-| См. также | [agent-tooling-catalog.md](agent-tooling-catalog.md) § Roadmap |
-
-**Контекст:** фаза 1 закрыта (`.cursor/rules`, `.cursorignore`, dependency-cruiser React-границы, knip files/deps, CI `lint:agent`). Ниже — осознанно отложено: либо нужен рефакторинг, либо зачистка legacy.
-
-**Scope:**
-
-- [x] **dependency-cruiser `no-circular`** — calculator + schema + lib (K-013 partial)
-- [x] **knip exports в CI** — `lint:knip` includes exports; library paths waivers in knip.json pending cleanup
-- [x] **Semgrep** — in `lint:agent` (strict, no continue-on-error)
-
-**Критерий закрытия:** `npm run lint:agent` включает Semgrep и полный knip (exports); `depcruise` с `no-circular` проходит без waivers для canvas/calculator.
 
 ---
 
@@ -248,6 +85,7 @@
 
 | ID | Вопрос | Статус |
 |----|--------|--------|
+| K-009 | Автообновление pack data | `blocked` — ждёт спецуказания (см. активные карточки) |
 | K-B1 | Кастомные серверные рецепты поверх версии модпака | `blocked` → [open-questions.md](open-questions.md) Q2 |
 | K-B2 | Dev-ветка Modpack-Modern vs только релизы | `blocked` → Q3 |
 | K-B3 | Иконки предметов — лицензия ассетов TFG | `blocked` → Q13 |
@@ -259,10 +97,19 @@
 | ID | Закрыто | Итог |
 |----|---------|------|
 | K-001 | 2026-06-17 | Парсер `tools/parser/`: fetch tag, pakku-lock, KubeJS AST, pipeline, pack `0.12.8` (2436 recipes), smoke/golden tests |
-| K-007 | 2026-06-18 | Полнота рецептов: chanced I/O, `global.modifyRecipe`, greenhouse helpers, GT vanilla substrate, LCR mirror; pack `0.12.8` → 2781 recipes, smoke 9/9 |
-| K-015 | 2026-06-30 | Проверка циклов: `cycle-analysis.ts` (SCC, баланс, катализатор); chance на входах; `target_not_output`, `disconnected_output`, `orphan_start_buffer` |
-| K-016 | 2026-07-03 | `custom_machine`: произвольный процесс без рецепта pack; динамические порты; синтетический Recipe в солвере; UI + `.tfgp` |
-| RC-001 | 2026-06-29 | Каноническая модель рецептов: `normalizeRecipeCanon`, `flow-index.json`, dedupe в picker/attach; pack `0.12.8` → 56 295 recipes (−884 дублей); breaking: `@lcr` id при native LCR |
+| K-002 | 2026-07-06 | Двусторонний расчёт продуктов; edge constraints; sign-off `rebra-rhenium-loop.tfgp` |
+| K-003 | 2026-07-06 | EU/t на узле; tier picker; selection sum; multiblock hatch → K-012 |
+| K-004 | 2026-07-06 | i18n RU+EN; ConfirmDialog; CLI check-scheme `--lang` |
+| K-006 | 2026-07-06 | Undo/redo; copy/paste; target rate (C); box-select + pan |
+| K-007 | 2026-06-18 | Полнота рецептов: chanced I/O, greenhouse, LCR mirror; pack `0.12.8` → 2781 recipes |
+| K-010 | 2026-06-28 | TFG-native snapshot pipeline; `build-pack --strict-snapshot` 0.12.8 |
+| K-011 | 2026-07-06 | Дефицит/избыток на узлах; propagation upstream |
+| K-013 | 2026-07-06 | Agent tooling фаза 2: depcruise `no-circular`, knip exports в CI, Semgrep |
+| K-014 | 2026-06-30 | Canvas drag perf; edge readiness gate; K-014 revisit spike отложен |
+| K-015 | 2026-06-30 | Проверка циклов: `cycle-analysis.ts`; structural issue codes |
+| K-016 | 2026-07-03 | `custom_machine`: динамические порты; синтетический Recipe; UI + `.tfgp` |
+| K-017 | 2026-07-06 | Унификация selection: `focusSelection` API; RF-local edges; regression-тесты; v0.4.1 |
+| RC-001 | 2026-06-29 | Каноническая модель рецептов; `flow-index.json`; pack 56 295 recipes |
 
 ---
 

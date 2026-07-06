@@ -47,10 +47,10 @@ npm run resume-tfg-server-export -- 0.12.8
 
 В репозитории держать:
 
-- `public/data/packs/<tag>/pack.json` — runtime data для приложения
+- `public/data/packs/<tag>/` — sharded pack data (pack.meta.json, recipes/*.json) для runtime приложения
 - `snapshots/<tag>/snapshot-manifest.json` — метаданные и marker recipes
 
-`recipes.json` создаётся локально или в CI (`generate-tfg-snapshot`). `build-pack` **требует** `recipes.json`; при отсутствии — ошибка с инструкцией.
+`recipes.json` создаётся локально или в CI (`generate-tfg-snapshot`). `build-pack --strict-snapshot` **требует** локальный snapshot; `build-pack --no-strict-snapshot` — только для dev, не для production.
 
 ## Bootstrap (deprecated)
 
