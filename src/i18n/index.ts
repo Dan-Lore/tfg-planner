@@ -23,6 +23,11 @@ const resources = {
         modpackLink: 'Репозиторий Modpack-Modern',
         inspiration: 'Вдохновение: Factorio Calculator',
       },
+      dialog: {
+        confirm: 'Подтвердить',
+        cancel: 'Отмена',
+        dismiss: 'Закрыть',
+      },
       versions: {
         title: 'Версии модпака',
         select: 'Загрузить',
@@ -104,7 +109,7 @@ const resources = {
           'Обеспечивает {{load}} потребности потребителей на порту · {{sent}} из {{demand}}',
         portOutLoadOpenTitle: '{{load}} · порт не подключён, производится {{produced}}',
         voltageTier: 'Tier',
-        energyHatchCount: 'Energy hatches',
+        energyHatchCount: 'Энергетические люки',
         apply: 'Применить',
         ratePrompt: 'Скорость в секунду',
         rateInvalid: 'Введите положительное число',
@@ -119,6 +124,46 @@ const resources = {
         searchRecipe: 'Поиск рецепта…',
         noMatches: 'Ничего не найдено',
         deleteHint: 'Del — удалить узел или связь',
+        help: {
+          title: 'Управление',
+          selectBoxWindow:
+            'ЛКМ рамкой слева→направо — только целиком (сплошная синяя рамка)',
+          selectBoxCrossing:
+            'ЛКМ рамкой справа→налево — пересечение (пунктирная зелёная рамка)',
+          pan: 'ПКМ drag — перемещение холста',
+          zoom: 'Колёсико — масштаб',
+          delete: 'Del — удалить узел или связь',
+          undo: 'Ctrl+Z / Ctrl+Y — отмена и повтор',
+          multiSelect: 'Shift+ЛКМ — добавить к выделению',
+          duplicate: 'Дублировать — копия выделения (Ctrl+C / Ctrl+V)',
+          targetRate: 'Целевая скорость — в инспекторе узла',
+        },
+        target: {
+          title: 'Целевая скорость',
+          product: 'Продукт',
+          rate: 'Скорость, /с',
+          apply: 'Применить',
+          clear: 'Сбросить',
+          current: 'Текущая цель: {{rate}}/с',
+        },
+        edgeConstraint: {
+          rate: 'Закрепить поток, /с',
+          apply: 'Закрепить',
+          clear: 'Снять закрепление',
+          current: 'Закреплено: {{rate}}/с',
+        },
+        selectionEnergy: {
+          title: 'Суммарная энергия',
+          total: '{{value}}',
+        },
+        versionMismatch: {
+          title: 'Версия modpack не совпадает',
+          importMessage:
+            'Файл создан для {{fileVersion}}, активна {{activeVersion}}. Всё равно загрузить?',
+          switchMessage:
+            'Схема привязана к {{schemeVersion}}, переключение на {{newVersion}}. Схема останется под старой версией. Продолжить?',
+          confirm: 'Всё равно продолжить',
+        },
         flowComputing: 'Пересчёт…',
         flowStale: 'Ожидание пересчёта…',
         portMenu: {
@@ -325,6 +370,11 @@ const resources = {
         modpackLink: 'Modpack-Modern repository',
         inspiration: 'Inspired by: Factorio Calculator',
       },
+      dialog: {
+        confirm: 'Confirm',
+        cancel: 'Cancel',
+        dismiss: 'Dismiss',
+      },
       versions: {
         title: 'Modpack versions',
         select: 'Load',
@@ -421,6 +471,46 @@ const resources = {
         searchRecipe: 'Search recipes…',
         noMatches: 'No matches',
         deleteHint: 'Del — delete node or edge',
+        help: {
+          title: 'Controls',
+          selectBoxWindow:
+            'LMB box left→right — fully enclosed only (solid blue frame)',
+          selectBoxCrossing:
+            'LMB box right→left — intersection (dashed green frame)',
+          pan: 'RMB drag — pan canvas',
+          zoom: 'Mouse wheel — zoom',
+          delete: 'Del — delete node or edge',
+          undo: 'Ctrl+Z / Ctrl+Y — undo and redo',
+          multiSelect: 'Shift+LMB — add to selection',
+          duplicate: 'Duplicate — copy selection (Ctrl+C / Ctrl+V)',
+          targetRate: 'Target rate — in node inspector',
+        },
+        target: {
+          title: 'Target rate',
+          product: 'Product',
+          rate: 'Rate, /s',
+          apply: 'Apply',
+          clear: 'Clear',
+          current: 'Current target: {{rate}}/s',
+        },
+        edgeConstraint: {
+          rate: 'Pin flow, /s',
+          apply: 'Pin',
+          clear: 'Clear pin',
+          current: 'Pinned: {{rate}}/s',
+        },
+        selectionEnergy: {
+          title: 'Selection energy',
+          total: '{{value}}',
+        },
+        versionMismatch: {
+          title: 'Modpack version mismatch',
+          importMessage:
+            'File is for {{fileVersion}}, active pack is {{activeVersion}}. Load anyway?',
+          switchMessage:
+            'Scheme is tied to {{schemeVersion}}, switching to {{newVersion}}. The scheme stays under the old version. Continue?',
+          confirm: 'Continue anyway',
+        },
         flowComputing: 'Computing…',
         flowStale: 'Recalc pending…',
         portMenu: {

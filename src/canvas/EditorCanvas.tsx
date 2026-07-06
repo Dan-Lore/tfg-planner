@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
   type Ref,
+  type MouseEvent as ReactMouseEvent,
 } from 'react';
 import {
   ReactFlow,
@@ -17,6 +18,7 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
   ConnectionMode,
+  SelectionMode,
   useNodesInitialized,
   type Connection,
   type Edge,
@@ -29,7 +31,7 @@ import {
   type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
-import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection } from '@/lib/merge-flow-nodes';
+import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection, flowGraphArraysEqual } from '@/lib/merge-flow-nodes';
 import {
   NodeInternalsGateProvider,
   useInternalsHold,
@@ -51,6 +53,7 @@ import { buildFlowEdgeRoutePlan } from '@/lib/flow-edge-route-plan';
 import type { PackLike } from '@/data/pack-registry';
 import type { NodeDynamicDisplay } from '@/canvas/node-display-context';
 import type { TfgpNode } from '@/schema/tfgp-types';
+import { useDirectionalBoxSelect } from '@/hooks/useDirectionalBoxSelect';
 import {
   animateViewport,
   viewportToCenterOn,
@@ -74,7 +77,6 @@ export type EditorCanvasProps = {
   rfNodes: Node[];
   rfEdges: Edge[];
   selectedNodeIds: string[];
-  selectedEdgeIds: string[];
   nodeTypes: NodeTypes;
   edgeTypes: EdgeTypes;
   colorTheme: 'light' | 'dark' | 'system';
@@ -92,10 +94,16 @@ export type EditorCanvasProps = {
   onPaneClick: () => void;
   onNodeClick: () => void;
   onMoveEnd: (viewport: ViewportState) => void;
+  onBoxSelectWrapClassChange?: (className: string) => void;
 };
 
 export interface EditorCanvasHandle {
   panToPoint: (x: number, y: number, options?: { duration?: number }) => void;
+  /** Programmatic edge highlight; nodeIds accepted for API symmetry (store applies nodes). */
+  focusSelection: (params: {
+    nodeIds: readonly string[];
+    edgeIds: readonly string[];
+  }) => void;
 }
 
 function EdgeReadinessBridge({
@@ -146,6 +154,9 @@ type EditorCanvasBodyProps = {
   onConnect: (conn: Connection) => void;
   isValidConnection: (conn: Connection | Edge) => boolean;
   onSelectionChange: (params: OnSelectionChangeParams) => void;
+  onSelectionStart: (event: ReactMouseEvent) => void;
+  onSelectionEnd: (event: ReactMouseEvent) => void;
+  selectionMode: SelectionMode;
   onNodesDelete: OnNodesDelete;
   onEdgesDelete: OnEdgesDelete;
   onPaneClick: () => void;
@@ -171,6 +182,9 @@ function EditorCanvasBody({
   onConnect,
   isValidConnection,
   onSelectionChange,
+  onSelectionStart,
+  onSelectionEnd,
+  selectionMode,
   onNodesDelete,
   onEdgesDelete,
   onPaneClick,
@@ -228,6 +242,8 @@ function EditorCanvasBody({
         onConnect={onConnect}
         isValidConnection={isValidConnection}
         onSelectionChange={onSelectionChange}
+        onSelectionStart={onSelectionStart}
+        onSelectionEnd={onSelectionEnd}
         onNodesDelete={onNodesDelete}
         onEdgesDelete={onEdgesDelete}
         deleteKeyCode={['Delete', 'Backspace']}
@@ -240,6 +256,11 @@ function EditorCanvasBody({
         nodeDragThreshold={1}
         elevateNodesOnSelect
         connectionMode={ConnectionMode.Loose}
+        panOnDrag={[2]}
+        selectionOnDrag
+        selectionMode={selectionMode}
+        multiSelectionKeyCode="Shift"
+        panActivationKeyCode={null}
       >
         <EdgeReadinessBridge
           topologyKey={topologyKey}
@@ -278,7 +299,6 @@ function EditorCanvasMeasured({
   rfNodes,
   rfEdges,
   selectedNodeIds,
-  selectedEdgeIds,
   nodeTypes,
   edgeTypes,
   colorTheme,
@@ -296,16 +316,22 @@ function EditorCanvasMeasured({
   onPaneClick,
   onNodeClick,
   onMoveEnd,
+  onBoxSelectWrapClassChange,
   canvasRef,
 }: EditorCanvasMeasuredProps & { canvasRef: Ref<EditorCanvasHandle> }) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const {
+    selectionMode,
+    wrapClassName,
+    onPointerDownCapture,
+    onSelectionStart,
+    onSelectionEnd,
+  } = useDirectionalBoxSelect();
   const cardHeights = useNodeCardHeights();
   const [flowNodes, setFlowNodes] = useState<Node[]>(() =>
     applyFlowNodeSelection(rfNodes, selectedNodeIds),
   );
-  const [flowEdges, setFlowEdges] = useState<Edge[]>(() =>
-    applyFlowEdgeSelection(rfEdges, selectedEdgeIds),
-  );
+  const [flowEdges, setFlowEdges] = useState<Edge[]>(() => rfEdges);
   const draggingNodeIdsRef = useRef(new Set<string>());
   const [flowViewport, setFlowViewport] = useState(viewport);
   const [edgesReady, setEdgesReady] = useState(false);
@@ -321,19 +347,27 @@ function EditorCanvasMeasured({
   const topologyKey = useMemo(() => portTopologyKey(rfNodes), [rfNodes]);
 
   useLayoutEffect(() => {
+    onBoxSelectWrapClassChange?.(wrapClassName);
+  }, [wrapClassName, onBoxSelectWrapClassChange]);
+
+  useLayoutEffect(() => {
     setFlowViewport(viewport);
   }, [viewport.x, viewport.y, viewport.zoom]);
 
   useLayoutEffect(() => {
     setFlowNodes((prev) => {
       const merged = mergeFlowNodes(prev, rfNodes, draggingNodeIdsRef.current);
-      return applyFlowNodeSelection(merged, selectedNodeIds);
+      const next = applyFlowNodeSelection(merged, selectedNodeIds);
+      return flowGraphArraysEqual(prev, next) ? prev : next;
     });
+  }, [rfNodes, selectedNodeIds]);
+
+  useLayoutEffect(() => {
     setFlowEdges((prev) => {
       const merged = mergeFlowEdges(prev, rfEdges);
-      return applyFlowEdgeSelection(merged, selectedEdgeIds);
+      return flowGraphArraysEqual(prev, merged) ? prev : merged;
     });
-  }, [rfNodes, rfEdges, selectedNodeIds, selectedEdgeIds]);
+  }, [rfEdges]);
 
   useImperativeHandle(
     canvasRef,
@@ -365,6 +399,12 @@ function EditorCanvasMeasured({
             panCancelRef.current = null;
           },
         );
+      },
+      focusSelection({ edgeIds }) {
+        setFlowEdges((prev) => {
+          const next = applyFlowEdgeSelection(prev, edgeIds);
+          return flowGraphArraysEqual(prev, next) ? prev : next;
+        });
       },
     }),
     [onMoveEnd],
@@ -432,7 +472,12 @@ function EditorCanvasMeasured({
   ]);
 
   return (
-    <div ref={wrapRef} className="editor-canvas-flow-host" style={{ width: '100%', height: '100%' }}>
+    <div
+      ref={wrapRef}
+      className="editor-canvas-flow-host"
+      style={{ width: '100%', height: '100%' }}
+      onPointerDownCapture={onPointerDownCapture}
+    >
       <NodeInternalsGateProvider>
         <EditorCanvasBody
           flowNodes={flowNodes}
@@ -444,6 +489,9 @@ function EditorCanvasMeasured({
           onConnect={onConnect}
           isValidConnection={isValidConnection}
           onSelectionChange={onSelectionChange}
+          onSelectionStart={onSelectionStart}
+          onSelectionEnd={onSelectionEnd}
+          selectionMode={selectionMode}
           onNodesDelete={onNodesDelete}
           onEdgesDelete={onEdgesDelete}
           onPaneClick={onPaneClick}

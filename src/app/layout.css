@@ -558,6 +558,16 @@ a {
   pointer-events: none;
 }
 
+.editor-canvas-wrap--box-window .react-flow__selection {
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.editor-canvas-wrap--box-crossing .react-flow__selection {
+  border: 1px dashed var(--success);
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+}
+
 .editor-canvas-drop-overlay {
   position: absolute;
   inset: 0;
@@ -1074,6 +1084,60 @@ a {
   white-space: nowrap;
 }
 
+.editor-help-hint {
+  position: relative;
+  margin-left: 0.35rem;
+}
+
+.editor-help-hint__trigger {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: help;
+  line-height: 1;
+  padding: 0;
+}
+
+.editor-help-hint__trigger:hover,
+.editor-help-hint__trigger:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.editor-help-hint__popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  z-index: 30;
+  min-width: 16rem;
+  max-width: 22rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
+  pointer-events: none;
+}
+
+.editor-help-hint__title {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.editor-help-hint__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .editor-toolbar__clear:not(:disabled):hover {
   border-color: #dc2626;
   color: #dc2626;
@@ -1083,6 +1147,17 @@ a {
   color: var(--muted);
   font-size: 0.85rem;
   margin: 0;
+}
+
+.editor-inspector__apply {
+  margin-top: 0.35rem;
+}
+
+.editor-inspector__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
 }
 
 .editor-inspector__title {

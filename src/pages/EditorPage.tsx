@@ -38,8 +38,12 @@ import { EditorToolbar } from '@/editor/EditorToolbar';
 import { EditorSidebar } from '@/editor/EditorSidebar';
 import { usePortAttachMenu } from '@/editor/PortAttachMenu';
 import { useEditorRfGraph } from '@/hooks/useEditorRfGraph';
+import { useEditorSelection } from '@/hooks/useEditorSelection';
 import { useSchemeIssues } from '@/hooks/useSchemeIssues';
-import type { TfgpEdge } from '@/schema/tfgp';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { shouldWarnVersionMismatch } from '@/lib/version-mismatch';
+import { idsEqual } from '@/lib/id-array-equal';
+import type { TfgpFile } from '@/schema/tfgp';
 
 function useEdgeTypes() {
   return useMemo(() => ({ flow: FlowEdge }), []);
@@ -94,12 +98,25 @@ export function EditorPage() {
     updateFlows,
     refreshFlowDisplay,
     refreshSchemeCheck,
+    clearTarget,
+    setEdgeConstraint,
+    clearEdgeConstraint,
   } = editorActions;
+
+  const { focusSelection } = useEditorSelection({
+    canvasRef,
+    setSelectedNodeIds,
+    setSelectedEdgeIds,
+  });
+
+  const [pendingImport, setPendingImport] = useState<TfgpFile | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
 
   const [packDisplayEpoch, setPackDisplayEpoch] = useState(0);
   const colorTheme = useThemeStore((s) => s.theme);
   const canvasDragDepthRef = useRef(0);
   const [isCanvasDragOver, setIsCanvasDragOver] = useState(false);
+  const [boxSelectWrapClass, setBoxSelectWrapClass] = useState('');
 
   const nodeTypes = useNodeTypes();
   const edgeTypes = useEdgeTypes();
@@ -147,7 +164,7 @@ export function EditorPage() {
     attachMachine,
     attachBuffer,
     attachCustomMachine,
-    setSelectedNodeIds,
+    focusSelection,
   });
 
   const {
@@ -179,8 +196,7 @@ export function EditorPage() {
     layoutWidthByNodeId,
     nodeDisplayById,
     canvasRef,
-    setSelectedNodeIds,
-    setSelectedEdgeIds,
+    focusSelection,
   });
 
   const onPersistNodePositions = useCallback(
@@ -265,8 +281,17 @@ export function EditorPage() {
 
   const onSelectionChange = useCallback(
     ({ nodes, edges }: OnSelectionChangeParams) => {
-      setSelectedNodeIds(nodes.map((n) => n.id));
-      setSelectedEdgeIds(edges.map((e) => e.id));
+      const nodeIds = nodes.map((n) => n.id);
+      const edgeIds = edges.map((e) => e.id);
+      const { selectedNodeIds, selectedEdgeIds } = useEditorStore.getState();
+      const nodeChanged = !idsEqual(selectedNodeIds, nodeIds);
+      const edgeChanged = !idsEqual(selectedEdgeIds, edgeIds);
+      if (nodeChanged) {
+        setSelectedNodeIds(nodeIds);
+      }
+      if (edgeChanged) {
+        setSelectedEdgeIds(edgeIds);
+      }
     },
     [setSelectedNodeIds, setSelectedEdgeIds],
   );
@@ -285,27 +310,27 @@ export function EditorPage() {
     [removeEdges],
   );
 
-  const handleEdgeRateApply = useCallback(
-    (edge: TfgpEdge, rate: number) => {
-      setTarget({
-        nodeId: edge.target,
-        itemId: edge.itemId,
-        fluidId: edge.fluidId,
-        ratePerSecond: rate,
-      });
-    },
-    [setTarget],
-  );
-
   const importTfgpFile = useCallback(
     async (file: File) => {
       try {
-        loadScheme(await readTfgpFile(file));
+        const parsed = await readTfgpFile(file);
+        setImportError(null);
+        if (
+          shouldWarnVersionMismatch(
+            parsed.modpack.version,
+            parsed.modpack.dataVersion,
+            activeEntry,
+          )
+        ) {
+          setPendingImport(parsed);
+          return;
+        }
+        loadScheme(parsed);
       } catch (err) {
-        alert(err instanceof Error ? err.message : t('editor.importFailed'));
+        setImportError(err instanceof Error ? err.message : t('editor.importFailed'));
       }
     },
-    [loadScheme, t],
+    [activeEntry, loadScheme, t],
   );
 
   const hasFileDrag = (e: DragEvent) => e.dataTransfer.types.includes('Files');
@@ -390,6 +415,14 @@ export function EditorPage() {
 
   return (
     <div className="editor-page">
+      {importError && (
+        <div className="alert editor-import-error" role="alert">
+          <p>{importError}</p>
+          <button type="button" className="btn btn-secondary" onClick={() => setImportError(null)}>
+            {t('dialog.dismiss')}
+          </button>
+        </div>
+      )}
       <EditorToolbar
         activeEntry={activeEntry}
         pack={pack}
@@ -398,17 +431,18 @@ export function EditorPage() {
         flowComputeState={flowComputeState}
         addNode={editorActions.addNode}
         addCustomMachine={editorActions.addCustomMachine}
-        setTarget={editorActions.setTarget}
         duplicateSelected={editorActions.duplicateSelected}
+        copySelection={editorActions.copySelection}
+        pasteClipboard={editorActions.pasteClipboard}
         undo={editorActions.undo}
         redo={editorActions.redo}
         clearScheme={editorActions.clearScheme}
-        setSelectedNodeIds={editorActions.setSelectedNodeIds}
+        focusSelection={focusSelection}
         onImportFile={importTfgpFile}
       />
       <div className="editor-body">
         <div
-          className={`editor-canvas-wrap${isCanvasDragOver ? ' editor-canvas-wrap--drop-target' : ''}`}
+          className={`editor-canvas-wrap${isCanvasDragOver ? ' editor-canvas-wrap--drop-target' : ''}${boxSelectWrapClass ? ` ${boxSelectWrapClass}` : ''}`}
           onDragEnter={handleCanvasDragEnter}
           onDragOver={handleCanvasDragOver}
           onDragLeave={handleCanvasDragLeave}
@@ -441,7 +475,6 @@ export function EditorPage() {
                 rfNodes={rfNodes}
                 rfEdges={rfEdges}
                 selectedNodeIds={selectedNodeIds}
-                selectedEdgeIds={selectedEdgeIds}
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 colorTheme={colorTheme}
@@ -459,6 +492,7 @@ export function EditorPage() {
                 onPaneClick={closePortMenu}
                 onNodeClick={closePortMenu}
                 onMoveEnd={(vp) => setViewport(vp)}
+                onBoxSelectWrapClassChange={setBoxSelectWrapClass}
               />
             </NodeDisplayProvider>
           </EditorNodeActionsProvider>
@@ -480,9 +514,31 @@ export function EditorPage() {
           removeCustomPort={removeCustomPort}
           onFocusIssue={handleFocusIssue}
           onPanToIssue={handlePanToIssue}
-          onEdgeRateApply={handleEdgeRateApply}
+          targets={scheme.targets}
+          setTarget={setTarget}
+          clearTarget={clearTarget}
+          edgeConstraints={scheme.edgeConstraints}
+          setEdgeConstraint={setEdgeConstraint}
+          clearEdgeConstraint={clearEdgeConstraint}
         />
       </div>
+      {pendingImport && activeEntry && (
+        <ConfirmDialog
+          open
+          title={t('editor.versionMismatch.title')}
+          message={t('editor.versionMismatch.importMessage', {
+            fileVersion: pendingImport.modpack.version,
+            activeVersion: activeEntry.modpackVersion,
+          })}
+          confirmLabel={t('editor.versionMismatch.confirm')}
+          cancelLabel={t('dialog.cancel')}
+          onConfirm={() => {
+            loadScheme(pendingImport);
+            setPendingImport(null);
+          }}
+          onCancel={() => setPendingImport(null)}
+        />
+      )}
       {menuElement}
     </div>
   );
