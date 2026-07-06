@@ -38,7 +38,17 @@ export function useEditorActions() {
       redo: () => useEditorStore.getState().redo(),
       setTarget: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['setTarget']>) =>
         useEditorStore.getState().setTarget(...args),
+      clearTarget: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['clearTarget']>) =>
+        useEditorStore.getState().clearTarget(...args),
+      setEdgeConstraint: (
+        ...args: Parameters<ReturnType<typeof useEditorStore.getState>['setEdgeConstraint']>
+      ) => useEditorStore.getState().setEdgeConstraint(...args),
+      clearEdgeConstraint: (
+        ...args: Parameters<ReturnType<typeof useEditorStore.getState>['clearEdgeConstraint']>
+      ) => useEditorStore.getState().clearEdgeConstraint(...args),
       duplicateSelected: () => useEditorStore.getState().duplicateSelected(),
+      copySelection: () => useEditorStore.getState().copySelection(),
+      pasteClipboard: () => useEditorStore.getState().pasteClipboard(),
       loadScheme: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['loadScheme']>) =>
         useEditorStore.getState().loadScheme(...args),
       clearScheme: () => useEditorStore.getState().clearScheme(),

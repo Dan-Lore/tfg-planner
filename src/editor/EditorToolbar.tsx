@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchCombobox } from '@/components/SearchCombobox';
-import { getMachineName, getRecipe, getMachineRecipeCount } from '@/data/pack-registry';
+import { getMachineName, getMachineRecipeCount } from '@/data/pack-registry';
 import type { ActivePack } from '@/data/pack-runtime';
 import type { PackManifestEntry } from '@/data/types';
 import { filterItemsByQuery, resolveMachineId } from '@/lib/search-combobox';
-import { parsePositiveRate } from '@/lib/parse-positive-rate';
-import { isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
-import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
 import { downloadTfgp, type TfgpFile } from '@/schema/tfgp';
 import type { FlowComputeState } from '@/stores/editor-store';
+import type { FocusSelectionParams } from '@/hooks/useEditorSelection';
 import type { EditorActions } from '@/editor/editor-actions';
+import { EditorHelpHint } from '@/editor/EditorHelpHint';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 
 export interface EditorToolbarProps {
   activeEntry: PackManifestEntry | null;
@@ -20,12 +20,13 @@ export interface EditorToolbarProps {
   flowComputeState: FlowComputeState;
   addNode: EditorActions['addNode'];
   addCustomMachine: EditorActions['addCustomMachine'];
-  setTarget: EditorActions['setTarget'];
   duplicateSelected: EditorActions['duplicateSelected'];
+  copySelection: EditorActions['copySelection'];
+  pasteClipboard: EditorActions['pasteClipboard'];
   undo: EditorActions['undo'];
   redo: EditorActions['redo'];
   clearScheme: EditorActions['clearScheme'];
-  setSelectedNodeIds: EditorActions['setSelectedNodeIds'];
+  focusSelection: (params: FocusSelectionParams) => void;
   onImportFile: (file: File) => void;
 }
 
@@ -37,17 +38,19 @@ export function EditorToolbar({
   flowComputeState,
   addNode,
   addCustomMachine,
-  setTarget,
   duplicateSelected,
+  copySelection,
+  pasteClipboard,
   undo,
   redo,
   clearScheme,
-  setSelectedNodeIds,
+  focusSelection,
   onImportFile,
 }: EditorToolbarProps) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language === 'en' ? 'en' : 'ru';
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [clearConfirmOpen, setClearConfirmOpen] = useState(false);
 
   const [machineExplicitId, setMachineExplicitId] = useState<string | null>(null);
   const [machineQuery, setMachineQuery] = useState('');
@@ -84,8 +87,6 @@ export function EditorToolbar({
     [machineExplicitId, filteredMachineItems],
   );
 
-  const selectedNode = scheme.nodes.find((n) => n.id === selectedNodeIds[0]);
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey) {
@@ -95,12 +96,18 @@ export function EditorToolbar({
         } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
           e.preventDefault();
           redo();
+        } else if (e.key === 'c') {
+          e.preventDefault();
+          copySelection();
+        } else if (e.key === 'v') {
+          e.preventDefault();
+          pasteClipboard();
         }
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [undo, redo]);
+  }, [undo, redo, copySelection, pasteClipboard]);
 
   const handleAddMachine = () => {
     if (!pack || !resolvedMachineId) return;
@@ -117,7 +124,7 @@ export function EditorToolbar({
         machineCount: 1,
         voltageTier: firstRecipe.energy?.minVoltageTier ?? 'LV',
       });
-      setSelectedNodeIds([newId]);
+      focusSelection({ nodeIds: [newId], edgeIds: [] });
       setMachineExplicitId(null);
       setMachineQuery('');
       setMachineResetKey((k) => k + 1);
@@ -129,12 +136,11 @@ export function EditorToolbar({
       x: 120 + scheme.nodes.length * 30,
       y: 120 + scheme.nodes.length * 20,
     });
-    setSelectedNodeIds([newId]);
+    focusSelection({ nodeIds: [newId], edgeIds: [] });
   };
 
   const handleClearScheme = () => {
-    if (!window.confirm(t('editor.clearSchemeConfirm'))) return;
-    clearScheme();
+    setClearConfirmOpen(true);
   };
 
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
@@ -181,65 +187,6 @@ export function EditorToolbar({
           {t('editor.addCustomMachine')}
         </button>
       </div>
-      <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={() => {
-          if (!pack || !selectedNode) return;
-          if (isMachineNode(selectedNode)) {
-            const recipe = getRecipe(pack, selectedNode.recipeId);
-            const out = recipe?.outputs[0];
-            const v = prompt(t('editor.ratePrompt'), '1');
-            if (!v || !out) return;
-            const rate = parsePositiveRate(v);
-            if (rate === null) {
-              alert(t('editor.rateInvalid'));
-              return;
-            }
-            setTarget({
-              nodeId: selectedNode.id,
-              itemId: out.itemId,
-              fluidId: out.fluidId,
-              ratePerSecond: rate,
-            });
-            return;
-          }
-          if (!isCustomMachineNode(selectedNode)) return;
-          const recipe = customMachineAsRecipe({
-            id: selectedNode.id,
-            kind: 'custom_machine',
-            machineId: '__custom__',
-            recipeId: `custom:${selectedNode.id}`,
-            machineCount: selectedNode.machineCount,
-            overclock: selectedNode.overclock,
-            voltageTier: 'LV',
-            durationTicks: selectedNode.durationTicks,
-            customInputs: selectedNode.inputs,
-            customOutputs: selectedNode.outputs,
-          });
-          const out = recipe?.outputs[0];
-          const v = prompt(t('editor.ratePrompt'), '1');
-          if (!v || !out) return;
-          const rate = parsePositiveRate(v);
-          if (rate === null) {
-            alert(t('editor.rateInvalid'));
-            return;
-          }
-          setTarget({
-            nodeId: selectedNode.id,
-            itemId: out.itemId,
-            fluidId: out.fluidId,
-            ratePerSecond: rate,
-          });
-        }}
-        disabled={
-          !pack ||
-          !selectedNode ||
-          (!isMachineNode(selectedNode) && !isCustomMachineNode(selectedNode))
-        }
-      >
-        {t('editor.targetRate')}
-      </button>
       <button
         type="button"
         className="btn btn-secondary"
@@ -292,6 +239,19 @@ export function EditorToolbar({
         accept=".tfgp,application/json"
         hidden
         onChange={handleImport}
+      />
+      <EditorHelpHint />
+      <ConfirmDialog
+        open={clearConfirmOpen}
+        title={t('editor.clearScheme')}
+        message={t('editor.clearSchemeConfirm')}
+        confirmLabel={t('dialog.confirm')}
+        cancelLabel={t('dialog.cancel')}
+        onConfirm={() => {
+          clearScheme();
+          setClearConfirmOpen(false);
+        }}
+        onCancel={() => setClearConfirmOpen(false)}
       />
     </div>
   );

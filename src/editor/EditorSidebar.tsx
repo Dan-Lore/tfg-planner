@@ -4,7 +4,7 @@ import { SchemeIssuesPanel } from '@/editor/SchemeIssuesPanel';
 import type { FlowResult } from '@/calculator/flow-solver';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
 import type { ActivePack } from '@/data/pack-runtime';
-import type { TfgpEdge, TfgpFile } from '@/schema/tfgp';
+import type { TfgpFile } from '@/schema/tfgp';
 import type { FlowEdgeData } from '@/lib/flow-edge-types';
 import type { SchemeIssue } from '@/scheme-check/check-scheme';
 import type { EditorActions } from '@/editor/editor-actions';
@@ -26,7 +26,12 @@ export interface EditorSidebarProps {
   removeCustomPort: EditorActions['removeCustomPort'];
   onFocusIssue: (issue: SchemeIssue) => void;
   onPanToIssue: (issue: SchemeIssue) => void;
-  onEdgeRateApply: (edge: TfgpEdge, rate: number) => void;
+  targets: TfgpFile['targets'];
+  setTarget: EditorActions['setTarget'];
+  clearTarget: EditorActions['clearTarget'];
+  edgeConstraints: TfgpFile['edgeConstraints'];
+  setEdgeConstraint: EditorActions['setEdgeConstraint'];
+  clearEdgeConstraint: EditorActions['clearEdgeConstraint'];
 }
 
 export function EditorSidebar({
@@ -46,7 +51,12 @@ export function EditorSidebar({
   removeCustomPort,
   onFocusIssue,
   onPanToIssue,
-  onEdgeRateApply,
+  targets,
+  setTarget,
+  clearTarget,
+  edgeConstraints,
+  setEdgeConstraint,
+  clearEdgeConstraint,
 }: EditorSidebarProps) {
   const { t } = useTranslation();
 
@@ -110,7 +120,12 @@ export function EditorSidebar({
               updateNode={updateNode}
               addCustomPort={addCustomPort}
               removeCustomPort={removeCustomPort}
-              onEdgeRateApply={onEdgeRateApply}
+              targets={targets}
+              setTarget={setTarget}
+              clearTarget={clearTarget}
+              edgeConstraints={edgeConstraints ?? []}
+              setEdgeConstraint={setEdgeConstraint}
+              clearEdgeConstraint={clearEdgeConstraint}
             />
           )}
         </div>

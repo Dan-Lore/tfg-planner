@@ -1,16 +1,20 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget, TfgpBufferKind, TfgpCustomMachineNode } from '@/schema/tfgp';
+import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget, TfgpEdgeConstraint, TfgpBufferKind, TfgpCustomMachineNode } from '@/schema/tfgp';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import { readPersistedEditorSnapshot } from '@/lib/editor-persist';
 import {
   allocateEdgeId,
   allocateNodeId,
+  cloneSchemeFragment,
   dedupeSchemeTopology,
   normalizeSchemeNodes,
+  pasteSchemeFragment,
   seedIdCounter,
+  snapshotSchemeFragment,
   type EditorSnapshot,
+  type SchemeClipboard,
 } from './editor-utils';
 import { pruneInvalidEdges } from '@/lib/prune-edges';
 import { normalizeNodeVoltage, patchForRecipeChange } from '@/lib/node-voltage';
@@ -27,6 +31,7 @@ import {
 import { inputPortId, outputPortId } from '@/lib/ports';
 import { getRecipe } from '@/data/pack-registry';
 import { cacheScheme } from '@/stores/editor-store-shared';
+import { idsEqual } from '@/lib/id-array-equal';
 import {
   schemePersistStorage,
   mergePersistedEditorState,
@@ -35,6 +40,8 @@ import { getFlowStoreState } from '@/stores/flow-store';
 import { refreshSchemeCheckAsync } from '@/stores/flow-compute-runtime';
 
 const MAX_HISTORY = 50;
+
+let schemeClipboard: SchemeClipboard | null = null;
 
 export interface SchemeState {
   scheme: TfgpFile;
@@ -99,7 +106,12 @@ export interface SchemeState {
   setSelectedNodeIds: (ids: string[]) => void;
   setSelectedEdgeIds: (ids: string[]) => void;
   setTarget: (target: TfgpTarget) => void;
+  clearTarget: (nodeId: string) => void;
+  setEdgeConstraint: (constraint: TfgpEdgeConstraint) => void;
+  clearEdgeConstraint: (edgeId: string) => void;
   duplicateSelected: () => void;
+  copySelection: () => void;
+  pasteClipboard: () => void;
   setSchemeName: (name: string) => void;
 }
 
@@ -165,7 +177,13 @@ export const useSchemeStore = create<SchemeState>()(
           file.edges,
           file.targets,
         );
-        const normalized = { ...file, nodes, edges, targets };
+        const normalized = {
+          ...file,
+          nodes,
+          edges,
+          targets,
+          edgeConstraints: file.edgeConstraints ?? [],
+        };
         seedIdCounter(normalized.nodes, normalized.edges);
         const key = packKey(normalized.modpack.version, normalized.modpack.dataVersion);
         getFlowStoreState().clearFlowState();
@@ -205,6 +223,7 @@ export const useSchemeStore = create<SchemeState>()(
           nodes: structuredClone(scheme.nodes),
           edges: structuredClone(scheme.edges),
           targets: structuredClone(scheme.targets),
+          edgeConstraints: structuredClone(scheme.edgeConstraints ?? []),
           viewport: { ...scheme.viewport },
         };
       },
@@ -228,6 +247,7 @@ export const useSchemeStore = create<SchemeState>()(
             nodes: prev.nodes,
             edges: prev.edges,
             targets: prev.targets,
+            edgeConstraints: prev.edgeConstraints,
             viewport: prev.viewport,
           },
           schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, {
@@ -235,6 +255,7 @@ export const useSchemeStore = create<SchemeState>()(
             nodes: prev.nodes,
             edges: prev.edges,
             targets: prev.targets,
+            edgeConstraints: prev.edgeConstraints,
             viewport: prev.viewport,
           }),
           past: past.slice(0, -1),
@@ -254,6 +275,7 @@ export const useSchemeStore = create<SchemeState>()(
             nodes: next.nodes,
             edges: next.edges,
             targets: next.targets,
+            edgeConstraints: next.edgeConstraints,
             viewport: next.viewport,
           },
           schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, {
@@ -261,6 +283,7 @@ export const useSchemeStore = create<SchemeState>()(
             nodes: next.nodes,
             edges: next.edges,
             targets: next.targets,
+            edgeConstraints: next.edgeConstraints,
             viewport: next.viewport,
           }),
           past: [...past, current],
@@ -728,6 +751,9 @@ export const useSchemeStore = create<SchemeState>()(
           const scheme = {
             ...s.scheme,
             edges: s.scheme.edges.filter((e) => !idSet.has(e.id)),
+            edgeConstraints: (s.scheme.edgeConstraints ?? []).filter(
+              (c) => !idSet.has(c.edgeId),
+            ),
           };
           return {
             scheme,
@@ -738,9 +764,17 @@ export const useSchemeStore = create<SchemeState>()(
         getFlowStoreState().updateFlows();
       },
 
-      setSelectedNodeIds: (ids) => set({ selectedNodeIds: ids }),
+      setSelectedNodeIds: (ids) => {
+        const current = get().selectedNodeIds;
+        if (idsEqual(current, ids)) return;
+        set({ selectedNodeIds: ids });
+      },
 
-      setSelectedEdgeIds: (ids) => set({ selectedEdgeIds: ids }),
+      setSelectedEdgeIds: (ids) => {
+        const current = get().selectedEdgeIds;
+        if (idsEqual(current, ids)) return;
+        set({ selectedEdgeIds: ids });
+      },
 
       setTarget: (target) => {
         get().pushHistory();
@@ -758,31 +792,110 @@ export const useSchemeStore = create<SchemeState>()(
         getFlowStoreState().recalculateScheme();
       },
 
-      duplicateSelected: () => {
-        const ids = get().selectedNodeIds;
-        if (ids.length === 0) return;
+      clearTarget: (nodeId) => {
         get().pushHistory();
-        const idSet = new Set(ids);
-        const { scheme } = get();
-        const toCopy = scheme.nodes.filter((n) => idSet.has(n.id));
-        const newNodes: TfgpNode[] = [];
-        for (const n of toCopy) {
-          const id = allocateNodeId([...scheme.nodes, ...newNodes], scheme.edges);
-          newNodes.push({
-            ...n,
-            id,
-            position: { x: n.position.x + 40, y: n.position.y + 40 },
-          });
-        }
         set((s) => {
           const scheme = {
             ...s.scheme,
-            nodes: [...s.scheme.nodes, ...newNodes],
+            targets: s.scheme.targets.filter((t) => t.nodeId !== nodeId),
           };
           return {
             scheme,
             schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
-            selectedNodeIds: newNodes.map((n) => n.id),
+          };
+        });
+        getFlowStoreState().recalculateScheme();
+      },
+
+      setEdgeConstraint: (constraint) => {
+        get().pushHistory();
+        set((s) => {
+          const rest = (s.scheme.edgeConstraints ?? []).filter(
+            (c) => c.edgeId !== constraint.edgeId,
+          );
+          const scheme = {
+            ...s.scheme,
+            edgeConstraints: [...rest, constraint],
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        getFlowStoreState().recalculateScheme();
+      },
+
+      clearEdgeConstraint: (edgeId) => {
+        get().pushHistory();
+        set((s) => {
+          const scheme = {
+            ...s.scheme,
+            edgeConstraints: (s.scheme.edgeConstraints ?? []).filter(
+              (c) => c.edgeId !== edgeId,
+            ),
+          };
+          return {
+            scheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
+          };
+        });
+        getFlowStoreState().recalculateScheme();
+      },
+
+      duplicateSelected: () => {
+        const ids = get().selectedNodeIds;
+        if (ids.length === 0) return;
+        get().pushHistory();
+        const { scheme } = get();
+        const { nodes: newNodes, edges: newEdges, newNodeIds } = cloneSchemeFragment(
+          scheme.nodes,
+          scheme.edges,
+          ids,
+        );
+        if (newNodes.length === 0) return;
+        set((s) => {
+          const nextScheme = {
+            ...s.scheme,
+            nodes: [...s.scheme.nodes, ...newNodes],
+            edges: [...s.scheme.edges, ...newEdges],
+          };
+          return {
+            scheme: nextScheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, nextScheme),
+            selectedNodeIds: newNodeIds,
+          };
+        });
+        getFlowStoreState().updateFlows();
+      },
+
+      copySelection: () => {
+        const { scheme, selectedNodeIds } = get();
+        schemeClipboard = snapshotSchemeFragment(
+          scheme.nodes,
+          scheme.edges,
+          selectedNodeIds,
+        );
+      },
+
+      pasteClipboard: () => {
+        if (!schemeClipboard || schemeClipboard.nodes.length === 0) return;
+        get().pushHistory();
+        const { scheme } = get();
+        const { nodes: newNodes, edges: newEdges, newNodeIds } = pasteSchemeFragment(
+          scheme.nodes,
+          scheme.edges,
+          schemeClipboard,
+        );
+        set((s) => {
+          const nextScheme = {
+            ...s.scheme,
+            nodes: [...s.scheme.nodes, ...newNodes],
+            edges: [...s.scheme.edges, ...newEdges],
+          };
+          return {
+            scheme: nextScheme,
+            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, nextScheme),
+            selectedNodeIds: newNodeIds,
           };
         });
         getFlowStoreState().updateFlows();

@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PackManifestEntry } from '@/data/types';
 import { recipeCount } from '@/data/pack-registry';
 import { packEntryNeedsLoad } from '@/lib/resolve-pack-entry';
+import { isSchemeNonEmpty } from '@/lib/version-mismatch';
 import { usePackStore } from '@/stores/pack-store';
 import { useEditorStore } from '@/stores/editor-store';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 
 export function PackVersionPanel() {
   const { t } = useTranslation();
@@ -14,13 +17,27 @@ export function PackVersionPanel() {
   const loadStage = usePackStore((s) => s.loadStage);
   const error = usePackStore((s) => s.error);
   const selectPack = usePackStore((s) => s.selectPack);
+  const scheme = useEditorStore((s) => s.scheme);
   const switchToPack = useEditorStore((s) => s.switchToPack);
+  const [pendingEntry, setPendingEntry] = useState<PackManifestEntry | null>(null);
 
-  const handleSelect = (entry: PackManifestEntry) => {
-    if (!packEntryNeedsLoad(entry, activePack, activeEntry)) return;
+  const applyPackSwitch = (entry: PackManifestEntry) => {
     void selectPack(entry).then(() => {
       switchToPack(entry.modpackVersion, entry.dataVersion);
     });
+  };
+
+  const handleSelect = (entry: PackManifestEntry) => {
+    if (!packEntryNeedsLoad(entry, activePack, activeEntry)) return;
+    if (
+      isSchemeNonEmpty(scheme) &&
+      (scheme.modpack.version !== entry.modpackVersion ||
+        scheme.modpack.dataVersion !== entry.dataVersion)
+    ) {
+      setPendingEntry(entry);
+      return;
+    }
+    applyPackSwitch(entry);
   };
 
   return (
@@ -64,6 +81,23 @@ export function PackVersionPanel() {
           {recipeCount(activePack)} recipes · {activePack.machines.length} machines
           {loadStage === 'ready' && ` · ${t('versions.recipesLazy')}`}
         </p>
+      )}
+      {pendingEntry && (
+        <ConfirmDialog
+          open
+          title={t('editor.versionMismatch.title')}
+          message={t('editor.versionMismatch.switchMessage', {
+            schemeVersion: scheme.modpack.version,
+            newVersion: pendingEntry.modpackVersion,
+          })}
+          confirmLabel={t('editor.versionMismatch.confirm')}
+          cancelLabel={t('dialog.cancel')}
+          onConfirm={() => {
+            applyPackSwitch(pendingEntry);
+            setPendingEntry(null);
+          }}
+          onCancel={() => setPendingEntry(null)}
+        />
       )}
     </section>
   );

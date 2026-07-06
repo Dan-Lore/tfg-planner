@@ -17,6 +17,7 @@ import { buildTagIndexForRecipes } from '@/lib/tag-index';
 import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
 import type { TagIndex } from '@/lib/tag-index';
+import type { FocusSelectionParams } from '@/hooks/useEditorSelection';
 import type { EditorActions } from '@/editor/editor-actions';
 
 const NODE_ATTACH_OFFSET_X = 280;
@@ -62,7 +63,7 @@ export function usePortAttachMenu(params: {
   attachMachine: EditorActions['attachMachine'];
   attachBuffer: EditorActions['attachBuffer'];
   attachCustomMachine: EditorActions['attachCustomMachine'];
-  setSelectedNodeIds: EditorActions['setSelectedNodeIds'];
+  focusSelection: (params: FocusSelectionParams) => void;
 }): {
   handlePortContextMenu: (
     nodeId: string,
@@ -82,7 +83,7 @@ export function usePortAttachMenu(params: {
     attachMachine,
     attachBuffer,
     attachCustomMachine,
-    setSelectedNodeIds,
+    focusSelection,
   } = params;
 
   const [portMenu, setPortMenu] = useState<PortMenuState | null>(null);
@@ -177,10 +178,10 @@ export function usePortAttachMenu(params: {
         itemId: portMenu.flow.itemId,
         fluidId: portMenu.flow.fluidId,
       });
-      setSelectedNodeIds([newId]);
+      focusSelection({ nodeIds: [newId], edgeIds: [] });
       setPortMenu(null);
     },
-    [portMenu, schemeNodes, pack, attachMachine, setSelectedNodeIds],
+    [portMenu, schemeNodes, pack, attachMachine, focusSelection],
   );
 
   const handlePortBufferSelect = useCallback(
@@ -204,10 +205,10 @@ export function usePortAttachMenu(params: {
         itemId: portMenu.flow.itemId,
         fluidId: portMenu.flow.fluidId,
       });
-      setSelectedNodeIds([newId]);
+      focusSelection({ nodeIds: [newId], edgeIds: [] });
       setPortMenu(null);
     },
-    [portMenu, schemeNodes, pack, attachBuffer, setSelectedNodeIds],
+    [portMenu, schemeNodes, pack, attachBuffer, focusSelection],
   );
 
   const handlePortCustomMachineSelect = useCallback(() => {
@@ -229,9 +230,9 @@ export function usePortAttachMenu(params: {
       itemId: portMenu.flow.itemId,
       fluidId: portMenu.flow.fluidId,
     });
-    setSelectedNodeIds([newId]);
+    focusSelection({ nodeIds: [newId], edgeIds: [] });
     setPortMenu(null);
-  }, [portMenu, schemeNodes, pack, attachCustomMachine, setSelectedNodeIds]);
+  }, [portMenu, schemeNodes, pack, attachCustomMachine, focusSelection]);
 
   const menuElement =
     portMenu && pack ? (
