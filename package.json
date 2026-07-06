@@ -22,6 +22,7 @@
     "resume-tfg-server-export": "node tools/parser/scripts/run-tfg-server-export.mjs",
     "parser:validate": "tsx --tsconfig tsconfig.app.json tools/parser/src/cli.ts validate",
     "check-scheme": "vite-node --config vitest.config.ts tools/check-scheme.ts",
+    "debug-scheme": "vite-node --config vitest.config.ts tools/debug-scheme-flow.ts",
     "lint:arch": "depcruise src tools/parser/src --config .dependency-cruiser.cjs",
     "lint:knip": "knip --include files,dependencies,duplicates,exports",
     "lint:semgrep": "node scripts/run-semgrep.mjs",

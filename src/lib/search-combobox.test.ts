@@ -76,8 +76,8 @@ describe('search-combobox', () => {
   it('resolves machine id with explicit pick or first', () => {
     const filtered = filterItemsByQuery(machineItems, 'экст');
     expect(resolveMachineId('b', filtered)).toBe('b');
-    expect(resolveMachineId(null, filtered)).toBe('a');
-    expect(resolveMachineId('missing', filtered)).toBe('a');
+    expect(resolveMachineId(null, filtered)).toBeNull();
+    expect(resolveMachineId('missing', filtered)).toBeNull();
     expect(resolveMachineId(null, [])).toBeNull();
   });
 

@@ -28,6 +28,3 @@ export function expandRecipeSchemeAliases(recipes: RecipeOp[]): RecipeOp[] {
 
   return extras.length > 0 ? [...recipes, ...extras] : recipes;
 }
-
-/** @deprecated use expandRecipeSchemeAliases */
-export const expandMarkerRecipeAliases = expandRecipeSchemeAliases;

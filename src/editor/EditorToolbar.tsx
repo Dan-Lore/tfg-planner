@@ -12,6 +12,13 @@ import type { EditorActions } from '@/editor/editor-actions';
 import { EditorHelpHint } from '@/editor/EditorHelpHint';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 
+function isEditableKeyboardTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+  return target.isContentEditable;
+}
+
 export interface EditorToolbarProps {
   activeEntry: PackManifestEntry | null;
   pack: ActivePack | null;
@@ -89,6 +96,7 @@ export function EditorToolbar({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (isEditableKeyboardTarget(e.target)) return;
       if (e.ctrlKey || e.metaKey) {
         if (e.key === 'z' && !e.shiftKey) {
           e.preventDefault();
@@ -110,14 +118,16 @@ export function EditorToolbar({
   }, [undo, redo, copySelection, pasteClipboard]);
 
   const handleAddMachine = () => {
-    if (!pack || !resolvedMachineId) return;
+    if (!pack || !machineExplicitId) return;
+    const machineId = resolvedMachineId;
+    if (!machineId) return;
     void (async () => {
-      const recipes = await pack.loadMachineRecipes(resolvedMachineId);
+      const recipes = await pack.loadMachineRecipes(machineId);
       if (recipes.length === 0) return;
       const firstRecipe = recipes[0]!;
       const newId = addNode({
         kind: 'machine',
-        machineId: resolvedMachineId,
+        machineId,
         recipeId: firstRecipe.id,
         position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
         overclock: 1,
@@ -174,9 +184,9 @@ export function EditorToolbar({
           <button
             type="button"
             className="btn"
-            onClick={handleAddMachine}
-            disabled={!resolvedMachineId}
-          >
+          onClick={handleAddMachine}
+          disabled={!machineExplicitId || !resolvedMachineId}
+        >
             {t('editor.addMachine')}
           </button>
           <button

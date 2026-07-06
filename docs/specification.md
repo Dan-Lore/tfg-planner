@@ -100,7 +100,7 @@
 
 - **Цель:** отображать энергопотребление на схеме (узел, линия, группа).
 - **Модель pack data:** `Recipe.energy` = `EnergyStack` на **минимальном tier** рецепта: `{ minVoltageTier, voltage, amperage }`; `EU/t = voltage × amperage` на min tier; `amperage` **статичен** (не зависит от tier узла и overclock); `durationTicks` — время на min tier.
-- **Узел схемы:** `voltageTier` (tier машины / energy hatch, ≥ min tier рецепта); `overclock` ускоряет рецепт (сокращает duration и повышает продуктовые потоки), **не** меняет EU/t. Multiblock energy hatch count / parallel — backlog **K-012** (не выводить из `amperage`).
+- **Узел схемы:** `voltageTier` (tier машины / energy hatch, ≥ min tier рецепта); `overclock` ускоряет рецепт (сокращает duration и повышает продуктовые потоки), **не** меняет EU/t. Multiblock energy hatch count / parallel — **K-012 `blocked`** (ждёт спецуказания; не выводить из `amperage`).
 - **GT voltage overclock:** при tier узла выше min tier — duration ÷ 2^Δtier, EU/t = `GTValues.V[nodeTier] × amperage` (amperage из pack).
 - **Singleblock:** в pack data `amperage ≤ 1` на min tier; tier узла может быть выше min tier рецепта.
 - **Запрещено:** показывать фиктивные значения (0, «—», placeholder), если данных нет.
@@ -111,7 +111,7 @@
 - [x] EU/t на узле — только при `recipe.energy` в pack data.
 - [x] Tier picker на узле (≥ min tier); overclock не влияет на EU/t.
 - [x] Суммарное потребление **выделенных** узлов (`src/lib/selection-energy.ts`).
-- [ ] Суммарное потребление линии / группы — см. **K-012** (multiblock hatch).
+- [ ] Суммарное потребление линии / группы — **K-012 `blocked`**
 - [ ] Непокрытые рецепты остаются в kanban, не в UI (~0.3% без energy в 0.12.8).
 
 ### 3.5. Масштабирование линий

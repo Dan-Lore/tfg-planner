@@ -157,7 +157,7 @@ export function resolveMachineId(
   if (explicitId && filtered.some((item) => item.id === explicitId)) {
     return explicitId;
   }
-  return filtered[0]?.id ?? null;
+  return null;
 }
 export function resolveMachineDisplayLabel(
   items: SearchComboboxItem[],

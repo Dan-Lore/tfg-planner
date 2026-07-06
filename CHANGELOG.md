@@ -5,8 +5,24 @@
 
 ## [Unreleased]
 
+### Added
+- `npm run debug-scheme` — CLI отладка solver по `.tfgp`
+- [`docs/perf-notes.md`](docs/perf-notes.md) — baseline и оптимизации (K-022)
+
+### Fixed
+- Editor: Ctrl+Z/Y/C/V не перехватываются в полях ввода (A1)
+- Editor: «Добавить машину» только после явного выбора в combobox (A2)
+- Legacy port ids `input_*` / `output_*` в `parsePortId` и prune edges (A3)
+
 ### Changed
 - Runtime: Node.js 24.18.0 LTS (CI, engines, @types/node)
+- `pruneInvalidEdges`: tag index только по рецептам узлов схемы (не full pack)
+- Kanban: K-005, K-009, K-012 → `blocked` (ждут спецуказания)
+- Docs: актуализированы `audit-deficiencies.md`, `kanban.md`, `schema-format.md` §groups
+
+### Removed
+- Orphan `energyHatchCount` из schema и i18n (K-021)
+- Мёртвый `flow-result-fixtures.ts`; deprecated parser re-exports
 
 ## [0.4.1] — 2026-07-06
 

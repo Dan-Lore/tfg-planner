@@ -15,12 +15,9 @@
     "coverage/**",
     "tools/parser/snapshots/**",
     "tools/parser/substrate-dumps/**",
-    "tools/parser/scripts/analyze-lang-coverage.ts",
-    "src/calculator/flow-result-fixtures.ts"
+    "tools/parser/scripts/analyze-lang-coverage.ts"
   ],
   "ignoreIssues": {
-    "tools/parser/src/pipeline/recipe-id-aliases.ts": ["duplicates"],
-    "tools/parser/src/snapshot/manifest.ts": ["duplicates"],
     "src/calculator/**": ["exports"],
     "src/lib/**": ["exports"],
     "src/canvas/**": ["exports"],

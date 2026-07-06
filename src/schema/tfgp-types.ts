@@ -44,7 +44,6 @@ export interface TfgpMachineNode extends TfgpNodeBase {
   machineCount: number;
   /** Output port index (0-based) used for backward machine-count pass; default 0. */
   primaryOutputIndex?: number;
-  energyHatchCount?: number;
 }
 
 export interface TfgpBufferNodeBase extends TfgpNodeBase {

@@ -54,9 +54,6 @@ export const RECIPE_SCHEME_ALIASES: Record<string, string[]> = {
   'tfg:cracker_off_gas_recycling': ['tfg:electrolyzer/cracker_off_gas_recycling'],
 };
 
-/** @deprecated use RECIPE_SCHEME_ALIASES */
-export const MARKER_RECIPE_ALIASES = RECIPE_SCHEME_ALIASES;
-
 export const MIN_RECIPE_COUNT_BY_TAG: Record<string, number> = {
   '0.12.8': 40_000,
 };

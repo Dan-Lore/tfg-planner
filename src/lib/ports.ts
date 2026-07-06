@@ -20,7 +20,7 @@ export function outputPortId(index: number): string {
 }
 
 export function parsePortId(port: string): { kind: 'in' | 'out'; index: number } | null {
-  const m = port.match(/^(in|out)_(\d+)$/);
+  const m = normalizePortId(port).match(/^(in|out)_(\d+)$/);
   if (!m) return null;
   return { kind: m[1] as 'in' | 'out', index: Number(m[2]) };
 }

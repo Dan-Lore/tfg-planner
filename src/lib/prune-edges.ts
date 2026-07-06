@@ -3,16 +3,13 @@ import type { ActivePack } from '@/data/pack-runtime';
 import { getRecipe } from '@/data/pack-registry';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 import { nodePortFlow, portsMatch } from '@/canvas/ports';
-import { buildTagIndex, buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/lib/tag-index';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/lib/tag-index';
 import { isMachineNode } from '@/lib/node-kind';
 
 function tagIndexForScheme(
   pack: ActivePack | PackData,
   nodes: TfgpNode[],
-): ReturnType<typeof buildTagIndex> {
-  if ('recipes' in pack && Array.isArray(pack.recipes)) {
-    return buildTagIndex(pack);
-  }
+): ReturnType<typeof buildTagIndexForRecipes> {
   const recipes = [];
   for (const node of nodes) {
     if (!isMachineNode(node)) continue;
