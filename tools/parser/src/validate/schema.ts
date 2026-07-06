@@ -114,6 +114,7 @@ export function buildReportFromShardedMeta(
   meta: PackMeta,
   tag: string,
   recipeCount: number,
+  extra: Partial<Pick<BuildReport['stats'], 'recipesWithEnergy' | 'recipesWithChance'>> = {},
 ): BuildReport {
   return {
     modpackVersion: meta.modpackVersion,
@@ -128,8 +129,8 @@ export function buildReportFromShardedMeta(
       machines: meta.machines.length,
       items: meta.items.length,
       fluids: meta.fluids.length,
-      recipesWithEnergy: 0,
-      recipesWithChance: 0,
+      recipesWithEnergy: extra.recipesWithEnergy ?? 0,
+      recipesWithChance: extra.recipesWithChance ?? 0,
     },
     warnings: [],
     warningsByKind: {},

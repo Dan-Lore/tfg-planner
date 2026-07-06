@@ -1,6 +1,6 @@
 {
   "name": "tfg-planner",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "description": "Production flowchart planner for TerraFirmaGreg-Modern modpack",
   "license": "MIT",
   "type": "module",
