@@ -1290,4 +1290,111 @@ describe('solveFlows', () => {
     expect(result.nodeMachineCounts['custom']).toBeGreaterThanOrEqual(2);
     expect(result.edgeFlows['e2'].toNumber()).toBeCloseTo(4, 4);
   });
+
+  it('pins flow on edge in linear chain', () => {
+    const result = solveFlows({
+      pack: samplePack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV' as const,
+        },
+        {
+          id: 'b',
+          machineId: 'm2',
+          recipeId: 'r2',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV' as const,
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'a',
+          target: 'b',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+      ],
+      edgeConstraints: [{ edgeId: 'e1', ratePerSecond: 4 }],
+      targets: [],
+      preserveManualMachineCounts: false,
+    });
+
+    expect(result.edgeFlows['e1'].toNumber()).toBeCloseTo(4, 5);
+  });
+
+  it('pins one branch in a split', () => {
+    const splitRecipe = {
+      id: 'split',
+      machineId: 'splitter',
+      durationTicks: 20,
+      inputs: [{ itemId: 'ore', amount: 1 }],
+      outputs: [
+        { itemId: 'a', amount: 1 },
+        { itemId: 'b', amount: 1 },
+      ],
+    };
+    const sinkRecipe = {
+      id: 'sink',
+      machineId: 'sink',
+      durationTicks: 20,
+      inputs: [{ itemId: 'a', amount: 1 }],
+      outputs: [{ itemId: 'out', amount: 1 }],
+    };
+    const pack: PackData = {
+      ...samplePack,
+      recipes: [splitRecipe, sinkRecipe],
+    };
+    const result = solveFlows({
+      pack,
+      nodes: [
+        {
+          id: 'src',
+          machineId: 'splitter',
+          recipeId: 'split',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV' as const,
+        },
+        {
+          id: 'sink',
+          machineId: 'sink',
+          recipeId: 'sink',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV' as const,
+        },
+      ],
+      edges: [
+        {
+          id: 'e-pin',
+          source: 'src',
+          target: 'sink',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'a',
+        },
+        {
+          id: 'e-free',
+          source: 'src',
+          target: 'sink',
+          sourcePort: 'out_1',
+          targetPort: 'in_0',
+          itemId: 'b',
+        },
+      ],
+      edgeConstraints: [{ edgeId: 'e-pin', ratePerSecond: 3 }],
+      targets: [],
+      preserveManualMachineCounts: false,
+    });
+
+    expect(result.edgeFlows['e-pin'].toNumber()).toBeCloseTo(3, 5);
+  });
 });

@@ -7,6 +7,7 @@ import {
   effectiveEuPerTick,
   effectiveTotalEu,
 } from './energy';
+import { sumSelectionEnergyEuPerTick } from '@/lib/selection-energy';
 
 function recipeWithEnergy(
   partial: Partial<Recipe> & { energy: NonNullable<Recipe['energy']> },
@@ -101,5 +102,34 @@ describe('energy', () => {
     };
     expect(effectiveEuPerTick(recipe, 'LV')).toBeUndefined();
     expect(effectiveDurationTicks(recipe, 'LV', 2)).toBe(50);
+  });
+
+  it('sums selection EU/t for machines with energy data', () => {
+    const recipe = recipeWithEnergy({
+      durationTicks: 10,
+      energy: { minVoltageTier: 'MV', voltage: 128, amperage: 1 },
+    });
+    const nodes = [
+      {
+        id: 'n1',
+        machineId: 'gtceu:assembler',
+        recipeId: 'test:recipe',
+        position: { x: 0, y: 0 },
+        machineCount: 2,
+        overclock: 1,
+        voltageTier: 'MV' as const,
+      },
+      {
+        id: 'n2',
+        machineId: 'gtceu:assembler',
+        recipeId: 'test:recipe',
+        position: { x: 0, y: 0 },
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'MV' as const,
+      },
+    ];
+    expect(sumSelectionEnergyEuPerTick(nodes, ['n1', 'n2'], () => recipe)).toBe(384);
+    expect(sumSelectionEnergyEuPerTick(nodes, ['missing'], () => recipe)).toBeUndefined();
   });
 });

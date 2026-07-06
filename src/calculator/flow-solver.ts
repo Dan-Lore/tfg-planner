@@ -30,6 +30,7 @@ import {
   computeEffectivePortRatesBoth,
   computePortDownstreamDemandByOutputPort,
 } from '@/calculator/flow-convergence';
+import { pinnedEdgeFlowMap } from '@/calculator/edge-constraints';
 import { runMachineCountPhase } from '@/calculator/flow-machine-counts';
 import {
   buildConnectedInPorts,
@@ -75,10 +76,13 @@ export function solveFlows(input: SolverInput): FlowResult {
       input.edges,
     ) ?? input.nodes.map((n) => n.id);
 
+  const edgeConstraints = input.edgeConstraints ?? [];
+
   const { nodeMachineCounts, nodePortOutputRates, nodeOutputRates } = runMachineCountPhase({
     nodes: input.nodes,
     edges: input.edges,
     targets: input.targets,
+    edgeConstraints,
     preserveCounts,
     recipes,
     tags,
@@ -100,6 +104,8 @@ export function solveFlows(input: SolverInput): FlowResult {
     recipes,
   );
 
+  const pinnedEdgeFlows = pinnedEdgeFlowMap(edgeConstraints);
+
   const { edgeFlows: convergedEdgeFlows, converged: flowConverged } = computeConvergedFlows(
     input.edges,
     nodePortOutputRates,
@@ -111,6 +117,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     order,
     connectedInPortsByNode,
     connectedOutPortsByNode,
+    pinnedEdgeFlows,
   );
 
   const effectivePortRatesByNode: Record<string, Record<string, Rational>> = {};

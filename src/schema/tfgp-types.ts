@@ -101,6 +101,11 @@ export interface TfgpTarget {
   ratePerSecond: number;
 }
 
+export interface TfgpEdgeConstraint {
+  edgeId: string;
+  ratePerSecond: number;
+}
+
 export interface TfgpFile {
   format: 'tfg-planner-graph';
   formatVersion: 1;
@@ -111,4 +116,5 @@ export interface TfgpFile {
   edges: TfgpEdge[];
   groups: TfgpGroup[];
   targets: TfgpTarget[];
+  edgeConstraints?: TfgpEdgeConstraint[];
 }

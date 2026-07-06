@@ -7,8 +7,14 @@ import { edgeProductMatchesFlow, flowsCompatible } from '@/lib/flow-match';
 import { buildTagIndex } from '@/lib/tag-index';
 import { isBufferNode, isCustomMachineNode, isEndBufferNode, isFlowMachineNode, isIntermediateBufferNode, isMachineNode, isStartBufferNode } from '@/lib/node-kind';
 import { resolveSourceOutputPort } from '@/calculator/port-resolution';
+import type { PackLike } from '@/data/pack-registry';
+import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
+import {
+  formatSchemeIssueSummary,
+  type SchemeIssueTranslator,
+} from '@/scheme-check/format-scheme-issue';
 import { normalizeSchemeNodes } from '@/stores/editor-utils';
-import type { TfgpEdge, TfgpFile, TfgpNode, TfgpTarget } from '@/schema/tfgp';
+import type { TfgpFile, TfgpTarget } from '@/schema/tfgp';
 
 export type SchemeIssueSeverity = 'error' | 'warning' | 'info';
 
@@ -53,7 +59,7 @@ export interface SchemeIssueContext {
 export interface SchemeIssue {
   severity: SchemeIssueSeverity;
   code: SchemeIssueCode;
-  message: string;
+  message?: string;
   edgeId?: string;
   nodeId?: string;
   context?: SchemeIssueContext;
@@ -734,7 +740,35 @@ export function checkScheme(
   };
 }
 
-export function formatSchemeCheckReport(result: SchemeCheckResult): string {
+export interface SchemeCheckReportOptions {
+  pack?: PackLike | null;
+  nodes?: TfgpNode[];
+  edges?: TfgpEdge[];
+  lang?: 'ru' | 'en';
+  translate?: SchemeIssueTranslator;
+}
+
+function issueMessage(
+  issue: SchemeIssue,
+  options: SchemeCheckReportOptions,
+): string {
+  if (options.nodes && options.edges && options.translate) {
+    return formatSchemeIssueSummary(
+      issue,
+      options.pack ?? null,
+      options.lang ?? 'ru',
+      options.nodes,
+      options.edges,
+      options.translate,
+    );
+  }
+  return issue.message ?? issue.code;
+}
+
+export function formatSchemeCheckReport(
+  result: SchemeCheckResult,
+  options: SchemeCheckReportOptions = {},
+): string {
   const lines: string[] = [
     `Схема: ${result.schemeName}`,
     `Modpack: ${result.modpackVersion}`,
@@ -759,7 +793,8 @@ export function formatSchemeCheckReport(result: SchemeCheckResult): string {
     lines.push(`${title} (${group.length}):`);
     for (const issue of group) {
       const ref = [issue.edgeId, issue.nodeId].filter(Boolean).join(', ');
-      lines.push(`  • [${issue.code}] ${issue.message}${ref ? ` (${ref})` : ''}`);
+      const message = issueMessage(issue, options);
+      lines.push(`  • [${issue.code}] ${message}${ref ? ` (${ref})` : ''}`);
     }
     lines.push('');
   }

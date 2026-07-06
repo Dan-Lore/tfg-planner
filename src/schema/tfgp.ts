@@ -19,6 +19,7 @@ export type {
   TfgpStartBufferNode,
   TfgpSupplyMode,
   TfgpTarget,
+  TfgpEdgeConstraint,
 } from '@/schema/tfgp-types';
 
 import type { TfgpFile } from '@/schema/tfgp-types';
@@ -44,6 +45,7 @@ export function createEmptyTfgp(
     edges: [],
     groups: [],
     targets: [],
+    edgeConstraints: [],
   };
 }
 

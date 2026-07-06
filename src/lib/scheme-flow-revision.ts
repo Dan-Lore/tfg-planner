@@ -15,6 +15,7 @@ export function schemeFlowRevision(scheme: TfgpFile): string {
     nodes,
     edges: scheme.edges,
     targets: scheme.targets,
+    edgeConstraints: scheme.edgeConstraints ?? [],
   });
   return fnv1aHash(payload);
 }

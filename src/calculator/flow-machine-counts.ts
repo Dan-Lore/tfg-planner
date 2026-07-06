@@ -6,6 +6,11 @@ import { primaryOutputIndex, primaryOutputProductKey } from '@/lib/primary-outpu
 import { recipeInputMatchesProduct } from '@/lib/flow-match';
 import { ceilMachineCount, idealMachineCount } from '@/calculator/rounding';
 import {
+  applyEdgeConstraintsToMachineCountPhase,
+  pinnedEdgeFlowMap,
+} from '@/calculator/edge-constraints';
+import type { SchemeEdgeConstraint } from '@/calculator/flow-solver-types';
+import {
   buildStartBufferTheoreticalRates,
   isSchemeBufferNode,
   isSchemeStartBuffer,
@@ -65,6 +70,7 @@ export interface MachineCountPhaseInput {
   nodes: SchemeNode[];
   edges: SchemeEdge[];
   targets: SchemeTarget[];
+  edgeConstraints: SchemeEdgeConstraint[];
   preserveCounts: boolean;
   recipes: Map<string, Recipe>;
   tags: TagIndex;
@@ -86,6 +92,7 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
     nodes,
     edges,
     targets,
+    edgeConstraints,
     preserveCounts,
     recipes,
     tags,
@@ -121,6 +128,19 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
       node.machineCount = nodeMachineCounts[node.id]!;
     }
   }
+
+  const edgeById = new Map(edges.map((e) => [e.id, e]));
+  applyEdgeConstraintsToMachineCountPhase(
+    edgeConstraints,
+    edges,
+    edgeById,
+    nodeById,
+    recipes,
+    tags,
+    incoming,
+    requiredOutput,
+    {},
+  );
 
   const reverseOrder = [...order].reverse();
 
@@ -197,6 +217,11 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
     edgeFlows,
   );
 
+  const pinned = pinnedEdgeFlowMap(edgeConstraints);
+  for (const [edgeId, rate] of pinned) {
+    edgeFlows[edgeId] = rate;
+  }
+
   if (!preserveCounts) {
     for (const nodeId of order) {
       for (const edge of outgoing.get(nodeId) ?? []) {
@@ -241,6 +266,10 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
     recipes,
     edgeFlows,
   );
+
+  for (const [edgeId, rate] of pinned) {
+    edgeFlows[edgeId] = rate;
+  }
 
   return { nodeMachineCounts, nodePortOutputRates, nodeOutputRates, edgeFlows };
 }

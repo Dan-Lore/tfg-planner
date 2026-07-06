@@ -75,6 +75,26 @@ export function assertTfgpShape(data: unknown): asserts data is TfgpFile {
   if (!Array.isArray(root.targets)) {
     throw new Error('Invalid .tfgp: targets must be an array');
   }
+  if (root.edgeConstraints !== undefined) {
+    if (!Array.isArray(root.edgeConstraints)) {
+      throw new Error('Invalid .tfgp: edgeConstraints must be an array when present');
+    }
+    root.edgeConstraints.forEach((constraint, index) => {
+      if (!isRecord(constraint)) {
+        throw new Error(`Invalid .tfgp: edgeConstraints[${index}] must be an object`);
+      }
+      if (!isNonEmptyString(constraint.edgeId)) {
+        throw new Error(
+          `Invalid .tfgp: edgeConstraints[${index}].edgeId must be a non-empty string`,
+        );
+      }
+      if (typeof constraint.ratePerSecond !== 'number' || constraint.ratePerSecond <= 0) {
+        throw new Error(
+          `Invalid .tfgp: edgeConstraints[${index}].ratePerSecond must be a positive number`,
+        );
+      }
+    });
+  }
 }
 
 export const TFGP_MAX_BYTES = 32 * 1024 * 1024;

@@ -6,6 +6,7 @@ import { machineIdsForRecipeIds, recipeIdsFromSchemeNodes, sliceAsPackData } fro
 import type { TfgpFile } from '@/schema/tfgp';
 import { checkScheme, formatSchemeCheckReport } from '@/scheme-check/check-scheme';
 import { runSolver } from '@/stores/editor-utils';
+import i18n from '@/i18n/index';
 
 function usage(): never {
   console.error('Usage: npm run check-scheme -- <file.tfgp> [--json]');
@@ -64,6 +65,8 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
 }
 
 const jsonMode = args.includes('--json');
+const langArg = args.find((a) => a.startsWith('--lang='));
+const lang = langArg?.split('=')[1] === 'en' ? 'en' : 'ru';
 const schemePath = args.find((a) => !a.startsWith('--'));
 if (!schemePath) {
   usage();
@@ -76,6 +79,7 @@ const snap = {
   nodes: scheme.nodes,
   edges: scheme.edges,
   targets: scheme.targets,
+  edgeConstraints: scheme.edgeConstraints ?? [],
   viewport: scheme.viewport,
 };
 const flowResult = runSolver(snap, pack, { preserveManualMachineCounts: true });
@@ -90,7 +94,17 @@ if (jsonMode) {
     ),
   );
 } else {
-  console.log(formatSchemeCheckReport(result));
+  const t = (key: string, params?: Record<string, string>) =>
+    i18n.t(key, { lng: lang, ...params });
+  console.log(
+    formatSchemeCheckReport(result, {
+      pack,
+      nodes: scheme.nodes,
+      edges: scheme.edges,
+      lang,
+      translate: t,
+    }),
+  );
 }
 
 process.exit(result.ok ? 0 : 1);

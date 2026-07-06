@@ -173,10 +173,10 @@ export function formatSchemeIssueSummary(
   t: SchemeIssueTranslator,
 ): string {
   const key = SUMMARY_KEYS[issue.code];
-  if (!key) return issue.message;
+  if (!key) return issue.message ?? issue.code;
   const params = baseParams(issue, pack, lang, nodes, edges);
   const translated = t(key, params);
-  return translated === key ? issue.message : translated;
+  return translated === key ? (issue.message ?? issue.code) : translated;
 }
 
 export function formatSchemeIssueDetail(
@@ -208,5 +208,5 @@ export function formatSchemeIssueDetail(
     }
   }
 
-  return parts.length > 0 ? parts.join('\n') : issue.message;
+  return parts.length > 0 ? parts.join('\n') : (issue.message ?? issue.code);
 }

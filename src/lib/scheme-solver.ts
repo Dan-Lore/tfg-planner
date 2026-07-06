@@ -11,6 +11,7 @@ export interface EditorSnapshot {
   nodes: TfgpNode[];
   edges: TfgpFile['edges'];
   targets: TfgpFile['targets'];
+  edgeConstraints: TfgpFile['edgeConstraints'];
   viewport: TfgpFile['viewport'];
 }
 
@@ -94,6 +95,10 @@ export function runSolver(
         fluidId: t.fluidId,
         ratePerSecond: t.ratePerSecond,
       })),
+    edgeConstraints: (snapshot.edgeConstraints ?? []).map((c) => ({
+      edgeId: c.edgeId,
+      ratePerSecond: c.ratePerSecond,
+    })),
   });
 }
 

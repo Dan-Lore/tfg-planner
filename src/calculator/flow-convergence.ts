@@ -338,6 +338,7 @@ export function assignOutgoingFromEffectiveRates(
   nodeById: Map<string, SchemeNode>,
   recipes: Map<string, Recipe>,
   tags: TagIndex,
+  pinnedEdgeFlows?: ReadonlyMap<string, Rational>,
 ): Rational {
   let maxDelta = R.zero;
   const edgeShares = new Map<string, Rational>();
@@ -350,10 +351,19 @@ export function assignOutgoingFromEffectiveRates(
   }
   for (const [portId, portEdges] of byPort) {
     const portRate = effectivePortRates[portId] ?? R.zero;
+    const unpinned = portEdges.filter((e) => !pinnedEdgeFlows?.has(e.id));
+    const pinnedSum = portEdges.reduce((sum, e) => {
+      const pinned = pinnedEdgeFlows?.get(e.id);
+      return pinned ? sum.add(pinned) : sum;
+    }, R.zero);
+    const remaining = portRate.sub(pinnedSum);
     const shareBase =
-      portEdges.length > 0 ? portRate.div(R.from(portEdges.length)) : R.zero;
+      unpinned.length > 0 && remaining.compare(R.zero) > 0
+        ? remaining.div(R.from(unpinned.length))
+        : R.zero;
     for (const edge of portEdges) {
-      edgeShares.set(edge.id, shareBase);
+      const pinned = pinnedEdgeFlows?.get(edge.id);
+      edgeShares.set(edge.id, pinned ?? shareBase);
     }
   }
 
@@ -413,10 +423,12 @@ export function assignOutgoingFromEffectiveRates(
   }
 
   for (const [edgeId, share] of edgeShares) {
+    const pinned = pinnedEdgeFlows?.get(edgeId);
+    const next = pinned ?? share;
     const prev = edgeFlows[edgeId] ?? R.zero;
-    const delta = rationalAbs(share.sub(prev));
+    const delta = rationalAbs(next.sub(prev));
     if (delta.compare(maxDelta) > 0) maxDelta = delta;
-    edgeFlows[edgeId] = share;
+    edgeFlows[edgeId] = next;
   }
 
   return maxDelta;
@@ -433,6 +445,7 @@ export function computeConvergedFlows(
   nodeOrder: string[],
   connectedInPortsByNode: Record<string, Set<string>>,
   connectedOutPortsByNode: Record<string, Set<string>>,
+  pinnedEdgeFlows?: ReadonlyMap<string, Rational>,
 ): { edgeFlows: Record<string, Rational>; converged: boolean } {
   const edgeFlows: Record<string, Rational> = {};
   for (const edge of edges) {
@@ -492,7 +505,14 @@ export function computeConvergedFlows(
       nodeById,
       recipes,
       tags,
+      pinnedEdgeFlows,
     );
+  }
+
+  if (pinnedEdgeFlows) {
+    for (const [edgeId, flow] of pinnedEdgeFlows) {
+      edgeFlows[edgeId] = flow;
+    }
   }
 
   let converged = true;
@@ -578,8 +598,14 @@ export function computeConvergedFlows(
         nodeById,
         recipes,
         tags,
+        pinnedEdgeFlows,
       );
       if (delta.compare(maxDelta) > 0) maxDelta = delta;
+    }
+    if (pinnedEdgeFlows) {
+      for (const [edgeId, flow] of pinnedEdgeFlows) {
+        edgeFlows[edgeId] = flow;
+      }
     }
     if (maxDelta.compare(CONVERGENCE_EPS_R) < 0) break;
     if (iter === MAX_FLOW_ITERATIONS - 1) converged = false;

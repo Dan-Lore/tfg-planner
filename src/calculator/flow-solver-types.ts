@@ -48,6 +48,11 @@ export interface SchemeTarget {
   ratePerSecond: number;
 }
 
+export interface SchemeEdgeConstraint {
+  edgeId: string;
+  ratePerSecond: number;
+}
+
 export interface FlowResult {
   edgeFlows: Record<string, Rational>;
   edgeTargetFlows: Record<string, Rational>;
@@ -78,6 +83,7 @@ export interface SolverInput {
   nodes: SchemeNode[];
   edges: SchemeEdge[];
   targets: SchemeTarget[];
+  edgeConstraints?: SchemeEdgeConstraint[];
   pack: PackData;
   preserveManualMachineCounts?: boolean;
 }

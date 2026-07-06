@@ -5,6 +5,7 @@ import { emptyFlowResult } from '@/test/flow-result-fixture';
 import {
   allocateNodeId,
   applyFlowResult,
+  cloneSchemeFragment,
   dedupeNodeIds,
   dedupeSchemeTopology,
   normalizeSchemeNodes,
@@ -141,6 +142,58 @@ describe('dedupeNodeIds', () => {
     expect(out.map((n) => n.id)).toEqual(['node_3', 'node_4']);
     const tower = out[1];
     expect(isMachineNode(tower) && tower.machineId).toBe('tower');
+  });
+});
+
+describe('cloneSchemeFragment', () => {
+  beforeEach(() => resetIdCounter());
+
+  it('copies selected nodes and internal edges only', () => {
+    const base = {
+      machineId: 'm',
+      recipeId: 'r',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV' as const,
+    };
+    const nodes: TfgpMachineNode[] = [
+      { id: 'node_1', ...base },
+      { id: 'node_2', ...base, position: { x: 100, y: 0 } },
+      { id: 'node_3', ...base, position: { x: 200, y: 0 } },
+    ];
+    const edges = [
+      {
+        id: 'edge_1',
+        source: 'node_1',
+        sourcePort: 'out_0',
+        target: 'node_2',
+        targetPort: 'in_0',
+        itemId: 'ingot',
+      },
+      {
+        id: 'edge_2',
+        source: 'node_2',
+        sourcePort: 'out_0',
+        target: 'node_3',
+        targetPort: 'in_0',
+        itemId: 'ingot',
+      },
+    ];
+    seedIdCounter(nodes, edges);
+
+    const { nodes: clonedNodes, edges: clonedEdges, newNodeIds } = cloneSchemeFragment(
+      nodes,
+      edges,
+      ['node_1', 'node_2'],
+    );
+
+    expect(clonedNodes).toHaveLength(2);
+    expect(clonedEdges).toHaveLength(1);
+    expect(clonedEdges[0]?.source).not.toBe('node_1');
+    expect(clonedEdges[0]?.target).not.toBe('node_2');
+    expect(newNodeIds).toHaveLength(2);
+    expect(clonedNodes[0]?.position).toEqual({ x: 40, y: 40 });
   });
 });
 

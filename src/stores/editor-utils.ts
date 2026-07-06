@@ -82,6 +82,105 @@ export interface DedupeSchemeTopologyResult {
   targets: TfgpTarget[];
 }
 
+export interface CloneSchemeFragmentResult {
+  nodes: TfgpNode[];
+  edges: TfgpEdge[];
+  newNodeIds: string[];
+}
+
+const CLONE_OFFSET = { x: 40, y: 40 };
+
+/** Copy selected nodes and internal edges with fresh ids and position offset. */
+export function cloneSchemeFragment(
+  nodes: readonly TfgpNode[],
+  edges: readonly TfgpEdge[],
+  selectedNodeIds: readonly string[],
+  positionOffset: { x: number; y: number } = CLONE_OFFSET,
+): CloneSchemeFragmentResult {
+  const idSet = new Set(selectedNodeIds);
+  if (idSet.size === 0) {
+    return { nodes: [], edges: [], newNodeIds: [] };
+  }
+
+  const toCopy = nodes.filter((n) => idSet.has(n.id));
+  const idMap = new Map<string, string>();
+  const workingNodes = [...nodes];
+  const workingEdges = [...edges];
+  const newNodes: TfgpNode[] = [];
+
+  for (const n of toCopy) {
+    const id = allocateNodeId(workingNodes, workingEdges);
+    idMap.set(n.id, id);
+    const cloned: TfgpNode = {
+      ...n,
+      id,
+      position: {
+        x: n.position.x + positionOffset.x,
+        y: n.position.y + positionOffset.y,
+      },
+    };
+    newNodes.push(cloned);
+    workingNodes.push(cloned);
+  }
+
+  const internalEdges = edges.filter(
+    (e) => idSet.has(e.source) && idSet.has(e.target),
+  );
+  const newEdges: TfgpEdge[] = [];
+  for (const edge of internalEdges) {
+    const source = idMap.get(edge.source);
+    const target = idMap.get(edge.target);
+    if (!source || !target) continue;
+    const id = allocateEdgeId(workingNodes, [...workingEdges, ...newEdges]);
+    newEdges.push({
+      ...edge,
+      id,
+      source,
+      target,
+    });
+  }
+
+  return { nodes: newNodes, edges: newEdges, newNodeIds: newNodes.map((n) => n.id) };
+}
+
+export interface SchemeClipboard {
+  nodes: TfgpNode[];
+  edges: TfgpEdge[];
+}
+
+/** Snapshot of a fragment for copy/paste (ids preserved). */
+export function snapshotSchemeFragment(
+  nodes: readonly TfgpNode[],
+  edges: readonly TfgpEdge[],
+  selectedNodeIds: readonly string[],
+): SchemeClipboard | null {
+  const idSet = new Set(selectedNodeIds);
+  if (idSet.size === 0) return null;
+  const fragmentNodes = nodes.filter((n) => idSet.has(n.id));
+  const fragmentEdges = edges.filter(
+    (e) => idSet.has(e.source) && idSet.has(e.target),
+  );
+  return {
+    nodes: structuredClone(fragmentNodes),
+    edges: structuredClone(fragmentEdges),
+  };
+}
+
+/** Paste clipboard fragment with fresh ids. */
+export function pasteSchemeFragment(
+  _nodes: readonly TfgpNode[],
+  _edges: readonly TfgpEdge[],
+  clipboard: SchemeClipboard,
+  positionOffset: { x: number; y: number } = CLONE_OFFSET,
+): CloneSchemeFragmentResult {
+  return cloneSchemeFragment(
+    clipboard.nodes,
+    clipboard.edges,
+    clipboard.nodes.map((n) => n.id),
+    positionOffset,
+  );
+}
+
 function remapEndpointId(
   endpoint: string,
   originalNodes: readonly TfgpNode[],

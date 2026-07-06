@@ -144,6 +144,7 @@ describe('checkScheme', () => {
       nodes: file.nodes,
       edges: file.edges,
       targets: file.targets,
+      edgeConstraints: file.edgeConstraints ?? [],
       viewport: file.viewport,
     };
     const flowResult = runSolver(snap, pack, { preserveManualMachineCounts: true });
