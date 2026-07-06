@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   animateViewport,
+  flowPointAtCanvasCenter,
   resolveIssueFocusPoint,
   viewportToCenterOn,
   type ViewportState,
@@ -37,6 +38,19 @@ describe('viewportToCenterOn', () => {
     expect(vp.zoom).toBe(2);
     expect(vp.x).toBe(200);
     expect(vp.y).toBe(150);
+  });
+});
+
+describe('flowPointAtCanvasCenter', () => {
+  it('inverts viewportToCenterOn', () => {
+    const point = { x: 100, y: 200 };
+    const zoom = 1.5;
+    const width = 800;
+    const height = 600;
+    const vp = viewportToCenterOn(point, zoom, width, height);
+    const recovered = flowPointAtCanvasCenter(vp, width, height);
+    expect(recovered.x).toBeCloseTo(point.x);
+    expect(recovered.y).toBeCloseTo(point.y);
   });
 });
 

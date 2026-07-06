@@ -56,6 +56,7 @@ import type { TfgpNode } from '@/schema/tfgp-types';
 import { useDirectionalBoxSelect } from '@/hooks/useDirectionalBoxSelect';
 import {
   animateViewport,
+  flowPointAtCanvasCenter,
   viewportToCenterOn,
   type ViewportState,
 } from '@/lib/viewport-focus';
@@ -99,6 +100,8 @@ export type EditorCanvasProps = {
 
 export interface EditorCanvasHandle {
   panToPoint: (x: number, y: number, options?: { duration?: number }) => void;
+  /** Flow coordinates at the center of the visible canvas, or null if not measured. */
+  getViewportCenterFlowPosition: () => { x: number; y: number } | null;
   /** Programmatic edge highlight; nodeIds accepted for API symmetry (store applies nodes). */
   focusSelection: (params: {
     nodeIds: readonly string[];
@@ -399,6 +402,13 @@ function EditorCanvasMeasured({
             panCancelRef.current = null;
           },
         );
+      },
+      getViewportCenterFlowPosition() {
+        const wrap = wrapRef.current;
+        if (!wrap) return null;
+        const { width, height } = wrap.getBoundingClientRect();
+        if (width <= 0 || height <= 0) return null;
+        return flowPointAtCanvasCenter(flowViewportRef.current, width, height);
       },
       focusSelection({ edgeIds }) {
         setFlowEdges((prev) => {

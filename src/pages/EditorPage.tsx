@@ -109,6 +109,11 @@ export function EditorPage() {
     setSelectedEdgeIds,
   });
 
+  const getViewportCenterForPlacement = useCallback(
+    () => canvasRef.current?.getViewportCenterFlowPosition() ?? null,
+    [],
+  );
+
   const [pendingImport, setPendingImport] = useState<TfgpFile | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
 
@@ -438,6 +443,7 @@ export function EditorPage() {
         redo={editorActions.redo}
         clearScheme={editorActions.clearScheme}
         focusSelection={focusSelection}
+        getViewportCenterForPlacement={getViewportCenterForPlacement}
         onImportFile={importTfgpFile}
       />
       <div className="editor-body">

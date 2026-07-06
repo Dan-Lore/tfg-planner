@@ -17,6 +17,25 @@ export const CUSTOM_MACHINE_NODE_WIDTH = Math.round(
 );
 export const BUFFER_NODE_WIDTH = 200;
 
+/** Top-left position so a node of given size is centered on `center`. */
+export function nodeTopLeftAtCenter(
+  center: { x: number; y: number },
+  width: number,
+  height: number,
+): { x: number; y: number } {
+  return {
+    x: center.x - width / 2,
+    y: center.y - height / 2,
+  };
+}
+
+/** Default card height for an empty custom machine (no ports yet). */
+export function estimateEmptyCustomMachineNodeHeight(): number {
+  const header = 76;
+  const portCount = 1;
+  return header + portCount * PORT_ROW_HEIGHT + PORT_SECTION_PADDING + 28;
+}
+
 /** React Flow node.style — use instead of node.width with onlyRenderVisibleElements. */
 export function machineNodeRfStyle(
   layoutWidth: number | undefined,

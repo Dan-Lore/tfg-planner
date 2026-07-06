@@ -37,6 +37,18 @@ export function viewportToCenterOn(
   };
 }
 
+/** Flow coordinates at the center of the visible canvas for a given viewport. */
+export function flowPointAtCanvasCenter(
+  viewport: ViewportState,
+  canvasWidth: number,
+  canvasHeight: number,
+): CanvasPoint {
+  return {
+    x: (canvasWidth / 2 - viewport.x) / viewport.zoom,
+    y: (canvasHeight / 2 - viewport.y) / viewport.zoom,
+  };
+}
+
 function nodeCenterById(
   nodeId: string,
   nodes: TfgpNode[],

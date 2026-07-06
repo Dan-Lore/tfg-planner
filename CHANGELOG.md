@@ -10,6 +10,7 @@
 - [`docs/perf-notes.md`](docs/perf-notes.md) — baseline и оптимизации (K-022)
 
 ### Fixed
+- Editor: новые машины и произвольные процессы из тулбара появляются в центре видимой области холста
 - Editor: Ctrl+Z/Y/C/V не перехватываются в полях ввода (A1)
 - Editor: «Добавить машину» только после явного выбора в combobox (A2)
 - Legacy port ids `input_*` / `output_*` в `parsePortId` и prune edges (A3)

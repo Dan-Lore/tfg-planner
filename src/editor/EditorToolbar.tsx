@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchCombobox } from '@/components/SearchCombobox';
+import {
+  CUSTOM_MACHINE_NODE_WIDTH,
+  estimateEmptyCustomMachineNodeHeight,
+  estimateMachineNodeHeightFromPorts,
+  MACHINE_NODE_MIN_WIDTH,
+  nodeTopLeftAtCenter,
+} from '@/canvas/node-bounds';
 import { getMachineName, getMachineRecipeCount } from '@/data/pack-registry';
 import type { ActivePack } from '@/data/pack-runtime';
 import type { PackManifestEntry } from '@/data/types';
@@ -34,6 +41,7 @@ export interface EditorToolbarProps {
   redo: EditorActions['redo'];
   clearScheme: EditorActions['clearScheme'];
   focusSelection: (params: FocusSelectionParams) => void;
+  getViewportCenterForPlacement: () => { x: number; y: number } | null;
   onImportFile: (file: File) => void;
 }
 
@@ -52,6 +60,7 @@ export function EditorToolbar({
   redo,
   clearScheme,
   focusSelection,
+  getViewportCenterForPlacement,
   onImportFile,
 }: EditorToolbarProps) {
   const { t, i18n } = useTranslation();
@@ -117,19 +126,52 @@ export function EditorToolbar({
     return () => window.removeEventListener('keydown', onKey);
   }, [undo, redo, copySelection, pasteClipboard]);
 
+  const fallbackNodePosition = (nodeIndex: number) => ({
+    x: 100 + nodeIndex * 30,
+    y: 100 + nodeIndex * 20,
+  });
+
+  const resolveToolbarNodePosition = (
+    center: { x: number; y: number } | null,
+    width: number,
+    height: number,
+  ) => {
+    if (center) {
+      return nodeTopLeftAtCenter(center, width, height);
+    }
+    return fallbackNodePosition(scheme.nodes.length);
+  };
+
   const handleAddMachine = () => {
     if (!pack || !machineExplicitId) return;
     const machineId = resolvedMachineId;
     if (!machineId) return;
+    const placementCenter = getViewportCenterForPlacement();
     void (async () => {
       const recipes = await pack.loadMachineRecipes(machineId);
       if (recipes.length === 0) return;
       const firstRecipe = recipes[0]!;
+      const portCount = Math.max(
+        firstRecipe.inputs?.length ?? 0,
+        firstRecipe.outputs?.length ?? 0,
+        1,
+      );
+      const height = estimateMachineNodeHeightFromPorts(
+        pack,
+        machineId,
+        firstRecipe.id,
+        portCount,
+      );
+      const position = resolveToolbarNodePosition(
+        placementCenter,
+        MACHINE_NODE_MIN_WIDTH,
+        height,
+      );
       const newId = addNode({
         kind: 'machine',
         machineId,
         recipeId: firstRecipe.id,
-        position: { x: 100 + scheme.nodes.length * 30, y: 100 + scheme.nodes.length * 20 },
+        position,
         overclock: 1,
         machineCount: 1,
         voltageTier: firstRecipe.energy?.minVoltageTier ?? 'LV',
@@ -142,10 +184,13 @@ export function EditorToolbar({
   };
 
   const handleAddCustomMachine = () => {
-    const newId = addCustomMachine({
-      x: 120 + scheme.nodes.length * 30,
-      y: 120 + scheme.nodes.length * 20,
-    });
+    const placementCenter = getViewportCenterForPlacement();
+    const position = resolveToolbarNodePosition(
+      placementCenter,
+      CUSTOM_MACHINE_NODE_WIDTH,
+      estimateEmptyCustomMachineNodeHeight(),
+    );
+    const newId = addCustomMachine(position);
     focusSelection({ nodeIds: [newId], edgeIds: [] });
   };
 
