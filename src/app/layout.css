@@ -536,6 +536,17 @@ a {
   align-items: center;
 }
 
+.editor-toolbar__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.editor-toolbar__group--end {
+  margin-left: auto;
+}
+
 .editor-body {
   display: flex;
   flex: 1;
@@ -1077,16 +1088,8 @@ a {
   color: var(--muted);
 }
 
-.editor-toolbar__hint {
-  color: var(--muted);
-  font-size: 0.75rem;
-  margin-left: auto;
-  white-space: nowrap;
-}
-
 .editor-help-hint {
   position: relative;
-  margin-left: 0.35rem;
 }
 
 .editor-help-hint__trigger {

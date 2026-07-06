@@ -152,95 +152,98 @@ export function EditorToolbar({
 
   return (
     <div className="editor-toolbar">
-      {activeEntry && (
-        <span className="editor-toolbar__pack" title={t('editor.activePack')}>
-          {activeEntry.modpackVersion}
-        </span>
-      )}
-      <div className="editor-toolbar__add">
-        <SearchCombobox
-          mode="machine"
-          className="editor-toolbar__machine-search"
-          items={machineItems}
-          value={resolvedMachineId ?? ''}
-          explicitId={machineExplicitId}
-          placeholder={t('editor.searchMachine')}
-          onExplicitPick={setMachineExplicitId}
-          onQueryChange={setMachineQuery}
-          resetKey={machineResetKey}
-          onChange={() => {}}
-        />
+      <div className="editor-toolbar__group">
+        {activeEntry && (
+          <span className="editor-toolbar__pack" title={t('editor.activePack')}>
+            {activeEntry.modpackVersion}
+          </span>
+        )}
+        <div className="editor-toolbar__add">
+          <SearchCombobox
+            mode="machine"
+            className="editor-toolbar__machine-search"
+            items={machineItems}
+            value={resolvedMachineId ?? ''}
+            explicitId={machineExplicitId}
+            placeholder={t('editor.searchMachine')}
+            onExplicitPick={setMachineExplicitId}
+            onQueryChange={setMachineQuery}
+            resetKey={machineResetKey}
+            onChange={() => {}}
+          />
+          <button
+            type="button"
+            className="btn"
+            onClick={handleAddMachine}
+            disabled={!resolvedMachineId}
+          >
+            {t('editor.addMachine')}
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleAddCustomMachine}
+            disabled={!pack}
+          >
+            {t('editor.addCustomMachine')}
+          </button>
+        </div>
         <button
           type="button"
-          className="btn"
-          onClick={handleAddMachine}
-          disabled={!resolvedMachineId}
+          className="btn btn-secondary"
+          onClick={duplicateSelected}
+          disabled={selectedNodeIds.length === 0}
         >
-          {t('editor.addMachine')}
+          {t('editor.duplicate')}
+        </button>
+        <button type="button" className="btn btn-secondary" onClick={undo}>
+          {t('editor.undo')} (Ctrl+Z)
+        </button>
+        <button type="button" className="btn btn-secondary" onClick={redo}>
+          {t('editor.redo')} (Ctrl+Y)
+        </button>
+        {flowComputeState !== 'idle' && (
+          <span className="editor-toolbar__compute" aria-live="polite">
+            {flowComputeState === 'computing'
+              ? t('editor.flowComputing')
+              : t('editor.flowStale')}
+          </span>
+        )}
+        <button
+          type="button"
+          className="btn btn-secondary editor-toolbar__clear"
+          onClick={handleClearScheme}
+          disabled={scheme.nodes.length === 0 && scheme.edges.length === 0}
+        >
+          {t('editor.clearScheme')}
+        </button>
+      </div>
+      <div className="editor-toolbar__group editor-toolbar__group--end">
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => downloadTfgp(scheme)}
+        >
+          {t('editor.export')}
         </button>
         <button
           type="button"
           className="btn btn-secondary"
-          onClick={handleAddCustomMachine}
-          disabled={!pack}
+          onClick={() => fileInputRef.current?.click()}
         >
-          {t('editor.addCustomMachine')}
+          {t('editor.import')}
         </button>
+        <input
+          ref={fileInputRef}
+          id="editor-import-tfgp"
+          name="tfgp-import"
+          type="file"
+          accept=".tfgp,application/json"
+          hidden
+          onChange={handleImport}
+        />
+        <EditorHelpHint />
       </div>
-      <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={duplicateSelected}
-        disabled={selectedNodeIds.length === 0}
-      >
-        {t('editor.duplicate')}
-      </button>
-      <button type="button" className="btn btn-secondary" onClick={undo}>
-        {t('editor.undo')} (Ctrl+Z)
-      </button>
-      <button type="button" className="btn btn-secondary" onClick={redo}>
-        {t('editor.redo')} (Ctrl+Y)
-      </button>
-      {flowComputeState !== 'idle' && (
-        <span className="editor-toolbar__compute" aria-live="polite">
-          {flowComputeState === 'computing'
-            ? t('editor.flowComputing')
-            : t('editor.flowStale')}
-        </span>
-      )}
-      <span className="editor-toolbar__hint">{t('editor.deleteHint')}</span>
-      <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={() => downloadTfgp(scheme)}
-      >
-        {t('editor.export')}
-      </button>
-      <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={() => fileInputRef.current?.click()}
-      >
-        {t('editor.import')}
-      </button>
-      <button
-        type="button"
-        className="btn btn-secondary editor-toolbar__clear"
-        onClick={handleClearScheme}
-        disabled={scheme.nodes.length === 0 && scheme.edges.length === 0}
-      >
-        {t('editor.clearScheme')}
-      </button>
-      <input
-        ref={fileInputRef}
-        id="editor-import-tfgp"
-        name="tfgp-import"
-        type="file"
-        accept=".tfgp,application/json"
-        hidden
-        onChange={handleImport}
-      />
-      <EditorHelpHint />
       <ConfirmDialog
         open={clearConfirmOpen}
         title={t('editor.clearScheme')}

@@ -123,7 +123,6 @@ const resources = {
         searchMachine: 'Поиск машины…',
         searchRecipe: 'Поиск рецепта…',
         noMatches: 'Ничего не найдено',
-        deleteHint: 'Del — удалить узел или связь',
         help: {
           title: 'Управление',
           selectBoxWindow:
@@ -470,7 +469,6 @@ const resources = {
         searchMachine: 'Search machines…',
         searchRecipe: 'Search recipes…',
         noMatches: 'No matches',
-        deleteHint: 'Del — delete node or edge',
         help: {
           title: 'Controls',
           selectBoxWindow:
