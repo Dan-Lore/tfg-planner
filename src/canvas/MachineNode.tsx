@@ -278,7 +278,7 @@ function MachineNodeComponent({ id, data, dragging, width }: NodeProps) {
               e.stopPropagation();
               actions.onMachineCountChange(
                 id,
-                adjustByWheel(d.machineCount, e.deltaY, 1, 1),
+                adjustByWheel(d.machineCount, e.deltaY, 1, 0),
               );
             }}
           />

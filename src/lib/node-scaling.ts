@@ -2,6 +2,7 @@ import type { TfgpNode, TfgpCustomMachineNode } from '@/schema/tfgp-types';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { normalizeNodeVoltage } from '@/lib/node-voltage';
 import { isBufferNode, isCustomMachineNode } from '@/lib/node-kind';
+import { clampMachineCount } from '@/lib/machine-count';
 import { clampNonNegativeInt } from '@/lib/buffer-defaults';
 
 /** Raw node from `.tfgp` JSON; may include legacy fields stripped on import. */
@@ -26,7 +27,7 @@ export function normalizeCustomMachineNode(node: TfgpCustomMachineNode): TfgpCus
     ...node,
     kind: 'custom_machine',
     durationTicks: safeDuration,
-    machineCount: Math.max(1, Math.ceil(node.machineCount ?? 1)),
+    machineCount: clampMachineCount(node.machineCount ?? 1),
     overclock,
     inputs: (node.inputs ?? []).map(({ label: rawLabel, ...p }) => {
       const label = rawLabel?.trim();
@@ -76,7 +77,7 @@ export function normalizeNodeScaling(node: RawTfgpNode): TfgpNode {
   if (isCustomMachineNode(node)) {
     return normalizeCustomMachineNode(node);
   }
-  let machineCount = Math.max(1, node.machineCount ?? 1);
+  let machineCount = clampMachineCount(node.machineCount ?? 1);
   const parallel = Math.max(1, node.parallel ?? 1);
   if (parallel !== 1) {
     machineCount = machineCount * parallel;

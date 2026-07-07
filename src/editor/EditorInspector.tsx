@@ -33,6 +33,7 @@ import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipeComboboxItems } from '@/lib/search-combobox';
 import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
+import { clampMachineCount } from '@/lib/machine-count';
 import type { TfgpCustomMachineNode, TfgpEdge, TfgpEdgeConstraint, TfgpMachineNode, TfgpNode, TfgpNodeBase, TfgpSupplyMode } from '@/schema/tfgp';
 import { buildCustomMachinePortDisplaysForNode, customNodeAsScheme } from '@/canvas/port-label-stubs';
 import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
@@ -279,7 +280,7 @@ function MachineInspector({
         />
         <label htmlFor={`${node.id}-machine-count`}>{t('editor.machineCount')}</label>
         <WheelNumberInput
-          min={1}
+          min={0}
           step={1}
           value={node.machineCount}
           inputProps={{
@@ -287,7 +288,7 @@ function MachineInspector({
             name: `${node.id}-machine-count`,
           }}
           onChange={(machineCount) =>
-            updateNode(node.id, { machineCount: Math.max(1, machineCount) })
+            updateNode(node.id, { machineCount: clampMachineCount(machineCount) })
           }
         />
         <label htmlFor={`${node.id}-overclock`}>{t('editor.overclock')}</label>
@@ -742,12 +743,12 @@ function CustomMachineInspector({
         />
         <label htmlFor={`${node.id}-custom-machine-count`}>{t('editor.machineCount')}</label>
         <WheelNumberInput
-          min={1}
+          min={0}
           step={1}
           value={node.machineCount}
           inputProps={{ id: `${node.id}-custom-machine-count` }}
           onChange={(machineCount) =>
-            updateNode(node.id, { machineCount: Math.max(1, machineCount) })
+            updateNode(node.id, { machineCount: clampMachineCount(machineCount) })
           }
         />
         <label htmlFor={`${node.id}-custom-overclock`}>{t('editor.overclock')}</label>

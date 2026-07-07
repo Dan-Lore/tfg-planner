@@ -83,6 +83,45 @@ describe('solveFlows', () => {
     expect(result.edgeFlows['e1'].toNumber()).toBeGreaterThan(0);
   });
 
+  it('machineCount 0 disables throughput in preserve mode', () => {
+    const result = solveFlows({
+      pack: samplePack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm1',
+          recipeId: 'r1',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV' as const,
+        },
+        {
+          id: 'b',
+          machineId: 'm2',
+          recipeId: 'r2',
+          machineCount: 0,
+          overclock: 1,
+          voltageTier: 'LV' as const,
+        },
+      ],
+      edges: [
+        {
+          id: 'e1',
+          source: 'a',
+          target: 'b',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          itemId: 'crushed',
+        },
+      ],
+      preserveManualMachineCounts: true,
+    });
+
+    expect(result.nodeMachineCounts['b']).toBe(0);
+    expect(result.nodeOutputRates.b!.ingot?.toNumber() ?? 0).toBe(0);
+    expect(result.edgeFlows['e1'].toNumber()).toBe(0);
+  });
+
   it('preserve mode scales input and output rates with manual machine count', () => {
     const mixerRecipe = {
       id: 'mix',

@@ -1,4 +1,4 @@
-const FLOW_DEBOUNCE_MS = 100;
+const FLOW_DEBOUNCE_MS = 500;
 
 export type DebouncedFn = (() => void) & { flush: () => void; cancel: () => void };
 

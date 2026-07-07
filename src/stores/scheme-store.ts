@@ -22,6 +22,7 @@ import { defaultVoltageTierForRecipe } from '@/calculator/energy';
 import { usePackStore } from './pack-store';
 import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
 import { estimateBufferDefaults, clampNonNegativeInt } from '@/lib/buffer-defaults';
+import { clampMachineCount } from '@/lib/machine-count';
 import { normalizeBufferNode, normalizeCustomMachineNode } from '@/lib/node-scaling';
 import {
   createEmptyCustomMachine,
@@ -378,6 +379,9 @@ export const useSchemeStore = create<SchemeState>()(
               }
               if (!isMachineNode(n)) return n;
               let next: TfgpMachineNode = { ...n, ...(patch as Partial<TfgpMachineNode>) };
+              if ('machineCount' in patch && patch.machineCount != null) {
+                next = { ...next, machineCount: clampMachineCount(patch.machineCount) };
+              }
               if ('recipeId' in patch && patch.recipeId && pack) {
                 const recipe = getRecipe(pack, patch.recipeId);
                 next = { ...next, ...patchForRecipeChange(recipe, n) };

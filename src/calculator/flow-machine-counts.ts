@@ -15,6 +15,7 @@ import {
   isSchemeBufferNode,
   isSchemeStartBuffer,
 } from '@/calculator/buffer-solver';
+import { clampMachineCount } from '@/lib/machine-count';
 import { assignEdgeFlowsFromPorts } from '@/calculator/flow-edge-assignment';
 import {
   buildNodePortOutputRates,
@@ -23,12 +24,16 @@ import {
 } from '@/calculator/flow-rates';
 import type { SchemeEdge, SchemeNode } from '@/calculator/flow-solver-types';
 
+function manualMachineCount(count: number): number {
+  return clampMachineCount(count);
+}
+
 function freezeManualMachineCounts(
   nodes: SchemeNode[],
   nodeMachineCounts: Record<string, number>,
 ): void {
   for (const node of nodes) {
-    nodeMachineCounts[node.id] = Math.max(1, node.machineCount);
+    nodeMachineCounts[node.id] = manualMachineCount(node.machineCount);
   }
 }
 
@@ -104,7 +109,7 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
   const requiredOutput: Record<string, Record<string, Rational>> = {};
 
   for (const node of nodes) {
-    nodeMachineCounts[node.id] = Math.max(1, node.machineCount);
+    nodeMachineCounts[node.id] = manualMachineCount(node.machineCount);
     requiredOutput[node.id] = {};
   }
 
