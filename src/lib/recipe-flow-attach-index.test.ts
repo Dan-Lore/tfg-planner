@@ -98,6 +98,52 @@ describe('recipe-flow-attach-index', () => {
     expect(candidates.some((c) => c.recipeId === 'gtceu:gas_collector/air')).toBe(true);
   });
 
+  it('resolves thermal centrifuge from purified ore without forge tag in meta', () => {
+    const macerator: Recipe = {
+      id: 'gtceu:macerator/macerate_chalcopyrite_crushed_ore_to_dust',
+      machineId: 'gtceu:macerator',
+      inputs: [{ itemId: 'gtceu:purified_chalcopyrite_ore', amount: 1 }],
+      outputs: [{ itemId: 'gtceu:chalcopyrite_dust', amount: 2 }],
+      durationTicks: 200,
+    };
+    const thermalCentrifuge: Recipe = {
+      id: 'gtceu:thermal_centrifuge/centrifuge_chalcopyrite_purified_ore_to_refined_ore',
+      machineId: 'gtceu:thermal_centrifuge',
+      inputs: [{ itemId: '#forge:purified_ores/chalcopyrite', amount: 1 }],
+      outputs: [{ itemId: 'gtceu:refined_chalcopyrite_ore', amount: 1 }],
+      durationTicks: 400,
+    };
+    const pack = miniPack([macerator, thermalCentrifuge], fluids);
+    pack.items = [
+      {
+        id: 'gtceu:purified_chalcopyrite_ore',
+        names: { ru: 'Очищенная халькопиритовая руда', en: 'Purified Chalcopyrite Ore' },
+      },
+    ];
+    const packTags = buildTagIndexFromMeta(pack);
+    const index = buildRecipeFlowAttachIndex(pack.recipes, packTags);
+    const flow = { itemId: 'gtceu:purified_chalcopyrite_ore', amount: 1 };
+    const machineIds = machineIdsForFlowAttach(index, flow, 'downstream', packTags);
+    expect(machineIds.has('gtceu:macerator')).toBe(true);
+    expect(machineIds.has('gtceu:thermal_centrifuge')).toBe(true);
+
+    const recipesById = new Map(pack.recipes.map((r) => [r.id, r]));
+    const candidates = findAttachCandidatesFromIndex(
+      pack,
+      index,
+      recipesById,
+      flow,
+      'downstream',
+      'ru',
+      packTags,
+    );
+    expect(
+      candidates.some(
+        (c) => c.recipeId === 'gtceu:thermal_centrifuge/centrifuge_chalcopyrite_purified_ore_to_refined_ore',
+      ),
+    ).toBe(true);
+  });
+
   it('dedupes @lcr mirror when native large chemical reactor recipe exists', () => {
     const body = {
       machineId: 'gtceu:large_chemical_reactor',

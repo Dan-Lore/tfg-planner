@@ -1,6 +1,7 @@
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import type { PackMeta, Recipe } from '@/data/types';
 import { buildRecipeFlowAttachIndex } from '@/lib/recipe-flow-attach-index';
 import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/lib/tag-index';
@@ -21,10 +22,15 @@ describe('generate flow-index', () => {
       }
       const meta = JSON.parse(readFileSync(join(PACK_DIR, 'pack.meta.json'), 'utf8')) as PackMeta;
       const tags = buildTagIndexForRecipes(meta, recipes, buildTagIndexFromMeta(meta));
-      const outPath = join(RECIPES_DIR, 'flow-index.json');
-      writeFileSync(outPath, JSON.stringify(buildRecipeFlowAttachIndex(recipes, tags)));
+      const outDir = mkdtempSync(join(tmpdir(), 'tfg-flow-index-'));
+      const outPath = join(outDir, 'flow-index.json');
+      const index = buildRecipeFlowAttachIndex(recipes, tags);
+      writeFileSync(outPath, JSON.stringify(index));
+      expect(recipes.length).toBeGreaterThan(50_000);
+      const sizeMb = Buffer.byteLength(JSON.stringify(index)) / (1024 * 1024);
+      expect(sizeMb).toBeLessThan(50);
       // eslint-disable-next-line no-console
-      console.log(`Wrote ${outPath} (${recipes.length} recipes)`);
+      console.log(`Wrote ${outPath} (${recipes.length} recipes, ${sizeMb.toFixed(1)} MB)`);
     },
     120_000,
   );

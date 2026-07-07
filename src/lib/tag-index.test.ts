@@ -27,6 +27,12 @@ describe('tag-rules', () => {
     );
   });
 
+  it('matches GTCEu purified ore ids to forge purified_ores tags', () => {
+    expect(
+      productMatchesTag('#forge:purified_ores/chalcopyrite', 'gtceu:purified_chalcopyrite_ore'),
+    ).toBe(true);
+  });
+
   it('matches forge simple fluid tags', () => {
     expect(productMatchesTag('#forge:air', 'gtceu:air')).toBe(true);
   });

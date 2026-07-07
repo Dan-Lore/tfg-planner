@@ -2,7 +2,7 @@ import { flowKey, inputPortId, outputPortId } from '@/lib/ports';
 import { getMachineName } from '@/data/pack-registry';
 import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe, PackData } from '@/data/types';
-import { flowLookupKeys } from '@/lib/flow-match';
+import { flowAttachLookupKeys, flowLookupKeys } from '@/lib/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { dedupeAttachCandidates } from '@/lib/recipe-canon';
 import type { TagIndex } from '@/lib/tag-index';
@@ -70,7 +70,7 @@ export function findDownstreamCandidates(
 ): AttachCandidate[] {
   const seen = new Set<string>();
   const refs: RecipePortRef[] = [];
-  for (const key of flowLookupKeys(flow, tags)) {
+  for (const key of flowAttachLookupKeys(flow, tags)) {
     for (const ref of index.byInputKey.get(key) ?? []) {
       const dedupe = `${ref.recipe.id}:${ref.portIndex}`;
       if (seen.has(dedupe)) continue;
@@ -97,7 +97,7 @@ export function findUpstreamCandidates(
 ): AttachCandidate[] {
   const seen = new Set<string>();
   const refs: RecipePortRef[] = [];
-  for (const key of flowLookupKeys(flow, tags)) {
+  for (const key of flowAttachLookupKeys(flow, tags)) {
     for (const ref of index.byOutputKey.get(key) ?? []) {
       const dedupe = `${ref.recipe.id}:${ref.portIndex}`;
       if (seen.has(dedupe)) continue;
@@ -130,7 +130,7 @@ export function findAttachCandidatesFromIndex(
   const seen = new Set<string>();
   const candidates: AttachCandidate[] = [];
 
-  for (const key of flowLookupKeys(flow, tags)) {
+  for (const key of flowAttachLookupKeys(flow, tags)) {
     for (const ref of map[key] ?? []) {
       const dedupe = `${ref.recipeId}:${ref.portIndex}`;
       if (seen.has(dedupe)) continue;

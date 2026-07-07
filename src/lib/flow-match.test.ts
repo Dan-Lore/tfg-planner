@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { edgeProductMatchesFlow, flowsCompatible, flowLookupKeys } from '@/lib/flow-match';
+import {
+  edgeProductMatchesFlow,
+  flowAttachLookupKeys,
+  flowsCompatible,
+  flowLookupKeys,
+} from '@/lib/flow-match';
 import { buildTagIndex, buildTagIndexFromMeta } from '@/lib/tag-index';
 import type { PackData } from '@/data/types';
 
@@ -44,6 +49,26 @@ const tagMetaFixture = {
   ],
   fluids: [{ id: 'gtceu:air', names: { ru: 'x', en: 'x' } }],
 };
+
+describe('flowLookupKeys inferred forge ore tags', () => {
+  it('includes purified ore tag without explicit tag entry in meta', () => {
+    const tags = buildTagIndexFromMeta({
+      items: [
+        {
+          id: 'gtceu:purified_chalcopyrite_ore',
+          names: { ru: 'x', en: 'x' },
+        },
+      ],
+      fluids: [],
+    });
+    const keys = flowAttachLookupKeys(
+      { itemId: 'gtceu:purified_chalcopyrite_ore', amount: 1 },
+      tags,
+    );
+    expect(keys).toContain('item:gtceu:purified_chalcopyrite_ore');
+    expect(keys).toContain('item:#forge:purified_ores/chalcopyrite');
+  });
+});
 
 describe('edgeProductMatchesFlow', () => {
   const tags = buildTagIndexFromMeta(tagMetaFixture);

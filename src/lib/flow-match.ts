@@ -1,5 +1,6 @@
 import { flowKey } from '@/lib/ports';
 import type { Flow } from '@/data/types';
+import { expandTagAliases, inferTagsForProduct } from '@/lib/tag-rules';
 import type { TagIndex } from './tag-index';
 
 export function flowProductId(flow: { itemId?: string; fluidId?: string }): string {
@@ -44,19 +45,38 @@ function flowWithProductId(flow: Flow, productId: string): Flow {
   return { itemId: productId, amount: flow.amount, chance: flow.chance };
 }
 
+export interface FlowLookupKeyOptions {
+  /** Resolve inferred forge/mod tags for concrete product ids (port attach lookup only). */
+  inferProductTags?: boolean;
+}
+
 export function flowLookupKeys(
   flow: Flow,
   tags: TagIndex,
+  options?: FlowLookupKeyOptions,
 ): string[] {
   const keys = new Set<string>();
   keys.add(flowKey(flow));
   const id = flowProductId(flow);
   if (id && !id.startsWith('#')) {
-    for (const tagId of tags.tagsForItem.get(id) ?? []) {
+    const tagIds = new Set<string>(tags.tagsForItem.get(id) ?? []);
+    if (options?.inferProductTags) {
+      for (const candidate of inferTagsForProduct(id)) {
+        for (const tagId of expandTagAliases(candidate)) {
+          tagIds.add(tagId);
+        }
+      }
+    }
+    for (const tagId of tagIds) {
       keys.add(flowKey(flowWithProductId(flow, tagId)));
     }
   }
   return [...keys];
+}
+
+/** Lookup keys when attaching from a port carrying a concrete product id. */
+export function flowAttachLookupKeys(flow: Flow, tags: TagIndex): string[] {
+  return flowLookupKeys(flow, tags, { inferProductTags: true });
 }
 
 export function recipeInputMatchesProduct(

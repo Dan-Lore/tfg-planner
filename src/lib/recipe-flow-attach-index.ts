@@ -1,5 +1,5 @@
 import type { Flow, Recipe, RecipeFlowAttachIndex, RecipeFlowAttachRef } from '@/data/types';
-import { flowLookupKeys } from '@/lib/flow-match';
+import { flowAttachLookupKeys, flowLookupKeys } from '@/lib/flow-match';
 import type { TagIndex } from '@/lib/tag-index';
 
 function addRef(
@@ -61,7 +61,7 @@ export function machineIdsForFlowAttach(
   const map =
     direction === 'downstream' ? attachIndex.byInputKey : attachIndex.byOutputKey;
   const machineIds = new Set<string>();
-  for (const key of flowLookupKeys(flow, tags)) {
+  for (const key of flowAttachLookupKeys(flow, tags)) {
     for (const ref of map[key] ?? []) {
       machineIds.add(ref.machineId);
     }
