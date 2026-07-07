@@ -2,7 +2,7 @@ import { flowKey, inputPortId, outputPortId } from '@/lib/ports';
 import { getMachineName } from '@/data/pack-registry';
 import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe, PackData } from '@/data/types';
-import { flowAttachLookupKeys, flowLookupKeys } from '@/lib/flow-match';
+import { flowAttachLookupKeys } from '@/lib/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { dedupeAttachCandidates } from '@/lib/recipe-canon';
 import type { TagIndex } from '@/lib/tag-index';
