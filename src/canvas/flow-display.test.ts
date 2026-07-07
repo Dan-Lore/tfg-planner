@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { R } from '@/calculator/rational';
-import { buildEdgeFlowData, buildNodeBalanceLines, buildOutputPortLoadMeta } from '@/canvas/flow-display';
+import { buildEdgeFlowData, buildNodeBalanceLines, buildNodeBottleneckMeta, buildOutputPortLoadMeta } from '@/canvas/flow-display';
 import type { PackData } from '@/data/types';
 import type { TfgpEdge, TfgpMachineNode } from '@/schema/tfgp';
 import { emptyFlowResult } from '@/test/flow-result-fixture';
@@ -100,6 +100,87 @@ describe('buildEdgeFlowData', () => {
     expect(data.e1?.source).toBe('4.00/s');
     expect(data.e3?.source).toBe('1.00/s');
     expect(edges.filter((e) => data[e.id]?.target)).toHaveLength(3);
+  });
+
+  it('prefixes ~ on edge labels for chanced recipe ports', () => {
+    const chancedPack: PackData = {
+      ...pack,
+      recipes: [
+        {
+          id: 'catalyst',
+          machineId: 'lcr',
+          durationTicks: 100,
+          inputs: [{ itemId: 'dust', amount: 1, chance: 1000 }],
+          outputs: [{ itemId: 'out', amount: 1 }],
+        },
+        {
+          id: 'producer',
+          machineId: 'elec',
+          durationTicks: 100,
+          inputs: [{ fluidId: 'gas', amount: 1000 }],
+          outputs: [{ itemId: 'dust', amount: 1, chance: 1000 }],
+        },
+      ],
+    };
+    const consumer: TfgpMachineNode = {
+      id: 'consumer',
+      machineId: 'lcr',
+      recipeId: 'catalyst',
+      position: { x: 200, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV',
+    };
+    const producer: TfgpMachineNode = {
+      id: 'producer',
+      machineId: 'elec',
+      recipeId: 'producer',
+      position: { x: 0, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV',
+    };
+    const edges: TfgpEdge[] = [
+      {
+        id: 'e_out',
+        source: 'producer',
+        target: 'buf',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'dust',
+      },
+      {
+        id: 'e_in',
+        source: 'buf',
+        target: 'consumer',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'dust',
+      },
+    ];
+    const buffer = {
+      id: 'buf',
+      kind: 'intermediate_buffer' as const,
+      machineId: '',
+      recipeId: '',
+      position: { x: 100, y: 0 },
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'LV' as const,
+      itemId: 'dust',
+      capacity: 100,
+    };
+    const result = emptyFlowResult({
+      edgeFlows: {
+        e_out: R.from(0.25),
+        e_in: R.from(0.025),
+      },
+    });
+    const data = buildEdgeFlowData(edges, [producer, buffer, consumer], chancedPack, result);
+    expect(data.e_out?.source).toBe('~0.2500/s');
+    expect(data.e_out?.target).toBe('0.2500/s');
+    expect(data.e_in?.source).toBe('0.0250/s');
+    expect(data.e_in?.target).toBe('~0.0250/s');
   });
 
   it('dedupes target labels when multiple edges hit the same input port', () => {
@@ -620,5 +701,165 @@ describe('buildOutputPortLoadMeta', () => {
     expect(meta.out_0?.loadPercent).toBeCloseTo(50, 5);
     expect(meta.out_0?.title).toContain('editor.portOutConsumerDemandTitle');
     expect(meta.out_0?.title).toContain('"load":"96%"');
+  });
+});
+
+describe('buildNodeBottleneckMeta', () => {
+  const recipe = pack.recipes[0]!;
+  const t = (key: string, opts?: Record<string, string>) =>
+    `${key}:${JSON.stringify(opts ?? {})}`;
+
+  const mixerScheme = {
+    id: 'mixer1',
+    machineId: 'mixer',
+    recipeId: 'mix',
+    machineCount: 2,
+    overclock: 1,
+    voltageTier: 'LV' as const,
+  };
+
+  it('returns input bottleneck when inflow limits throughput', () => {
+    const result = emptyFlowResult({
+      nodeMaxLoad: { mixer1: R.from(0.5) },
+      nodePortInLoad: { mixer1: { in_0: R.from(0.5), in_1: R.from(1), in_2: R.from(1) } },
+      nodePortOutRecipeLoad: { mixer1: { out_0: R.from(0.5) } },
+      nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
+    });
+
+    const meta = buildNodeBottleneckMeta(
+      mixerScheme,
+      recipe,
+      new Set(['in_0', 'in_1', 'in_2']),
+      new Set(['out_0']),
+      result,
+      pack,
+      'en',
+      t,
+    );
+
+    expect(meta?.kind).toBe('input');
+    expect(meta?.portId).toBe('in_0');
+    expect(meta?.productId).toBe('a');
+    expect(meta?.shortLabel).toContain('editor.bottleneck.inputShort');
+  });
+
+  it('returns output bottleneck when inputs allow more than downstream pulls', () => {
+    const result = emptyFlowResult({
+      nodeMaxLoad: { mixer1: R.from(1) },
+      nodePortInLoad: { mixer1: { in_0: R.from(1), in_1: R.from(1), in_2: R.from(1) } },
+      nodePortOutRecipeLoad: { mixer1: { out_0: R.from(0.1) } },
+      nodePortOutConsumerLoad: { mixer1: { out_0: R.from(1) } },
+      nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
+    });
+
+    const meta = buildNodeBottleneckMeta(
+      mixerScheme,
+      recipe,
+      new Set(['in_0', 'in_1', 'in_2']),
+      new Set(['out_0']),
+      result,
+      pack,
+      'en',
+      t,
+    );
+
+    expect(meta?.kind).toBe('output');
+    expect(meta?.portId).toBe('out_0');
+    expect(meta?.productId).toBe('out');
+    expect(meta?.shortLabel).toContain('editor.bottleneck.outputShort');
+  });
+
+  it('returns undefined on supplier when downstream still wants more of the product', () => {
+    const result = emptyFlowResult({
+      nodeMaxLoad: { mixer1: R.from(1) },
+      nodePortInLoad: { mixer1: { in_0: R.from(1), in_1: R.from(1), in_2: R.from(1) } },
+      nodePortOutRecipeLoad: { mixer1: { out_0: R.from(0.1) } },
+      nodePortOutConsumerLoad: { mixer1: { out_0: R.from(0.09) } },
+      nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
+    });
+
+    const meta = buildNodeBottleneckMeta(
+      mixerScheme,
+      recipe,
+      new Set(['in_0', 'in_1', 'in_2']),
+      new Set(['out_0']),
+      result,
+      pack,
+      'en',
+      t,
+    );
+
+    expect(meta).toBeUndefined();
+  });
+
+  it('returns output bottleneck when inputs allow more throughput than recipe runs', () => {
+    const crackerRecipe = {
+      id: 'cracker',
+      machineId: 'gtceu:cracker',
+      durationTicks: 320,
+      inputs: [
+        { fluidId: 'tfg:reformed_aromatic_feedstock', amount: 2000 },
+        { fluidId: 'gtceu:steam', amount: 4000 },
+      ],
+      outputs: [
+        { fluidId: 'tfg:reformate_gas', amount: 8000 },
+        { fluidId: 'tfg:cracker_off_gas', amount: 1000 },
+      ],
+    };
+    const crackerScheme = {
+      id: 'cracker1',
+      machineId: 'gtceu:cracker',
+      recipeId: 'cracker',
+      machineCount: 1,
+      overclock: 1,
+      voltageTier: 'HV' as const,
+    };
+    const result = emptyFlowResult({
+      nodeMaxLoad: { cracker1: R.from(8 / 9) },
+      nodePortInLoad: { cracker1: { in_0: R.from(8 / 9), in_1: R.from(1) } },
+      nodePortOutRecipeLoad: {
+        cracker1: { out_0: R.from(0.18), out_1: R.from(0.18) },
+      },
+      nodePortOutConsumerLoad: { cracker1: { out_1: R.from(1) } },
+      nodePortOutputRates: {
+        cracker1: { out_0: R.from(500), out_1: R.from(62.5) },
+      },
+    });
+
+    const meta = buildNodeBottleneckMeta(
+      crackerScheme,
+      crackerRecipe,
+      new Set(['in_0', 'in_1']),
+      new Set(['out_0', 'out_1']),
+      result,
+      pack,
+      'en',
+      t,
+    );
+
+    expect(meta?.kind).toBe('output');
+    expect(meta?.portId).toBe('out_1');
+    expect(meta?.productId).toBe('tfg:cracker_off_gas');
+  });
+
+  it('returns undefined at full recipe throughput', () => {
+    const result = emptyFlowResult({
+      nodeMaxLoad: { mixer1: R.from(1) },
+      nodePortOutRecipeLoad: { mixer1: { out_0: R.from(1) } },
+      nodePortOutputRates: { mixer1: { out_0: R.from(2) } },
+    });
+
+    const meta = buildNodeBottleneckMeta(
+      mixerScheme,
+      recipe,
+      new Set(['in_0']),
+      new Set(['out_0']),
+      result,
+      pack,
+      'en',
+      t,
+    );
+
+    expect(meta).toBeUndefined();
   });
 });

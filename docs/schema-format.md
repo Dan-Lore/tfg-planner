@@ -75,12 +75,6 @@
       "name": "Участок плавки",
       "nodeIds": ["n1", "n2"]
     }
-  ],
-  "targets": [
-    {
-      "itemId": "gt:copper_plate",
-      "ratePerSecond": 1
-    }
   ]
 }
 ```
@@ -128,10 +122,6 @@
 | `name` | string | Подпись на холсте |
 | `nodeIds` | string[] | Узлы внутри рамки |
 
-### targets
-
-Режим C — **целевой продукт на выходе** (как в Factorio Calculator — «хочу N штук в секунду»).
-
 ### edgeConstraints (optional)
 
 Закрепление потока на **конкретном ребре** (режим pin, K-002). Массив объектов:
@@ -153,6 +143,7 @@ application/vnd.tfg-planner.graph+json
 
 - Старые версии формата читаются через цепочку миграций `vN → vN+1`.
 - Неизвестные поля в JSON игнорируются (forward compatibility).
+- Legacy-поле `targets[]` в старых `.tfgp` **игнорируется** при импорте (не сохраняется в export).
 
 ## Пример файла
 

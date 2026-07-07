@@ -31,7 +31,7 @@ import {
   type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
-import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection, flowGraphArraysEqual } from '@/lib/merge-flow-nodes';
+import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection, applyIssuePanelEdgeFocus, flowGraphArraysEqual } from '@/lib/merge-flow-nodes';
 import {
   NodeInternalsGateProvider,
   useInternalsHold,
@@ -78,6 +78,7 @@ export type EditorCanvasProps = {
   rfNodes: Node[];
   rfEdges: Edge[];
   selectedNodeIds: string[];
+  selectedEdgeIds: string[];
   nodeTypes: NodeTypes;
   edgeTypes: EdgeTypes;
   colorTheme: 'light' | 'dark' | 'system';
@@ -107,6 +108,8 @@ export interface EditorCanvasHandle {
     nodeIds: readonly string[];
     edgeIds: readonly string[];
   }) => void;
+  /** Clear issue-panel edge highlight. */
+  clearEdgeFocus: () => void;
 }
 
 function EdgeReadinessBridge({
@@ -149,6 +152,7 @@ type EditorCanvasBodyProps = {
   flowNodes: Node[];
   flowEdges: Edge[];
   selectedNodeIds: string[];
+  selectedEdgeIds: string[];
   nodeTypes: NodeTypes;
   edgeTypes: EdgeTypes;
   colorTheme: 'light' | 'dark' | 'system';
@@ -177,6 +181,7 @@ function EditorCanvasBody({
   flowNodes,
   flowEdges,
   selectedNodeIds,
+  selectedEdgeIds,
   nodeTypes,
   edgeTypes,
   colorTheme,
@@ -231,7 +236,7 @@ function EditorCanvasBody({
   );
 
   return (
-    <SelectionProvider selectedNodeIds={selectedNodeIds}>
+    <SelectionProvider selectedNodeIds={selectedNodeIds} selectedEdgeIds={selectedEdgeIds}>
     <ObstacleRectsProvider value={obstacleContext}>
       <EdgeRoutePlanProvider plan={edgeRoutePlan}>
       <ReactFlow
@@ -302,6 +307,7 @@ function EditorCanvasMeasured({
   rfNodes,
   rfEdges,
   selectedNodeIds,
+  selectedEdgeIds,
   nodeTypes,
   edgeTypes,
   colorTheme,
@@ -340,6 +346,7 @@ function EditorCanvasMeasured({
   const [edgesReady, setEdgesReady] = useState(false);
   const flowViewportRef = useRef(flowViewport);
   const panCancelRef = useRef<(() => void) | null>(null);
+  const pendingIssueEdgeFocusRef = useRef<string | null>(null);
 
   flowViewportRef.current = flowViewport;
 
@@ -368,9 +375,12 @@ function EditorCanvasMeasured({
   useLayoutEffect(() => {
     setFlowEdges((prev) => {
       const merged = mergeFlowEdges(prev, rfEdges);
-      return flowGraphArraysEqual(prev, merged) ? prev : merged;
+      const focusId = pendingIssueEdgeFocusRef.current;
+      const focused = applyIssuePanelEdgeFocus(merged, focusId);
+      const next = applyFlowEdgeSelection(focused, selectedEdgeIds);
+      return flowGraphArraysEqual(prev, next) ? prev : next;
     });
-  }, [rfEdges]);
+  }, [rfEdges, selectedEdgeIds]);
 
   useImperativeHandle(
     canvasRef,
@@ -411,8 +421,16 @@ function EditorCanvasMeasured({
         return flowPointAtCanvasCenter(flowViewportRef.current, width, height);
       },
       focusSelection({ edgeIds }) {
+        pendingIssueEdgeFocusRef.current = edgeIds[0] ?? null;
         setFlowEdges((prev) => {
-          const next = applyFlowEdgeSelection(prev, edgeIds);
+          const next = applyIssuePanelEdgeFocus(prev, pendingIssueEdgeFocusRef.current);
+          return flowGraphArraysEqual(prev, next) ? prev : next;
+        });
+      },
+      clearEdgeFocus() {
+        pendingIssueEdgeFocusRef.current = null;
+        setFlowEdges((prev) => {
+          const next = applyIssuePanelEdgeFocus(prev, null);
           return flowGraphArraysEqual(prev, next) ? prev : next;
         });
       },
@@ -493,6 +511,7 @@ function EditorCanvasMeasured({
           flowNodes={flowNodes}
           flowEdges={flowEdges}
           selectedNodeIds={selectedNodeIds}
+          selectedEdgeIds={selectedEdgeIds}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           colorTheme={colorTheme}

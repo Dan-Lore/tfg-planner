@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpTarget, TfgpEdgeConstraint, TfgpBufferKind, TfgpCustomMachineNode } from '@/schema/tfgp';
+import type { TfgpFile, TfgpMachineNode, TfgpNode, TfgpEdge, TfgpEdgeConstraint, TfgpBufferKind, TfgpCustomMachineNode } from '@/schema/tfgp';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import { packKey } from '@/lib/pack-key';
 import { readPersistedEditorSnapshot } from '@/lib/editor-persist';
@@ -105,8 +105,6 @@ export interface SchemeState {
   removeEdges: (ids: string[]) => void;
   setSelectedNodeIds: (ids: string[]) => void;
   setSelectedEdgeIds: (ids: string[]) => void;
-  setTarget: (target: TfgpTarget) => void;
-  clearTarget: (nodeId: string) => void;
   setEdgeConstraint: (constraint: TfgpEdgeConstraint) => void;
   clearEdgeConstraint: (edgeId: string) => void;
   duplicateSelected: () => void;
@@ -172,16 +170,15 @@ export const useSchemeStore = create<SchemeState>()(
       loadScheme: (file) => {
         const pack = usePackStore.getState().activePack;
         const normalizedNodes = normalizeSchemeNodes(file.nodes, pack);
-        const { nodes, edges, targets } = dedupeSchemeTopology(
+        const deduped = dedupeSchemeTopology(
           normalizedNodes,
           file.edges,
-          file.targets,
         );
+        const { nodes, edges } = deduped;
         const normalized = {
           ...file,
           nodes,
           edges,
-          targets,
           edgeConstraints: file.edgeConstraints ?? [],
         };
         seedIdCounter(normalized.nodes, normalized.edges);
@@ -222,7 +219,6 @@ export const useSchemeStore = create<SchemeState>()(
         return {
           nodes: structuredClone(scheme.nodes),
           edges: structuredClone(scheme.edges),
-          targets: structuredClone(scheme.targets),
           edgeConstraints: structuredClone(scheme.edgeConstraints ?? []),
           viewport: { ...scheme.viewport },
         };
@@ -246,7 +242,6 @@ export const useSchemeStore = create<SchemeState>()(
             ...s.scheme,
             nodes: prev.nodes,
             edges: prev.edges,
-            targets: prev.targets,
             edgeConstraints: prev.edgeConstraints,
             viewport: prev.viewport,
           },
@@ -254,7 +249,6 @@ export const useSchemeStore = create<SchemeState>()(
             ...s.scheme,
             nodes: prev.nodes,
             edges: prev.edges,
-            targets: prev.targets,
             edgeConstraints: prev.edgeConstraints,
             viewport: prev.viewport,
           }),
@@ -274,7 +268,6 @@ export const useSchemeStore = create<SchemeState>()(
             ...s.scheme,
             nodes: next.nodes,
             edges: next.edges,
-            targets: next.targets,
             edgeConstraints: next.edgeConstraints,
             viewport: next.viewport,
           },
@@ -282,7 +275,6 @@ export const useSchemeStore = create<SchemeState>()(
             ...s.scheme,
             nodes: next.nodes,
             edges: next.edges,
-            targets: next.targets,
             edgeConstraints: next.edgeConstraints,
             viewport: next.viewport,
           }),
@@ -774,37 +766,6 @@ export const useSchemeStore = create<SchemeState>()(
         const current = get().selectedEdgeIds;
         if (idsEqual(current, ids)) return;
         set({ selectedEdgeIds: ids });
-      },
-
-      setTarget: (target) => {
-        get().pushHistory();
-        set((s) => {
-          const rest = s.scheme.targets.filter((t) => t.nodeId !== target.nodeId);
-          const scheme = {
-            ...s.scheme,
-            targets: [...rest, target],
-          };
-          return {
-            scheme,
-            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
-          };
-        });
-        getFlowStoreState().recalculateScheme();
-      },
-
-      clearTarget: (nodeId) => {
-        get().pushHistory();
-        set((s) => {
-          const scheme = {
-            ...s.scheme,
-            targets: s.scheme.targets.filter((t) => t.nodeId !== nodeId),
-          };
-          return {
-            scheme,
-            schemesByPack: cacheScheme(s.schemesByPack, s.activePackKey, scheme),
-          };
-        });
-        getFlowStoreState().recalculateScheme();
       },
 
       setEdgeConstraint: (constraint) => {

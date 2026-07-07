@@ -10,7 +10,6 @@ import { customMachineRecipeId } from '@/calculator/custom-machine-recipe';
 export interface EditorSnapshot {
   nodes: TfgpNode[];
   edges: TfgpFile['edges'];
-  targets: TfgpFile['targets'];
   edgeConstraints: TfgpFile['edgeConstraints'];
   viewport: TfgpFile['viewport'];
 }
@@ -87,14 +86,6 @@ export function runSolver(
       itemId: e.itemId,
       fluidId: e.fluidId,
     })),
-    targets: snapshot.targets
-      .filter((t) => t.nodeId)
-      .map((t) => ({
-        nodeId: t.nodeId!,
-        itemId: t.itemId,
-        fluidId: t.fluidId,
-        ratePerSecond: t.ratePerSecond,
-      })),
     edgeConstraints: (snapshot.edgeConstraints ?? []).map((c) => ({
       edgeId: c.edgeId,
       ratePerSecond: c.ratePerSecond,

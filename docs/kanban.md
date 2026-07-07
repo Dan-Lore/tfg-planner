@@ -18,7 +18,23 @@
 
 ## Активные карточки
 
-_Нет открытых продуктовых карточек. P2 polish — см. [audit-deficiencies.md](audit-deficiencies.md)._
+### K-024 · Кнопка в тулбаре: расчёт целевой скорости
+
+| Поле | Значение |
+|------|----------|
+| Статус | `backlog` |
+| Область | UI / solver |
+
+**Описание:** кнопка в `EditorToolbar` на выбранном узле — ввод целевой скорости продукта → пересчёт `machineCount` по цепочке (`preserveManualMachineCounts: false`). **Без** поля `targets` в `.tfgp` и без UI в инспекторе.
+
+**Критерий закрытия:**
+- [ ] Кнопка на линейной схеме: цель → пересчёт машин и потоков
+- [ ] Для SCC: поведение зафиксировано в spec (цель на внешний выход, не на петлю)
+- [ ] i18n RU+EN
+
+---
+
+_Прочий P2 polish — см. [audit-deficiencies.md](audit-deficiencies.md)._
 
 ---
 
@@ -51,6 +67,7 @@ CI cron + UI manifest check. Не начинать без явного запр�
 
 | ID | Закрыто | Итог |
 |----|---------|------|
+| K-023 | 2026-07-06 | Cycle bootstrap: seed edge buffer→SCC, pinned flow, UI yellow edge, sign-off rhenium loop |
 | K-018 | 2026-07-06 | Актуализация `audit-deficiencies.md` после 0.4.1 |
 | K-019 | 2026-07-06 | Editor A1–A3: keyboard guard, explicit machine pick, legacy ports |
 | K-020 | 2026-07-06 | Dead code: `flow-result-fixtures`, i18n, deprecated parser exports, `debug-scheme` script |
@@ -60,7 +77,7 @@ CI cron + UI manifest check. Не начинать без явного запр�
 | K-002 | 2026-07-06 | Двусторонний расчёт продуктов; edge constraints; sign-off `rebra-rhenium-loop.tfgp` |
 | K-003 | 2026-07-06 | EU/t на узле; tier picker; selection sum; multiblock hatch → K-012 (blocked) |
 | K-004 | 2026-07-06 | i18n RU+EN; ConfirmDialog; CLI check-scheme `--lang` |
-| K-006 | 2026-07-06 | Undo/redo; copy/paste; target rate (C); box-select + pan |
+| K-006 | 2026-07-06 | Undo/redo; copy/paste; box-select + pan |
 | K-007 | 2026-06-18 | Полнота рецептов: chanced I/O, greenhouse, LCR mirror; pack `0.12.8` → 2781 recipes |
 | K-010 | 2026-06-28 | TFG-native snapshot pipeline; `build-pack --strict-snapshot` 0.12.8 |
 | K-011 | 2026-07-06 | Дефицит/избыток на узлах; propagation upstream |

@@ -16,7 +16,6 @@ export {
   type SchemeEdge,
   type SchemeNode,
   type SchemeNodeKind,
-  type SchemeTarget,
   type SolverInput,
 } from '@/calculator/flow-solver-types';
 
@@ -59,9 +58,13 @@ import {
 } from '@/calculator/buffer-solver';
 
 import { buildRecipeMap } from '@/calculator/custom-machine-recipe';
+import {
+  buildCycleBootstrapPlan,
+  buildCycleSeedResults,
+} from '@/calculator/cycle-bootstrap';
 
 /**
- * Пересчёт потоков: целевые скорости → ceil(machineCount) → потоки по DAG.
+ * Пересчёт потоков: machineCount / edgeConstraints → потоки по DAG.
  */
 export function solveFlows(input: SolverInput): FlowResult {
   const preserveCounts = input.preserveManualMachineCounts !== false;
@@ -81,7 +84,6 @@ export function solveFlows(input: SolverInput): FlowResult {
   const { nodeMachineCounts, nodePortOutputRates, nodeOutputRates } = runMachineCountPhase({
     nodes: input.nodes,
     edges: input.edges,
-    targets: input.targets,
     edgeConstraints,
     preserveCounts,
     recipes,
@@ -105,6 +107,15 @@ export function solveFlows(input: SolverInput): FlowResult {
   );
 
   const pinnedEdgeFlows = pinnedEdgeFlowMap(edgeConstraints);
+  const cycleBootstrap = buildCycleBootstrapPlan(
+    input.nodes,
+    input.edges,
+    recipes,
+    nodePortOutputRates,
+    tags,
+  );
+  // Cycle bootstrap: synthetic inflow on intermediate_buffer only (K-023).
+  // Do not pin seed-edge flow — that caps SCC throughput below machine equilibrium.
 
   const { edgeFlows: convergedEdgeFlows, converged: flowConverged } = computeConvergedFlows(
     input.edges,
@@ -118,6 +129,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     connectedInPortsByNode,
     connectedOutPortsByNode,
     pinnedEdgeFlows,
+    cycleBootstrap.bootstrapInflowByNodeId,
   );
 
   const effectivePortRatesByNode: Record<string, Record<string, Rational>> = {};
@@ -360,7 +372,7 @@ export function solveFlows(input: SolverInput): FlowResult {
     edgeTargetFlows[edge.id] = convergedEdgeFlows[edge.id] ?? R.zero;
   }
 
-  return {
+  const flowResult: FlowResult = {
     edgeFlows: convergedEdgeFlows,
     edgeTargetFlows,
     nodeOutputRates,
@@ -382,4 +394,15 @@ export function solveFlows(input: SolverInput): FlowResult {
     nodeMachineCounts,
     nonConverged: !flowConverged,
   };
+
+  flowResult.cycleSeeds = buildCycleSeedResults(
+    input.nodes,
+    input.edges,
+    input.pack,
+    flowResult,
+    cycleBootstrap.seeds,
+    tags,
+  );
+
+  return flowResult;
 }

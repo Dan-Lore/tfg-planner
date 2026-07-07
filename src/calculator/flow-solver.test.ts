@@ -45,7 +45,7 @@ describe('rounding', () => {
 });
 
 describe('solveFlows', () => {
-  it('linear chain with target', () => {
+  it('linear chain with fixed machine count', () => {
     const result = solveFlows({
       pack: samplePack,
       nodes: [
@@ -61,7 +61,7 @@ describe('solveFlows', () => {
           id: 'b',
           machineId: 'm2',
           recipeId: 'r2',
-          machineCount: 1,
+          machineCount: 3,
           overclock: 1,
           voltageTier: 'LV' as const,
         },
@@ -76,11 +76,10 @@ describe('solveFlows', () => {
           itemId: 'crushed',
         },
       ],
-      targets: [{ nodeId: 'b', itemId: 'ingot', ratePerSecond: 2.5 }],
-      preserveManualMachineCounts: false,
+      preserveManualMachineCounts: true,
     });
 
-    expect(result.nodeMachineCounts['b']).toBeGreaterThanOrEqual(3);
+    expect(result.nodeMachineCounts['b']).toBe(3);
     expect(result.edgeFlows['e1'].toNumber()).toBeGreaterThan(0);
   });
 
@@ -109,14 +108,12 @@ describe('solveFlows', () => {
       pack,
       nodes: [node],
       edges: [],
-      targets: [],
       preserveManualMachineCounts: true,
     });
     const three = solveFlows({
       pack,
       nodes: [{ ...node, machineCount: 3 }],
       edges: [],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -130,7 +127,7 @@ describe('solveFlows', () => {
     expect(three.nodeMachineCounts.n1).toBe(3);
   });
 
-  it('preserve mode keeps manual machine count on target nodes', () => {
+  it('preserve mode keeps manual machine count', () => {
     const mixerRecipe = {
       id: 'mix',
       machineId: 'mixer',
@@ -152,20 +149,18 @@ describe('solveFlows', () => {
       pack,
       nodes: [node],
       edges: [],
-      targets: [{ nodeId: 'n1', itemId: 'out', ratePerSecond: 0.5 }],
       preserveManualMachineCounts: true,
     });
     const full = solveFlows({
       pack,
-      nodes: [node],
+      nodes: [{ ...node, machineCount: 1 }],
       edges: [],
-      targets: [{ nodeId: 'n1', itemId: 'out', ratePerSecond: 0.5 }],
       preserveManualMachineCounts: false,
     });
 
     expect(preserved.nodeMachineCounts.n1).toBe(4);
-    expect(preserved.nodeOutputRates.n1!.out!.toNumber()).toBeGreaterThan(0.5);
-    expect(full.nodeMachineCounts.n1).toBeLessThan(4);
+    expect(preserved.nodeOutputRates.n1!.out!.toNumber()).toBeCloseTo(0.8, 5);
+    expect(full.nodeMachineCounts.n1).toBe(1);
   });
 
   it('assigns per-port output rates and edge flows for duplicate products on separate ports', () => {
@@ -239,7 +234,6 @@ describe('solveFlows', () => {
           itemId: 'tfc:wood/log/pine',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -277,7 +271,6 @@ describe('solveFlows', () => {
         },
       ],
       edges: [],
-      targets: [],
       preserveManualMachineCounts: true,
     });
     expect(result.nodePortOutputRates.n1!.out_0!.toNumber()).toBeCloseTo(0.4, 5);
@@ -314,7 +307,6 @@ describe('solveFlows', () => {
           itemId: 'crushed',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -382,7 +374,6 @@ describe('solveFlows', () => {
           itemId: 'a',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -422,7 +413,6 @@ describe('solveFlows', () => {
           itemId: 'crushed',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -485,7 +475,6 @@ describe('solveFlows', () => {
           itemId: 'crushed',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -552,7 +541,6 @@ describe('solveFlows', () => {
           itemId: 'x',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -673,7 +661,6 @@ describe('solveFlows', () => {
           fluidId: 'h2',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -767,7 +754,6 @@ describe('solveFlows', () => {
           fluidId: 'benzene',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -884,7 +870,6 @@ describe('solveFlows', () => {
           fluidId: 'h2',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -1005,7 +990,6 @@ describe('solveFlows', () => {
           fluidId: 'h2',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -1048,7 +1032,6 @@ describe('solveFlows', () => {
           itemId: 'crushed',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -1188,7 +1171,6 @@ describe('solveFlows', () => {
           fluidId: 'gtceu:hydrogen',
         },
       ],
-      targets: [],
       preserveManualMachineCounts: true,
     });
 
@@ -1283,7 +1265,7 @@ describe('solveFlows', () => {
           itemId: 'ingot',
         },
       ],
-      targets: [{ nodeId: 'b', itemId: 'plate', ratePerSecond: 4 }],
+      edgeConstraints: [{ edgeId: 'e2', ratePerSecond: 4 }],
       preserveManualMachineCounts: false,
     });
 
@@ -1323,7 +1305,6 @@ describe('solveFlows', () => {
         },
       ],
       edgeConstraints: [{ edgeId: 'e1', ratePerSecond: 4 }],
-      targets: [],
       preserveManualMachineCounts: false,
     });
 
@@ -1391,7 +1372,6 @@ describe('solveFlows', () => {
         },
       ],
       edgeConstraints: [{ edgeId: 'e-pin', ratePerSecond: 3 }],
-      targets: [],
       preserveManualMachineCounts: false,
     });
 

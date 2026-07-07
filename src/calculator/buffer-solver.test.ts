@@ -68,7 +68,6 @@ describe('buffer nodes in solveFlows', () => {
           itemId: 'ore',
         },
       ],
-      targets: [],
     });
 
     const flow = result.edgeFlows.e1?.toNumber() ?? 0;
@@ -112,7 +111,6 @@ describe('buffer nodes in solveFlows', () => {
           itemId: 'ore',
         },
       ],
-      targets: [],
     });
 
     const flow = result.edgeFlows.e1?.toNumber() ?? 0;
@@ -171,7 +169,6 @@ describe('buffer nodes in solveFlows', () => {
           itemId: 'ore',
         },
       ],
-      targets: [],
     });
 
     expect(result.edgeFlows.e2?.toNumber()).toBeCloseTo(1, 5);
@@ -229,7 +226,6 @@ describe('buffer nodes in solveFlows', () => {
           itemId: 'ore',
         },
       ],
-      targets: [],
     });
 
     const out = result.edgeFlows.e2?.toNumber() ?? 0;
@@ -326,7 +322,6 @@ describe('buffer nodes in solveFlows', () => {
           itemId: 'ore',
         },
       ],
-      targets: [],
     });
 
     const hvFlow = result.edgeFlows.e_hv?.toNumber() ?? 0;
@@ -372,7 +367,6 @@ describe('buffer nodes in solveFlows', () => {
           itemId: 'ore',
         },
       ],
-      targets: [],
     });
 
     expect(result.edgeFlows.e1?.toNumber()).toBeCloseTo(1, 5);

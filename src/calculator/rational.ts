@@ -7,8 +7,7 @@ export class Rational {
     const d = BigInt(den);
     if (d === 0n) throw new Error('Division by zero');
     const g = gcd(n < 0n ? -n : n, d < 0n ? -d : d);
-    const sign = (n < 0n) !== (d < 0n) ? -1n : 1n;
-    this.num = sign * (n / g);
+    this.num = n / g;
     this.den = d / g;
     if (this.den < 0n) {
       this.num = -this.num;

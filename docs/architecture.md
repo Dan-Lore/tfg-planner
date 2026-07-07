@@ -79,20 +79,20 @@
 - **History stack** (undo/redo): снимки графа + параметров расчёта; controlled `viewport`; Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Shift+Z на macOS).
 - **Масштабирование UI:**
   - A — clipboard duplicate (топология);
-  - C — панель целевой скорости на выходном узле / в `targets`.
+  - ручной `machineCount` в инспекторе; будущая кнопка целевой скорости — K-024.
 - **Editor state:** `useSchemeStore` (топология, selection, undo/redo, persist `schemesByPack` + `activePackKey`) + `useFlowStore` (расчёт, `flowResult`, `schemeCheckResult`, persist `flowsByPack`); `useEditorStore` — facade для существующих consumers. Оба slice пишут в один ключ `tfg-editor-store` через `editor-combined-storage`. После F5: `editor-hydration` ждёт rehydrate обоих slice; восстановление cached flow — в scheme `onRehydrateStorage` (`restoreForPack`), `restore-active-pack` использует `waitForEditorHydration`.
 - **Editor UI:** `EditorPage` — оркестратор; `EditorToolbar`, `EditorSidebar`, `PortAttachMenu`; хуки `useEditorRfGraph`, `useSchemeIssues`. Узлы: store → `SelectionProvider` → `useNodeSelected`; `mergeFlowNodes` не сохраняет RF-local `selected` на merge. Рёбра: см. асимметричную модель выделения выше.
 
 ### 2.5. Calculator Engine
 
-**Модель:** пользователь владеет **топологией** (узлы на холсте); солвер балансирует **продуктовые потоки** и в режиме C обновляет **`machineCount`** на существующих узлах.
+**Модель:** пользователь владеет **топологией** (узлы на холсте); солвер балансирует **продуктовые потоки** по `machineCount`, `edgeConstraints` и cycle bootstrap.
 
 ```
          ┌─────────────────────────────────────┐
          │  User edits:                        │
-         │  · target rate (mode C)             │
-         │  · rate on any edge                 │
-         │  · recipe / OC / machineCount       │
+         │  · machineCount on nodes            │
+         │  · rate pin on edge (constraints)    │
+         │  · recipe / OC / topology           │
          └─────────────────┬───────────────────┘
                            ▼
               ┌────────────────────────┐

@@ -18,6 +18,7 @@ import {
   buildInputPortLoadMeta,
   buildNodeBalanceLines,
   buildNodeLoadMeta,
+  buildNodeBottleneckMeta,
   buildOutputPortLoadMeta,
   rateMapToStrings,
 } from '@/canvas/flow-display';
@@ -25,22 +26,20 @@ import { buildPortDisplays, type PortDisplay } from '@/canvas/MachineNode';
 import { flowLabel } from '@/canvas/ports';
 import { SearchCombobox } from '@/components/SearchCombobox';
 import { WheelNumberInput } from '@/components/WheelNumberInput';
-import { getMachineName, getItemName, getRecipe, getRecipesForMachine } from '@/data/pack-registry';
+import { getMachineName, getRecipe, getRecipesForMachine, getItemName } from '@/data/pack-registry';
 import type { PackLike } from '@/data/pack-registry';
-import type { Recipe } from '@/data/types';
 import { loadGradientStyle } from '@/lib/load-gradient';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipeComboboxItems } from '@/lib/search-combobox';
 import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
-import { productKey } from '@/lib/ports';
-import { primaryOutputIndex } from '@/lib/primary-output';
-import type { TfgpCustomMachineNode, TfgpEdge, TfgpEdgeConstraint, TfgpMachineNode, TfgpNode, TfgpNodeBase, TfgpSupplyMode, TfgpTarget } from '@/schema/tfgp';
+import type { TfgpCustomMachineNode, TfgpEdge, TfgpEdgeConstraint, TfgpMachineNode, TfgpNode, TfgpNodeBase, TfgpSupplyMode } from '@/schema/tfgp';
 import { buildCustomMachinePortDisplaysForNode, customNodeAsScheme } from '@/canvas/port-label-stubs';
 import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
 import type { EditorActions } from '@/editor/editor-actions';
 import { resolveCustomPortLabel } from '@/lib/custom-port-label';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
+import { buildCycleSeedInspectorLines } from '@/lib/cycle-seed-label';
 import { formatSchemeIssueSummary } from '@/scheme-check/format-scheme-issue';
 import { listNodeIssues } from '@/editor/SchemeIssuesPanel';
 
@@ -54,130 +53,6 @@ function formatTotalEu(value: number): string {
   if (value >= 1000) return `${Math.round(value)} EU`;
   if (Number.isInteger(value)) return `${value} EU`;
   return `${Math.round(value * 10) / 10} EU`;
-}
-
-function outputOptionLabel(
-  pack: PackLike,
-  lang: 'ru' | 'en',
-  out: Recipe['outputs'][number],
-  index: number,
-): string {
-  const key = productKey(out);
-  const name = getItemName(pack, key, lang);
-  return name === key ? `out_${index}` : name;
-}
-
-function TargetRateSection({
-  nodeId,
-  recipe,
-  pack,
-  lang,
-  node,
-  targets,
-  setTarget,
-  clearTarget,
-}: {
-  nodeId: string;
-  recipe: Recipe | undefined;
-  pack: PackLike;
-  lang: 'ru' | 'en';
-  node: TfgpNode;
-  targets: TfgpTarget[];
-  setTarget: EditorActions['setTarget'];
-  clearTarget: EditorActions['clearTarget'];
-}) {
-  const { t } = useTranslation();
-  const defaultOutIdx =
-    recipe && isMachineNode(node)
-      ? primaryOutputIndex(
-          {
-            id: node.id,
-            kind: 'machine',
-            machineId: node.machineId,
-            recipeId: node.recipeId,
-            machineCount: node.machineCount,
-            overclock: node.overclock,
-            voltageTier: node.voltageTier,
-            primaryOutputIndex: node.primaryOutputIndex,
-          },
-          recipe,
-        )
-      : recipe && isCustomMachineNode(node)
-        ? primaryOutputIndex(customNodeAsScheme(node), recipe)
-        : 0;
-  const [outIdx, setOutIdx] = useState(defaultOutIdx);
-  const [rateInput, setRateInput] = useState('');
-
-  const currentTarget = targets.find((tgt) => tgt.nodeId === nodeId);
-  const outputs = recipe?.outputs ?? [];
-
-  if (!recipe || outputs.length === 0) return null;
-
-  const selectedOut = outputs[outIdx] ?? outputs[defaultOutIdx];
-  if (!selectedOut) return null;
-
-  return (
-    <InspectorSection title={t('editor.target.title')}>
-      {currentTarget && (
-        <p className="editor-inspector__meta">
-          {t('editor.target.current', { rate: currentTarget.ratePerSecond })}
-        </p>
-      )}
-      <label htmlFor={`${nodeId}-target-product`}>{t('editor.target.product')}</label>
-      <select
-        id={`${nodeId}-target-product`}
-        className="editor-sidebar__select"
-        value={outIdx}
-        onChange={(e) => setOutIdx(Number(e.target.value))}
-      >
-        {outputs.map((out, idx) => (
-          <option key={idx} value={idx}>
-            {outputOptionLabel(pack, lang, out, idx)}
-          </option>
-        ))}
-      </select>
-      <label htmlFor={`${nodeId}-target-rate`}>{t('editor.target.rate')}</label>
-      <input
-        id={`${nodeId}-target-rate`}
-        type="text"
-        inputMode="decimal"
-        value={rateInput}
-        placeholder={currentTarget ? String(currentTarget.ratePerSecond) : '1'}
-        onChange={(e) => setRateInput(e.target.value)}
-      />
-      <div className="editor-inspector__actions">
-        <button
-          type="button"
-          className="editor-inspector__apply"
-          onClick={() => {
-            const rate = parsePositiveRate(rateInput);
-            if (rate == null) return;
-            setTarget({
-              nodeId,
-              itemId: selectedOut.itemId,
-              fluidId: selectedOut.fluidId,
-              ratePerSecond: rate,
-            });
-            setRateInput('');
-          }}
-        >
-          {t('editor.target.apply')}
-        </button>
-        {currentTarget && (
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => {
-              clearTarget(nodeId);
-              setRateInput('');
-            }}
-          >
-            {t('editor.target.clear')}
-          </button>
-        )}
-      </div>
-    </InspectorSection>
-  );
 }
 
 function getNodeDisplayName(node: TfgpNode, pack: PackLike, lang: 'ru' | 'en'): string {
@@ -301,9 +176,6 @@ function MachineInspector({
   schemeCheck,
   nodes,
   edges,
-  targets,
-  setTarget,
-  clearTarget,
 }: {
   node: TfgpMachineNode;
   pack: PackLike;
@@ -315,9 +187,6 @@ function MachineInspector({
   schemeCheck: SchemeCheckResult | null;
   nodes: TfgpNode[];
   edges: TfgpEdge[];
-  targets: TfgpTarget[];
-  setTarget: EditorActions['setTarget'];
-  clearTarget: EditorActions['clearTarget'];
 }) {
   const { t } = useTranslation();
   const recipe = getRecipe(pack, node.recipeId);
@@ -342,6 +211,10 @@ function MachineInspector({
     ? buildOutputPortLoadMeta(node.id, recipe, connectedOut, flowResult, t)
     : undefined;
   const nodeLoadMeta = flowResult ? buildNodeLoadMeta(node.id, recipe, flowResult, t) : undefined;
+  const bottleneckMeta =
+    flowResult && recipe
+      ? buildNodeBottleneckMeta(node, recipe, connectedIn, connectedOut, flowResult, pack, lang, t)
+      : undefined;
   const { inputPorts, outputPorts } = buildPortDisplays(
     recipe,
     pack,
@@ -450,17 +323,6 @@ function MachineInspector({
         )}
       </InspectorSection>
 
-      <TargetRateSection
-        nodeId={node.id}
-        recipe={recipe}
-        pack={pack}
-        lang={lang}
-        node={node}
-        targets={targets}
-        setTarget={setTarget}
-        clearTarget={clearTarget}
-      />
-
       {(nodeLoadMeta || euPerTick != null || recipeDuration) && (
         <InspectorSection title={t('editor.inspector.calculation')}>
           {nodeLoadMeta && (
@@ -471,6 +333,11 @@ function MachineInspector({
             >
               {nodeLoadMeta.label}
             </div>
+          )}
+          {bottleneckMeta && (
+            <p className="editor-inspector__bottleneck" title={bottleneckMeta.title}>
+              {bottleneckMeta.shortLabel}
+            </p>
           )}
           {euPerTick != null && (
             <p className="editor-inspector__meta">
@@ -708,9 +575,6 @@ function CustomMachineInspector({
   removeCustomPort,
   schemeCheck,
   nodes,
-  targets,
-  setTarget,
-  clearTarget,
 }: {
   node: TfgpCustomMachineNode;
   pack: PackLike;
@@ -724,12 +588,8 @@ function CustomMachineInspector({
   removeCustomPort: EditorActions['removeCustomPort'];
   schemeCheck: SchemeCheckResult | null;
   nodes: TfgpNode[];
-  targets: TfgpTarget[];
-  setTarget: EditorActions['setTarget'];
-  clearTarget: EditorActions['clearTarget'];
 }) {
   const { t } = useTranslation();
-  const customRecipe = customMachineAsRecipe(customNodeAsScheme(node));
 
   const bundle = buildCustomMachinePortDisplaysForNode(
     node,
@@ -746,6 +606,19 @@ function CustomMachineInspector({
   const nodeLoadMeta = flowResult && recipe
     ? buildNodeLoadMeta(node.id, recipe, flowResult, t)
     : undefined;
+  const bottleneckMeta =
+    flowResult && recipe
+      ? buildNodeBottleneckMeta(
+          customNodeAsScheme(node),
+          recipe,
+          connectedIn,
+          connectedOut,
+          flowResult,
+          pack,
+          lang,
+          t,
+        )
+      : undefined;
 
   const effectiveTicks = Math.round(
     node.durationTicks / Math.max(node.overclock, 0.1),
@@ -900,17 +773,6 @@ function CustomMachineInspector({
         </p>
       </InspectorSection>
 
-      <TargetRateSection
-        nodeId={node.id}
-        recipe={customRecipe}
-        pack={pack}
-        lang={lang}
-        node={node}
-        targets={targets}
-        setTarget={setTarget}
-        clearTarget={clearTarget}
-      />
-
       {(nodeLoadMeta || bundle.balanceLines.length > 0) && (
         <InspectorSection title={t('editor.inspector.calculation')}>
           {nodeLoadMeta && (
@@ -921,6 +783,11 @@ function CustomMachineInspector({
             >
               {nodeLoadMeta.label}
             </div>
+          )}
+          {bottleneckMeta && (
+            <p className="editor-inspector__bottleneck" title={bottleneckMeta.title}>
+              {bottleneckMeta.shortLabel}
+            </p>
           )}
           {bundle.balanceLines.map((line) => (
             <div
@@ -962,6 +829,7 @@ function EdgeInspector({
   nodes,
   pack,
   lang,
+  flowResult,
   flowEdgeData,
   edgeConstraints,
   setEdgeConstraint,
@@ -971,6 +839,7 @@ function EdgeInspector({
   nodes: TfgpNode[];
   pack: PackLike;
   lang: 'ru' | 'en';
+  flowResult: FlowResult | null;
   flowEdgeData: Record<string, FlowEdgeData>;
   edgeConstraints: TfgpEdgeConstraint[];
   setEdgeConstraint: EditorActions['setEdgeConstraint'];
@@ -981,6 +850,13 @@ function EdgeInspector({
   const sourceNode = nodes.find((n) => n.id === edge.source);
   const targetNode = nodes.find((n) => n.id === edge.target);
   const edgeData = flowEdgeData[edge.id];
+  const cycleSeed = flowResult?.cycleSeeds?.find((s) => s.edgeId === edge.id);
+  const cycleSeedProductLabel = cycleSeed
+    ? getItemName(pack, cycleSeed.productId, lang)
+    : '';
+  const cycleInspectorLines = cycleSeed
+    ? buildCycleSeedInspectorLines(t, cycleSeed, cycleSeedProductLabel)
+    : [];
   const currentConstraint = edgeConstraints.find((c) => c.edgeId === edge.id);
   const productLabel = flowLabel(
     { itemId: edge.itemId, fluidId: edge.fluidId, amount: 1 },
@@ -1014,17 +890,30 @@ function EdgeInspector({
       </InspectorSection>
 
       <InspectorSection title={t('editor.inspector.calculation')}>
-        {edgeData?.source ? (
+        {cycleInspectorLines.length > 0 ? (
+          <div className="editor-inspector__cycle-info">
+            {cycleInspectorLines.map((line) => (
+              <p
+                key={line.key}
+                className="editor-inspector__meta editor-inspector__cycle-line"
+                title={line.title}
+              >
+                {line.text}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {!cycleSeed && edgeData?.source ? (
           <p className="editor-inspector__meta">
             {t('editor.inspector.flowSource')}: <strong>{edgeData.source}</strong>
           </p>
         ) : null}
-        {edgeData?.target ? (
+        {!cycleSeed && edgeData?.target ? (
           <p className="editor-inspector__meta">
             {t('editor.inspector.flowTarget')}: <strong>{edgeData.target}</strong>
           </p>
         ) : null}
-        {!edgeData?.source && !edgeData?.target && (
+        {!cycleSeed && !edgeData?.source && !edgeData?.target && (
           <p className="editor-inspector__hint">{t('editor.inspector.noFlow')}</p>
         )}
         <div className="editor-inspector__field">
@@ -1087,9 +976,6 @@ export interface EditorInspectorProps {
   updateNode: (id: string, patch: Partial<TfgpNode>) => void;
   addCustomPort: EditorActions['addCustomPort'];
   removeCustomPort: EditorActions['removeCustomPort'];
-  targets: TfgpTarget[];
-  setTarget: EditorActions['setTarget'];
-  clearTarget: EditorActions['clearTarget'];
   edgeConstraints: TfgpEdgeConstraint[];
   setEdgeConstraint: EditorActions['setEdgeConstraint'];
   clearEdgeConstraint: EditorActions['clearEdgeConstraint'];
@@ -1110,9 +996,6 @@ export function EditorInspector({
   updateNode,
   addCustomPort,
   removeCustomPort,
-  targets,
-  setTarget,
-  clearTarget,
   edgeConstraints,
   setEdgeConstraint,
   clearEdgeConstraint,
@@ -1164,9 +1047,6 @@ export function EditorInspector({
           removeCustomPort={removeCustomPort}
           schemeCheck={schemeCheck}
           nodes={nodes}
-          targets={targets}
-          setTarget={setTarget}
-          clearTarget={clearTarget}
         />
       );
     }
@@ -1184,9 +1064,6 @@ export function EditorInspector({
           schemeCheck={schemeCheck}
           nodes={nodes}
           edges={edges}
-          targets={targets}
-          setTarget={setTarget}
-          clearTarget={clearTarget}
         />
       );
     }
@@ -1203,6 +1080,7 @@ export function EditorInspector({
         nodes={nodes}
         pack={pack}
         lang={lang}
+        flowResult={flowResult}
         flowEdgeData={flowEdgeData}
         edgeConstraints={edgeConstraints}
         setEdgeConstraint={setEdgeConstraint}

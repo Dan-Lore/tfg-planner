@@ -41,16 +41,39 @@ export interface SchemeNode {
 
 export type SchemeEdge = SchemeGraphEdge;
 
-export interface SchemeTarget {
-  nodeId: string;
-  itemId?: string;
-  fluidId?: string;
-  ratePerSecond: number;
-}
-
 export interface SchemeEdgeConstraint {
   edgeId: string;
   ratePerSecond: number;
+}
+
+export interface CycleSeedInfo {
+  edgeId: string;
+  sccIndex: number;
+  seedFlowPerSecond: number;
+  /** Theoretical catalyst demand on the seed port (not limited by buffer stock). */
+  theoreticalDemandPerSecond: number;
+  productId: string;
+  netPerSecond: number;
+  producePerSecond: number;
+  consumePerSecond: number;
+  reproductionPercent?: number;
+  bufferMaintainAmount?: number;
+  /** Catalyst production attempts per second (expected / chance). */
+  produceAttemptPerSecond?: number;
+  /** Catalyst consumption attempts per second (expected / chance). */
+  consumeAttemptPerSecond?: number;
+  /** GT chance on consumer port (e.g. 1000 = 10%). */
+  catalystChance?: number;
+  /** Minimum recommended intermediate-buffer stock for a 1 h planning horizon. */
+  recommendedCapacity: number;
+  recommendedCapacityDetail?: {
+    attemptsPerHour: number;
+    chancePercent: number;
+    mean: number;
+    stdDev: number;
+    zScore: number;
+  };
+  mode: 'deficit' | 'stable' | 'surplus';
 }
 
 export interface FlowResult {
@@ -77,12 +100,12 @@ export interface FlowResult {
   nodeMachineCounts: Record<string, number>;
   /** True when iterative flow convergence did not reach epsilon within max iterations. */
   nonConverged?: boolean;
+  cycleSeeds?: CycleSeedInfo[];
 }
 
 export interface SolverInput {
   nodes: SchemeNode[];
   edges: SchemeEdge[];
-  targets: SchemeTarget[];
   edgeConstraints?: SchemeEdgeConstraint[];
   pack: PackData;
   preserveManualMachineCounts?: boolean;

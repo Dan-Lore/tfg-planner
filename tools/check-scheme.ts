@@ -78,7 +78,6 @@ const pack = loadPackForScheme(scheme);
 const snap = {
   nodes: scheme.nodes,
   edges: scheme.edges,
-  targets: scheme.targets,
   edgeConstraints: scheme.edgeConstraints ?? [],
   viewport: scheme.viewport,
 };

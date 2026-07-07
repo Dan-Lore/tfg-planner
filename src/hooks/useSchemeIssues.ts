@@ -15,6 +15,8 @@ export function useSchemeIssues(params: {
   nodeDisplayById: Record<string, NodeDynamicDisplay>;
   canvasRef: RefObject<EditorCanvasHandle | null>;
   focusSelection: (params: FocusSelectionParams) => void;
+  /** Skip mirroring RF selection back to store after programmatic edge focus. */
+  suppressSelectionSync?: () => void;
 }) {
   const {
     schemeNodes,
@@ -24,20 +26,26 @@ export function useSchemeIssues(params: {
     nodeDisplayById,
     canvasRef,
     focusSelection,
+    suppressSelectionSync,
   } = params;
 
   const handleFocusIssue = useCallback(
     (issue: SchemeIssue) => {
       if (issue.edgeId) {
-        const edge = schemeEdges.find((e) => e.id === issue.edgeId);
-        focusSelection({
-          nodeIds: edge
-            ? [edge.source, edge.target]
-            : issue.nodeId
-              ? [issue.nodeId]
-              : [],
-          edgeIds: [issue.edgeId],
-        });
+        suppressSelectionSync?.();
+        canvasRef.current?.focusSelection({ nodeIds: [], edgeIds: [issue.edgeId] });
+        if (pack) {
+          const point = resolveIssueFocusPoint(issue, {
+            nodes: schemeNodes,
+            edges: schemeEdges,
+            pack,
+            layoutWidthByNodeId,
+            displayById: nodeDisplayById,
+          });
+          if (point) {
+            canvasRef.current?.panToPoint(point.x, point.y);
+          }
+        }
         return;
       }
       if (issue.nodeId) {
@@ -55,7 +63,7 @@ export function useSchemeIssues(params: {
         }
       }
     },
-    [schemeEdges, focusSelection],
+    [schemeEdges, schemeNodes, pack, layoutWidthByNodeId, nodeDisplayById, canvasRef, focusSelection, suppressSelectionSync],
   );
 
   const handlePanToIssue = useCallback(

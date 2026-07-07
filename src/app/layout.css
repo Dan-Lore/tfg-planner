@@ -24,9 +24,18 @@
   --alert-text: #fef3c7;
   --error-text: #fca5a5;
   --issue-error: #ef4444;
+  --issue-error-hover: #f87171;
+  --issue-error-selected: #dc2626;
   --issue-warning: #f59e0b;
   --issue-error-bg: rgba(239, 68, 68, 0.12);
   --issue-warning-bg: rgba(245, 158, 11, 0.12);
+  --cycle-seed: #e6b800;
+  --cycle-seed-hover: #f0c929;
+  --cycle-seed-selected: #b88900;
+  --cycle-seed-glow: rgba(184, 137, 0, 0.45);
+  --issue-warning-hover: #fbbf24;
+  --issue-warning-selected: #d97706;
+  --edge-flow-stroke: #64748b;
   --debug-obstacle: #c084fc;
   --debug-obstacle-bg: rgba(192, 132, 252, 0.14);
   --rf-dots: #334155;
@@ -58,9 +67,18 @@
   --alert-text: #92400e;
   --error-text: #dc2626;
   --issue-error: #dc2626;
+  --issue-error-hover: #ef4444;
+  --issue-error-selected: #b91c1c;
   --issue-warning: #d97706;
   --issue-error-bg: rgba(220, 38, 38, 0.1);
   --issue-warning-bg: rgba(217, 119, 6, 0.1);
+  --cycle-seed: #ca8a04;
+  --cycle-seed-hover: #eab308;
+  --cycle-seed-selected: #92400e;
+  --cycle-seed-glow: rgba(146, 64, 14, 0.35);
+  --issue-warning-hover: #f59e0b;
+  --issue-warning-selected: #b45309;
+  --edge-flow-stroke: #94a3b8;
   --debug-obstacle: #9333ea;
   --debug-obstacle-bg: rgba(147, 51, 234, 0.12);
   --rf-dots: #cbd5e1;
@@ -1223,6 +1241,14 @@ a {
   border-radius: 4px;
 }
 
+.editor-inspector__bottleneck {
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin: -0.25rem 0 0.5rem;
+  color: var(--text-muted, #8b949e);
+  line-height: 1.3;
+}
+
 .editor-inspector__load-row {
   display: flex;
   flex-wrap: wrap;
@@ -1875,6 +1901,18 @@ a {
   margin-right: 0.25rem;
 }
 
+.machine-node__bottleneck {
+  font-size: 0.6rem;
+  font-weight: 500;
+  margin-top: 0.15rem;
+  color: var(--text-muted, #8b949e);
+  line-height: 1.25;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .machine-node__load--max,
 .machine-node__load--current {
   margin-top: 0.2rem;
@@ -2139,6 +2177,7 @@ a {
 .custom-machine-node {
   border-style: dashed;
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  --node-hover-border: color-mix(in srgb, var(--accent) 45%, var(--hover-border));
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--accent) 4%, var(--surface2)) 0%,
@@ -2147,7 +2186,7 @@ a {
 }
 
 .custom-machine-node:hover:not(.is-dragging):not(.machine-node--selected) {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--hover-border));
+  border-color: var(--node-hover-border);
 }
 
 .custom-machine-node__ports {
@@ -2309,6 +2348,17 @@ a {
   font-size: 10px;
 }
 
+/* Custom FlowEdge owns hover/selection stroke — disable React Flow default halo */
+.react-flow__edge.selected {
+  filter: none;
+}
+
+/* Node cards own selection chrome */
+.react-flow__node.selected {
+  box-shadow: none;
+  outline: none;
+}
+
 .react-flow__background {
   background: var(--bg);
 }
@@ -2348,19 +2398,19 @@ a {
 }
 
 .machine-node--issue-error,
-.buffer-node--issue-error {
-  --node-ring-color: var(--issue-error);
-  --node-hover-border: color-mix(in srgb, var(--issue-error) 82%, white);
+.buffer-node--issue-error,
+.custom-machine-node.machine-node--issue-error {
   border-color: var(--issue-error);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--issue-error) 35%, transparent);
+  --node-ring-color: var(--issue-error-selected);
+  --node-hover-border: var(--issue-error-hover);
 }
 
 .machine-node--issue-warning,
-.buffer-node--issue-warning {
-  --node-ring-color: var(--issue-warning);
-  --node-hover-border: color-mix(in srgb, var(--issue-warning) 82%, white);
+.buffer-node--issue-warning,
+.custom-machine-node.machine-node--issue-warning {
   border-color: var(--issue-warning);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--issue-warning) 35%, transparent);
+  --node-ring-color: var(--issue-warning-selected);
+  --node-hover-border: var(--issue-warning-hover);
 }
 
 .editor-inspector__issue-list {

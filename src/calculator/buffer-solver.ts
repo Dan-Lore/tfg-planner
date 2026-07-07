@@ -243,9 +243,18 @@ export function computeIntermediateBufferEffectiveOut(
   _node: SchemeNode,
   inflow: Rational,
   downstreamDemand: Rational,
+  bootstrapInflow?: Rational,
 ): Rational {
-  if (inflow.compare(R.zero) <= 0) return R.zero;
-  let out = inflow;
+  let effectiveInflow = inflow;
+  if (
+    inflow.compare(R.zero) <= 0 &&
+    bootstrapInflow &&
+    bootstrapInflow.compare(R.zero) > 0
+  ) {
+    effectiveInflow = bootstrapInflow;
+  }
+  if (effectiveInflow.compare(R.zero) <= 0) return R.zero;
+  let out = effectiveInflow;
   if (downstreamDemand.compare(out) < 0) out = downstreamDemand;
   return out;
 }
@@ -367,6 +376,7 @@ export function processIntermediateBufferIteration(
   recipes: Map<string, Recipe>,
   tags: TagIndex,
   nodePortOutputRates: Record<string, Record<string, Rational>>,
+  bootstrapInflowByNodeId?: ReadonlyMap<string, Rational>,
 ): number {
   const inflow = collectBufferInflows(nodeIncoming, edgeFlows);
   const demand = computeDownstreamDemand(
@@ -379,7 +389,13 @@ export function processIntermediateBufferIteration(
     tags,
     nodePortOutputRates,
   );
-  const effectiveOut = computeIntermediateBufferEffectiveOut(node, inflow, demand);
+  const bootstrapInflow = bootstrapInflowByNodeId?.get(nodeId);
+  const effectiveOut = computeIntermediateBufferEffectiveOut(
+    node,
+    inflow,
+    demand,
+    bootstrapInflow,
+  );
   return assignBufferOutgoing(
     nodeId,
     nodeEdges,

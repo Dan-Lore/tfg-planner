@@ -18,7 +18,6 @@ export type {
   TfgpNodeKind,
   TfgpStartBufferNode,
   TfgpSupplyMode,
-  TfgpTarget,
   TfgpEdgeConstraint,
 } from '@/schema/tfgp-types';
 
@@ -44,7 +43,6 @@ export function createEmptyTfgp(
     nodes: [],
     edges: [],
     groups: [],
-    targets: [],
     edgeConstraints: [],
   };
 }
@@ -52,9 +50,10 @@ export function createEmptyTfgp(
 export function parseTfgp(json: string): TfgpFile {
   const data = JSON.parse(json) as unknown;
   assertTfgpShape(data);
+  const { targets: _legacyTargets, ...rest } = data as TfgpFile & { targets?: unknown };
   return {
-    ...data,
-    nodes: data.nodes.map(normalizeNodeScaling),
+    ...rest,
+    nodes: rest.nodes.map(normalizeNodeScaling),
   };
 }
 

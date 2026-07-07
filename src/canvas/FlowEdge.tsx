@@ -20,6 +20,7 @@ import {
 } from '@/lib/edge-routing';
 import { applyParallelOffset } from '@/lib/edge-route-plan';
 import { useObstacleRects } from '@/canvas/obstacle-rects-context';
+import { useEdgeSelected } from '@/canvas/selection-context';
 import { useEdgeRoutePlanEntry } from '@/canvas/use-edge-route-plan';
 import type { FlowEdgeData } from '@/lib/flow-edge-types';
 
@@ -44,6 +45,30 @@ function buildBezierRoute(
   };
 }
 
+function edgeToneStroke(
+  base: string,
+  hover: string,
+  selectedTone: string,
+  isSelected: boolean,
+  isHovered: boolean,
+): string {
+  if (isSelected) return selectedTone;
+  if (isHovered) return hover;
+  return base;
+}
+
+function edgeToneWidth(
+  base: number,
+  hover: number,
+  selectedWidth: number,
+  isSelected: boolean,
+  isHovered: boolean,
+): number {
+  if (isSelected) return selectedWidth;
+  if (isHovered) return hover;
+  return base;
+}
+
 function edgePropsEqual(a: EdgeProps, b: EdgeProps): boolean {
   if (a.id !== b.id) return false;
   if (a.sourceX !== b.sourceX || a.sourceY !== b.sourceY) return false;
@@ -52,9 +77,12 @@ function edgePropsEqual(a: EdgeProps, b: EdgeProps): boolean {
   const da = a.data as FlowEdgeData | undefined;
   const db = b.data as FlowEdgeData | undefined;
   return (
+    da?.isCycleSeed === db?.isCycleSeed &&
+    da?.cycleSeedTitle === db?.cycleSeedTitle &&
     da?.source === db?.source &&
     da?.target === db?.target &&
-    da?.checkSeverity === db?.checkSeverity
+    da?.checkSeverity === db?.checkSeverity &&
+    da?.issuePanelFocus === db?.issuePanelFocus
   );
 }
 
@@ -74,16 +102,61 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
   selected,
 }: EdgeProps) {
   const [hovered, setHovered] = useState(false);
+  const storeSelected = useEdgeSelected(id);
   const { obstacles, skipObstacleRouting } = useObstacleRects();
   const routePlan = useEdgeRoutePlanEntry(id);
   const d = (data ?? {}) as FlowEdgeData;
-  const emphasized = selected || hovered;
-  const issueStroke =
-    d.checkSeverity === 'error'
-      ? 'var(--issue-error)'
-      : d.checkSeverity === 'warning'
-        ? 'var(--issue-warning)'
+  const isCycleYellow = d.isCycleSeed || d.issuePanelFocus === true;
+  const isWarningEdge = d.checkSeverity === 'warning' && !isCycleYellow;
+  const isErrorEdge = d.checkSeverity === 'error';
+  const isPlainFlow = !isCycleYellow && !isWarningEdge && !isErrorEdge;
+  const isActive = selected || storeSelected || d.issuePanelFocus === true;
+
+  const cycleStroke = isCycleYellow
+    ? edgeToneStroke(
+        'var(--cycle-seed)',
+        'var(--cycle-seed-hover)',
+        'var(--cycle-seed-selected)',
+        isActive,
+        hovered,
+      )
+    : undefined;
+  const issueStroke = isErrorEdge
+    ? edgeToneStroke(
+        'var(--issue-error)',
+        'var(--issue-error-hover)',
+        'var(--issue-error-selected)',
+        isActive,
+        hovered,
+      )
+    : isWarningEdge
+      ? edgeToneStroke(
+          'var(--issue-warning)',
+          'var(--issue-warning-hover)',
+          'var(--issue-warning-selected)',
+          isActive,
+          hovered,
+        )
+      : undefined;
+  const plainStroke = isPlainFlow
+    ? edgeToneStroke(
+        'var(--edge-flow-stroke)',
+        'var(--accent)',
+        'var(--accent-hover)',
+        isActive,
+        hovered,
+      )
+    : undefined;
+  const edgeStroke = cycleStroke ?? issueStroke ?? plainStroke;
+
+  const edgeStrokeWidth = isCycleYellow
+    ? edgeToneWidth(2.25, 2.75, 3, isActive, hovered)
+    : issueStroke
+      ? edgeToneWidth(2.25, 2.5, 2.75, isActive, hovered)
+      : isPlainFlow
+        ? edgeToneWidth(1.5, 2, 2.5, isActive, hovered)
         : undefined;
+  const edgeTitle = d.cycleSeedTitle ?? d.checkTitle;
   const round = (value: number) => Math.round(value);
 
   const endpoints = useMemo(
@@ -180,13 +253,20 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
 
   return (
     <g
-      className={
-        d.checkSeverity ? `flow-edge flow-edge--issue-${d.checkSeverity}` : 'flow-edge'
-      }
+      className={[
+        'flow-edge',
+        isCycleYellow && 'flow-edge--cycle-seed',
+        isWarningEdge && 'flow-edge--issue-warning',
+        isErrorEdge && 'flow-edge--issue-error',
+        hovered && 'flow-edge--hovered',
+        isActive && 'flow-edge--selected',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {d.checkTitle ? <title>{d.checkTitle}</title> : null}
+      {edgeTitle ? <title>{edgeTitle}</title> : null}
       <BaseEdge
         id={id}
         path={routed.path}
@@ -194,17 +274,9 @@ const FlowEdgeComponent = memo(function FlowEdgeComponent({
         interactionWidth={18}
         style={{
           ...style,
-          strokeWidth: selected
-            ? 2.5
-            : issueStroke
-              ? hovered
-                ? 2.5
-                : 2.25
-              : hovered
-                ? 2
-                : undefined,
-          stroke: issueStroke ?? (emphasized ? 'var(--accent)' : undefined),
-          strokeDasharray: d.checkSeverity === 'warning' ? '7 5' : undefined,
+          strokeWidth: edgeStrokeWidth,
+          stroke: edgeStroke,
+          strokeDasharray: isWarningEdge ? '7 5' : undefined,
           transition: 'stroke 0.15s ease, stroke-width 0.15s ease',
         }}
       />

@@ -11,7 +11,7 @@ const nodes = normalizeSchemeNodes(scheme.nodes, pack);
 const snap = {
   nodes,
   edges: scheme.edges,
-  targets: scheme.targets,
+  edgeConstraints: scheme.edgeConstraints ?? [],
   viewport: scheme.viewport,
 };
 

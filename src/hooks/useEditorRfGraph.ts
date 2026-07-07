@@ -6,7 +6,7 @@ import {
   buildBufferPortDisplays,
   formatBufferRate,
 } from '@/canvas/BufferNode';
-import { buildNodeLoadMeta } from '@/canvas/flow-display';
+import { buildNodeLoadMeta, buildNodeBottleneckMeta } from '@/canvas/flow-display';
 import type { EditorNodeActions } from '@/canvas/editor-node-actions-context';
 import type { NodeDynamicDisplay } from '@/canvas/node-display-context';
 import { normalizePortId } from '@/lib/ports';
@@ -19,12 +19,13 @@ import { buildStableRfNodes } from '@/lib/stable-rf-nodes';
 import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
 import { getRecipe } from '@/data/pack-registry';
 import { pickEdgeIssueMeta, pickNodeIssueMeta } from '@/editor/SchemeIssuesPanel';
+import { edgeIssueBlocksFlowAnimation } from '@/scheme-check/check-scheme';
 import { R } from '@/calculator/rational';
 import type { FlowResult } from '@/calculator/flow-solver';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
 import type { ActivePack } from '@/data/pack-runtime';
 import { isBufferNode, isCustomMachineNode } from '@/lib/node-kind';
-import { buildCustomMachinePortDisplaysForNode } from '@/canvas/port-label-stubs';
+import { buildCustomMachinePortDisplaysForNode, customNodeAsScheme } from '@/canvas/port-label-stubs';
 import { customMachineAsRecipe } from '@/calculator/custom-machine-recipe';
 import type { TfgpFile } from '@/schema/tfgp';
 import type { EditorActions } from '@/editor/editor-actions';
@@ -111,7 +112,6 @@ export function useEditorRfGraph(params: {
       layoutWidthByNodeId,
     );
   }, [
-    scheme,
     pack,
     flowResult,
     lang,
@@ -119,6 +119,8 @@ export function useEditorRfGraph(params: {
     schemeRevision,
     packDisplayEpoch,
     layoutWidthByNodeId,
+    scheme.nodes,
+    scheme.edges,
   ]);
 
   const editorNodeActions = useMemo<EditorNodeActions>(
@@ -236,6 +238,18 @@ export function useEditorRfGraph(params: {
         const nodeLoadMeta = flowResult && recipe
           ? buildNodeLoadMeta(n.id, recipe, flowResult, t)
           : undefined;
+        const bottleneckMeta = flowResult && recipe
+          ? buildNodeBottleneckMeta(
+              customNodeAsScheme(n),
+              recipe,
+              connectedIn,
+              connectedOut,
+              flowResult,
+              pack,
+              lang,
+              t,
+            )
+          : undefined;
         map[n.id] = {
           inputPorts: bundle.inputPorts,
           outputPorts: bundle.outputPorts,
@@ -243,6 +257,8 @@ export function useEditorRfGraph(params: {
           loadPercent: nodeLoadMeta?.currentLoadPercent,
           loadLabel: nodeLoadMeta?.label,
           loadTitle: nodeLoadMeta?.title,
+          bottleneckLabel: bottleneckMeta?.shortLabel,
+          bottleneckTitle: bottleneckMeta?.title,
         };
         continue;
       }
@@ -250,6 +266,9 @@ export function useEditorRfGraph(params: {
       const recipe = getRecipe(pack, n.recipeId);
       const nodeLoadMeta = flowResult
         ? buildNodeLoadMeta(n.id, recipe, flowResult, t)
+        : undefined;
+      const bottleneckMeta = flowResult
+        ? buildNodeBottleneckMeta(n, recipe, connectedIn, connectedOut, flowResult, pack, lang, t)
         : undefined;
       const bundle = buildMachinePortDisplaysForNode(
         n,
@@ -268,6 +287,8 @@ export function useEditorRfGraph(params: {
         loadPercent: nodeLoadMeta?.currentLoadPercent,
         loadLabel: nodeLoadMeta?.label,
         loadTitle: nodeLoadMeta?.title,
+        bottleneckLabel: bottleneckMeta?.shortLabel,
+        bottleneckTitle: bottleneckMeta?.title,
       };
     }
     return map;
@@ -324,7 +345,9 @@ export function useEditorRfGraph(params: {
             checkSeverity: edgeIssue?.severity,
             checkTitle: edgeIssue?.title,
           },
-          animated: Boolean(flowEdgeData[e.id]?.source) && !edgeIssue,
+          animated:
+            Boolean(flowEdgeData[e.id]?.source) &&
+            !edgeIssueBlocksFlowAnimation(e.id, schemeCheckResult),
         };
       }),
     [scheme.edges, flowEdgeData, schemeCheckResult, pack, lang, scheme.nodes, t],

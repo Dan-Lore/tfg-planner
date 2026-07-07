@@ -9,6 +9,8 @@ export interface NodeDynamicDisplay {
   loadPercent?: number;
   loadLabel?: string;
   loadTitle?: string;
+  bottleneckLabel?: string;
+  bottleneckTitle?: string;
 }
 
 const EMPTY_DISPLAY: NodeDynamicDisplay = {

@@ -21,7 +21,7 @@ import {
   perMachineOutputRate,
   sumPortRatesByProduct,
 } from '@/calculator/flow-rates';
-import type { SchemeEdge, SchemeNode, SchemeTarget } from '@/calculator/flow-solver-types';
+import type { SchemeEdge, SchemeNode } from '@/calculator/flow-solver-types';
 
 function freezeManualMachineCounts(
   nodes: SchemeNode[],
@@ -69,7 +69,6 @@ function buildPortOutputRatesForNodes(
 export interface MachineCountPhaseInput {
   nodes: SchemeNode[];
   edges: SchemeEdge[];
-  targets: SchemeTarget[];
   edgeConstraints: SchemeEdgeConstraint[];
   preserveCounts: boolean;
   recipes: Map<string, Recipe>;
@@ -91,7 +90,6 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
   const {
     nodes,
     edges,
-    targets,
     edgeConstraints,
     preserveCounts,
     recipes,
@@ -108,25 +106,6 @@ export function runMachineCountPhase(input: MachineCountPhaseInput): MachineCoun
   for (const node of nodes) {
     nodeMachineCounts[node.id] = Math.max(1, node.machineCount);
     requiredOutput[node.id] = {};
-  }
-
-  for (const target of targets) {
-    const node = nodeById.get(target.nodeId);
-    if (!node || isSchemeBufferNode(node)) continue;
-    const recipe = recipes.get(node.recipeId);
-    if (!recipe) continue;
-    const key = target.itemId ?? target.fluidId ?? '';
-    if (!key) continue;
-
-    const rate = R.from(target.ratePerSecond);
-    requiredOutput[node.id]![key] = rate;
-
-    if (!preserveCounts) {
-      const perMachine = perMachineOutputRate(recipe, key, node);
-      const ideal = idealMachineCount(rate, perMachine);
-      nodeMachineCounts[node.id] = ceilMachineCount(ideal);
-      node.machineCount = nodeMachineCounts[node.id]!;
-    }
   }
 
   const edgeById = new Map(edges.map((e) => [e.id, e]));

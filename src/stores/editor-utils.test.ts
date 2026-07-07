@@ -85,12 +85,10 @@ describe('dedupeSchemeTopology', () => {
         targetPort: 'in_0',
       },
     ];
-    const targets = [{ nodeId: 'node_3', itemId: 'ingot', ratePerSecond: 1 }];
-    const out = dedupeSchemeTopology(nodes, edges, targets);
+    const out = dedupeSchemeTopology(nodes, edges);
     expect(out.nodes.map((n) => n.id)).toEqual(['node_3', 'node_4']);
     expect(out.edges[0]?.source).toBe('node_3');
     expect(out.edges[0]?.target).toBe('node_5');
-    expect(out.targets[0]?.nodeId).toBe('node_3');
   });
 
   it('remaps endpoints that uniquely identify a renamed node', () => {

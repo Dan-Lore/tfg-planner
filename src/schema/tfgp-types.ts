@@ -93,13 +93,6 @@ export interface TfgpGroup {
   nodeIds: string[];
 }
 
-export interface TfgpTarget {
-  nodeId?: string;
-  itemId?: string;
-  fluidId?: string;
-  ratePerSecond: number;
-}
-
 export interface TfgpEdgeConstraint {
   edgeId: string;
   ratePerSecond: number;
@@ -114,6 +107,5 @@ export interface TfgpFile {
   nodes: TfgpNode[];
   edges: TfgpEdge[];
   groups: TfgpGroup[];
-  targets: TfgpTarget[];
   edgeConstraints?: TfgpEdgeConstraint[];
 }

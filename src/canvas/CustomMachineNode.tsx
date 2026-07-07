@@ -124,6 +124,8 @@ function CustomMachineNodeComponent({ id, data, dragging, width }: NodeProps) {
   const loadLabel = display.loadLabel ?? d.loadLabel;
   const loadTitle = display.loadTitle ?? d.loadTitle;
   const loadPercent = display.loadPercent ?? d.loadPercent;
+  const bottleneckLabel = display.bottleneckLabel;
+  const bottleneckTitle = display.bottleneckTitle;
   const balanceLines = display.balanceLines ?? d.balanceLines ?? [];
 
   const cardWidth = resolveMachineCardWidth(d.layoutWidth, width);
@@ -149,7 +151,15 @@ function CustomMachineNodeComponent({ id, data, dragging, width }: NodeProps) {
   return (
     <div
       ref={cardMeasureRef}
-      className={`machine-node custom-machine-node ${isSelected ? 'machine-node--selected' : ''} ${dragging ? 'is-dragging' : ''}`}
+      className={[
+        'machine-node',
+        'custom-machine-node',
+        isSelected ? 'machine-node--selected' : '',
+        d.checkSeverity ? `machine-node--issue-${d.checkSeverity}` : '',
+        dragging ? 'is-dragging' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={{
         width: cardWidth,
         minWidth: Math.max(cardWidth, CUSTOM_MACHINE_NODE_MIN_WIDTH),
@@ -187,6 +197,11 @@ function CustomMachineNodeComponent({ id, data, dragging, width }: NodeProps) {
             title={loadTitle}
           >
             {loadLabel}
+          </div>
+        )}
+        {bottleneckLabel != null && (
+          <div className="machine-node__bottleneck" title={bottleneckTitle}>
+            {bottleneckLabel}
           </div>
         )}
         {balanceLines.map((line) => (

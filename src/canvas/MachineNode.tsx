@@ -20,7 +20,7 @@ import { adjustByWheel } from '@/lib/wheel-adjust';
 import { useNonPassiveWheel } from '@/hooks/use-non-passive-wheel';
 import type { Rational } from '@/calculator/rational';
 import { R } from '@/calculator/rational';
-import { formatFlowRateLabel, isChancedFlow } from '@/lib/flow-chance';
+import { formatRate } from '@/calculator/format';
 import { loadGradientStyle } from '@/lib/load-gradient';
 import { MACHINE_NODE_MIN_WIDTH, resolveMachineCardWidth } from '@/canvas/node-bounds';
 import { useNodeDisplay } from '@/canvas/node-display-context';
@@ -227,6 +227,8 @@ function MachineNodeComponent({ id, data, dragging, width }: NodeProps) {
   const loadLabel = display.loadLabel ?? d.loadLabel;
   const loadPercent = display.loadPercent ?? d.loadPercent;
   const loadTitle = display.loadTitle ?? d.loadTitle;
+  const bottleneckLabel = display.bottleneckLabel;
+  const bottleneckTitle = display.bottleneckTitle;
 
   const internalsKey = `${(d.inputPortIds ?? []).join(',')}|${(d.outputPortIds ?? []).join(',')}|${d.recipeId}`;
   useNodeInternalsSync(id, internalsKey);
@@ -345,6 +347,11 @@ function MachineNodeComponent({ id, data, dragging, width }: NodeProps) {
             {loadLabel}
           </div>
         )}
+        {bottleneckLabel != null && (
+          <div className="machine-node__bottleneck" title={bottleneckTitle}>
+            {bottleneckLabel}
+          </div>
+        )}
         {balanceLines.map((line) => (
           <div
             key={line.text}
@@ -448,7 +455,7 @@ export function buildPortDisplays(
       const loadMeta = outputPortLoadMeta?.[portId];
       const rate =
         portRate && portRate.compare(R.zero) > 0
-          ? formatFlowRateLabel(portRate, isChancedFlow(flow))
+          ? `${formatRate(portRate)}/s`
           : outputRates[key];
       return {
         portId,

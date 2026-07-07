@@ -51,7 +51,6 @@ const scheme: TfgpFile = {
   ],
   edges: [],
   groups: [],
-  targets: [],
 };
 
 describe('runSchemeCheck', () => {

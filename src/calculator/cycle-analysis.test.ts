@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { findCycleComponents, analyzeCycles } from '@/calculator/cycle-analysis';
 import { solveFlows } from '@/calculator/flow-solver';
+import { computeReproductionPercent } from '@/lib/cycle-seed-metrics';
 import type { PackData } from '@/data/types';
 import { buildTagIndex } from '@/lib/tag-index';
 
@@ -182,7 +183,6 @@ describe('analyzeCycles', () => {
         { id: 'e_co2', source: 'el', target: 'co2sink', sourcePort: 'out_1', targetPort: 'in_0', fluidId: 'co2' },
         { id: 'e_h2', source: 'el', target: 'h2sink', sourcePort: 'out_2', targetPort: 'in_0', fluidId: 'h2' },
       ],
-      targets: [{ nodeId: 'lcr', fluidId: 'reformed', ratePerSecond: 1 }],
       preserveManualMachineCounts: true,
     });
 
@@ -205,5 +205,130 @@ describe('analyzeCycles', () => {
     );
 
     expect(analysis.catalystImbalances).toHaveLength(0);
+  });
+
+  it('balances chanced catalyst in items/s with reproduction above 100%', () => {
+    const flowResult = solveFlows({
+      pack: samplePack,
+      nodes: [
+        {
+          id: 'lcr',
+          machineId: 'lcr',
+          recipeId: 'reformed',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'HV',
+        },
+        {
+          id: 'cr',
+          machineId: 'cracker',
+          recipeId: 'cracker',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'HV',
+        },
+        {
+          id: 'el',
+          machineId: 'elec',
+          recipeId: 'recycle',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'HV',
+        },
+        {
+          id: 'buf',
+          kind: 'intermediate_buffer' as const,
+          itemId: 'gtceu:tiny_rhenium_dust',
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+          capacity: 300,
+        },
+        {
+          id: 'steam',
+          kind: 'start_buffer' as const,
+          fluidId: 'steam',
+          supplyMode: 'rate' as const,
+          autoSupplyRate: true,
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'arom',
+          kind: 'start_buffer' as const,
+          fluidId: 'aromatic',
+          supplyMode: 'rate' as const,
+          autoSupplyRate: true,
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'co2sink',
+          kind: 'end_buffer' as const,
+          fluidId: 'co2',
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'h2sink',
+          kind: 'end_buffer' as const,
+          fluidId: 'h2',
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+      ],
+      edges: [
+        { id: 'e_steam', source: 'steam', target: 'cr', sourcePort: 'out_0', targetPort: 'in_1', fluidId: 'steam' },
+        { id: 'e_arom', source: 'arom', target: 'lcr', sourcePort: 'out_0', targetPort: 'in_1', fluidId: 'aromatic' },
+        { id: 'e_ref', source: 'lcr', target: 'cr', sourcePort: 'out_0', targetPort: 'in_0', fluidId: 'reformed' },
+        { id: 'e_off', source: 'cr', target: 'el', sourcePort: 'out_1', targetPort: 'in_0', fluidId: 'off_gas' },
+        { id: 'e_rh_in', source: 'el', target: 'buf', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'gtceu:tiny_rhenium_dust' },
+        { id: 'e_rh_out', source: 'buf', target: 'lcr', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'gtceu:tiny_rhenium_dust' },
+        { id: 'e_co2', source: 'el', target: 'co2sink', sourcePort: 'out_1', targetPort: 'in_0', fluidId: 'co2' },
+        { id: 'e_h2', source: 'el', target: 'h2sink', sourcePort: 'out_2', targetPort: 'in_0', fluidId: 'h2' },
+      ],
+      preserveManualMachineCounts: true,
+    });
+
+    const analysis = analyzeCycles(
+      [
+        { id: 'lcr', machineId: 'lcr', recipeId: 'reformed', machineCount: 1, overclock: 1, voltageTier: 'HV' },
+        { id: 'cr', machineId: 'cracker', recipeId: 'cracker', machineCount: 1, overclock: 1, voltageTier: 'HV' },
+        { id: 'el', machineId: 'elec', recipeId: 'recycle', machineCount: 1, overclock: 1, voltageTier: 'HV' },
+        { id: 'buf', kind: 'intermediate_buffer', itemId: 'gtceu:tiny_rhenium_dust', machineId: '', recipeId: '', machineCount: 1, overclock: 1, voltageTier: 'LV' },
+      ],
+      [
+        { id: 'e_ref', source: 'lcr', target: 'cr', sourcePort: 'out_0', targetPort: 'in_0', fluidId: 'reformed' },
+        { id: 'e_off', source: 'cr', target: 'el', sourcePort: 'out_1', targetPort: 'in_0', fluidId: 'off_gas' },
+        { id: 'e_rh_in', source: 'el', target: 'buf', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'gtceu:tiny_rhenium_dust' },
+        { id: 'e_rh_out', source: 'buf', target: 'lcr', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'gtceu:tiny_rhenium_dust' },
+      ],
+      samplePack,
+      flowResult,
+      buildTagIndex(samplePack),
+    );
+
+    const rhBalance = analysis.balances.find(
+      (b) => b.productId === 'gtceu:tiny_rhenium_dust',
+    );
+    expect(rhBalance).toBeDefined();
+    expect(rhBalance!.net.toNumber()).toBeGreaterThan(0);
+    const reproduction = computeReproductionPercent(rhBalance!.produce, rhBalance!.consume);
+    expect(reproduction).toBeDefined();
+    expect(reproduction!).toBeGreaterThan(100);
   });
 });

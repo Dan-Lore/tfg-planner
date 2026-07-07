@@ -26,9 +26,6 @@ export interface EditorSidebarProps {
   removeCustomPort: EditorActions['removeCustomPort'];
   onFocusIssue: (issue: SchemeIssue) => void;
   onPanToIssue: (issue: SchemeIssue) => void;
-  targets: TfgpFile['targets'];
-  setTarget: EditorActions['setTarget'];
-  clearTarget: EditorActions['clearTarget'];
   edgeConstraints: TfgpFile['edgeConstraints'];
   setEdgeConstraint: EditorActions['setEdgeConstraint'];
   clearEdgeConstraint: EditorActions['clearEdgeConstraint'];
@@ -51,9 +48,6 @@ export function EditorSidebar({
   removeCustomPort,
   onFocusIssue,
   onPanToIssue,
-  targets,
-  setTarget,
-  clearTarget,
   edgeConstraints,
   setEdgeConstraint,
   clearEdgeConstraint,
@@ -120,9 +114,6 @@ export function EditorSidebar({
               updateNode={updateNode}
               addCustomPort={addCustomPort}
               removeCustomPort={removeCustomPort}
-              targets={targets}
-              setTarget={setTarget}
-              clearTarget={clearTarget}
               edgeConstraints={edgeConstraints ?? []}
               setEdgeConstraint={setEdgeConstraint}
               clearEdgeConstraint={clearEdgeConstraint}

@@ -72,9 +72,6 @@ export function assertTfgpShape(data: unknown): asserts data is TfgpFile {
   if (!Array.isArray(root.groups)) {
     throw new Error('Invalid .tfgp: groups must be an array');
   }
-  if (!Array.isArray(root.targets)) {
-    throw new Error('Invalid .tfgp: targets must be an array');
-  }
   if (root.edgeConstraints !== undefined) {
     if (!Array.isArray(root.edgeConstraints)) {
       throw new Error('Invalid .tfgp: edgeConstraints must be an array when present');

@@ -1,4 +1,4 @@
-import type { TfgpNode, TfgpEdge, TfgpTarget } from '@/schema/tfgp';
+import type { TfgpNode, TfgpEdge } from '@/schema/tfgp';
 import type { ActivePack } from '@/data/pack-runtime';
 import type { PackData } from '@/data/types';
 import { getRecipe } from '@/data/pack-registry';
@@ -79,7 +79,6 @@ export function allocateEdgeId(
 export interface DedupeSchemeTopologyResult {
   nodes: TfgpNode[];
   edges: TfgpEdge[];
-  targets: TfgpTarget[];
 }
 
 export interface CloneSchemeFragmentResult {
@@ -195,11 +194,10 @@ function remapEndpointId(
   return nextId && nextId !== endpoint ? nextId : endpoint;
 }
 
-/** Reassign ids for duplicate nodes and remap edges/targets that pointed at renamed nodes. */
+/** Reassign ids for duplicate nodes and remap edges that pointed at renamed nodes. */
 export function dedupeSchemeTopology(
   nodes: TfgpNode[],
   edges: TfgpEdge[],
-  targets: TfgpTarget[] = [],
 ): DedupeSchemeTopologyResult {
   seedIdCounter(nodes, edges);
   const taken = new Set<string>();
@@ -219,18 +217,10 @@ export function dedupeSchemeTopology(
     target: remapEndpointId(edge.target, nodes, dedupedNodes),
   }));
 
-  const remappedTargets = targets.map((target) => {
-    if (!target.nodeId) return target;
-    return {
-      ...target,
-      nodeId: remapEndpointId(target.nodeId, nodes, dedupedNodes),
-    };
-  });
-
-  return { nodes: dedupedNodes, edges: remappedEdges, targets: remappedTargets };
+  return { nodes: dedupedNodes, edges: remappedEdges };
 }
 
-/** @deprecated Use {@link dedupeSchemeTopology} — does not remap edges/targets. */
+/** @deprecated Use {@link dedupeSchemeTopology} — does not remap edges. */
 export function dedupeNodeIds(nodes: TfgpNode[], edges: TfgpEdge[]): TfgpNode[] {
   return dedupeSchemeTopology(nodes, edges).nodes;
 }

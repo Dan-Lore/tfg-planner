@@ -12,7 +12,6 @@ function scheme(nodes: TfgpMachineNode[]): TfgpFile {
     nodes,
     edges: [],
     groups: [],
-    targets: [],
     viewport: { x: 0, y: 0, zoom: 1 },
   };
 }

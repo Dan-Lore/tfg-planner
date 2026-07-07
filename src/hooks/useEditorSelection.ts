@@ -5,6 +5,10 @@ import type { EditorActions } from '@/editor/editor-actions';
 export type FocusSelectionParams = {
   nodeIds: readonly string[];
   edgeIds: readonly string[];
+  /** When false, leave store selectedNodeIds unchanged (edge-issue focus). */
+  syncNodeSelection?: boolean;
+  /** When false, leave store selectedEdgeIds unchanged (canvas-only edge highlight). */
+  syncEdgeSelection?: boolean;
 };
 
 /** Programmatic canvas selection: store (inspector/minimap) + RF edge highlight. */
@@ -16,9 +20,18 @@ export function useEditorSelection(params: {
   const { canvasRef, setSelectedNodeIds, setSelectedEdgeIds } = params;
 
   const focusSelection = useCallback(
-    ({ nodeIds, edgeIds }: FocusSelectionParams) => {
-      setSelectedNodeIds([...nodeIds]);
-      setSelectedEdgeIds([...edgeIds]);
+    ({
+      nodeIds,
+      edgeIds,
+      syncNodeSelection = true,
+      syncEdgeSelection = true,
+    }: FocusSelectionParams) => {
+      if (syncNodeSelection) {
+        setSelectedNodeIds([...nodeIds]);
+      }
+      if (syncEdgeSelection) {
+        setSelectedEdgeIds([...edgeIds]);
+      }
       canvasRef.current?.focusSelection({ nodeIds, edgeIds });
     },
     [canvasRef, setSelectedNodeIds, setSelectedEdgeIds],

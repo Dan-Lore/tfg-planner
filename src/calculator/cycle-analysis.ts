@@ -5,7 +5,7 @@ import { perMachineOutputRateAtIndex } from '@/calculator/flow-rates';
 import { portInputDemandRate } from '@/calculator/port-resolution';
 import { R, type Rational } from '@/calculator/rational';
 import type { PackData, Recipe } from '@/data/types';
-import { primaryOutputIndex } from '@/lib/primary-output';
+import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
 import type { TagIndex } from '@/lib/tag-index';
 import { productKey } from '@/lib/ports';
 
@@ -200,18 +200,20 @@ function computeProductBalances(
       if (!node) continue;
 
       if (node.kind === 'intermediate_buffer') {
-        const bufferKey = node.itemId ?? node.fluidId ?? '';
-        if (bufferKey !== productId) continue;
-        const inflow = flowResult.nodePortInLoad[nodeId]?.in_0 ?? R.zero;
-        const outflow = flowResult.nodeEffectivePortOutputRates[nodeId]?.out_0 ?? R.zero;
-        consume = consume.add(inflow);
-        produce = produce.add(outflow);
         continue;
       }
 
       if (!node?.recipeId) continue;
       const recipe = recipes.get(node.recipeId);
       if (!recipe) continue;
+
+      const solverNode = asSolverNode(node);
+      const primaryIdx = primaryOutputIndex(solverNode, recipe);
+      const effectivePrimary = primaryTheoreticalPortRate(
+        solverNode,
+        recipe,
+        flowResult.nodeEffectivePortOutputRates[nodeId],
+      );
 
       for (let i = 0; i < recipe.outputs.length; i++) {
         if (productKey(recipe.outputs[i]!) !== productId) continue;
@@ -222,9 +224,9 @@ function computeProductBalances(
 
       for (let i = 0; i < recipe.inputs.length; i++) {
         if (productKey(recipe.inputs[i]!) !== productId) continue;
-        const portLoad = flowResult.nodePortInLoad[nodeId]?.[`in_${i}`] ?? R.zero;
-        if (portLoad.compare(R.zero) > 0) {
-          consume = consume.add(portLoad);
+        const demand = portInputDemandRate(recipe, i, effectivePrimary, primaryIdx);
+        if (demand.compare(R.zero) > 0) {
+          consume = consume.add(demand);
         }
       }
     }

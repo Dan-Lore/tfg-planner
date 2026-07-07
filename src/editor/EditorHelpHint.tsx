@@ -10,7 +10,6 @@ const HELP_KEYS = [
   'undo',
   'multiSelect',
   'duplicate',
-  'targetRate',
 ] as const;
 
 export function EditorHelpHint() {

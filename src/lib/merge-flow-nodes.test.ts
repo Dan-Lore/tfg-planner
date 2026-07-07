@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   applyFlowEdgeSelection,
   applyFlowNodeSelection,
+  applyIssuePanelEdgeFocus,
   mergeFlowEdges,
   mergeFlowNodes,
 } from '@/lib/merge-flow-nodes';
@@ -245,6 +246,18 @@ describe('applyFlowNodeSelection', () => {
   });
 });
 
+describe('applyIssuePanelEdgeFocus', () => {
+  it('sets issuePanelFocus flag on target edge', () => {
+    const edges = [
+      { id: 'e1', source: 'a', target: 'b', data: { source: '1/s' } },
+      { id: 'e2', source: 'b', target: 'c', data: {} },
+    ];
+    const result = applyIssuePanelEdgeFocus(edges, 'e1');
+    expect((result[0]?.data as { issuePanelFocus?: boolean }).issuePanelFocus).toBe(true);
+    expect((result[1]?.data as { issuePanelFocus?: boolean }).issuePanelFocus).toBeUndefined();
+  });
+});
+
 describe('applyFlowEdgeSelection', () => {
   it('sets selected from store ids', () => {
     const edges = [
@@ -266,7 +279,7 @@ describe('applyFlowEdgeSelection', () => {
 });
 
 describe('mergeFlowEdges', () => {
-  it('does not preserve RF-local selected on merge (store applies selection)', () => {
+  it('preserves RF-local selected when edge data is refreshed', () => {
     const prev = [
       { id: 'e1', source: 'a', target: 'b', selected: true, data: { source: '1/s' } },
     ];
@@ -275,7 +288,7 @@ describe('mergeFlowEdges', () => {
     ];
 
     const merged = mergeFlowEdges(prev, next);
-    expect(merged[0]?.selected).toBeUndefined();
+    expect(merged[0]?.selected).toBe(true);
     expect(merged[0]?.data).toEqual({ source: '2/s' });
   });
 

@@ -13,4 +13,9 @@ describe('Rational', () => {
   it('stringifies fractions', () => {
     expect(new Rational(1n, 2n).toString()).toBe('1/2');
   });
+
+  it('preserves negative sign', () => {
+    expect(new Rational(-1n, 2n).compare(R.zero)).toBeLessThan(0);
+    expect(R.zero.sub(R.of(1, 2n)).compare(R.zero)).toBeLessThan(0);
+  });
 });

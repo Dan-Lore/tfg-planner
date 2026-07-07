@@ -36,10 +36,6 @@ export function useEditorActions() {
       pushHistory: () => useEditorStore.getState().pushHistory(),
       undo: () => useEditorStore.getState().undo(),
       redo: () => useEditorStore.getState().redo(),
-      setTarget: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['setTarget']>) =>
-        useEditorStore.getState().setTarget(...args),
-      clearTarget: (...args: Parameters<ReturnType<typeof useEditorStore.getState>['clearTarget']>) =>
-        useEditorStore.getState().clearTarget(...args),
       setEdgeConstraint: (
         ...args: Parameters<ReturnType<typeof useEditorStore.getState>['setEdgeConstraint']>
       ) => useEditorStore.getState().setEdgeConstraint(...args),

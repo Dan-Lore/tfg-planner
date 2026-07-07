@@ -1,9 +1,15 @@
 import { buildRecipeMapForScheme, customMachineRecipeId } from '@/calculator/custom-machine-recipe';
 import type { FlowResult } from '@/calculator/flow-solver';
-import { analyzeCycles, isBalancedNet, type CycleAnalysisNode } from '@/calculator/cycle-analysis';
+import { analyzeCycles, findCycleComponents, isBalancedNet, type CycleAnalysisNode } from '@/calculator/cycle-analysis';
+import type { SchemeNode } from '@/calculator/flow-solver-types';
+import { findCycleSeedEdgeId, findPrimaryCycleSeedEdge } from '@/calculator/cycle-bootstrap';
+import {
+  isProductExternallySuppliedToScc,
+  seedProductKey,
+} from '@/lib/cycle-seed-metrics';
 import type { PackData, Recipe } from '@/data/types';
 import { nodePortFlow, parsePortId, portsMatch, productKey } from '@/canvas/ports';
-import { edgeProductMatchesFlow, flowsCompatible } from '@/lib/flow-match';
+import { edgeProductMatchesFlow } from '@/lib/flow-match';
 import { buildTagIndex } from '@/lib/tag-index';
 import { isBufferNode, isCustomMachineNode, isEndBufferNode, isFlowMachineNode, isIntermediateBufferNode, isMachineNode, isStartBufferNode } from '@/lib/node-kind';
 import { resolveSourceOutputPort } from '@/calculator/port-resolution';
@@ -14,7 +20,7 @@ import {
   type SchemeIssueTranslator,
 } from '@/scheme-check/format-scheme-issue';
 import { normalizeSchemeNodes } from '@/stores/editor-utils';
-import type { TfgpFile, TfgpTarget } from '@/schema/tfgp';
+import type { TfgpFile } from '@/schema/tfgp';
 
 export type SchemeIssueSeverity = 'error' | 'warning' | 'info';
 
@@ -28,12 +34,10 @@ export type SchemeIssueCode =
   | 'disconnected_input'
   | 'disconnected_output'
   | 'orphan_start_buffer'
-  | 'target_on_buffer'
-  | 'target_not_output'
-  | 'target_missing_node'
   | 'cycle_product_deficit'
   | 'cycle_product_surplus'
   | 'cycle_not_running'
+  | 'cycle_no_seed'
   | 'catalyst_imbalance'
   | 'pack_version_missing'
   | 'tag_input_unverified'
@@ -51,6 +55,8 @@ export interface SchemeIssueContext {
   inputCount?: string;
   theoreticalRate?: string;
   netRate?: string;
+  reproductionPercent?: string;
+  bufferMaintainAmount?: string;
   sccIndex?: string;
   nodeIds?: string;
   balanceRatio?: string;
@@ -93,6 +99,28 @@ const SEVERITY_RANK: Record<SchemeIssueSeverity, number> = {
   warning: 1,
   info: 0,
 };
+
+const CYCLE_OPERATIONAL_ISSUE_CODES = new Set<SchemeIssueCode>([
+  'cycle_product_deficit',
+  'cycle_product_surplus',
+  'cycle_not_running',
+]);
+
+export function isCycleOperationalIssueCode(code: SchemeIssueCode): boolean {
+  return CYCLE_OPERATIONAL_ISSUE_CODES.has(code);
+}
+
+/** Layout/wiring edge issues block flow animation; cycle balance warnings do not. */
+export function edgeIssueBlocksFlowAnimation(
+  edgeId: string,
+  result: SchemeCheckResult | null,
+): boolean {
+  if (!result) return false;
+  const issues = indexSchemeIssues(result).byEdgeId.get(edgeId) ?? [];
+  return issues.some(
+    (i) => i.severity !== 'info' && !isCycleOperationalIssueCode(i.code),
+  );
+}
 
 export function worstIssueSeverity(
   a: SchemeIssueSeverity | undefined,
@@ -399,20 +427,6 @@ function checkEdge(
   return issues;
 }
 
-function recipeOutputMatchesTarget(
-  recipe: Recipe,
-  targetKey: string,
-  tags: ReturnType<typeof buildTagIndex>,
-): boolean {
-  for (const output of recipe.outputs) {
-    const outKey = productKey(output);
-    if (outKey === targetKey) return true;
-    if (flowsCompatible(output, { itemId: targetKey, amount: 1 }, tags)) return true;
-    if (flowsCompatible(output, { fluidId: targetKey, amount: 1 }, tags)) return true;
-  }
-  return false;
-}
-
 function checkDisconnectedOutputs(
   nodes: TfgpNode[],
   edges: TfgpEdge[],
@@ -553,7 +567,25 @@ function checkCycleBalance(
   tags: ReturnType<typeof buildTagIndex>,
 ): SchemeIssue[] {
   const issues: SchemeIssue[] = [];
-  const nodes = toCycleAnalysisNodes(normalizeSchemeNodes(scheme.nodes, pack));
+  const normalizedNodes = normalizeSchemeNodes(scheme.nodes, pack);
+  const nodes = toCycleAnalysisNodes(normalizedNodes);
+  const solverNodes = normalizedNodes as unknown as SchemeNode[];
+  const components = findCycleComponents(solverNodes, scheme.edges);
+
+  for (const scc of components) {
+    if (!findPrimaryCycleSeedEdge(scc, solverNodes, scheme.edges)) {
+      issues.push({
+        severity: 'warning',
+        code: 'cycle_no_seed',
+        message: `Петля ${scc.index + 1} (${scc.nodeIds.join(', ')}): нет ребра buffer→кольцо для bootstrap`,
+        context: {
+          sccIndex: String(scc.index + 1),
+          nodeIds: scc.nodeIds.join(', '),
+        },
+      });
+    }
+  }
+
   const analysis = analyzeCycles(nodes, scheme.edges, pack, flowResult, tags);
   const notRunningSccs = new Set(analysis.notRunning.map((n) => n.sccIndex));
 
@@ -561,6 +593,7 @@ function checkCycleBalance(
     issues.push({
       severity: 'warning',
       code: 'cycle_not_running',
+      edgeId: findCycleSeedEdgeId(flowResult, sccIndex),
       message: `Петля ${sccIndex + 1} (${nodeIds.join(', ')}): потоки ≈ 0 при ненулевой теоретической мощности`,
       context: {
         sccIndex: String(sccIndex + 1),
@@ -569,19 +602,50 @@ function checkCycleBalance(
     });
   }
 
+  const seedProductKeys = new Set(
+    (flowResult.cycleSeeds ?? []).map((s) => seedProductKey(s.sccIndex, s.productId)),
+  );
+  const sccNodeIdSets = new Map(
+    components.map((scc) => [scc.index, new Set(scc.nodeIds)] as const),
+  );
+
   for (const balance of analysis.balances) {
     if (notRunningSccs.has(balance.sccIndex)) continue;
     if (isBalancedNet(balance.net)) continue;
+
+    const key = seedProductKey(balance.sccIndex, balance.productId);
+    if (!seedProductKeys.has(key)) continue;
+
+    const sccNodes = sccNodeIdSets.get(balance.sccIndex);
+    if (
+      sccNodes &&
+      isProductExternallySuppliedToScc(sccNodes, balance.productId, solverNodes, scheme.edges)
+    ) {
+      continue;
+    }
+
     const net = balance.net.toNumber();
     const code = net < 0 ? 'cycle_product_deficit' : 'cycle_product_surplus';
+    const seed = flowResult.cycleSeeds?.find(
+      (s) => s.sccIndex === balance.sccIndex && s.productId === balance.productId,
+    );
     issues.push({
       severity: 'warning',
       code,
+      edgeId: findCycleSeedEdgeId(flowResult, balance.sccIndex, balance.productId),
       message: `Петля ${balance.sccIndex + 1}: ${balance.productId} net ${net.toFixed(6)}/s`,
       context: {
         sccIndex: String(balance.sccIndex + 1),
         productId: balance.productId,
         netRate: net.toFixed(6),
+        reproductionPercent:
+          seed?.reproductionPercent !== undefined
+            ? String(seed.reproductionPercent)
+            : undefined,
+        bufferMaintainAmount:
+          seed?.bufferMaintainAmount !== undefined
+            ? String(seed.bufferMaintainAmount)
+            : undefined,
       },
     });
   }
@@ -642,58 +706,6 @@ function checkDisconnectedInputs(
   return issues;
 }
 
-function checkTargets(
-  targets: TfgpTarget[],
-  nodeById: Map<string, TfgpNode>,
-  recipes: Map<string, Recipe>,
-  tags: ReturnType<typeof buildTagIndex>,
-): SchemeIssue[] {
-  const issues: SchemeIssue[] = [];
-  for (const target of targets) {
-    if (!target.nodeId) continue;
-    const node = nodeById.get(target.nodeId);
-    if (!node) {
-      issues.push({
-        severity: 'warning',
-        code: 'target_missing_node',
-        message: `Цель производства: узел «${target.nodeId}» не найден`,
-        context: { productId: target.nodeId },
-      });
-      continue;
-    }
-    if (isBufferNode(node)) {
-      issues.push({
-        severity: 'warning',
-        code: 'target_on_buffer',
-        message: `Цель на буфере ${nodeLabel(node)} игнорируется солвером — задайте цель на машине`,
-        nodeId: node.id,
-        context: machineContext(node),
-      });
-      continue;
-    }
-    if (!isFlowMachineNode(node)) continue;
-    const recipe = recipeForNode(node, recipes);
-    const targetKey = target.itemId ?? target.fluidId ?? '';
-    if (!recipe || !targetKey) continue;
-    if (!recipeOutputMatchesTarget(recipe, targetKey, tags)) {
-      const isInput = recipe.inputs.some(
-        (inp) => productKey(inp) === targetKey || flowsCompatible(inp, { itemId: targetKey, amount: 1 }, tags) || flowsCompatible(inp, { fluidId: targetKey, amount: 1 }, tags),
-      );
-      issues.push({
-        severity: 'warning',
-        code: 'target_not_output',
-        message: `${nodeLabel(node)}: цель ${targetKey} не является выходом рецепта${isInput ? ' (это вход)' : ''}`,
-        nodeId: node.id,
-        context: {
-          ...machineContext(node),
-          productId: targetKey,
-        },
-      });
-    }
-  }
-  return issues;
-}
-
 export interface CheckSchemeOptions {
   /** Reuse solver output for cycle-balance checks. */
   flowResult?: FlowResult;
@@ -715,7 +727,6 @@ export function checkScheme(
   issues.push(...checkDisconnectedInputs(scheme.nodes, scheme.edges, recipes));
   issues.push(...checkDisconnectedOutputs(scheme.nodes, scheme.edges, recipes, tags));
   issues.push(...checkOrphanStartBuffers(scheme.nodes, scheme.edges));
-  issues.push(...checkTargets(scheme.targets ?? [], nodeById, recipes, tags));
 
   const hasStructuralErrors = issues.some((i) => i.severity === 'error');
   if (!hasStructuralErrors && options.flowResult) {

@@ -1,5 +1,6 @@
 import type { Edge, Node } from '@xyflow/react';
 import { machineNodeRfStyle } from '@/canvas/node-bounds';
+import type { FlowEdgeData } from '@/lib/flow-edge-types';
 
 const LAYOUT_WIDTH_EPS = 0.5;
 
@@ -125,6 +126,7 @@ export function mergeFlowEdges(prev: Edge[], next: Edge[]): Edge[] {
   return next.map((edge) => {
     const existing = prevById.get(edge.id);
     if (!existing) return edge;
+    let merged: Edge;
     if (
       edge.source === existing.source &&
       edge.target === existing.target &&
@@ -133,9 +135,14 @@ export function mergeFlowEdges(prev: Edge[], next: Edge[]): Edge[] {
       edge.data === existing.data &&
       edge.animated === existing.animated
     ) {
-      return existing;
+      merged = existing;
+    } else {
+      merged = edge;
     }
-    return edge;
+    if (rfSelected(existing.selected) && !rfSelected(merged.selected)) {
+      return { ...merged, selected: true };
+    }
+    return merged;
   });
 }
 
@@ -151,6 +158,30 @@ export function applyFlowEdgeSelection(
     if (rfSelected(edge.selected) === shouldSelect) return edge;
     changed = true;
     return { ...edge, selected: shouldSelect };
+  });
+  return changed ? next : edges;
+}
+
+/** Highlight edge opened from scheme-check issues panel (survives rfEdges data refresh). */
+export function applyIssuePanelEdgeFocus(
+  edges: Edge[],
+  focusEdgeId: string | null,
+): Edge[] {
+  let changed = false;
+  const next = edges.map((edge) => {
+    const focused = focusEdgeId !== null && edge.id === focusEdgeId;
+    const data = (edge.data ?? {}) as FlowEdgeData;
+    if (data.issuePanelFocus === (focused ? true : undefined)) {
+      return edge;
+    }
+    changed = true;
+    const nextData: FlowEdgeData = { ...data };
+    if (focused) {
+      nextData.issuePanelFocus = true;
+    } else {
+      delete nextData.issuePanelFocus;
+    }
+    return { ...edge, data: nextData };
   });
   return changed ? next : edges;
 }

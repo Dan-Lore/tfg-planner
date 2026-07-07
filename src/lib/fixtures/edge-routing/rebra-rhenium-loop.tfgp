@@ -107,12 +107,5 @@
       "itemId": "gtceu:tiny_rhenium_dust"
     }
   ],
-  "groups": [],
-  "targets": [
-    {
-      "nodeId": "node_96",
-      "itemId": "gtceu:tiny_rhenium_dust",
-      "ratePerSecond": 1111
-    }
-  ]
+  "groups": []
 }

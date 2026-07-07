@@ -25,13 +25,28 @@ describe('parseTfgp', () => {
       viewport: { x: 0, y: 0, zoom: 1 },
       edges: [],
       groups: [],
-      targets: [],
     });
     expect(() => parseTfgp(raw)).toThrow(/nodes must be an array/);
   });
 
   it('rejects malformed JSON', () => {
     expect(() => parseTfgp('{not json')).toThrow();
+  });
+
+  it('ignores legacy targets on import', () => {
+    const raw = JSON.stringify({
+      format: 'tfg-planner-graph',
+      formatVersion: 1,
+      meta: { name: 'x', author: '', createdAt: '', updatedAt: '', description: '' },
+      modpack: { version: '0.12.8', dataVersion: 1 },
+      viewport: { x: 0, y: 0, zoom: 1 },
+      nodes: [],
+      edges: [],
+      groups: [],
+      targets: [{ nodeId: 'n1', itemId: 'ingot', ratePerSecond: 1 }],
+    });
+    const parsed = parseTfgp(raw);
+    expect('targets' in parsed).toBe(false);
   });
 
   it('rejects edges without sourcePort and targetPort', () => {
@@ -44,7 +59,6 @@ describe('parseTfgp', () => {
       nodes: [],
       edges: [{ id: 'e1', source: 'a', target: 'b' }],
       groups: [],
-      targets: [],
     });
     expect(() => parseTfgp(raw)).toThrow(/sourcePort must be a non-empty string/);
   });

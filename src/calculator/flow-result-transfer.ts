@@ -1,5 +1,6 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { Rational } from '@/calculator/rational';
+import { normalizeCycleSeedInfo } from '@/lib/cycle-seed-metrics';
 
 interface RationalLike {
   num: bigint | string;
@@ -87,6 +88,8 @@ export function dehydrateFlowResult(result: FlowResult): FlowResult {
     nodeLoad: dehydrateRationalMap(result.nodeLoad) as unknown as FlowResult['nodeLoad'],
     nodeSurplus: dehydrateNestedRationalMap(result.nodeSurplus) as unknown as FlowResult['nodeSurplus'],
     nodeMachineCounts: result.nodeMachineCounts,
+    nonConverged: result.nonConverged,
+    cycleSeeds: result.cycleSeeds,
   };
 }
 
@@ -156,5 +159,7 @@ export function hydrateFlowResult(raw: FlowResult): FlowResult {
       raw.nodeSurplus as Record<string, Record<string, unknown>>,
     ),
     nodeMachineCounts: raw.nodeMachineCounts,
+    nonConverged: raw.nonConverged,
+    cycleSeeds: raw.cycleSeeds?.map((seed) => normalizeCycleSeedInfo(seed)),
   };
 }

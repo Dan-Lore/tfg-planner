@@ -7,6 +7,7 @@ import {
   type SchemeNode,
 } from '@/calculator/flow-solver-types';
 import { primaryOutputIndex as resolvePrimaryOutputIndex } from '@/lib/primary-output';
+import { chanceRateMultiplier } from '@/lib/flow-chance';
 import {
   portInputDemandRate,
   resolveSourceOutputPort,
@@ -290,9 +291,10 @@ export function computeEffectivePortRates(
     const inflow = connected
       ? (inflowsByPort[portId] ?? R.zero)
       : demandAtTheoretical;
+    const effectiveInputAmount = R.from(inp.amount).mul(chanceRateMultiplier(inp.chance));
     const maxPrimary = inflow
       .mul(R.from(primaryOut.amount))
-      .div(R.from(inp.amount));
+      .div(effectiveInputAmount);
     if (maxPrimary.compare(effectivePrimary) < 0) {
       effectivePrimary = maxPrimary;
     }
@@ -446,6 +448,7 @@ export function computeConvergedFlows(
   connectedInPortsByNode: Record<string, Set<string>>,
   connectedOutPortsByNode: Record<string, Set<string>>,
   pinnedEdgeFlows?: ReadonlyMap<string, Rational>,
+  bootstrapInflowByNodeId?: ReadonlyMap<string, Rational>,
 ): { edgeFlows: Record<string, Rational>; converged: boolean } {
   const edgeFlows: Record<string, Rational> = {};
   for (const edge of edges) {
@@ -551,6 +554,7 @@ export function computeConvergedFlows(
           recipes,
           tags,
           nodePortOutputRates,
+          bootstrapInflowByNodeId,
         );
         if (R.from(delta).compare(maxDelta) > 0) maxDelta = R.from(delta);
         continue;

@@ -54,7 +54,6 @@ function scheme(overrides: Partial<TfgpFile>): TfgpFile {
     nodes: [],
     edges: [],
     groups: [],
-    targets: [],
     ...overrides,
   };
 }
@@ -143,7 +142,6 @@ describe('checkScheme', () => {
     const snap = {
       nodes: file.nodes,
       edges: file.edges,
-      targets: file.targets,
       edgeConstraints: file.edgeConstraints ?? [],
       viewport: file.viewport,
     };
@@ -305,25 +303,6 @@ describe('checkScheme', () => {
     expect(
       result.issues.some((i) => i.code === 'edge_source_product_mismatch' && i.edgeId === 'e_tag'),
     ).toBe(true);
-  });
-
-  it('flags target_not_output when target product is a recipe input', () => {
-    const file = scheme({
-      nodes: [
-        {
-          id: 'lcr',
-          machineId: 'lcr',
-          recipeId: 'tower',
-          machineCount: 1,
-          overclock: 1,
-          voltageTier: 'LV',
-          position: { x: 0, y: 0 },
-        },
-      ],
-      targets: [{ nodeId: 'lcr', itemId: 'charcoal', ratePerSecond: 1 }],
-    });
-    const result = checkScheme(file, miniPack);
-    expect(result.issues.some((i) => i.code === 'target_not_output')).toBe(true);
   });
 
   it('flags disconnected_output when machine output has no edge', () => {

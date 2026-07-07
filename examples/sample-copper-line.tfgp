@@ -57,12 +57,5 @@
       "itemId": "tfg:purified_copper_ore"
     }
   ],
-  "groups": [],
-  "targets": [
-    {
-      "nodeId": "furnace",
-      "itemId": "tfg:copper_ingot",
-      "ratePerSecond": 1
-    }
-  ]
+  "groups": []
 }

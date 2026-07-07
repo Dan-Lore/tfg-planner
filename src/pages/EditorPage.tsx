@@ -90,7 +90,6 @@ export function EditorPage() {
     removeCustomPort,
     ensureCustomPort,
     pushHistory,
-    setTarget,
     loadScheme,
     setSchemeName,
     setSelectedNodeIds,
@@ -98,7 +97,6 @@ export function EditorPage() {
     updateFlows,
     refreshFlowDisplay,
     refreshSchemeCheck,
-    clearTarget,
     setEdgeConstraint,
     clearEdgeConstraint,
   } = editorActions;
@@ -120,8 +118,13 @@ export function EditorPage() {
   const [packDisplayEpoch, setPackDisplayEpoch] = useState(0);
   const colorTheme = useThemeStore((s) => s.theme);
   const canvasDragDepthRef = useRef(0);
+  const suppressSelectionSyncRemainingRef = useRef(0);
   const [isCanvasDragOver, setIsCanvasDragOver] = useState(false);
   const [boxSelectWrapClass, setBoxSelectWrapClass] = useState('');
+
+  const suppressSelectionSync = useCallback(() => {
+    suppressSelectionSyncRemainingRef.current = 4;
+  }, []);
 
   const nodeTypes = useNodeTypes();
   const edgeTypes = useEdgeTypes();
@@ -202,6 +205,7 @@ export function EditorPage() {
     nodeDisplayById,
     canvasRef,
     focusSelection,
+    suppressSelectionSync,
   });
 
   const onPersistNodePositions = useCallback(
@@ -286,6 +290,10 @@ export function EditorPage() {
 
   const onSelectionChange = useCallback(
     ({ nodes, edges }: OnSelectionChangeParams) => {
+      if (suppressSelectionSyncRemainingRef.current > 0) {
+        suppressSelectionSyncRemainingRef.current -= 1;
+        return;
+      }
       const nodeIds = nodes.map((n) => n.id);
       const edgeIds = edges.map((e) => e.id);
       const { selectedNodeIds, selectedEdgeIds } = useEditorStore.getState();
@@ -481,6 +489,7 @@ export function EditorPage() {
                 rfNodes={rfNodes}
                 rfEdges={rfEdges}
                 selectedNodeIds={selectedNodeIds}
+                selectedEdgeIds={selectedEdgeIds}
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 colorTheme={colorTheme}
@@ -495,7 +504,10 @@ export function EditorPage() {
                 onSelectionChange={onSelectionChange}
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
-                onPaneClick={closePortMenu}
+                onPaneClick={() => {
+                  closePortMenu();
+                  canvasRef.current?.clearEdgeFocus();
+                }}
                 onNodeClick={closePortMenu}
                 onMoveEnd={(vp) => setViewport(vp)}
                 onBoxSelectWrapClassChange={setBoxSelectWrapClass}
@@ -520,9 +532,6 @@ export function EditorPage() {
           removeCustomPort={removeCustomPort}
           onFocusIssue={handleFocusIssue}
           onPanToIssue={handlePanToIssue}
-          targets={scheme.targets}
-          setTarget={setTarget}
-          clearTarget={clearTarget}
           edgeConstraints={scheme.edgeConstraints}
           setEdgeConstraint={setEdgeConstraint}
           clearEdgeConstraint={clearEdgeConstraint}

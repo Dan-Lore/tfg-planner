@@ -57,7 +57,6 @@ const resources = {
           removePort: 'Удалить порт',
           removePortBlocked: 'Сначала отключите связь',
         },
-        targetRate: 'Целевая скорость',
         duplicate: 'Дублировать',
         undo: 'Отменить',
         redo: 'Повторить',
@@ -65,9 +64,37 @@ const resources = {
         import: 'Загрузить .tfgp',
         importFailed: 'Не удалось загрузить .tfgp',
         dropScheme: 'Отпустите файл .tfgp для открытия',
+        cycleSeed: {
+          deficit:
+            'Воспроизводство {{reproduction}}%: недостаток {{absNet}}/с {{product}}. Стартовый поток с буфера {{seedFlow}}/с.',
+          stable:
+            'Воспроизводство {{reproduction}}%: для стабильной работы поддерживайте {{bufferAmount}} {{product}} в буфере. Поток с буфера ~{{seedFlow}}/с.',
+          stableNoBuffer:
+            'Воспроизводство {{reproduction}}%: цикл ~сбалансирован. Поток с буфера ~{{seedFlow}}/с ({{product}}).',
+          surplus:
+            'Воспроизводство {{reproduction}}%: избыток +{{net}}/с {{product}} в петле.',
+          edgeBalanceStable: '{{reproduction}}%',
+          edgeBalanceStableBuffer: '{{reproduction}}% · буфер {{bufferAmount}}',
+          edgeBalanceDeficit: '{{reproduction}}% · −{{absNet}}/с',
+          edgeBalanceSurplus: '{{reproduction}}% · +{{net}}/с',
+          inspector: {
+            loop: 'Петля {{index}} · {{product}}',
+            produceInLoop: 'Производство: {{rate}}/с',
+            consumeInLoop: 'Потребление: {{rate}}/с',
+            reproduction: 'Воспроизводство: {{value}}%',
+            selfSufficient: 'Самодостаточный цикл, потребление ≈ производство',
+            stable: 'Самодерживающийся цикл',
+            deficit: 'Недостаток {{absNet}}/с',
+            surplus: 'Избыток {{absNet}}/с',
+            recommendedCapacity: 'Рекомендуемая ёмкость буфера: {{amount}} (на 1 ч)',
+            recommendedCapacityTooltip:
+              'За 1 ч: {{attempts}} попыток × {{chance}}%. Ожидание {{mean}}, σ≈{{stdDev}}. Запас 99%: {{mean}} + {{z}}σ ≈ {{capacity}}.',
+            currentBuffer: 'Ёмкость буфера: {{amount}}',
+          },
+        },
         clearScheme: 'Очистить схему',
         clearSchemeConfirm:
-          'Удалить все узлы, связи и цели? Действие нельзя отменить.',
+          'Удалить все узлы и связи? Действие нельзя отменить.',
         noPack: 'Версия modpack не выбрана. Сначала выберите её на главной странице.',
         restoringPack: 'Восстановление данных modpack {{version}}',
         machineCount: 'Машин',
@@ -91,6 +118,14 @@ const resources = {
         recipeThroughputTitle:
           'Текущая {{load}} — фактическая скорость относительно полного рецепта',
         loadUtilizationMeta: 'Загруженность: {{current}} / {{max}}',
+        bottleneck: {
+          inputShort: 'Мало на входе: {{product}}',
+          outputShort: 'Упор на выходе: {{product}}',
+          inputTitle:
+            'Вход {{portId}} · {{product}}\nПоступает {{received}} из {{demand}} ({{load}} макс. загрузки)',
+          outputTitle:
+            'Выход {{portId}} · {{product}}\nУходит {{sent}} из {{produced}} ({{load}} от полного рецепта)',
+        },
         portInputMaxLoadTitle: '{{load}} · {{received}} из {{demand}} (вклад в макс. загрузку)',
         portRecipeLoad: 'Рец {{value}}',
         portCapacityLoad: 'Ёмк {{value}}',
@@ -134,15 +169,6 @@ const resources = {
           undo: 'Ctrl+Z / Ctrl+Y — отмена и повтор (без pan/zoom холста)',
           multiSelect: 'Shift+ЛКМ — добавить к выделению',
           duplicate: 'Дублировать — копия выделения (Ctrl+C / Ctrl+V)',
-          targetRate: 'Целевая скорость — в инспекторе узла',
-        },
-        target: {
-          title: 'Целевая скорость',
-          product: 'Продукт',
-          rate: 'Скорость, /с',
-          apply: 'Применить',
-          clear: 'Сбросить',
-          current: 'Текущая цель: {{rate}}/с',
         },
         edgeConstraint: {
           rate: 'Закрепить поток, /с',
@@ -203,11 +229,6 @@ const resources = {
               'У стартового буфера нет исходящих связей — он не питает схему.',
             orphan_start_buffer_detail:
               'Узел: {{nodeId}}\nПродукт: {{productLabel}}',
-            target_not_output: 'Цель не на выходе рецепта: {{product}}',
-            target_not_output_reason:
-              'Целевой продукт не является выходом выбранного рецепта — солвер не масштабирует линию по этой цели.',
-            target_not_output_detail:
-              'Узел: {{nodeId}}\nМашина: {{machineLabel}}\nРецепт: {{recipeId}}\nПродукт цели: {{productLabel}}',
             cycle_product_deficit: 'Дефицит в петле {{sccIndex}}: {{product}}',
             cycle_product_deficit_reason:
               'В замкнутой петле продукт расходуется быстрее, чем производится — нужен внешний источник или буфер.',
@@ -222,6 +243,11 @@ const resources = {
             cycle_not_running_reason:
               'Потоки в петле ≈ 0 при ненулевой теоретической мощности — нет bootstrap, заблокированы выходы или неверная цель.',
             cycle_not_running_detail:
+              'Петля: {{sccIndex}}\nУзлы: {{nodeIds}}',
+            cycle_no_seed: 'Петля {{sccIndex}}: нет bootstrap buffer→кольцо',
+            cycle_no_seed_reason:
+              'Замкнутая петля без ребра от start/intermediate buffer в кольцо — солвер не может завести цикл.',
+            cycle_no_seed_detail:
               'Петля: {{sccIndex}}\nУзлы: {{nodeIds}}',
             catalyst_imbalance: 'Дисбаланс катализатора {{product}} в петле {{sccIndex}}',
             catalyst_imbalance_reason:
@@ -274,15 +300,6 @@ const resources = {
               'Вход рецепта задан тегом (#…); pack data не проверяет, что продукт на связи входит в этот тег.',
             tag_input_unverified_detail:
               'Связь: {{edgeId}}\nМаршрут: {{edgeRoute}}\nПорт: {{portId}}\nВход (тег): {{tgtProductLabel}}\nНа связи: {{edgeProductLabel}}',
-            target_missing_node: 'Цель производства указывает на отсутствующий узел',
-            target_missing_node_reason:
-              'Цель производства (targets[]) ссылается на nodeId, отсутствующий в схеме.',
-            target_missing_node_detail: 'Отсутствующий узел: {{productId}}',
-            target_on_buffer: 'Цель на буфере не учитывается расчётом',
-            target_on_buffer_reason:
-              'Солвер учитывает цели только на машинах; цель на буфере игнорируется.',
-            target_on_buffer_detail:
-              'Узел: {{nodeId}}\nМашина: {{machineLabel}}\nРецепт: {{recipeId}}',
             pack_version_missing: 'Версия модпака не найдена',
             pack_version_missing_reason:
               'scheme.meta.modpackVersion не найдена среди загруженных pack data.',
@@ -402,7 +419,6 @@ const resources = {
           removePort: 'Remove port',
           removePortBlocked: 'Disconnect the edge first',
         },
-        targetRate: 'Target rate',
         duplicate: 'Duplicate',
         undo: 'Undo',
         redo: 'Redo',
@@ -410,9 +426,37 @@ const resources = {
         import: 'Load .tfgp',
         importFailed: 'Failed to load .tfgp',
         dropScheme: 'Drop a .tfgp file to open',
+        cycleSeed: {
+          deficit:
+            'Reproduction {{reproduction}}%: deficit {{absNet}}/s {{product}}. Seed flow from buffer {{seedFlow}}/s.',
+          stable:
+            'Reproduction {{reproduction}}%: for stable operation keep {{bufferAmount}} {{product}} in the buffer. Buffer feed ~{{seedFlow}}/s.',
+          stableNoBuffer:
+            'Reproduction {{reproduction}}%: loop ~balanced. Buffer feed ~{{seedFlow}}/s ({{product}}).',
+          surplus:
+            'Reproduction {{reproduction}}%: surplus +{{net}}/s {{product}} in the loop.',
+          edgeBalanceStable: '{{reproduction}}%',
+          edgeBalanceStableBuffer: '{{reproduction}}% · buffer {{bufferAmount}}',
+          edgeBalanceDeficit: '{{reproduction}}% · −{{absNet}}/s',
+          edgeBalanceSurplus: '{{reproduction}}% · +{{net}}/s',
+          inspector: {
+            loop: 'Loop {{index}} · {{product}}',
+            produceInLoop: 'Production: {{rate}}/s',
+            consumeInLoop: 'Consumption: {{rate}}/s',
+            reproduction: 'Reproduction: {{value}}%',
+            selfSufficient: 'Self-sufficient loop, consumption ≈ production',
+            stable: 'Self-sustaining loop',
+            deficit: 'Deficit {{absNet}}/s',
+            surplus: 'Surplus {{absNet}}/s',
+            recommendedCapacity: 'Recommended buffer capacity: {{amount}} (1 h)',
+            recommendedCapacityTooltip:
+              'Per 1 h: {{attempts}} attempts × {{chance}}%. Expected {{mean}}, σ≈{{stdDev}}. 99% reserve: {{mean}} + {{z}}σ ≈ {{capacity}}.',
+            currentBuffer: 'Buffer capacity: {{amount}}',
+          },
+        },
         clearScheme: 'Clear scheme',
         clearSchemeConfirm:
-          'Remove all nodes, edges, and targets? This cannot be undone.',
+          'Remove all nodes and edges? This cannot be undone.',
         noPack: 'No modpack version selected. Choose one on the home page first.',
         restoringPack: 'Restoring modpack {{version}}',
         machineCount: 'Machines',
@@ -437,6 +481,14 @@ const resources = {
         recipeThroughputTitle:
           'Current {{load}} — actual rate vs full recipe',
         loadUtilizationMeta: 'Load: {{current}} / {{max}}',
+        bottleneck: {
+          inputShort: 'Low input: {{product}}',
+          outputShort: 'Output blocked: {{product}}',
+          inputTitle:
+            'Input {{portId}} · {{product}}\nReceiving {{received}} of {{demand}} ({{load}} max load)',
+          outputTitle:
+            'Output {{portId}} · {{product}}\nSending {{sent}} of {{produced}} ({{load}} of full recipe)',
+        },
         portInputMaxLoadTitle: '{{load}} · {{received}} of {{demand}} (max load contribution)',
         portRecipeLoad: 'Rec {{value}}',
         portCapacityLoad: 'Cap {{value}}',
@@ -479,15 +531,6 @@ const resources = {
           undo: 'Ctrl+Z / Ctrl+Y — undo/redo scheme (not canvas pan/zoom)',
           multiSelect: 'Shift+LMB — add to selection',
           duplicate: 'Duplicate — copy selection (Ctrl+C / Ctrl+V)',
-          targetRate: 'Target rate — in node inspector',
-        },
-        target: {
-          title: 'Target rate',
-          product: 'Product',
-          rate: 'Rate, /s',
-          apply: 'Apply',
-          clear: 'Clear',
-          current: 'Current target: {{rate}}/s',
         },
         edgeConstraint: {
           rate: 'Pin flow, /s',
@@ -548,11 +591,6 @@ const resources = {
               'The start buffer has no outgoing edges — it does not feed the scheme.',
             orphan_start_buffer_detail:
               'Node: {{nodeId}}\nProduct: {{productLabel}}',
-            target_not_output: 'Target is not a recipe output: {{product}}',
-            target_not_output_reason:
-              'The target product is not an output of the selected recipe — the solver will not scale the line from this target.',
-            target_not_output_detail:
-              'Node: {{nodeId}}\nMachine: {{machineLabel}}\nRecipe: {{recipeId}}\nTarget product: {{productLabel}}',
             cycle_product_deficit: 'Loop {{sccIndex}} deficit: {{product}}',
             cycle_product_deficit_reason:
               'In a closed loop the product is consumed faster than produced — an external source or buffer is needed.',
@@ -567,6 +605,11 @@ const resources = {
             cycle_not_running_reason:
               'Flows in the loop are ≈ 0 while theoretical capacity > 0 — missing bootstrap, blocked outputs, or wrong target.',
             cycle_not_running_detail:
+              'Loop: {{sccIndex}}\nNodes: {{nodeIds}}',
+            cycle_no_seed: 'Loop {{sccIndex}}: no buffer→loop bootstrap edge',
+            cycle_no_seed_reason:
+              'Closed loop has no edge from a start/intermediate buffer into the ring — the solver cannot bootstrap the cycle.',
+            cycle_no_seed_detail:
               'Loop: {{sccIndex}}\nNodes: {{nodeIds}}',
             catalyst_imbalance: 'Catalyst imbalance {{product}} in loop {{sccIndex}}',
             catalyst_imbalance_reason:
@@ -619,15 +662,6 @@ const resources = {
               'The recipe input is a tag (#…); pack data does not verify that the edge product belongs to that tag.',
             tag_input_unverified_detail:
               'Edge: {{edgeId}}\nRoute: {{edgeRoute}}\nPort: {{portId}}\nInput (tag): {{tgtProductLabel}}\nOn edge: {{edgeProductLabel}}',
-            target_missing_node: 'Production target points to a missing node',
-            target_missing_node_reason:
-              'A production target (targets[]) references a nodeId that is not in the scheme.',
-            target_missing_node_detail: 'Missing node: {{productId}}',
-            target_on_buffer: 'Target on buffer is ignored by the solver',
-            target_on_buffer_reason:
-              'The solver only applies targets on machines; a target on a buffer is ignored.',
-            target_on_buffer_detail:
-              'Node: {{nodeId}}\nMachine: {{machineLabel}}\nRecipe: {{recipeId}}',
             pack_version_missing: 'Modpack version not found',
             pack_version_missing_reason:
               'scheme.meta.modpackVersion was not found among loaded pack data.',
