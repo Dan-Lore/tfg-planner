@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { findCycleComponents, analyzeCycles } from '@/calculator/cycle-analysis';
-import { solveFlows } from '@/calculator/flow-solver';
+import { solveFlows, type FlowResult } from '@/calculator/flow-solver';
+import { R } from '@/calculator/rational';
 import { computeReproductionPercent } from '@/lib/cycle-seed-metrics';
 import type { PackData } from '@/data/types';
 import { buildTagIndex } from '@/lib/tag-index';
+import { loadTestPack } from '@/test-fixtures/load-test-pack';
 
 const samplePack: PackData = {
   format: 'tfg-pack-data',
@@ -330,5 +332,89 @@ describe('analyzeCycles', () => {
     const reproduction = computeReproductionPercent(rhBalance!.produce, rhBalance!.consume);
     expect(reproduction).toBeDefined();
     expect(reproduction!).toBeGreaterThan(100);
+  });
+
+  it('merges forge tag inputs with concrete buffer product in loop balance', () => {
+    const pack = loadTestPack('0.12.8');
+    const tags = buildTagIndex(pack);
+    const flowResult = {
+      nodeMachineCounts: { sludge: 1, acid: 1 },
+      nodeEffectivePortOutputRates: {
+        sludge: { out_0: R.from(0.96), out_1: R.from(40), out_2: R.from(100) },
+        acid: { out_0: R.from(40) },
+      },
+      nodePortOutputRates: {
+        sludge: { out_0: R.from(0.96), out_1: R.from(40), out_2: R.from(100) },
+        acid: { out_0: R.from(40) },
+      },
+      edgeFlows: {},
+    } as FlowResult;
+
+    const analysis = analyzeCycles(
+      [
+        {
+          id: 'sludge',
+          machineId: 'gtceu:large_chemical_reactor',
+          recipeId: 'gtceu:large_chemical_reactor/bauxite_sludge_from_slurry',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'MV',
+        },
+        {
+          id: 'acid',
+          machineId: 'gtceu:large_chemical_reactor',
+          recipeId: 'gtceu:large_chemical_reactor/sulfuric_acid_from_trioxide',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'buf',
+          kind: 'intermediate_buffer',
+          fluidId: 'gtceu:sulfuric_acid',
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+      ],
+      [
+        {
+          id: 'e_acid_out',
+          source: 'acid',
+          target: 'buf',
+          sourcePort: 'out_0',
+          targetPort: 'in_0',
+          fluidId: 'gtceu:sulfuric_acid',
+        },
+        {
+          id: 'e_acid_in',
+          source: 'buf',
+          target: 'sludge',
+          sourcePort: 'out_0',
+          targetPort: 'in_1',
+          fluidId: 'gtceu:sulfuric_acid',
+        },
+        {
+          id: 'e_so3',
+          source: 'sludge',
+          target: 'acid',
+          sourcePort: 'out_3',
+          targetPort: 'in_0',
+          fluidId: 'gtceu:sulfur_trioxide',
+        },
+      ],
+      pack,
+      flowResult,
+      tags,
+    );
+
+    const acidBalance = analysis.balances.find((b) => b.productId === 'gtceu:sulfuric_acid');
+    expect(acidBalance).toBeDefined();
+    expect(acidBalance!.consume.toNumber()).toBeCloseTo(40, 3);
+    expect(acidBalance!.produce.toNumber()).toBeCloseTo(40, 3);
+    expect(Math.abs(acidBalance!.net.toNumber())).toBeLessThan(0.001);
+    expect(analysis.balances.some((b) => b.productId === '#forge:sulfuric_acid')).toBe(false);
   });
 });

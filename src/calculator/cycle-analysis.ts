@@ -8,6 +8,8 @@ import type { PackData, Recipe } from '@/data/types';
 import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
 import type { TagIndex } from '@/lib/tag-index';
 import { productKey } from '@/lib/ports';
+import { recipeInputMatchesProduct } from '@/lib/flow-match';
+import { productMatchesTag } from '@/lib/tag-rules';
 
 const BALANCE_EPS_R = R.of(1, 1_000_000n);
 const FLOW_EPS_R = R.of(1, 1_000_000_000n);
@@ -173,6 +175,28 @@ function productsInScc(
   return products;
 }
 
+function productIdsMatch(a: string, b: string, tags: TagIndex): boolean {
+  if (a === b) return true;
+  return recipeInputMatchesProduct(a, b, tags);
+}
+
+/** Merge forge/mod tag ids with concrete buffer/edge ids in the same SCC. */
+function canonicalizeSccProductIds(productIds: Set<string>, tags: TagIndex): Set<string> {
+  const ids = [...productIds];
+  const drop = new Set<string>();
+  for (const id of ids) {
+    if (!id.startsWith('#')) continue;
+    for (const other of ids) {
+      if (other.startsWith('#') || other === id) continue;
+      if (productMatchesTag(id, other)) {
+        drop.add(id);
+        break;
+      }
+    }
+  }
+  return new Set(ids.filter((id) => !drop.has(id)));
+}
+
 function theoreticalPrimaryRate(
   node: CycleAnalysisNode,
   recipe: Recipe,
@@ -186,9 +210,13 @@ function computeProductBalances(
   nodeById: Map<string, CycleAnalysisNode>,
   recipes: Map<string, Recipe>,
   flowResult: FlowResult,
+  tags: TagIndex,
 ): CycleProductBalance[] {
   const nodeIdSet = new Set(scc.nodeIds);
-  const productIds = productsInScc(nodeIdSet, nodeById, recipes);
+  const productIds = canonicalizeSccProductIds(
+    productsInScc(nodeIdSet, nodeById, recipes),
+    tags,
+  );
   const balances: CycleProductBalance[] = [];
 
   for (const productId of productIds) {
@@ -216,14 +244,16 @@ function computeProductBalances(
       );
 
       for (let i = 0; i < recipe.outputs.length; i++) {
-        if (productKey(recipe.outputs[i]!) !== productId) continue;
+        const outKey = productKey(recipe.outputs[i]!);
+        if (!productIdsMatch(outKey, productId, tags)) continue;
         const effective =
           flowResult.nodeEffectivePortOutputRates[nodeId]?.[`out_${i}`] ?? R.zero;
         produce = produce.add(effective);
       }
 
       for (let i = 0; i < recipe.inputs.length; i++) {
-        if (productKey(recipe.inputs[i]!) !== productId) continue;
+        const inKey = productKey(recipe.inputs[i]!);
+        if (!productIdsMatch(inKey, productId, tags)) continue;
         const demand = portInputDemandRate(recipe, i, effectivePrimary, primaryIdx);
         if (demand.compare(R.zero) > 0) {
           consume = consume.add(demand);
@@ -353,7 +383,7 @@ export function analyzeCycles(
   edges: readonly SchemeEdge[],
   pack: PackData,
   flowResult: FlowResult,
-  _tags: TagIndex,
+  tags: TagIndex,
 ): CycleAnalysisResult {
   const recipes = buildRecipeMap(
     pack,
@@ -367,7 +397,7 @@ export function analyzeCycles(
   const catalystImbalances: CycleAnalysisResult['catalystImbalances'] = [];
 
   for (const scc of components) {
-    balances.push(...computeProductBalances(scc, nodeById, recipes, flowResult));
+    balances.push(...computeProductBalances(scc, nodeById, recipes, flowResult, tags));
 
     const internalFlow = sccInternalFlowSum(scc, edges, flowResult.edgeFlows);
     if (
