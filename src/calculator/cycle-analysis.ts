@@ -322,7 +322,7 @@ function computeCatalystImbalances(
     if (!node?.recipeId) continue;
     const recipe = recipes.get(node.recipeId);
     if (!recipe) continue;
-    for (const flow of [...recipe.inputs, ...recipe.outputs]) {
+    for (const flow of recipe.inputs) {
       if (flow.chance !== undefined && flow.chance > 0 && flow.chance < 10_000) {
         catalystProducts.add(productKey(flow));
       }
@@ -361,6 +361,7 @@ function computeCatalystImbalances(
     }
 
     if (produce.compare(R.zero) <= 0 && consume.compare(R.zero) <= 0) continue;
+    if (consume.compare(R.zero) <= 0) continue;
     const ratio =
       produce.compare(R.zero) > 0
         ? consume.div(produce).toNumber()

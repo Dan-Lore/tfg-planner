@@ -7,7 +7,9 @@
 
 ### Fixed
 - CI: циклический импорт `product-lexicon` (depcruise), knip (мёртвый `formatting.ts`, dev-скрипт `analyze-lang-misses`), унификация workflow на `npm run verify:ci`
-- Dev: `pack.lang.json.gz` — Vite отдаёт сырой gzip без `Content-Encoding`; парсер принимает и сжатые, и уже распакованные байты
+- Dev: `pack.lang.json.gz` — Vite отдаёт сырой gzip без `Content-Encoding`; парсер принимает сжатые, и уже распакованные байты
+- Cycle bootstrap: все `intermediate_buffer` в одной SCC получают synthetic inflow (петля кальцита + H₂SO₄ в переработке боксита)
+- `catalyst_imbalance`: только chanced **входы** с потреблением внутри SCC; chanced byproducts на `end_buffer` не предупреждают
 
 ### Added
 - **Product Lexicon (K-025):** `src/lib/product-lexicon/` — EMI-like resolve (lang keys, forge category/material, GT tier tags `#gtceu:circuits/*` / `#gtceu:batteries/*`, tag members, GT prefix/suffix); `pack.lang.json.gz` с lazy fetch + IndexedDB; `PackRuntime.getItemName` через lexicon; `npm run parser:export-lang` / `parser:recanonicalize-lang` / `parser:lang-coverage`; namespace breakdown в `build-report.json`

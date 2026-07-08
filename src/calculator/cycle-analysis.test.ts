@@ -209,6 +209,91 @@ describe('analyzeCycles', () => {
     expect(analysis.catalystImbalances).toHaveLength(0);
   });
 
+  it('does not flag chanced byproducts exported to end_buffer', () => {
+    const byproductPack: PackData = {
+      ...samplePack,
+      recipes: [
+        {
+          id: 'loop',
+          machineId: 'm',
+          durationTicks: 100,
+          inputs: [{ itemId: 'x', amount: 1 }],
+          outputs: [{ itemId: 'x', amount: 1 }],
+        },
+        {
+          id: 'byproduct',
+          machineId: 'centrifuge',
+          durationTicks: 100,
+          inputs: [{ itemId: 'x', amount: 1 }],
+          outputs: [
+            { itemId: 'x', amount: 1 },
+            { itemId: 'gtceu:gallium_dust', amount: 1, chance: 1000 },
+          ],
+        },
+      ],
+    };
+    const flowResult = solveFlows({
+      pack: byproductPack,
+      nodes: [
+        {
+          id: 'a',
+          machineId: 'm',
+          recipeId: 'loop',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+        {
+          id: 'c',
+          machineId: 'centrifuge',
+          recipeId: 'byproduct',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'MV',
+        },
+        {
+          id: 'sink',
+          kind: 'end_buffer',
+          itemId: 'gtceu:gallium_dust',
+          machineId: '',
+          recipeId: '',
+          machineCount: 1,
+          overclock: 1,
+          voltageTier: 'LV',
+        },
+      ],
+      edges: [
+        { id: 'e1', source: 'a', target: 'c', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'x' },
+        { id: 'e2', source: 'c', target: 'a', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'x' },
+        {
+          id: 'e3',
+          source: 'c',
+          target: 'sink',
+          sourcePort: 'out_1',
+          targetPort: 'in_0',
+          itemId: 'gtceu:gallium_dust',
+        },
+      ],
+      preserveManualMachineCounts: true,
+    });
+
+    const analysis = analyzeCycles(
+      [
+        { id: 'a', machineId: 'm', recipeId: 'loop', machineCount: 1, overclock: 1, voltageTier: 'LV' },
+        { id: 'c', machineId: 'centrifuge', recipeId: 'byproduct', machineCount: 1, overclock: 1, voltageTier: 'MV' },
+      ],
+      [
+        { id: 'e1', source: 'a', target: 'c', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'x' },
+        { id: 'e2', source: 'c', target: 'a', sourcePort: 'out_0', targetPort: 'in_0', itemId: 'x' },
+      ],
+      byproductPack,
+      flowResult,
+      buildTagIndex(byproductPack),
+    );
+
+    expect(analysis.catalystImbalances).toHaveLength(0);
+  });
+
   it('balances chanced catalyst in items/s with reproduction above 100%', () => {
     const flowResult = solveFlows({
       pack: samplePack,

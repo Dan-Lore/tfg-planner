@@ -58,14 +58,15 @@ export function intermediateBufferBootstrapCap(node: SchemeNode): Rational {
   return R.from(stock).div(R.from(BUFFER_HORIZON_SEC));
 }
 
-/** Primary seed edge: intermediate_buffer product feed into SCC, else start_buffer. */
-export function findPrimaryCycleSeedEdge(
+/** All seed edges: every intermediate_buffer feed into SCC, else one start_buffer. */
+export function findCycleSeedEdges(
   scc: CycleComponent,
   nodes: readonly SchemeNode[],
   edges: readonly SchemeEdge[],
-): SchemeEdge | null {
+): SchemeEdge[] {
   const nodeIdSet = new Set(scc.nodeIds);
   const nodeById = new Map(nodes.map((n) => [n.id, n]));
+  const intermediateSeeds: SchemeEdge[] = [];
 
   for (const edge of edges) {
     if (!nodeIdSet.has(edge.target)) continue;
@@ -73,16 +74,26 @@ export function findPrimaryCycleSeedEdge(
     if (!source || !isSchemeIntermediateBuffer(source)) continue;
     const bufferKey = bufferProductKey(source);
     const edgeKey = edgeProductKey(edge);
-    if (bufferKey && edgeKey === bufferKey) return edge;
+    if (bufferKey && edgeKey === bufferKey) intermediateSeeds.push(edge);
   }
+  if (intermediateSeeds.length > 0) return intermediateSeeds;
 
   for (const edge of edges) {
     if (!nodeIdSet.has(edge.target)) continue;
     const source = nodeById.get(edge.source);
-    if (source && isSchemeStartBuffer(source)) return edge;
+    if (source && isSchemeStartBuffer(source)) return [edge];
   }
 
-  return null;
+  return [];
+}
+
+/** Primary seed edge: first intermediate_buffer feed into SCC, else start_buffer. */
+export function findPrimaryCycleSeedEdge(
+  scc: CycleComponent,
+  nodes: readonly SchemeNode[],
+  edges: readonly SchemeEdge[],
+): SchemeEdge | null {
+  return findCycleSeedEdges(scc, nodes, edges)[0] ?? null;
 }
 
 export function computeCycleSeedDemand(
@@ -155,38 +166,38 @@ export function buildCycleBootstrapPlan(
 
   const components = findCycleComponents(nodes, edges);
   for (const scc of components) {
-    const seedEdge = findPrimaryCycleSeedEdge(scc, nodes, edges);
-    if (!seedEdge) continue;
+    const seedEdges = findCycleSeedEdges(scc, nodes, edges);
+    for (const seedEdge of seedEdges) {
+      const theoreticalDemand = computeCycleSeedDemand(
+        seedEdge,
+        nodes,
+        recipes,
+        nodePortOutputRates,
+        tags,
+      );
+      const seedFlow = computeCycleSeedFlow(
+        seedEdge,
+        nodes,
+        recipes,
+        nodePortOutputRates,
+        tags,
+      );
+      if (seedFlow.compare(R.zero) <= 0) continue;
 
-    const theoreticalDemand = computeCycleSeedDemand(
-      seedEdge,
-      nodes,
-      recipes,
-      nodePortOutputRates,
-      tags,
-    );
-    const seedFlow = computeCycleSeedFlow(
-      seedEdge,
-      nodes,
-      recipes,
-      nodePortOutputRates,
-      tags,
-    );
-    if (seedFlow.compare(R.zero) <= 0) continue;
+      const productId = edgeProductKey(seedEdge);
+      pinnedFlows.set(seedEdge.id, seedFlow);
+      seeds.push({
+        edge: seedEdge,
+        sccIndex: scc.index,
+        seedFlow,
+        theoreticalDemand,
+        productId,
+      });
 
-    const productId = edgeProductKey(seedEdge);
-    pinnedFlows.set(seedEdge.id, seedFlow);
-    seeds.push({
-      edge: seedEdge,
-      sccIndex: scc.index,
-      seedFlow,
-      theoreticalDemand,
-      productId,
-    });
-
-    const source = nodes.find((n) => n.id === seedEdge.source);
-    if (source && isSchemeIntermediateBuffer(source) && seedFlow.compare(R.zero) > 0) {
-      bootstrapInflowByNodeId.set(source.id, seedFlow);
+      const source = nodes.find((n) => n.id === seedEdge.source);
+      if (source && isSchemeIntermediateBuffer(source) && seedFlow.compare(R.zero) > 0) {
+        bootstrapInflowByNodeId.set(source.id, seedFlow);
+      }
     }
   }
 

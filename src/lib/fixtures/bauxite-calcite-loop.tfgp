@@ -1,0 +1,319 @@
+{
+  "format": "tfg-planner-graph",
+  "formatVersion": 1,
+  "meta": {
+    "name": "bauxite-calcite-loop fixture",
+    "author": "",
+    "createdAt": "2026-07-08T07:30:00.000Z",
+    "updatedAt": "2026-07-08T07:30:00.000Z",
+    "description": "Calcite + H2SO4 dual-buffer SCC sign-off (K-023 extension)"
+  },
+  "modpack": {
+    "version": "0.12.8",
+    "dataVersion": 1
+  },
+  "viewport": { "x": 0, "y": 0, "zoom": 1 },
+  "nodes": [
+    {
+      "id": "node_ore",
+      "kind": "start_buffer",
+      "position": { "x": 0, "y": 0 },
+      "itemId": "gtceu:purified_bauxite_ore",
+      "capacity": 0,
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true
+    },
+    {
+      "id": "node_steam",
+      "kind": "start_buffer",
+      "position": { "x": 0, "y": 100 },
+      "fluidId": "#forge:steam",
+      "capacity": 0,
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true
+    },
+    {
+      "id": "node_water",
+      "kind": "start_buffer",
+      "position": { "x": 0, "y": 200 },
+      "fluidId": "#forge:water",
+      "capacity": 0,
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true
+    },
+    {
+      "id": "node_salt",
+      "kind": "start_buffer",
+      "position": { "x": 0, "y": 300 },
+      "itemId": "#forge:dusts/salt",
+      "capacity": 0,
+      "supplyMode": "rate",
+      "supplyRate": 0,
+      "autoSupplyRate": true
+    },
+    {
+      "id": "node_40",
+      "kind": "machine",
+      "machineId": "gtceu:mixer",
+      "recipeId": "gtceu:mixer/bauxite_slurry_from_washed_bauxite",
+      "position": { "x": 200, "y": 0 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "HV"
+    },
+    {
+      "id": "node_42",
+      "kind": "machine",
+      "machineId": "gtceu:cracker",
+      "recipeId": "gtceu:cracker/cracked_bauxite_slurry",
+      "position": { "x": 400, "y": 0 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "MV"
+    },
+    {
+      "id": "node_44",
+      "kind": "machine",
+      "machineId": "gtceu:large_chemical_reactor",
+      "recipeId": "gtceu:large_chemical_reactor/bauxite_sludge_from_slurry",
+      "position": { "x": 600, "y": 0 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "MV"
+    },
+    {
+      "id": "node_48",
+      "kind": "machine",
+      "machineId": "gtceu:distillery",
+      "recipeId": "gtceu:distillery/bauxite_sludge_decalcification",
+      "position": { "x": 800, "y": 0 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "MV"
+    },
+    {
+      "id": "node_50",
+      "kind": "machine",
+      "machineId": "gtceu:centrifuge",
+      "recipeId": "gtceu:centrifuge/bauxite_sludge_centrifuge",
+      "position": { "x": 1000, "y": 0 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "MV"
+    },
+    {
+      "id": "node_93",
+      "kind": "machine",
+      "machineId": "gtceu:electric_blast_furnace",
+      "recipeId": "gtceu:electric_blast_furnace/soda_ash_from_calcite",
+      "position": { "x": 200, "y": 200 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_89",
+      "kind": "machine",
+      "machineId": "gtceu:chemical_reactor",
+      "recipeId": "gtceu:chemical_reactor/sulfuric_acid_from_trioxide",
+      "position": { "x": 600, "y": 200 },
+      "machineCount": 1,
+      "overclock": 1,
+      "voltageTier": "LV"
+    },
+    {
+      "id": "node_79",
+      "kind": "intermediate_buffer",
+      "position": { "x": 500, "y": 300 },
+      "fluidId": "gtceu:sulfuric_acid",
+      "capacity": 0
+    },
+    {
+      "id": "node_117",
+      "kind": "intermediate_buffer",
+      "position": { "x": 800, "y": 200 },
+      "itemId": "gtceu:calcite_dust",
+      "capacity": 0
+    },
+    {
+      "id": "node_gallium",
+      "kind": "end_buffer",
+      "position": { "x": 1200, "y": 0 },
+      "itemId": "gtceu:gallium_dust",
+      "capacity": 0
+    },
+    {
+      "id": "node_sio2",
+      "kind": "end_buffer",
+      "position": { "x": 1200, "y": 100 },
+      "itemId": "gtceu:silicon_dioxide_dust",
+      "capacity": 0
+    },
+    {
+      "id": "node_iron",
+      "kind": "end_buffer",
+      "position": { "x": 1200, "y": 200 },
+      "itemId": "gtceu:iron_dust",
+      "capacity": 0
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_ore",
+      "source": "node_ore",
+      "sourcePort": "out_0",
+      "target": "node_40",
+      "targetPort": "in_0",
+      "itemId": "gtceu:purified_bauxite_ore"
+    },
+    {
+      "id": "edge_steam",
+      "source": "node_steam",
+      "sourcePort": "out_0",
+      "target": "node_42",
+      "targetPort": "in_1",
+      "fluidId": "#forge:steam"
+    },
+    {
+      "id": "edge_water",
+      "source": "node_water",
+      "sourcePort": "out_0",
+      "target": "node_40",
+      "targetPort": "in_3",
+      "fluidId": "#forge:water"
+    },
+    {
+      "id": "edge_salt",
+      "source": "node_salt",
+      "sourcePort": "out_0",
+      "target": "node_93",
+      "targetPort": "in_1",
+      "itemId": "#forge:dusts/salt"
+    },
+    {
+      "id": "edge_43",
+      "source": "node_40",
+      "sourcePort": "out_0",
+      "target": "node_42",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:bauxite_slurry"
+    },
+    {
+      "id": "edge_45",
+      "source": "node_42",
+      "sourcePort": "out_0",
+      "target": "node_44",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:cracked_bauxite_slurry"
+    },
+    {
+      "id": "edge_85",
+      "source": "node_79",
+      "sourcePort": "out_0",
+      "target": "node_44",
+      "targetPort": "in_1",
+      "fluidId": "gtceu:sulfuric_acid"
+    },
+    {
+      "id": "edge_90",
+      "source": "node_44",
+      "sourcePort": "out_3",
+      "target": "node_89",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:sulfur_trioxide"
+    },
+    {
+      "id": "edge_91",
+      "source": "node_89",
+      "sourcePort": "out_0",
+      "target": "node_79",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:sulfuric_acid"
+    },
+    {
+      "id": "edge_49",
+      "source": "node_44",
+      "sourcePort": "out_2",
+      "target": "node_48",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:bauxite_sludge"
+    },
+    {
+      "id": "edge_51",
+      "source": "node_48",
+      "sourcePort": "out_1",
+      "target": "node_50",
+      "targetPort": "in_0",
+      "fluidId": "gtceu:decalcified_bauxite_sludge"
+    },
+    {
+      "id": "edge_118",
+      "source": "node_48",
+      "sourcePort": "out_0",
+      "target": "node_117",
+      "targetPort": "in_0",
+      "itemId": "gtceu:calcite_dust"
+    },
+    {
+      "id": "edge_119",
+      "source": "node_117",
+      "sourcePort": "out_0",
+      "target": "node_93",
+      "targetPort": "in_0",
+      "itemId": "gtceu:calcite_dust"
+    },
+    {
+      "id": "edge_95",
+      "source": "node_93",
+      "sourcePort": "out_0",
+      "target": "node_40",
+      "targetPort": "in_1",
+      "itemId": "gtceu:soda_ash_dust"
+    },
+    {
+      "id": "edge_94",
+      "source": "node_93",
+      "sourcePort": "out_1",
+      "target": "node_40",
+      "targetPort": "in_2",
+      "itemId": "#forge:dusts/calcium_chloride"
+    },
+    {
+      "id": "edge_107",
+      "source": "node_50",
+      "sourcePort": "out_1",
+      "target": "node_gallium",
+      "targetPort": "in_0",
+      "itemId": "gtceu:gallium_dust"
+    },
+    {
+      "id": "edge_111",
+      "source": "node_50",
+      "sourcePort": "out_4",
+      "target": "node_sio2",
+      "targetPort": "in_0",
+      "itemId": "gtceu:silicon_dioxide_dust"
+    },
+    {
+      "id": "edge_113",
+      "source": "node_50",
+      "sourcePort": "out_5",
+      "target": "node_iron",
+      "targetPort": "in_0",
+      "itemId": "gtceu:iron_dust"
+    },
+    {
+      "id": "edge_102",
+      "source": "node_50",
+      "sourcePort": "out_6",
+      "target": "node_89",
+      "targetPort": "in_1",
+      "fluidId": "minecraft:water"
+    }
+  ],
+  "groups": [],
+  "edgeConstraints": []
+}

@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { R } from '@/calculator/rational';
 import {
+  buildCycleBootstrapPlan,
   computeCycleSeedFlow,
   computeCycleSeedDemand,
+  findCycleSeedEdges,
   findPrimaryCycleSeedEdge,
   intermediateBufferBootstrapCap,
   resolveCycleSeedMode,
@@ -157,6 +159,215 @@ describe('findPrimaryCycleSeedEdge', () => {
     const scc = findCycleComponents(rheniumNodes, rheniumEdges)[0]!;
     const seed = findPrimaryCycleSeedEdge(scc, rheniumNodes, rheniumEdges);
     expect(seed?.id).toBe('edge_141');
+  });
+});
+
+describe('findCycleSeedEdges', () => {
+  it('returns all intermediate_buffer feeds in one SCC', () => {
+    const dualBufferNodes: SchemeNode[] = [
+      {
+        id: 'lcr',
+        kind: 'machine',
+        machineId: 'gtceu:large_chemical_reactor',
+        recipeId: 'lcr',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'MV',
+      },
+      {
+        id: 'ebf',
+        kind: 'machine',
+        machineId: 'gtceu:electric_blast_furnace',
+        recipeId: 'ebf',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'LV',
+      },
+      {
+        id: 'buf_acid',
+        kind: 'intermediate_buffer',
+        machineId: '',
+        recipeId: '',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'LV',
+        fluidId: 'gtceu:sulfuric_acid',
+        capacity: 0,
+      },
+      {
+        id: 'buf_calcite',
+        kind: 'intermediate_buffer',
+        machineId: '',
+        recipeId: '',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'LV',
+        itemId: 'gtceu:calcite_dust',
+        capacity: 0,
+      },
+    ];
+    const dualBufferEdges: SchemeEdge[] = [
+      {
+        id: 'e_acid',
+        source: 'buf_acid',
+        target: 'lcr',
+        sourcePort: 'out_0',
+        targetPort: 'in_1',
+        fluidId: 'gtceu:sulfuric_acid',
+      },
+      {
+        id: 'e_calcite',
+        source: 'buf_calcite',
+        target: 'ebf',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'gtceu:calcite_dust',
+      },
+      {
+        id: 'e_lcr_ebf',
+        source: 'lcr',
+        target: 'ebf',
+        sourcePort: 'out_0',
+        targetPort: 'in_1',
+        itemId: 'gtceu:soda_ash_dust',
+      },
+      {
+        id: 'e_ebf_lcr',
+        source: 'ebf',
+        target: 'lcr',
+        sourcePort: 'out_1',
+        targetPort: 'in_0',
+        itemId: 'gtceu:calcium_chloride_dust',
+      },
+    ];
+    const scc = findCycleComponents(dualBufferNodes, dualBufferEdges)[0]!;
+    const seeds = findCycleSeedEdges(scc, dualBufferNodes, dualBufferEdges);
+    expect(seeds.map((e) => e.id).sort()).toEqual(['e_acid', 'e_calcite']);
+  });
+});
+
+describe('buildCycleBootstrapPlan', () => {
+  it('bootstraps every intermediate_buffer in a multi-buffer SCC', () => {
+    const dualBufferNodes: SchemeNode[] = [
+      {
+        id: 'lcr',
+        kind: 'machine',
+        machineId: 'gtceu:large_chemical_reactor',
+        recipeId: 'lcr_dual',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'MV',
+      },
+      {
+        id: 'ebf',
+        kind: 'machine',
+        machineId: 'gtceu:electric_blast_furnace',
+        recipeId: 'ebf_dual',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'LV',
+      },
+      {
+        id: 'buf_acid',
+        kind: 'intermediate_buffer',
+        machineId: '',
+        recipeId: '',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'LV',
+        fluidId: 'gtceu:sulfuric_acid',
+        capacity: 0,
+      },
+      {
+        id: 'buf_calcite',
+        kind: 'intermediate_buffer',
+        machineId: '',
+        recipeId: '',
+        machineCount: 1,
+        overclock: 1,
+        voltageTier: 'LV',
+        itemId: 'gtceu:calcite_dust',
+        capacity: 0,
+      },
+    ];
+    const dualBufferEdges: SchemeEdge[] = [
+      {
+        id: 'e_acid',
+        source: 'buf_acid',
+        target: 'lcr',
+        sourcePort: 'out_0',
+        targetPort: 'in_1',
+        fluidId: 'gtceu:sulfuric_acid',
+      },
+      {
+        id: 'e_calcite',
+        source: 'buf_calcite',
+        target: 'ebf',
+        sourcePort: 'out_0',
+        targetPort: 'in_0',
+        itemId: 'gtceu:calcite_dust',
+      },
+      {
+        id: 'e_lcr_ebf',
+        source: 'lcr',
+        target: 'ebf',
+        sourcePort: 'out_0',
+        targetPort: 'in_1',
+        itemId: 'gtceu:soda_ash_dust',
+      },
+      {
+        id: 'e_ebf_lcr',
+        source: 'ebf',
+        target: 'lcr',
+        sourcePort: 'out_1',
+        targetPort: 'in_0',
+        itemId: 'gtceu:calcium_chloride_dust',
+      },
+    ];
+    const dualPack = {
+      ...miniPack,
+      recipes: [
+        {
+          id: 'lcr_dual',
+          machineId: 'gtceu:large_chemical_reactor',
+          durationTicks: 100,
+          inputs: [
+            { itemId: 'gtceu:calcium_chloride_dust', amount: 1 },
+            { fluidId: 'gtceu:sulfuric_acid', amount: 1000 },
+          ],
+          outputs: [{ itemId: 'gtceu:soda_ash_dust', amount: 1 }],
+        },
+        {
+          id: 'ebf_dual',
+          machineId: 'gtceu:electric_blast_furnace',
+          durationTicks: 100,
+          inputs: [
+            { itemId: 'gtceu:calcite_dust', amount: 1 },
+            { itemId: 'gtceu:salt_dust', amount: 1 },
+          ],
+          outputs: [
+            { itemId: 'gtceu:soda_ash_dust', amount: 1 },
+            { itemId: 'gtceu:calcium_chloride_dust', amount: 1 },
+          ],
+        },
+      ],
+    } as unknown as PackData;
+    const tags = buildTagIndex(dualPack);
+    const recipes = new Map(dualPack.recipes.map((r) => [r.id, r]));
+    const nodePortOutputRates = {
+      lcr: { out_0: R.from(1) },
+      ebf: { out_0: R.from(1), out_1: R.from(1) },
+    };
+    const plan = buildCycleBootstrapPlan(
+      dualBufferNodes,
+      dualBufferEdges,
+      recipes,
+      nodePortOutputRates,
+      tags,
+    );
+    expect(plan.bootstrapInflowByNodeId.get('buf_acid')!.toNumber()).toBeGreaterThan(0);
+    expect(plan.bootstrapInflowByNodeId.get('buf_calcite')!.toNumber()).toBeGreaterThan(0);
+    expect(plan.seeds).toHaveLength(2);
   });
 });
 
