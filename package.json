@@ -31,7 +31,7 @@
     "lint:knip": "knip --include files,dependencies,duplicates,exports",
     "lint:semgrep": "node scripts/run-semgrep.mjs",
     "lint:agent": "npm run lint:arch && npm run lint:knip && npm run lint:semgrep",
-    "verify:ci": "npm run typecheck && npm run test && npm run lint:agent && npm run parser:validate && npm run build && vite build --mode pages"
+    "verify:ci": "npm run typecheck && npm run test && npm run lint:agent && npm run parser:validate && vite build --mode pages"
   },
   "dependencies": {
     "@xyflow/react": "^12.6.0",

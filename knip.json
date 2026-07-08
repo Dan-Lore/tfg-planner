@@ -15,7 +15,8 @@
     "coverage/**",
     "tools/parser/snapshots/**",
     "tools/parser/substrate-dumps/**",
-    "tools/parser/scripts/analyze-lang-coverage.ts"
+    "tools/parser/scripts/analyze-lang-coverage.ts",
+    "tools/parser/scripts/analyze-lang-misses.ts"
   ],
   "ignoreIssues": {
     "src/calculator/**": ["exports"],

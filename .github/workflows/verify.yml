@@ -26,23 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Test
-        run: npm test
-
       - name: Install Semgrep
         run: pip install semgrep
 
-      - name: Architecture & dead-code lint
-        run: npm run lint:agent
-
-      - name: Parser validate
-        run: npm run parser:validate
-
-      - name: Build
-        run: npm run build
+      - name: Verify
+        run: npm run verify:ci
         env:
           VITE_BASE_PATH: ${{ inputs.vite_base_path }}
 

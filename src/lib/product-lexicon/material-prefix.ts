@@ -1,15 +1,4 @@
-import type { LangBundle } from './types';
-
-export interface SuffixEntry {
-  suffix: string;
-  prefix: string;
-}
-
-export interface PrefixEntry {
-  lead: string;
-  tail: string;
-  prefix: string;
-}
+import type { LangBundle, PrefixEntry, SuffixEntry } from './types';
 
 function isSuffixOnlyTagPrefix(prefix: string): boolean {
   if (prefix.startsWith('cable_gt_') || prefix.startsWith('wire_gt_') || prefix.startsWith('pipe_')) {

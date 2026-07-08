@@ -1,6 +1,16 @@
 import type { LocalizedName } from '@/data/types';
 import type { TagIndex } from '@/lib/tag-index';
-import type { PrefixEntry, SuffixEntry } from './material-prefix';
+
+export interface SuffixEntry {
+  suffix: string;
+  prefix: string;
+}
+
+export interface PrefixEntry {
+  lead: string;
+  tail: string;
+  prefix: string;
+}
 
 export interface LangBundle {
   ru: Record<string, string>;

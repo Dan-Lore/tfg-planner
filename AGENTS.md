@@ -69,6 +69,6 @@ Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`
 | `AGENTS.md` + `docs/architecture.md` | Точки входа и границы модулей | читать перед задачей |
 | [docs/agent-tooling-catalog.md](docs/agent-tooling-catalog.md) | Полный справочник инструментов + статус интеграции | при выборе tooling |
 
-Перед рефакторингом: `npm run lint:agent`. Перед **push или git tag**: `npm run verify:ci` (typecheck, test, lint:agent, parser:validate, build + Pages). Не добавлять React-импорты в `src/calculator/` и `tools/parser/`.
+Перед рефакторингом: `npm run lint:agent`. Перед **push или git tag**: `npm run verify:ci` (typecheck, test, lint:agent, parser:validate, Pages build) — та же команда, что и job **Verify** в GitHub Actions; для Pages задайте `VITE_BASE_PATH=/tfg-planner/` (в CI подставляется из имени репозитория). Не добавлять React-импорты в `src/calculator/` и `tools/parser/`.
 
 **Roadmap tooling (фаза 2):** [kanban K-013](docs/kanban.md) — Semgrep, depcruise `no-circular`, полный knip в CI.

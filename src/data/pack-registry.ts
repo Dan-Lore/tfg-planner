@@ -81,9 +81,6 @@ async function loadV2Pack(entry: PackManifestEntry): Promise<ActivePack> {
       if (lexicon) runtime.setLexicon(lexicon);
     })
     .catch((err) => {
-      // #region agent log
-      fetch('http://127.0.0.1:7815/ingest/a4c01786-6c76-4f15-8a5b-7527ced6c773',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'b5b3c4'},body:JSON.stringify({sessionId:'b5b3c4',location:'pack-registry.ts:lang-catch',message:'ensurePackLexicon failed',data:{errorName:err instanceof Error?err.name:'unknown',errorMessage:err instanceof Error?err.message:String(err),modpackVersion:entry.modpackVersion},timestamp:Date.now(),hypothesisId:'H1-H5'})}).catch(()=>{});
-      // #endregion
       console.warn('[pack] Failed to load pack lang artifact', err);
     });
   return runtime;

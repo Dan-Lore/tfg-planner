@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Fixed
+- CI: циклический импорт `product-lexicon` (depcruise), knip (мёртвый `formatting.ts`, dev-скрипт `analyze-lang-misses`), унификация workflow на `npm run verify:ci`
+- Dev: `pack.lang.json.gz` — Vite отдаёт сырой gzip без `Content-Encoding`; парсер принимает и сжатые, и уже распакованные байты
+
 ### Added
 - **Product Lexicon (K-025):** `src/lib/product-lexicon/` — EMI-like resolve (lang keys, forge category/material, GT tier tags `#gtceu:circuits/*` / `#gtceu:batteries/*`, tag members, GT prefix/suffix); `pack.lang.json.gz` с lazy fetch + IndexedDB; `PackRuntime.getItemName` через lexicon; `npm run parser:export-lang` / `parser:recanonicalize-lang` / `parser:lang-coverage`; namespace breakdown в `build-report.json`
 - `machineCount: 0` на узле машины — отключение потока без удаления узла (инспектор, колесо на карточке)

@@ -3,13 +3,11 @@ import {
   buildPrefixIndex,
   buildSuffixIndex,
   collectMaterialPrefixKeys,
-  type PrefixEntry,
-  type SuffixEntry,
 } from './material-prefix';
 import { isFallbackName, collectKeysForIds, resolveResourceName } from './resolve-chain';
 import { collectLangKeysForResolve } from './lang-keys';
 import { gtceuTierRepresentativeItem } from './gtceu-tier-tags';
-import type { AppLang, LangBundle, PackLangArtifact, ResolveContext } from './types';
+import type { AppLang, LangBundle, PackLangArtifact, PrefixEntry, ResolveContext, SuffixEntry } from './types';
 
 export class ProductLexicon {
   private readonly suffixIndex: { ru: SuffixEntry[]; en: SuffixEntry[] };
