@@ -65,6 +65,11 @@ export async function writeLangArtifactToCache(
   }
 }
 
+function isGzipBytes(bytes: ArrayBuffer): boolean {
+  const u8 = new Uint8Array(bytes);
+  return u8.length >= 2 && u8[0] === 0x1f && u8[1] === 0x8b;
+}
+
 export async function decompressGzipJson<T>(bytes: ArrayBuffer): Promise<T> {
   if (typeof DecompressionStream !== 'undefined') {
     const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
@@ -72,4 +77,13 @@ export async function decompressGzipJson<T>(bytes: ArrayBuffer): Promise<T> {
     return JSON.parse(text) as T;
   }
   throw new Error('Gzip decompression is not supported in this browser');
+}
+
+/** Parse pack.lang bytes: raw gzip (prod) or JSON already decompressed by Content-Encoding (dev). */
+export async function parsePackLangArtifactBytes<T>(bytes: ArrayBuffer): Promise<T> {
+  if (isGzipBytes(bytes)) {
+    return decompressGzipJson<T>(bytes);
+  }
+  const text = new TextDecoder().decode(bytes);
+  return JSON.parse(text) as T;
 }

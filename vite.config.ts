@@ -1,7 +1,50 @@
 import path from 'node:path';
-import { copyFileSync } from 'node:fs';
+import { copyFileSync, createReadStream, existsSync } from 'node:fs';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { Plugin } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+
+const PACK_LANG_RE = /^\/data\/packs\/[^/]+\/pack\.lang\.json\.gz$/;
+
+function resolvePackLangPathname(reqUrl: string | undefined, base: string): string | null {
+  if (!reqUrl) return null;
+  const pathname = reqUrl.split('?')[0];
+  const normalizedBase =
+    base === '/' ? '' : base.endsWith('/') ? base.slice(0, -1) : base;
+  const pathOnly =
+    normalizedBase && pathname.startsWith(normalizedBase)
+      ? pathname.slice(normalizedBase.length)
+      : pathname;
+  return PACK_LANG_RE.test(pathOnly) ? pathOnly : null;
+}
+
+/** Serve pack.lang.json.gz as raw gzip bytes (no Content-Encoding) for client-side gunzip. */
+function packLangRawGzipPlugin(base: string): Plugin {
+  const createHandler = (staticRoot: string) => {
+    return (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+      const rel = resolvePackLangPathname(req.url, base);
+      if (!rel) return next();
+      const filePath = path.join(staticRoot, rel.slice(1));
+      if (!existsSync(filePath)) return next();
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/gzip');
+      res.setHeader('Cache-Control', 'no-cache');
+      createReadStream(filePath).pipe(res);
+    };
+  };
+  const publicRoot = path.resolve(__dirname, 'public');
+  const distRoot = path.resolve(__dirname, 'dist');
+  return {
+    name: 'pack-lang-raw-gzip',
+    configureServer(server) {
+      server.middlewares.use(createHandler(publicRoot));
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(createHandler(distRoot));
+    },
+  };
+}
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -15,6 +58,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
+      packLangRawGzipPlugin(base),
       {
         name: 'gh-pages-spa-fallback',
         closeBundle() {
