@@ -5,6 +5,8 @@
 
 ## [Unreleased]
 
+## [0.4.3] — 2026-07-08
+
 ### Fixed
 - CI: циклический импорт `product-lexicon` (depcruise), knip (мёртвый `formatting.ts`, dev-скрипт `analyze-lang-misses`), унификация workflow на `npm run verify:ci`
 - Dev: `pack.lang.json.gz` — Vite отдаёт сырой gzip без `Content-Encoding`; парсер принимает сжатые, и уже распакованные байты
