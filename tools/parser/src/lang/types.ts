@@ -1,7 +1,4 @@
-export interface LangBundle {
-  ru: Record<string, string>;
-  en: Record<string, string>;
-}
+export type { LangBundle } from '../../../../src/lib/product-lexicon/types.js';
 
 export interface LangStats {
   kubejsFiles: number;

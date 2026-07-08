@@ -1,7 +1,7 @@
 {
   "modpackVersion": "0.12.8",
   "tag": "0.12.8",
-  "generatedAt": "2026-07-06T00:29:57.418Z",
+  "generatedAt": "2026-07-08T03:52:11.061Z",
   "stats": {
     "snapshotRecipes": 56295,
     "snapshotFiles": 0,
@@ -12,9 +12,422 @@
     "items": 24551,
     "fluids": 1183,
     "recipesWithEnergy": 0,
-    "recipesWithChance": 0
+    "recipesWithChance": 0,
+    "recipeIoLocalized": 0.750136006839201,
+    "recipeIoTagsLocalized": 0.8134618636901741,
+    "recipeIoItemsLocalized": 0.7238509056643283,
+    "recipeIoFluidsLocalized": 0.9276773296244785,
+    "recipeIoTotal": 25734,
+    "recipeIoTagsTotal": 5913
   },
   "warnings": [],
   "warningsByKind": {},
-  "unparsedFiles": []
+  "unparsedFiles": [],
+  "langCoverageByNamespace": {
+    "ad_astra": {
+      "localized": 190,
+      "total": 190,
+      "ratio": 1
+    },
+    "advancedperipherals": {
+      "localized": 13,
+      "total": 13,
+      "ratio": 1
+    },
+    "ae2": {
+      "localized": 245,
+      "total": 252,
+      "ratio": 0.9722222222222222
+    },
+    "ae2insertexportcard": {
+      "localized": 2,
+      "total": 2,
+      "ratio": 1
+    },
+    "ae2netanalyser": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "ae2wtlib": {
+      "localized": 5,
+      "total": 5,
+      "ratio": 1
+    },
+    "afc": {
+      "localized": 409,
+      "total": 409,
+      "ratio": 1
+    },
+    "ags_modernmarkings": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "alekiships": {
+      "localized": 4,
+      "total": 4,
+      "ratio": 1
+    },
+    "applied_ammo_box": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "beneath": {
+      "localized": 76,
+      "total": 76,
+      "ratio": 1
+    },
+    "betterend": {
+      "localized": 67,
+      "total": 68,
+      "ratio": 0.9852941176470589
+    },
+    "buildinggadgets2": {
+      "localized": 6,
+      "total": 6,
+      "ratio": 1
+    },
+    "chalk": {
+      "localized": 16,
+      "total": 16,
+      "ratio": 1
+    },
+    "comforts": {
+      "localized": 32,
+      "total": 34,
+      "ratio": 0.9411764705882353
+    },
+    "computercraft": {
+      "localized": 17,
+      "total": 17,
+      "ratio": 1
+    },
+    "copycats": {
+      "localized": 36,
+      "total": 36,
+      "ratio": 1
+    },
+    "create": {
+      "localized": 301,
+      "total": 301,
+      "ratio": 1
+    },
+    "create_connected": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "create_factory_logistics": {
+      "localized": 4,
+      "total": 4,
+      "ratio": 1
+    },
+    "create_hypertube": {
+      "localized": 5,
+      "total": 5,
+      "ratio": 1
+    },
+    "createaddition": {
+      "localized": 11,
+      "total": 12,
+      "ratio": 0.9166666666666666
+    },
+    "createdeco": {
+      "localized": 87,
+      "total": 89,
+      "ratio": 0.9775280898876404
+    },
+    "deafission": {
+      "localized": 7,
+      "total": 7,
+      "ratio": 1
+    },
+    "diggerhelmet": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "etched": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "everycomp": {
+      "localized": 0,
+      "total": 72,
+      "ratio": 0
+    },
+    "expatternprovider": {
+      "localized": 35,
+      "total": 37,
+      "ratio": 0.9459459459459459
+    },
+    "exposure": {
+      "localized": 10,
+      "total": 10,
+      "ratio": 1
+    },
+    "firmaciv": {
+      "localized": 7,
+      "total": 7,
+      "ratio": 1
+    },
+    "firmalife": {
+      "localized": 251,
+      "total": 258,
+      "ratio": 0.9728682170542635
+    },
+    "forge": {
+      "localized": 4654,
+      "total": 5507,
+      "ratio": 0.8451062284365353
+    },
+    "framedblocks": {
+      "localized": 2,
+      "total": 2,
+      "ratio": 1
+    },
+    "greate": {
+      "localized": 80,
+      "total": 124,
+      "ratio": 0.6451612903225806
+    },
+    "gtceu": {
+      "localized": 6195,
+      "total": 11326,
+      "ratio": 0.5469715698393078
+    },
+    "gtmutils": {
+      "localized": 14,
+      "total": 14,
+      "ratio": 1
+    },
+    "hangglider": {
+      "localized": 2,
+      "total": 2,
+      "ratio": 1
+    },
+    "immersive_aircraft": {
+      "localized": 15,
+      "total": 15,
+      "ratio": 1
+    },
+    "measurements": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "megacells": {
+      "localized": 35,
+      "total": 35,
+      "ratio": 1
+    },
+    "merequester": {
+      "localized": 2,
+      "total": 2,
+      "ratio": 1
+    },
+    "minecraft": {
+      "localized": 481,
+      "total": 483,
+      "ratio": 0.9958592132505176
+    },
+    "morered": {
+      "localized": 43,
+      "total": 44,
+      "ratio": 0.9772727272727273
+    },
+    "railways": {
+      "localized": 1316,
+      "total": 1316,
+      "ratio": 1
+    },
+    "rnr": {
+      "localized": 570,
+      "total": 572,
+      "ratio": 0.9965034965034965
+    },
+    "sandworm_mod": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "simplylight": {
+      "localized": 38,
+      "total": 40,
+      "ratio": 0.95
+    },
+    "sns": {
+      "localized": 10,
+      "total": 10,
+      "ratio": 1
+    },
+    "species": {
+      "localized": 10,
+      "total": 10,
+      "ratio": 1
+    },
+    "tacz": {
+      "localized": 1,
+      "total": 5,
+      "ratio": 0.2
+    },
+    "tfc": {
+      "localized": 2180,
+      "total": 2250,
+      "ratio": 0.9688888888888889
+    },
+    "tfc_gourmet": {
+      "localized": 114,
+      "total": 116,
+      "ratio": 0.9827586206896551
+    },
+    "tfcagedalcohol": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "tfcastikorcarts": {
+      "localized": 80,
+      "total": 80,
+      "ratio": 1
+    },
+    "tfcbetterbf": {
+      "localized": 1,
+      "total": 1,
+      "ratio": 1
+    },
+    "tfcchannelcasting": {
+      "localized": 17,
+      "total": 17,
+      "ratio": 1
+    },
+    "tfcgroomer": {
+      "localized": 9,
+      "total": 9,
+      "ratio": 1
+    },
+    "tfchotornot": {
+      "localized": 36,
+      "total": 36,
+      "ratio": 1
+    },
+    "tfcscraping": {
+      "localized": 11,
+      "total": 11,
+      "ratio": 1
+    },
+    "tfg": {
+      "localized": 1481,
+      "total": 1704,
+      "ratio": 0.869131455399061
+    },
+    "vintageimprovements": {
+      "localized": 25,
+      "total": 25,
+      "ratio": 1
+    },
+    "wan_ancient_beasts": {
+      "localized": 32,
+      "total": 34,
+      "ratio": 0.9411764705882353
+    },
+    "waterflasks": {
+      "localized": 5,
+      "total": 5,
+      "ratio": 1
+    }
+  },
+  "langMissByReason": {
+    "resolved": 19304,
+    "no_lang_key": 5632,
+    "no_tag_member": 798
+  },
+  "langMissSample": [
+    "ae2:auto_complete_card",
+    "betterend:creeping_moss",
+    "everycomp:c/ad_astra/aeronos_window",
+    "everycomp:c/ad_astra/aeronos_window_pane",
+    "everycomp:c/ad_astra/glacian_window",
+    "everycomp:c/ad_astra/glacian_window_pane",
+    "everycomp:c/ad_astra/strophar_window",
+    "everycomp:c/ad_astra/strophar_window_pane",
+    "everycomp:c/afc/baobab_window",
+    "everycomp:c/afc/baobab_window_pane",
+    "everycomp:c/afc/cypress_window",
+    "everycomp:c/afc/cypress_window_pane",
+    "everycomp:c/afc/eucalyptus_window",
+    "everycomp:c/afc/eucalyptus_window_pane",
+    "everycomp:c/afc/fig_window",
+    "everycomp:c/afc/fig_window_pane",
+    "everycomp:c/afc/hevea_window",
+    "everycomp:c/afc/hevea_window_pane",
+    "everycomp:c/afc/ipe_window",
+    "everycomp:c/afc/ipe_window_pane",
+    "everycomp:c/afc/ironwood_window",
+    "everycomp:c/afc/ironwood_window_pane",
+    "everycomp:c/afc/mahogany_window",
+    "everycomp:c/afc/mahogany_window_pane",
+    "everycomp:c/afc/teak_window",
+    "everycomp:c/afc/teak_window_pane",
+    "everycomp:c/afc/tualang_window",
+    "everycomp:c/afc/tualang_window_pane",
+    "everycomp:c/domum_ornamentum/cactus_extra_window",
+    "everycomp:c/domum_ornamentum/cactus_extra_window_pane",
+    "everycomp:c/domum_ornamentum/cactus_window",
+    "everycomp:c/domum_ornamentum/cactus_window_pane",
+    "everycomp:c/tfc/acacia_window",
+    "everycomp:c/tfc/acacia_window_pane",
+    "everycomp:c/tfc/ash_window",
+    "everycomp:c/tfc/ash_window_pane",
+    "everycomp:c/tfc/aspen_window",
+    "everycomp:c/tfc/aspen_window_pane",
+    "everycomp:c/tfc/birch_window",
+    "everycomp:c/tfc/birch_window_pane"
+  ],
+  "langUnlocalizableSample": [
+    "ae2:auto_complete_card",
+    "betterend:creeping_moss",
+    "everycomp:c/ad_astra/aeronos_window",
+    "everycomp:c/ad_astra/aeronos_window_pane",
+    "everycomp:c/ad_astra/glacian_window",
+    "everycomp:c/ad_astra/glacian_window_pane",
+    "everycomp:c/ad_astra/strophar_window",
+    "everycomp:c/ad_astra/strophar_window_pane",
+    "everycomp:c/afc/baobab_window",
+    "everycomp:c/afc/baobab_window_pane",
+    "everycomp:c/afc/cypress_window",
+    "everycomp:c/afc/cypress_window_pane",
+    "everycomp:c/afc/eucalyptus_window",
+    "everycomp:c/afc/eucalyptus_window_pane",
+    "everycomp:c/afc/fig_window",
+    "everycomp:c/afc/fig_window_pane",
+    "everycomp:c/afc/hevea_window",
+    "everycomp:c/afc/hevea_window_pane",
+    "everycomp:c/afc/ipe_window",
+    "everycomp:c/afc/ipe_window_pane",
+    "everycomp:c/afc/ironwood_window",
+    "everycomp:c/afc/ironwood_window_pane",
+    "everycomp:c/afc/mahogany_window",
+    "everycomp:c/afc/mahogany_window_pane",
+    "everycomp:c/afc/teak_window",
+    "everycomp:c/afc/teak_window_pane",
+    "everycomp:c/afc/tualang_window",
+    "everycomp:c/afc/tualang_window_pane",
+    "everycomp:c/domum_ornamentum/cactus_extra_window",
+    "everycomp:c/domum_ornamentum/cactus_extra_window_pane",
+    "everycomp:c/domum_ornamentum/cactus_window",
+    "everycomp:c/domum_ornamentum/cactus_window_pane",
+    "everycomp:c/tfc/acacia_window",
+    "everycomp:c/tfc/acacia_window_pane",
+    "everycomp:c/tfc/ash_window",
+    "everycomp:c/tfc/ash_window_pane",
+    "everycomp:c/tfc/aspen_window",
+    "everycomp:c/tfc/aspen_window_pane",
+    "everycomp:c/tfc/birch_window",
+    "everycomp:c/tfc/birch_window_pane"
+  ],
+  "langAchievableCeiling": 0.781145566177042
 }

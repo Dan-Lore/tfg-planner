@@ -19,6 +19,8 @@ import '@xyflow/react/dist/style.css';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
 import { usePackStore } from '@/stores/pack-store';
+import { usePackLangReady } from '@/hooks/usePackLangReady';
+import { isPackRuntime } from '@/data/pack-runtime';
 import { useEditorStore } from '@/stores/editor-store';
 import { useThemeStore } from '@/stores/theme-store';
 import { useNodeTypes } from '@/canvas/MachineNode';
@@ -116,6 +118,7 @@ export function EditorPage() {
   const [importError, setImportError] = useState<string | null>(null);
 
   const [packDisplayEpoch, setPackDisplayEpoch] = useState(0);
+  const langReady = usePackLangReady(pack);
   const colorTheme = useThemeStore((s) => s.theme);
   const canvasDragDepthRef = useRef(0);
   const suppressSelectionSyncRemainingRef = useRef(0);
@@ -156,6 +159,12 @@ export function EditorPage() {
       cancelled = true;
     };
   }, [pack, updateFlows, refreshFlowDisplay, refreshSchemeCheck]);
+
+  useEffect(() => {
+    if (!pack || !isPackRuntime(pack)) return;
+    if (!langReady) return;
+    setPackDisplayEpoch((epoch) => epoch + 1);
+  }, [langReady]);
 
   const handleRecipeChange = useCallback(
     (nodeId: string, recipeId: string) => {

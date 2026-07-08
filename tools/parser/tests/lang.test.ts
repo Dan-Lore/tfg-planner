@@ -4,8 +4,11 @@ import { fileURLToPath } from 'node:url';
 import { describe, it, expect } from 'vitest';
 import AdmZip from 'adm-zip';
 import { loadKubeJsLang } from '../src/lang/load-kubejs.js';
-import { resolveResourceName, resolveMachineName } from '../src/lang/resolve-name.js';
-import type { LangBundle } from '../src/lang/types.js';
+import {
+  resolveResourceName,
+  resolveMachineName,
+  type LangBundle,
+} from '../src/lang/resolve-name.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cacheRoot = join(__dirname, '..', '..', '..', '.cache');
@@ -33,21 +36,21 @@ describe('lang resolution', () => {
   it.skipIf(!hasModpackCache)(
     'resolves TFC and GTCEu names from modpack kubejs + gtceu jar',
     () => {
-    const root = modpackRoot!;
-    const { bundle: kubejs } = loadKubeJsLang(root);
-    const zip = new AdmZip(join(cacheRoot, 'mods', 'gtceu-1.20.1-7.5.3.jar'));
-    const gtRu = JSON.parse(zip.readAsText('assets/gtceu/lang/ru_ru.json'));
-    const gtEn = JSON.parse(zip.readAsText('assets/gtceu/lang/en_us.json'));
-    const bundle = {
-      ru: { ...gtRu, ...kubejs.ru },
-      en: { ...gtEn, ...kubejs.en },
-    };
+      const root = modpackRoot!;
+      const { bundle: kubejs } = loadKubeJsLang(root);
+      const zip = new AdmZip(join(cacheRoot, 'mods', 'gtceu-1.20.1-7.5.3.jar'));
+      const gtRu = JSON.parse(zip.readAsText('assets/gtceu/lang/ru_ru.json'));
+      const gtEn = JSON.parse(zip.readAsText('assets/gtceu/lang/en_us.json'));
+      const bundle = {
+        ru: { ...gtRu, ...kubejs.ru },
+        en: { ...gtEn, ...kubejs.en },
+      };
 
-    expect(resolveResourceName('tfc:powder/flux', bundle).ru).toBe('Флюс');
-    expect(resolveResourceName('gtceu:copper_dust', bundle).ru).toBe('Медь (Пыль)');
-    expect(resolveResourceName('#forge:dusts/copper', bundle).ru).toBe('Пыль меди');
-    expect(resolveMachineName('gtceu:mixer', bundle).ru).toBe('Миксер');
-    expect(resolveMachineName('minecraft:smelting', bundle).ru).toBe('Плавка');
+      expect(resolveResourceName('tfc:powder/flux', bundle).ru).toBe('Флюс');
+      expect(resolveResourceName('gtceu:copper_dust', bundle).ru).toBe('Медь (Пыль)');
+      expect(resolveResourceName('#forge:dusts/copper', bundle).ru).toBe('Пыль меди');
+      expect(resolveMachineName('gtceu:mixer', bundle).ru).toBe('Миксер');
+      expect(resolveMachineName('minecraft:smelting', bundle).ru).toBe('Плавка');
     },
   );
 

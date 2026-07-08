@@ -16,7 +16,7 @@ export function productNamespace(id: string): string | null {
 type AffixPattern = { prefix?: string; suffix: string };
 
 /** GTCEu-style local id suffixes for `#forge:{category}/{material}`. */
-const FORGE_CATEGORY_AFFIXES: Record<string, AffixPattern[]> = {
+export const FORGE_CATEGORY_AFFIXES: Record<string, AffixPattern[]> = {
   dusts: [{ suffix: '_dust' }],
   tiny_dusts: [{ prefix: 'tiny_', suffix: '_dust' }],
   small_dusts: [{ prefix: 'small_', suffix: '_dust' }],
@@ -34,6 +34,7 @@ const FORGE_CATEGORY_AFFIXES: Record<string, AffixPattern[]> = {
   double_ingots: [{ suffix: '_double_ingot' }],
   plates: [{ suffix: '_plate' }],
   double_plates: [{ suffix: '_double_plate' }],
+  sheets: [{ suffix: '_sheet' }],
   nuggets: [{ suffix: '_nugget' }],
   rods: [{ suffix: '_rod' }],
   long_rods: [{ suffix: '_long_rod' }],
@@ -46,6 +47,7 @@ const FORGE_CATEGORY_AFFIXES: Record<string, AffixPattern[]> = {
   screws: [{ suffix: '_screw' }],
   bolts: [{ suffix: '_bolt' }],
   gears: [{ suffix: '_gear' }],
+  small_gears: [{ prefix: 'small_', suffix: '_gear' }],
   rings: [{ suffix: '_ring' }],
   rotors: [{ suffix: '_rotor' }],
   lenses: [{ suffix: '_lens' }],
@@ -64,6 +66,9 @@ const FORGE_CATEGORY_AFFIXES: Record<string, AffixPattern[]> = {
     { suffix: '_buzz_saw_blade' },
   ],
 };
+
+/** Forge `#category/material` categories shared with tag inference and lang resolve. */
+export const FORGE_TAG_CATEGORIES = Object.keys(FORGE_CATEGORY_AFFIXES);
 
 function isBurnableLogId(id: string): boolean {
   if (id.startsWith('#')) return false;
@@ -264,4 +269,4 @@ export function productMatchesTag(tagId: string, productId: string): boolean {
   }
   return false;
 }
-
+

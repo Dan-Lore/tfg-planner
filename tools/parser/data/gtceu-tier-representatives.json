@@ -1,0 +1,24 @@
+{
+  "circuits": {
+    "ulv": "gtceu:micro_processor",
+    "lv": "gtceu:electronic_circuit",
+    "mv": "gtceu:good_electronic_circuit",
+    "hv": "gtceu:advanced_integrated_circuit",
+    "ev": "gtceu:advanced_circuit",
+    "iv": "gtceu:data_orb",
+    "luv": "gtceu:energy_crystal",
+    "zpm": "gtceu:quantum_eye",
+    "uv": "gtceu:quantum_star"
+  },
+  "batteries": {
+    "ulv": "gtceu:ulv_lithium_battery",
+    "lv": "gtceu:lv_lithium_battery",
+    "mv": "gtceu:mv_lithium_battery",
+    "hv": "gtceu:hv_lithium_battery",
+    "ev": "gtceu:ev_lithium_battery",
+    "iv": "gtceu:iv_lithium_battery",
+    "luv": "gtceu:luv_lithium_battery",
+    "zpm": "gtceu:zpm_lithium_battery",
+    "uv": "gtceu:uv_lithium_battery"
+  }
+}

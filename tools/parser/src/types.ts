@@ -108,6 +108,12 @@ export interface BuildReport {
     goldenMismatched?: number;
     goldenMissing?: number;
     removedDuplicateRecipes?: number;
+    recipeIoLocalized?: number;
+    recipeIoTagsLocalized?: number;
+    recipeIoItemsLocalized?: number;
+    recipeIoFluidsLocalized?: number;
+    recipeIoTotal?: number;
+    recipeIoTagsTotal?: number;
   };
   removedDuplicateRecipeIdsSample?: string[];
   warnings: ParseWarning[];
@@ -115,4 +121,9 @@ export interface BuildReport {
   unparsedFiles: string[];
   smokeResults?: { id: string; ok: boolean; reason?: string }[];
   goldenDiff?: { id: string; field: string; expected: unknown; actual: unknown }[];
+  langCoverageByNamespace?: Record<string, { localized: number; total: number; ratio: number }>;
+  langMissByReason?: Partial<Record<string, number>>;
+  langMissSample?: string[];
+  langUnlocalizableSample?: string[];
+  langAchievableCeiling?: number;
 }

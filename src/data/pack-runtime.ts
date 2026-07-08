@@ -21,6 +21,7 @@ import type { Flow } from './types';
 import type { TagIndex } from '@/lib/tag-index';
 import { machineIdsForFlowAttach } from '@/lib/recipe-flow-attach-index';
 import type { TfgpFile } from '@/schema/tfgp';
+import type { ProductLexicon } from '@/lib/product-lexicon';
 
 export type JsonLoader = (url: string) => Promise<unknown>;
 
@@ -57,6 +58,10 @@ export class PackRuntime {
   private itemById: Map<string, ItemDef>;
   private fluidById: Map<string, ItemDef>;
   private recipeIdToMachineId = new Map<string, string>();
+  private lexicon: ProductLexicon | null = null;
+  private metaTagIndex: TagIndex | null = null;
+  private langReadyListeners = new Set<() => void>();
+  private bakedNames: Map<string, { ru: string; en: string }>;
 
   constructor(
     meta: PackMeta,
@@ -71,6 +76,9 @@ export class PackRuntime {
 
     this.itemById = new Map(meta.items.map((i) => [i.id, i]));
     this.fluidById = new Map(meta.fluids.map((f) => [f.id, f]));
+    this.bakedNames = new Map(
+      [...meta.items, ...meta.fluids].map((def) => [def.id, def.names]),
+    );
     for (const machine of meta.machines) {
       for (const recipeId of machine.recipeIds) {
         this.recipeIdToMachineId.set(recipeId, machine.id);
@@ -110,12 +118,43 @@ export class PackRuntime {
     return this.recipeById.get(id);
   }
 
-  getItemName(itemId: string, lang: 'ru' | 'en'): string {
+  get langReady(): boolean {
+    return this.lexicon !== null;
+  }
+
+  setLexicon(lexicon: ProductLexicon): void {
+    this.lexicon = lexicon;
+    for (const listener of this.langReadyListeners) listener();
+  }
+
+  onLangReady(listener: () => void): () => void {
+    this.langReadyListeners.add(listener);
+    return () => this.langReadyListeners.delete(listener);
+  }
+
+  private getTagIndex(): TagIndex {
+    if (!this.metaTagIndex) {
+      this.metaTagIndex = buildTagIndexFromMeta(this.meta);
+    }
+    return this.metaTagIndex;
+  }
+
+  private lookupMetaName(itemId: string, lang: 'ru' | 'en'): string {
     const item = this.itemById.get(itemId);
     if (item) return item.names[lang] ?? item.names.en;
     const fluid = this.fluidById.get(itemId);
     if (fluid) return fluid.names[lang] ?? fluid.names.en;
     return itemId;
+  }
+
+  getItemName(itemId: string, lang: 'ru' | 'en'): string {
+    if (this.lexicon) {
+      return this.lexicon.resolve(itemId, lang, {
+        tagIndex: this.getTagIndex(),
+        bakedNames: this.bakedNames,
+      });
+    }
+    return this.lookupMetaName(itemId, lang);
   }
 
   getMachineName(machineId: string, lang: 'ru' | 'en'): string {

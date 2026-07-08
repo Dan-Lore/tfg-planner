@@ -14,6 +14,8 @@
 ```
 public/data/packs/<tag>/
   pack.meta.json       # machines, items, fluids (без recipes)
+  pack.lang.json.gz    # pruned lang bundle + pre-resolved recipe I/O names
+  manifest.json        # checksum, langSha256, langBytes
   recipes/
     index.json         # machineId → shard file + count
     flow-index.json    # port-attach index (product/tag → recipe candidates); обязателен для `status: ready`
@@ -21,7 +23,18 @@ public/data/packs/<tag>/
     …                  # по одному файлу на machineId
 ```
 
-Manifest entry: `path` → `pack.meta.json`, `recipesRoot` → `recipes/`.
+Manifest entry: `path` → `pack.meta.json`, `recipesRoot` → `recipes/`, `langPath` → `pack.lang.json.gz`.
+
+**Lang:** `build-pack` / `npm run parser:export-lang` собирают `pack.lang.json.gz` (pruned kubejs+JAR lang + `resolved` map).
+
+| Сценарий | Команды |
+|----------|---------|
+| Release (recipes + lang) | `generate-tfg-snapshot` → `build-pack --strict-snapshot` |
+| Lang-only | `parser:recanonicalize-lang -- <tag>` |
+| Namespace report | `parser:lang-coverage -- <tag>` |
+| Tier representatives | `parser:generate-gtceu-tier-reps -- <tag>` |
+
+Lang bundle flags: `--download-mod-jars` / `--no-download-mod-jars`, env `TFG_DOWNLOAD_MOD_JARS`. Regression baseline: `tools/parser/lang-baseline/`. Браузер грузит артефакт лениво после `pack.meta`, кэш IndexedDB. Resolve: [`src/lib/product-lexicon/`](../src/lib/product-lexicon/).
 
 **Принцип:** рецепты = **все** записи `RecipeManager` после полной загрузки modpack (mods + KubeJS + post-reload), не KubeJS AST и не GT-only subset.
 

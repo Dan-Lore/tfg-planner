@@ -48,6 +48,13 @@
 - [x] При смене версии — предупреждение, если схема несовместима (`ConfirmDialog`, import/switch pack).
 - [x] Отчёт сборки (`build-report.json`) фиксирует непокрытые скрипты без silent-fail.
 
+**Имена продуктов (EMI-like, K-025):**
+
+- Парсер: [`src/lib/product-lexicon/`](../src/lib/product-lexicon/) — единая цепочка resolve для build-time и runtime.
+- Артефакт `pack.lang.json.gz` (pruned lang + `resolved` map) грузится **лениво** после `pack.meta`, кэш IndexedDB.
+- UI: `getItemName` / подписи рецептов через lexicon; до загрузки lang — имена из `pack.meta`.
+- Метрики: `build-report.json` → `recipeIoLocalized`, `recipeIoTagsLocalized`, `langCoverageByNamespace`, `langAchievableCeiling`; CI gate ≥ 75% / 81% tags (max achievable на lang bundle 0.12.8; ~78% потолок).
+
 ### 3.2. Редактор мнемосхем
 
 - **Лист (холст):** свободное размещение узлов-механизмов.

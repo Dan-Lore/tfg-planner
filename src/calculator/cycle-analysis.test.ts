@@ -348,7 +348,7 @@ describe('analyzeCycles', () => {
         acid: { out_0: R.from(40) },
       },
       edgeFlows: {},
-    } as FlowResult;
+    } as unknown as FlowResult;
 
     const analysis = analyzeCycles(
       [

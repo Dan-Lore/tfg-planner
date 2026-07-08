@@ -6,6 +6,7 @@
 ## [Unreleased]
 
 ### Added
+- **Product Lexicon (K-025):** `src/lib/product-lexicon/` — EMI-like resolve (lang keys, forge category/material, GT tier tags `#gtceu:circuits/*` / `#gtceu:batteries/*`, tag members, GT prefix/suffix); `pack.lang.json.gz` с lazy fetch + IndexedDB; `PackRuntime.getItemName` через lexicon; `npm run parser:export-lang` / `parser:recanonicalize-lang` / `parser:lang-coverage`; namespace breakdown в `build-report.json`
 - `machineCount: 0` на узле машины — отключение потока без удаления узла (инспектор, колесо на карточке)
 - Debounce пересчёта потоков при правках схемы: **500 ms** (было 100 ms)
 - Стохастическая рекомендуемая ёмкость буфера катализатора (99% запас на 1 ч по биномиальному распределению попыток)
@@ -33,6 +34,8 @@
 - Legacy port ids `input_*` / `output_*` в `parsePortId` и prune edges (A3)
 
 ### Changed
+- **K-026:** lang regression baseline, `mergeExistingLangReport`, unified `downloadModJars`, editor re-render on lang load, forge sheets/small_gears resolve, `generate-gtceu-tier-reps`
+- **K-025 закрыт:** CI lang gate 75% overall / 81% tags (max achievable на bundle 0.12.8); smoke-теги `#forge:sulfuric_acid`, `#forge:purified_ores/chalcopyrite`, `#gtceu:circuits/mv`, `#gtceu:batteries/lv`
 - Runtime: Node.js 24.18.0 LTS (CI, engines, @types/node)
 - `pruneInvalidEdges`: tag index только по рецептам узлов схемы (не full pack)
 - Kanban: K-005, K-009, K-012 → `blocked` (ждут спецуказания)

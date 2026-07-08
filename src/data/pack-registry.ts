@@ -12,6 +12,7 @@ import { publicPath } from '@/lib/public-path';
 import { dedupeRecipesForDisplay } from '@/lib/recipe-canon';
 import { packKey } from '@/lib/pack-key';
 import type { PackBuildManifest } from '@/lib/pack-build-manifest';
+import { ensurePackLexicon } from './pack-lang-loader';
 
 export type PackLike = ActivePack | PackData;
 
@@ -74,7 +75,15 @@ async function loadV2Pack(entry: PackManifestEntry): Promise<ActivePack> {
   }
   const shardIndex = await fetchJson<RecipeShardIndex>(publicPath(indexUrl(entry.recipesRoot)));
 
-  return new PackRuntime(meta, recipesRoot, shardIndex);
+  const runtime = new PackRuntime(meta, recipesRoot, shardIndex);
+  void ensurePackLexicon(entry, buildManifest)
+    .then((lexicon) => {
+      if (lexicon) runtime.setLexicon(lexicon);
+    })
+    .catch((err) => {
+      console.warn('[pack] Failed to load pack lang artifact', err);
+    });
+  return runtime;
 }
 
 export async function loadActivePack(entry: PackManifestEntry): Promise<ActivePack> {

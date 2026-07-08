@@ -10,12 +10,23 @@
 
 ## Сборка данных
 
+### Полный pipeline (release)
+
 ```bash
-npm run generate-tfg-snapshot -- 0.12.8   # in-game export (once per tag)
+npm run generate-tfg-snapshot -- 0.12.8   # in-game export (once per tag; recipes.json gitignored)
 npm run build-pack -- --tag 0.12.8 --strict-snapshot
 ```
 
-Выход: `pack.meta.json`, `recipes/*.json`, `build-report.json`, per-pack `manifest.json`.
+Выход: `pack.meta.json`, `recipes/*.json`, `pack.lang.json.gz`, `build-report.json`, per-pack `manifest.json`.
+
+### Lang-only hotfix (без snapshot)
+
+```bash
+npm run parser:recanonicalize-lang -- 0.12.8
+npm run parser:lang-coverage -- 0.12.8
+```
+
+Флаги lang bundle: `--download-mod-jars` / `--no-download-mod-jars`, env `TFG_DOWNLOAD_MOD_JARS=0|1` (по умолчанию `true` при наличии `.cache/modpack`).
 
 Конвертация существующего monolith (dev): `node tools/shard-monolith-pack.mjs 0.12.8`.
 

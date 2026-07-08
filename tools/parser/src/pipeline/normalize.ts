@@ -2,6 +2,7 @@ import type { PackData, Machine, ItemDef, Recipe } from '../../../../src/data/ty
 import type { RecipeOp } from '../types.js';
 import type { LangBundle } from '../lang/types.js';
 import { resolveMachineName, resolveResourceName } from '../lang/resolve-name.js';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/lib/tag-index.js';
 import { isMultiblockMachineId } from '../../../../src/calculator/gt-multiblock.js';
 import { nativeTierForMachine } from '../gt-machine-tiers.js';
 import { extractCircuitFromFlows } from './extract-circuit.js';
@@ -78,12 +79,27 @@ export function normalizePack(
   }
   progress.done(normalizedRecipes.length);
 
-  const nameFor = (id: string) =>
-    lang ? resolveResourceName(id, lang) : resolveResourceName(id, { ru: {}, en: {} });
-
   logStage(`Building item/fluid defs (${items.size} items, ${fluids.size} fluids)…`);
   const sortedItems = [...items].sort();
   const sortedFluids = [...fluids].sort();
+  const tagIndex = lang
+    ? buildTagIndexForRecipes(
+        {
+          items: sortedItems.map((id) => ({ id, names: { ru: '', en: '' } })),
+          fluids: sortedFluids.map((id) => ({ id, names: { ru: '', en: '' } })),
+        },
+        normalizedRecipes,
+        buildTagIndexFromMeta({
+          items: sortedItems.map((id) => ({ id, names: { ru: '', en: '' } })),
+          fluids: sortedFluids.map((id) => ({ id, names: { ru: '', en: '' } })),
+        }),
+      )
+    : undefined;
+  const resolveOpts = tagIndex ? { tagIndex } : {};
+  const nameFor = (id: string) =>
+    lang
+      ? resolveResourceName(id, lang, resolveOpts)
+      : resolveResourceName(id, { ru: {}, en: {} });
   const itemProgress = createProgressReporter('Item defs', { every: 3000, intervalMs: 15_000 });
   const itemDefs: ItemDef[] = sortedItems.map((id, i) => {
     itemProgress.tick(i + 1, sortedItems.length);

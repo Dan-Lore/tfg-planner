@@ -181,7 +181,7 @@ function productIdsMatch(a: string, b: string, tags: TagIndex): boolean {
 }
 
 /** Merge forge/mod tag ids with concrete buffer/edge ids in the same SCC. */
-function canonicalizeSccProductIds(productIds: Set<string>, tags: TagIndex): Set<string> {
+function canonicalizeSccProductIds(productIds: Set<string>, _tags: TagIndex): Set<string> {
   const ids = [...productIds];
   const drop = new Set<string>();
   for (const id of ids) {

@@ -18,6 +18,26 @@
 
 ## Активные карточки
 
+### K-026 · EMI/i18n follow-up (post K-025)
+
+| Поле | Значение |
+|------|----------|
+| Статус | `in_progress` |
+| Область | parser / `product-lexicon` / runtime UX |
+
+**Описание:** pipeline snapshot→build-pack, regression gate, runtime re-render при загрузке lang, resolver-хвосты `no_tag_member`, tier representatives tooling.
+
+**Критерий закрытия:**
+- [x] `mergeExistingLangReport` + тест; `lang-baseline` + regression gate
+- [x] `downloadModJars` унифицирован в lang-скриптах
+- [x] `usePackLangReady` → `packDisplayEpoch` в редакторе
+- [x] Forge `sheets` / `small_gears` + тесты; `FORGE_TAG_CATEGORIES` export
+- [x] `generate-gtceu-tier-reps` + JSON; deprecate `analyze-lang-coverage`
+- [ ] Полный `build-pack` на CI/локально со snapshot (ждёт `generate-tfg-snapshot`)
+- [ ] `recipeIoTagsLocalized` ≥ 84% после resolver-итерации (опционально)
+
+---
+
 ### K-024 · Кнопка в тулбаре: расчёт целевой скорости
 
 | Поле | Значение |
@@ -67,6 +87,7 @@ CI cron + UI manifest check. Не начинать без явного запр�
 
 | ID | Закрыто | Итог |
 |----|---------|------|
+| K-025 | 2026-07-08 | Product Lexicon: GTCEu tier tags, forge/mod tag resolve, namespace report (`parser:lang-coverage`), CI gate 75%/81%, smoke tags; pack `0.12.8` — 75.0% overall / 81.3% tags / 78.1% ceiling |
 | K-023 | 2026-07-06 | Cycle bootstrap: seed edge buffer→SCC, pinned flow, UI yellow edge, sign-off rhenium loop |
 | K-018 | 2026-07-06 | Актуализация `audit-deficiencies.md` после 0.4.1 |
 | K-019 | 2026-07-06 | Editor A1–A3: keyboard guard, explicit machine pick, legacy ports |

@@ -122,6 +122,10 @@ export interface PackManifestEntry {
   /** Base URL for sharded recipe files (v2). */
   recipesRoot?: string;
   status: 'ready' | 'planned' | 'building' | 'deprecated';
+  /** Lazy-loaded lang artifact (v2+). */
+  langPath?: string;
+  langSha256?: string;
+  langBytes?: number;
 }
 
 export interface PackManifest {

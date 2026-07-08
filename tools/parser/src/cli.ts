@@ -16,6 +16,12 @@ import {
   validatePackMeta,
   validatePackSchema,
 } from './validate/schema.js';
+import {
+  validateLangArtifact,
+  validateLangCoverageFromReport,
+  validateLangSmokeTags,
+} from './validate/lang-gate.js';
+import { mergeExistingLangReport } from './validate/merge-lang-report.js';
 import type { PackData, PackMeta, RecipeShardIndex } from '../../../src/data/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -119,7 +125,21 @@ function cmdValidate(args: Args): void {
   }
 
   const outPath = join(packDir, 'build-report.json');
+  const existingReport = existsSync(outPath)
+    ? (JSON.parse(readFileSync(outPath, 'utf-8')) as typeof report)
+    : null;
+  mergeExistingLangReport(report, existingReport);
   writeFileSync(outPath, JSON.stringify(report, null, 2));
+
+  const langErrors = [
+    ...validateLangArtifact(packDir),
+    ...validateLangCoverageFromReport(report),
+    ...validateLangSmokeTags(packDir),
+  ];
+  if (langErrors.length > 0) {
+    throw new Error(`Lang validation failed:\n${langErrors.join('\n')}`);
+  }
+
   console.log(`Pack OK: ${packPath}`);
   console.log(`Report: ${outPath}`);
 }

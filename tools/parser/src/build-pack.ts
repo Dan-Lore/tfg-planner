@@ -9,6 +9,9 @@ import { sanitizeRecipeFlows } from './pipeline/sanitize-flows.js';
 import { sanitizeRecipeEnergy } from './pipeline/sanitize-energy.js';
 import { buildLangBundle } from './lang/build-lang-bundle.js';
 import { countNamedDefs } from './lang/resolve-name.js';
+import { exportPackLang } from './lang/export-pack-lang.js';
+import { computeRecipeIoLocalizedByKind } from './lang/lang-coverage.js';
+import { buildLangCoverageReport } from './lang/lang-coverage-report.js';
 import { loadTfgExcludes } from './datapack/excludes.js';
 import { validatePackSchema, buildReportFromPack, writeShardedPack } from './validate/schema.js';
 import { runSmokeChains } from './validate/smoke-chains.js';
@@ -213,6 +216,16 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   }
 
   const lockSha = pakkuLockSha256(modpackRoot);
+  logStage('Exporting pack.lang.json.gz…');
+  const langExport = exportPackLang(pack, langBundle);
+  const langCoverage = buildLangCoverageReport(
+    pack.items.filter((d) => !d.id.startsWith('#')).map((d) => d.id),
+    pack.fluids.filter((d) => !d.id.startsWith('#')).map((d) => d.id),
+    [...pack.items, ...pack.fluids].filter((d) => d.id.startsWith('#')).map((d) => d.id),
+    langExport.artifact.resolved ?? {},
+    langBundle,
+  );
+
   const report = buildReportFromPack(
     pack,
     tag,
@@ -233,12 +246,23 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
       recipesMissingOutputs: missingOutputs,
       recipesCircuitOnlyDropped: broken.length,
       removedDuplicateRecipes: removedDuplicateRecipeIds.length,
+      recipeIoLocalized: langCoverage.recipeIoLocalized,
+      recipeIoTagsLocalized: langCoverage.recipeIoTagsLocalized,
+      recipeIoItemsLocalized: langCoverage.recipeIoItemsLocalized,
+      recipeIoFluidsLocalized: langCoverage.recipeIoFluidsLocalized,
+      recipeIoTotal: langCoverage.recipeIoTotal,
+      recipeIoTagsTotal: langCoverage.recipeIoTagsTotal,
     },
     warnings,
     [],
   );
   report.smokeResults = smokeResults;
   report.goldenDiff = goldenDiff;
+  report.langCoverageByNamespace = langCoverage.langCoverageByNamespace;
+  report.langMissByReason = langCoverage.langMissByReason;
+  report.langMissSample = langCoverage.langMissSample;
+  report.langUnlocalizableSample = langCoverage.langUnlocalizableSample;
+  report.langAchievableCeiling = langCoverage.langAchievableCeiling;
   if (removedDuplicateRecipeIds.length > 0) {
     report.removedDuplicateRecipeIdsSample = removedDuplicateRecipeIds.slice(0, 50);
   }
@@ -248,10 +272,16 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
   const metaPath = join(outDir, 'pack.meta.json');
   const reportPath = join(outDir, 'build-report.json');
   const manifestPath = join(outDir, 'manifest.json');
+  const langGzPath = join(outDir, 'pack.lang.json.gz');
 
   logStage(`Writing sharded pack v2 (${pack.recipes.length} recipes)…`);
   const { shardCount } = writeShardedPack(outDir, pack, writeJson);
   logStage(`Wrote pack.meta.json + ${shardCount} recipe shards`);
+
+  writeFileSync(langGzPath, langExport.gzipBytes);
+  logStage(
+    `Wrote pack.lang.json.gz (${langExport.gzipBytes.length} bytes, ${Math.round(langCoverage.recipeIoLocalized * 100)}% recipe I/O localized)`,
+  );
 
   const metaJson = JSON.stringify({
     format: 'tfg-pack-data',
@@ -275,6 +305,9 @@ export async function buildPack(options: BuildPackOptions): Promise<BuildPackRes
     pakkuLockSha256: lockSha,
     modpackTag: tag,
     recipeShards: shardCount,
+    langPath: 'pack.lang.json.gz',
+    langSha256: langExport.sha256,
+    langBytes: langExport.gzipBytes.length,
   });
 
   return { packPath: metaPath, reportPath, manifestPath, report };
