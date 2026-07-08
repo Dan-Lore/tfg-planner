@@ -164,6 +164,8 @@ const resources = {
           selectBoxCrossing:
             'ЛКМ рамкой справа→налево — пересечение (пунктирная зелёная рамка)',
           pan: 'ПКМ drag — перемещение холста',
+          portContextMenu:
+            'ПКМ по порту — буфер, произвольный процесс или подключение машины',
           zoom: 'Колёсико — масштаб',
           delete: 'Del — удалить узел или связь',
           undo: 'Ctrl+Z / Ctrl+Y — отмена и повтор (без pan/zoom холста)',
@@ -526,6 +528,8 @@ const resources = {
           selectBoxCrossing:
             'LMB box right→left — intersection (dashed green frame)',
           pan: 'RMB drag — pan canvas',
+          portContextMenu:
+            'RMB on port — buffer, custom process, or attach machine',
           zoom: 'Mouse wheel — zoom',
           delete: 'Del — delete node or edge',
           undo: 'Ctrl+Z / Ctrl+Y — undo/redo scheme (not canvas pan/zoom)',

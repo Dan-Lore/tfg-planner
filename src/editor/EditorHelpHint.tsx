@@ -5,6 +5,7 @@ const HELP_KEYS = [
   'selectBoxWindow',
   'selectBoxCrossing',
   'pan',
+  'portContextMenu',
   'zoom',
   'delete',
   'undo',
