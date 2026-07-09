@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import type { PackData, PackMeta, Recipe, RecipeShardIndex } from '../../../../src/data/types.js';
 import type { BuildReport, ParseWarning, WarningKind } from '../types.js';
 import { buildRecipeFlowAttachIndex } from '../../../../src/lib/recipe-flow-attach-index.js';
-import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/lib/tag-index.js';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/shared/tag-index.js';
 
 export function summarizeWarningsByKind(
   warnings: ParseWarning[],

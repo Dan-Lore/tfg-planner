@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalizePortId, parsePortId } from '@/lib/ports';
+import { normalizePortId, parsePortId } from '@/shared/ports';
 
 describe('parsePortId', () => {
   it('parses canonical in/out ids', () => {

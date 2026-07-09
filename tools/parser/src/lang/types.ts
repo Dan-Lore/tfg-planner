@@ -1,4 +1,4 @@
-export type { LangBundle } from '../../../../src/lib/product-lexicon/types.js';
+export type { LangBundle } from '../../../../src/shared/product-lexicon/types.js';
 
 export interface LangStats {
   kubejsFiles: number;

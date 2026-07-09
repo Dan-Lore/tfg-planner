@@ -171,21 +171,24 @@ Export → .tfgp | Import → Graph Model
 
 ```
 tools/
-  parser/              # K-001
+  parser/              # CLI: build-pack, validate; src/index.ts — programmatic API
+  parser-legacy/       # документация KubeJS AST (код пока в parser/src/kubejs)
 src/
-  app/                 # роутинг, layout, меню версий
+  shared/              # domain: ports, tag-index, flow-match, gt-voltage, product-lexicon, node-kind, primary-output
+  editor-graph/        # routing/, flow-compute, machine-layout-width, scheme-obstacles, flow-display/
+  editor/              # build-rf-graph, inspector/, editor hooks
+  canvas/flow-display/ # re-export from editor-graph flow-display
+  calculator/buffers/  # start/intermediate/end buffer solver modules
+  scheme-check/        # check-scheme-structural → structural/, check-scheme-cycles
+  app/bootstrap/       # restore-active-pack (entry orchestration)
+  calculator/          # flow-solver, index.ts — public API
   canvas/
-  calculator/
-    flow-solver.ts
-    rounding.ts          # ceil(machineCount), min 1
-    energy.ts            # K-003, изолирован
-  data/
+  data/                # pack-key, pack-persist, pack-selection, resolve-pack-entry
   schema/
-  i18n/
-  shared/
-data/
-  packs/
-locales/
+  i18n/                # → src/locales/{ru,en}/translation.json
+  stores/              # scheme-store (thin) + scheme-mutations, scheme-lifecycle, …
+  pages/editor/        # EditorPage + useEditorConnections/Selection/Import
+src/locales/
   ru/
   en/
 ```

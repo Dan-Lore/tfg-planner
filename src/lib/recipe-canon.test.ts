@@ -9,7 +9,7 @@ import {
   pickCanonicalRecipe,
   recipeDisplayGroupKey,
   recipePathSuffix,
-} from '@/lib/recipe-canon';
+} from '@/shared/recipe-canon';
 
 function ptfeBody(machineId: string, id: string): Recipe {
   return {

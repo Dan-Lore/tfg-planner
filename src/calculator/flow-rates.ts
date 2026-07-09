@@ -1,7 +1,7 @@
 import type { Recipe } from '@/data/types';
 import { Rational, R } from '@/calculator/rational';
-import { productKey } from '@/lib/ports';
-import { chanceRateMultiplier } from '@/lib/flow-chance';
+import { productKey } from '@/shared/ports';
+import { chanceRateMultiplier } from '@/shared/flow-chance';
 import { effectiveDurationTicks } from '@/calculator/energy';
 import { isSchemeCustomMachine } from '@/calculator/custom-machine-recipe';
 import { TICKS_PER_SECOND, type SchemeNode } from '@/calculator/flow-solver-types';

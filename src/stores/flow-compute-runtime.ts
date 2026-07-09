@@ -1,9 +1,9 @@
-import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
-import { shouldApplyFlowResult } from '@/lib/flow-compute-guard';
-import { debounceFlowUpdate } from '@/lib/debounce-flow-update';
-import { mergePendingFlowUpdateMode } from '@/lib/flow-compute-queue';
-import { computeFlowsAsync, type FlowComputeMode } from '@/lib/flow-compute';
-import { hydrateFlowResult } from '@/calculator/flow-result-transfer';
+import { schemeFlowRevision } from '@/editor-graph/scheme-flow-revision';
+import { shouldApplyFlowResult } from '@/editor-graph/flow-compute-guard';
+import { debounceFlowUpdate } from '@/editor-graph/debounce-flow-update';
+import { mergePendingFlowUpdateMode } from '@/editor-graph/flow-compute-queue';
+import { computeFlowsAsync, type FlowComputeMode } from '@/editor-graph/flow-compute';
+import { hydrateFlowResult } from '@/calculator';
 import { runSchemeCheck } from '@/scheme-check/run-scheme-check';
 import { sliceAsPackData } from '@/data/pack-slice';
 import { usePackStore } from '@/stores/pack-store';

@@ -1,7 +1,7 @@
 import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
 import type { Flow, Recipe } from '@/data/types';
-import { formatFlowQuantityLabel } from '@/lib/flow-chance';
+import { formatFlowQuantityLabel } from '@/shared/flow-chance';
 import { productInputs } from '@/lib/recipe-product-flows';
 
 function flowName(pack: PackLike, flow: Flow, lang: 'ru' | 'en'): string {

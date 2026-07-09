@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { usePackStore } from '@/stores/pack-store';
-import { scheduleEnsureActivePackReady } from '@/lib/restore-active-pack';
+import { scheduleEnsureActivePackReady } from '@/app/bootstrap/restore-active-pack';
 
 /** Load manifest and restore persisted pack. */
 export function usePackBootstrap(): void {

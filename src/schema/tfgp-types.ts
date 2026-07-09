@@ -1,5 +1,5 @@
 import type { VoltageTier } from '@/data/types';
-import type { SchemeGraphEdge } from '@/lib/scheme-edge-types';
+import type { SchemeGraphEdge } from '@/shared/scheme-edge-types';
 
 export interface TfgpMeta {
   name: string;

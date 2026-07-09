@@ -1,7 +1,7 @@
 import { R, type Rational } from './rational';
-import { buildTagIndex } from '@/lib/tag-index';
-import { productKey } from '@/lib/ports';
-import { primaryOutputIndex } from '@/lib/primary-output';
+import { buildTagIndex } from '@/shared/tag-index';
+import { productKey } from '@/shared/ports';
+import { primaryOutputIndex } from '@/shared/primary-output';
 import { buildAdjacency, topologicalOrder } from '@/calculator/flow-graph';
 import {
   type FlowResult,

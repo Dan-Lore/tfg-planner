@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pruneInvalidEdges } from '@/lib/prune-edges';
+import { pruneInvalidEdges } from '@/editor-graph/prune-edges';
 import type { PackData, Recipe } from '@/data/types';
 
 function miniPack(recipes: Recipe[]): PackData {

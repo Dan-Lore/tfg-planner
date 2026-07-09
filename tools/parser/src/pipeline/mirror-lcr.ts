@@ -1,5 +1,5 @@
 import type { RecipeOp } from '../types.js';
-import { recipePathSuffix } from '../../../../src/lib/recipe-canon.js';
+import { recipePathSuffix } from '../../../../src/shared/recipe-canon.js';
 
 const CHEM = 'gtceu:chemical_reactor';
 const LCR = 'gtceu:large_chemical_reactor';

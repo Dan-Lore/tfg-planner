@@ -4,17 +4,17 @@ import type { FlowResult } from '@/calculator/flow-solver';
 import { dehydrateFlowResult } from '@/calculator/flow-result-transfer';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import type { TfgpMachineNode } from '@/schema/tfgp';
-import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
+import { schemeFlowRevision } from '@/editor-graph/scheme-flow-revision';
 import '@/stores/editor-store';
 import { useSchemeStore } from '@/stores/scheme-store';
 import { useFlowStore } from '@/stores/flow-store';
 import { editorStoresHaveHydrated } from '@/stores/editor-hydration';
 
-vi.mock('@/lib/flow-compute', () => ({
+vi.mock('@/editor-graph/flow-compute', () => ({
   computeFlowsAsync: vi.fn().mockResolvedValue(null),
 }));
 
-vi.mock('@/lib/debounce-flow-update', () => ({
+vi.mock('@/editor-graph/debounce-flow-update', () => ({
   debounceFlowUpdate: (fn: () => void) => {
     fn();
     return Object.assign(fn, { cancel: () => {} });

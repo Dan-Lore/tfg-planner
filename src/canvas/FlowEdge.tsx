@@ -8,7 +8,7 @@ import {
 import {
   edgeLabelPosition,
   edgeLabelPositionOnWaypoints,
-} from '@/lib/bezier-edge-label';
+} from '@/editor-graph/bezier-edge-label';
 import {
   edgePathNeedsObstacleRouting,
   buildSmoothStepRoute,
@@ -17,14 +17,14 @@ import {
   pathHitsThirdPartyObstacles,
   DEFAULT_EDGE_OFFSET,
   type EdgeRouteEndpoints,
-} from '@/lib/edge-routing';
-import { applyParallelOffset } from '@/lib/edge-route-plan';
+} from '@/editor-graph/edge-routing';
+import { applyParallelOffset } from '@/editor-graph/edge-route-plan';
 import { useObstacleRects } from '@/canvas/obstacle-rects-context';
 import { useEdgeSelected } from '@/canvas/selection-context';
 import { useEdgeRoutePlanEntry } from '@/canvas/use-edge-route-plan';
-import type { FlowEdgeData } from '@/lib/flow-edge-types';
+import type { FlowEdgeData } from '@/editor-graph/flow-edge-types';
 
-export type { FlowEdgeData } from '@/lib/flow-edge-types';
+export type { FlowEdgeData } from '@/editor-graph/flow-edge-types';
 
 type RoutedPath = {
   path: string;

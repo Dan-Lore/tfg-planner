@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { FlowResult } from '@/calculator/flow-solver';
+import type { FlowResult } from '@/calculator';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
 import { readPersistedEditorSnapshot, type PersistedPackFlowCache } from '@/lib/editor-persist';
-import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
+import { schemeFlowRevision } from '@/editor-graph/scheme-flow-revision';
 import { restoreFlowsForScheme, getEditorBindings } from '@/stores/editor-store-shared';
 import {
   flowPersistStorage,

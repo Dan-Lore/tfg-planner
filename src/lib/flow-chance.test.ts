@@ -6,7 +6,7 @@ import {
   formatFlowQuantityLabel,
   formatFlowRateLabel,
   isChancedFlow,
-} from '@/lib/flow-chance';
+} from '@/shared/flow-chance';
 
 describe('flow-chance', () => {
   it('detects chanced flows below GT base', () => {

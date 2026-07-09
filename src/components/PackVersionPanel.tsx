@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PackManifestEntry } from '@/data/types';
 import { recipeCount } from '@/data/pack-registry';
-import { packEntryNeedsLoad } from '@/lib/resolve-pack-entry';
+import { packEntryNeedsLoad } from '@/data/resolve-pack-entry';
 import { isSchemeNonEmpty } from '@/lib/version-mismatch';
 import { usePackStore } from '@/stores/pack-store';
 import { useEditorStore } from '@/stores/editor-store';

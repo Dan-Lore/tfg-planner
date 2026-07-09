@@ -2,7 +2,7 @@ import type { PackData, Machine, ItemDef, Recipe } from '../../../../src/data/ty
 import type { RecipeOp } from '../types.js';
 import type { LangBundle } from '../lang/types.js';
 import { resolveMachineName, resolveResourceName } from '../lang/resolve-name.js';
-import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/lib/tag-index.js';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/shared/tag-index.js';
 import { isMultiblockMachineId } from '../../../../src/calculator/gt-multiblock.js';
 import { nativeTierForMachine } from '../gt-machine-tiers.js';
 import { extractCircuitFromFlows } from './extract-circuit.js';

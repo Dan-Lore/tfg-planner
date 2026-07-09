@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import type { VoltageTier } from '@/calculator/gt-voltage';
+import type { VoltageTier } from '@/calculator';
 import type { TfgpSupplyMode } from '@/schema/tfgp';
 
 export interface EditorNodeActions {

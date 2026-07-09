@@ -5,7 +5,7 @@ import {
   extractCorridorSegments,
   PARALLEL_EDGE_GAP,
   type EdgeRouteDraft,
-} from '@/lib/edge-route-lanes';
+} from '@/editor-graph/edge-route-lanes';
 
 function hSegmentWaypoints(y: number, x0: number, x1: number): XYPosition[] {
   return [

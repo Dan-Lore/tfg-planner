@@ -1,6 +1,6 @@
 import type { Flow, Recipe, RecipeFlowAttachIndex, RecipeFlowAttachRef } from '@/data/types';
-import { flowAttachLookupKeys, flowLookupKeys } from '@/lib/flow-match';
-import type { TagIndex } from '@/lib/tag-index';
+import { flowAttachLookupKeys, flowLookupKeys } from '@/shared/flow-match';
+import type { TagIndex } from '@/shared/tag-index';
 
 function addRef(
   map: Record<string, RecipeFlowAttachRef[]>,

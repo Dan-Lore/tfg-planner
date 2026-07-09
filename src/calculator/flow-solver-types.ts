@@ -1,7 +1,7 @@
 import type { PackData } from '@/data/types';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import type { Rational } from '@/calculator/rational';
-import type { SchemeGraphEdge } from '@/lib/scheme-edge-types';
+import type { SchemeGraphEdge } from '@/shared/scheme-edge-types';
 
 export const TICKS_PER_SECOND = 20;
 

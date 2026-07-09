@@ -1,7 +1,7 @@
 import type { TfgpNode, TfgpCustomMachineNode } from '@/schema/tfgp-types';
 import type { VoltageTier } from '@/calculator/gt-voltage';
 import { normalizeNodeVoltage } from '@/lib/node-voltage';
-import { isBufferNode, isCustomMachineNode } from '@/lib/node-kind';
+import { isBufferNode, isCustomMachineNode } from '@/shared/node-kind';
 import { clampMachineCount } from '@/lib/machine-count';
 import { clampNonNegativeInt } from '@/lib/buffer-defaults';
 

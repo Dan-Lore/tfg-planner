@@ -3,7 +3,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parseTfgp } from '@/schema/tfgp';
 import { loadTestPack } from '@/test-fixtures/load-test-pack';
-import { runSolver } from '@/lib/scheme-solver';
+import { runSolver } from '@/editor-graph/scheme-solver';
 import { checkScheme } from '@/scheme-check/check-scheme';
 
 const BAUXITE_CALCITE_FIXTURE = path.join(

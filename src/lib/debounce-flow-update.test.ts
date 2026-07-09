@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { debounceFlowUpdate } from '@/lib/debounce-flow-update';
+import { debounceFlowUpdate } from '@/editor-graph/debounce-flow-update';
 
 describe('debounceFlowUpdate', () => {
   it('defaults to 500ms delay', async () => {

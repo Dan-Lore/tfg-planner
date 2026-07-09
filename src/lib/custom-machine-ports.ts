@@ -1,5 +1,5 @@
 import type { TfgpCustomPort, TfgpCustomMachineNode, TfgpEdge } from '@/schema/tfgp';
-import { inputPortId, outputPortId, parsePortId } from '@/lib/ports';
+import { inputPortId, outputPortId, parsePortId } from '@/shared/ports';
 
 export function expandCustomPorts(
   ports: TfgpCustomPort[],

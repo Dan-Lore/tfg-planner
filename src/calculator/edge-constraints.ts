@@ -1,5 +1,5 @@
 import type { Recipe } from '@/data/types';
-import type { TagIndex } from '@/lib/tag-index';
+import type { TagIndex } from '@/shared/tag-index';
 import { R, type Rational } from '@/calculator/rational';
 import type {
   SchemeEdge,
@@ -8,9 +8,9 @@ import type {
 } from '@/calculator/flow-solver-types';
 import { perMachineOutputRate } from '@/calculator/flow-rates';
 import { isSchemeBufferNode } from '@/calculator/buffer-solver';
-import { recipeInputMatchesProduct } from '@/lib/flow-match';
-import { primaryOutputProductKey } from '@/lib/primary-output';
-import { productKey } from '@/lib/ports';
+import { recipeInputMatchesProduct } from '@/shared/flow-match';
+import { primaryOutputProductKey } from '@/shared/primary-output';
+import { productKey } from '@/shared/ports';
 
 export function pinnedEdgeFlowMap(
   constraints: readonly SchemeEdgeConstraint[],

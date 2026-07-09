@@ -43,3 +43,7 @@ coverage/
 
 # Dev profiling (large binary dumps)
 *.heapsnapshot
+
+# code2prompt (generated LLM context dump)
+code2prompt.txt
+.tools/

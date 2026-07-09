@@ -1,26 +1,22 @@
 import { memo, useEffect, useMemo, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
-import type { PackLike } from '@/data/pack-registry';
-import type { Flow, Recipe } from '@/data/types';
+import type { Recipe } from '@/data/types';
 import { getMachineName, getMachineRecipeCount, getRecipe, getRecipesForMachine } from '@/data/pack-registry';
-import type { NodeBalanceLine, PortLoadMeta } from '@/canvas/flow-display';
+import type { MachineNodeData, PortDisplay } from '@/canvas/node-data-types';
+export type { MachineNodeData, PortDisplay } from '@/canvas/node-data-types';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
-import type { VoltageTier } from '@/calculator/gt-voltage';
+import type { VoltageTier } from '@/calculator';
 import {
   allowedTiersForRecipe,
   effectiveDurationTicks,
   effectiveEuPerTick,
   effectiveTotalEu,
   formatEuPerTick,
-} from '@/calculator/energy';
+} from '@/calculator';
 import { RecipePicker } from './RecipePicker';
-import { flowLabel, inputPortId, outputPortId, productKey } from './ports';
 import { adjustByWheel } from '@/lib/wheel-adjust';
 import { useNonPassiveWheel } from '@/hooks/use-non-passive-wheel';
-import type { Rational } from '@/calculator/rational';
-import { R } from '@/calculator/rational';
-import { formatRate } from '@/calculator/format';
 import { loadGradientStyle } from '@/lib/load-gradient';
 import { MACHINE_NODE_MIN_WIDTH, resolveMachineCardWidth } from '@/canvas/node-bounds';
 import { useNodeDisplay } from '@/canvas/node-display-context';
@@ -29,40 +25,6 @@ import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
 import { useMeasureNodeCard } from '@/canvas/node-card-measure-context';
 import { useNodeSelected } from '@/canvas/selection-context';
 import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
-export interface PortDisplay {
-  portId: string;
-  label: string;
-  tooltip?: string;
-  rate?: string;
-  /** Input: max-load contribution. Output: sent / recipe rate; consumer demand % in tooltip. */
-  loadPercent?: number;
-  loadLabel?: string;
-  connected: boolean;
-}
-
-export interface MachineNodeData {
-  machineId: string;
-  recipeId: string;
-  machineCount: number;
-  overclock: number;
-  voltageTier: VoltageTier;
-  pack: PackLike;
-  inputPorts?: PortDisplay[];
-  outputPorts?: PortDisplay[];
-  balanceLines?: NodeBalanceLine[];
-  loadPercent?: number;
-  loadLabel?: string;
-  loadTitle?: string;
-  /** Port ids for handle topology — rates/loads come from NodeDisplayContext. */
-  inputPortIds?: string[];
-  outputPortIds?: string[];
-  checkSeverity?: 'error' | 'warning';
-  checkTitle?: string;
-  /** Unified width for all nodes of the same machineId. */
-  layoutWidth?: number;
-  [key: string]: unknown;
-}
-
 
 function formatOverclock(value: number): string {
   return Number.isInteger(value) ? String(value) : value.toFixed(1);
@@ -396,80 +358,4 @@ function MachineNodeComponent({ id, data, dragging, width }: NodeProps) {
 
 export const MachineNode = memo(MachineNodeComponent);
 
-import { BufferNode } from '@/canvas/BufferNode';
-import { CustomMachineNode } from '@/canvas/CustomMachineNode';
-
-export function useNodeTypes() {
-  return useMemo(
-    () => ({ machine: MachineNode, buffer: BufferNode, customMachine: CustomMachineNode }),
-    [],
-  );
-}
-
-export function buildPortDisplays(
-  recipe:
-    | {
-        inputs: Flow[];
-        outputs: Flow[];
-      }
-    | undefined,
-  pack: PackLike,
-  lang: 'ru' | 'en',
-  connectedIn: Set<string>,
-  connectedOut: Set<string>,
-  inputRates: Record<string, string>,
-  outputRates: Record<string, string>,
-  outputPortRateRationals?: Record<string, Rational>,
-  inputPortLoadMeta?: Record<string, PortLoadMeta>,
-  outputPortLoadMeta?: Record<string, PortLoadMeta>,
-): { inputPorts: PortDisplay[]; outputPorts: PortDisplay[] } {
-  if (!recipe) {
-    return { inputPorts: [], outputPorts: [] };
-  }
-  return {
-    inputPorts: recipe.inputs.map((flow, i) => {
-      const portId = inputPortId(i);
-      const key = productKey(flow);
-      const label = flowLabel(flow, pack, lang, flow.amount);
-      const rate = inputRates[key];
-      const loadMeta = inputPortLoadMeta?.[portId];
-      return {
-        portId,
-        label,
-        tooltip: [rate ? `${label} · ${rate}` : label, loadMeta?.title]
-          .filter(Boolean)
-          .join('\n'),
-        rate,
-        loadPercent: loadMeta?.loadPercent,
-        loadLabel: loadMeta
-          ? formatLoadPercentDisplay(loadMeta.loadPercent)
-          : undefined,
-        connected: connectedIn.has(portId),
-      };
-    }),
-    outputPorts: recipe.outputs.map((flow, i) => {
-      const portId = outputPortId(i);
-      const key = productKey(flow);
-      const label = flowLabel(flow, pack, lang, flow.amount);
-      const portRate = outputPortRateRationals?.[portId];
-      const loadMeta = outputPortLoadMeta?.[portId];
-      const rate =
-        portRate && portRate.compare(R.zero) > 0
-          ? `${formatRate(portRate)}/s`
-          : outputRates[key];
-      return {
-        portId,
-        label,
-        tooltip: [rate ? `${label} · ${rate}` : label, loadMeta?.title]
-          .filter(Boolean)
-          .join('\n'),
-        rate,
-        loadPercent: loadMeta?.loadPercent,
-        loadLabel: loadMeta
-          ? formatLoadPercentDisplay(loadMeta.loadPercent)
-          : undefined,
-        connected: connectedOut.has(portId),
-      };
-    }),
-  };
-}
+export { buildPortDisplays } from '@/editor-graph/port-displays';

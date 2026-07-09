@@ -1,7 +1,7 @@
 import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
 import type { Flow, Recipe } from '@/data/types';
-import { formatFlowQuantityLabel, isChancedFlow } from '@/lib/flow-chance';
+import { formatFlowQuantityLabel, isChancedFlow } from '@/shared/flow-chance';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { productInputs } from '@/lib/recipe-product-flows';
 import { baseEuPerTick, formatEuPerTick } from '@/calculator/energy';

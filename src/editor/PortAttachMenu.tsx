@@ -13,10 +13,10 @@ import { getRecipe } from '@/data/pack-registry';
 import { isPackRuntime, type ActivePack } from '@/data/pack-runtime';
 import type { Flow } from '@/data/types';
 import { findAttachCandidatesFromIndex, type AttachCandidate } from '@/lib/recipe-index';
-import { buildTagIndexForRecipes } from '@/lib/tag-index';
-import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/lib/node-kind';
+import { buildTagIndexForRecipes } from '@/shared/tag-index';
+import { isBufferNode, isCustomMachineNode, isMachineNode } from '@/shared/node-kind';
 import type { TfgpBufferKind, TfgpNode } from '@/schema/tfgp';
-import type { TagIndex } from '@/lib/tag-index';
+import type { TagIndex } from '@/shared/tag-index';
 import type { FocusSelectionParams } from '@/hooks/useEditorSelection';
 import type { EditorActions } from '@/editor/editor-actions';
 

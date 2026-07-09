@@ -1,7 +1,7 @@
 import type { PackLike } from '@/data/pack-registry';
 import { getItemName } from '@/data/pack-registry';
 import type { Recipe } from '@/data/types';
-import { dedupeRecipesForDisplay } from '@/lib/recipe-canon';
+import { dedupeRecipesForDisplay } from '@/shared/recipe-canon';
 import { formatRecipeLabel } from '@/lib/recipe-label';
 import { buildRecipePickerDetail, type RecipePickerDetail } from '@/lib/recipe-picker-detail';
 

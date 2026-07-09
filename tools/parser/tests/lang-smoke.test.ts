@@ -2,8 +2,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { describe, it, expect } from 'vitest';
-import { isFallbackName } from '../../../src/lib/product-lexicon/lang-keys.js';
-import type { PackLangArtifact } from '../../../src/lib/product-lexicon/types.js';
+import { isFallbackName } from '../../../src/shared/product-lexicon/lang-keys.js';
+import type { PackLangArtifact } from '../../../src/shared/product-lexicon/types.js';
 
 const root = join(import.meta.dirname, '..', '..', '..');
 const tag = '0.12.8';

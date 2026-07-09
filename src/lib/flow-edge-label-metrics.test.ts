@@ -3,7 +3,7 @@ import {
   FLOW_EDGE_LABEL_PORT_GAP,
   flowEdgeLabelCenterOffsetFromTextWidth,
   measureFlowEdgeLabelTextWidth,
-} from '@/lib/flow-edge-label-metrics';
+} from '@/editor-graph/flow-edge-label-metrics';
 
 describe('flow-edge-label-metrics', () => {
   it('offsets center by port gap plus half text width', () => {

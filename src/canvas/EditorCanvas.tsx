@@ -31,7 +31,7 @@ import {
   type OnNodesDelete,
   type OnSelectionChangeParams,
 } from '@xyflow/react';
-import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection, applyIssuePanelEdgeFocus, flowGraphArraysEqual } from '@/lib/merge-flow-nodes';
+import { mergeFlowNodes, mergeFlowEdges, applyFlowNodeSelection, applyFlowEdgeSelection, applyIssuePanelEdgeFocus, flowGraphArraysEqual } from '@/editor-graph/merge-flow-nodes';
 import {
   NodeInternalsGateProvider,
   useInternalsHold,
@@ -40,7 +40,7 @@ import {
   ObstacleRectsProvider,
   type ObstacleRectsContextValue,
 } from '@/canvas/obstacle-rects-context';
-import { edgeHandlesReady } from '@/lib/scheme-port-ids';
+import { edgeHandlesReady } from '@/editor-graph/scheme-port-ids';
 import { ObstacleDebugOverlay } from '@/canvas/ObstacleDebugOverlay';
 import { SelectionProvider } from '@/canvas/selection-context';
 import { buildSchemeObstacleRects, shiftObstaclesForDragging } from '@/canvas/scheme-obstacles';
@@ -49,7 +49,7 @@ import {
   useNodeCardHeights,
 } from '@/canvas/node-card-measure-context';
 import { EdgeRoutePlanProvider } from '@/canvas/use-edge-route-plan';
-import { buildFlowEdgeRoutePlan } from '@/lib/flow-edge-route-plan';
+import { buildFlowEdgeRoutePlan } from '@/editor-graph/flow-edge-route-plan';
 import type { PackLike } from '@/data/pack-registry';
 import type { NodeDynamicDisplay } from '@/canvas/node-display-context';
 import type { TfgpNode } from '@/schema/tfgp-types';
@@ -59,7 +59,7 @@ import {
   flowPointAtCanvasCenter,
   viewportToCenterOn,
   type ViewportState,
-} from '@/lib/viewport-focus';
+} from '@/editor-graph/viewport-focus';
 
 const DEFAULT_PAN_DURATION_MS = 400;
 

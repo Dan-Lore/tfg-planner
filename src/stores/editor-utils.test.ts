@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest';
-import { isMachineNode } from '@/lib/node-kind';
+import { isMachineNode } from '@/shared/node-kind';
 import type { TfgpMachineNode } from '@/schema/tfgp';
 import { emptyFlowResult } from '@/test/flow-result-fixture';
 import {

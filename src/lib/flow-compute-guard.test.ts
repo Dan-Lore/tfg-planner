@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { shouldApplyFlowResult } from '@/lib/flow-compute-guard';
+import { shouldApplyFlowResult } from '@/editor-graph/flow-compute-guard';
 import { parsePositiveRate } from '@/lib/parse-positive-rate';
 
 describe('shouldApplyFlowResult', () => {

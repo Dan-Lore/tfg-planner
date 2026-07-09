@@ -16,12 +16,12 @@ import {
 } from './pack-slice';
 import { publicPath } from '@/lib/public-path';
 import { buildRecipeFlowAttachIndex } from '@/lib/recipe-flow-attach-index';
-import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/lib/tag-index';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/shared/tag-index';
 import type { Flow } from './types';
-import type { TagIndex } from '@/lib/tag-index';
+import type { TagIndex } from '@/shared/tag-index';
 import { machineIdsForFlowAttach } from '@/lib/recipe-flow-attach-index';
 import type { TfgpFile } from '@/schema/tfgp';
-import type { ProductLexicon } from '@/lib/product-lexicon';
+import type { ProductLexicon } from '@/shared/product-lexicon';
 
 export type JsonLoader = (url: string) => Promise<unknown>;
 

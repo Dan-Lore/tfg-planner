@@ -1,4 +1,4 @@
-import type { PackLangArtifact } from '@/lib/product-lexicon';
+import type { PackLangArtifact } from '@/shared/product-lexicon';
 
 const DB_NAME = 'tfg-pack-lang';
 const DB_VERSION = 1;

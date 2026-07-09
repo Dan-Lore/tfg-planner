@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { PackData, Recipe } from '@/data/types';
-import { buildTagIndexFromMeta } from '@/lib/tag-index';
+import { buildTagIndexFromMeta } from '@/shared/tag-index';
 import {
   buildRecipeFlowAttachIndex,
   machineIdsForFlowAttach,

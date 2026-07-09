@@ -1,6 +1,6 @@
 import type { Flow, PackData, Recipe } from '@/data/types';
 import type { TfgpCustomPort, TfgpNode } from '@/schema/tfgp-types';
-import { isCustomMachineNode } from '@/lib/node-kind';
+import { isCustomMachineNode } from '@/shared/node-kind';
 import { R, type Rational } from '@/calculator/rational';
 import { TICKS_PER_SECOND, type SchemeNode } from '@/calculator/flow-solver-types';
 

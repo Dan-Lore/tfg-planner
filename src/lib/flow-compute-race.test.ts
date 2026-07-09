@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { shouldApplyFlowResult } from '@/lib/flow-compute-guard';
-import { mergePendingFlowUpdateMode } from '@/lib/flow-compute-queue';
+import { shouldApplyFlowResult } from '@/editor-graph/flow-compute-guard';
+import { mergePendingFlowUpdateMode } from '@/editor-graph/flow-compute-queue';
 
 describe('flow compute race (integration scenario)', () => {
   it('discards stale worker result when scheme revision changed during compute', () => {

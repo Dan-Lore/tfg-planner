@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import type { PackLike } from '@/data/pack-registry';
 import type { TfgpBufferKind, TfgpSupplyMode } from '@/schema/tfgp';
 import { flowLabel } from '@/canvas/ports';
-import { formatRate } from '@/calculator/flow-solver';
-import { R } from '@/calculator/rational';
+import { formatRate } from '@/calculator';
+import { R } from '@/calculator';
 import { loadGradientStyle } from '@/lib/load-gradient';
-import type { PortDisplay } from '@/canvas/MachineNode';
+import type { BufferNodeData, PortDisplay } from '@/canvas/node-data-types';
+export type { BufferNodeData } from '@/canvas/node-data-types';
 import { BUFFER_NODE_WIDTH } from '@/canvas/node-bounds';
 import { useNodeDisplay } from '@/canvas/node-display-context';
 import { useEditorNodeActions } from '@/canvas/editor-node-actions-context';
@@ -15,28 +16,6 @@ import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
 import { useMeasureNodeCard } from '@/canvas/node-card-measure-context';
 import { useNodeSelected } from '@/canvas/selection-context';
 import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
-
-export interface BufferNodeData {
-  bufferKind: TfgpBufferKind;
-  itemId?: string;
-  fluidId?: string;
-  capacity: number;
-  supplyMode?: TfgpSupplyMode;
-  supplyRate?: number;
-  initialStock?: number;
-  autoSupplyRate?: boolean;
-  pack: PackLike;
-  checkSeverity?: 'error' | 'warning';
-  checkTitle?: string;
-  inputPorts: PortDisplay[];
-  outputPorts: PortDisplay[];
-  loadPercent?: number;
-  loadLabel?: string;
-  loadTitle?: string;
-  inputPortIds?: string[];
-  outputPortIds?: string[];
-  [key: string]: unknown;
-}
 
 function formatLoadPercentDisplay(percent: number): string {
   if (percent >= 99.95) return '100%';

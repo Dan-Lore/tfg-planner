@@ -1,17 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import type { NodeBalanceLine } from '@/canvas/flow-display';
-import type { PortDisplay } from '@/canvas/MachineNode';
-
-export interface NodeDynamicDisplay {
-  inputPorts: PortDisplay[];
-  outputPorts: PortDisplay[];
-  balanceLines: NodeBalanceLine[];
-  loadPercent?: number;
-  loadLabel?: string;
-  loadTitle?: string;
-  bottleneckLabel?: string;
-  bottleneckTitle?: string;
-}
+export type { NodeDynamicDisplay } from '@/editor-graph/node-display-types';
+import type { NodeDynamicDisplay } from '@/editor-graph/node-display-types';
 
 const EMPTY_DISPLAY: NodeDynamicDisplay = {
   inputPorts: [],

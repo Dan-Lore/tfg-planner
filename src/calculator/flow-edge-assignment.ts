@@ -1,5 +1,5 @@
 import type { Recipe } from '@/data/types';
-import type { TagIndex } from '@/lib/tag-index';
+import type { TagIndex } from '@/shared/tag-index';
 import { Rational, R } from '@/calculator/rational';
 import {
   type SchemeEdge,

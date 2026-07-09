@@ -4,8 +4,8 @@ import {
   flowAttachLookupKeys,
   flowsCompatible,
   flowLookupKeys,
-} from '@/lib/flow-match';
-import { buildTagIndex, buildTagIndexFromMeta } from '@/lib/tag-index';
+} from '@/shared/flow-match';
+import { buildTagIndex, buildTagIndexFromMeta } from '@/shared/tag-index';
 import type { PackData } from '@/data/types';
 
 const pack: PackData = {

@@ -4,7 +4,7 @@ import type { FlowResult } from '@/calculator/flow-solver';
 import { dehydrateFlowResult } from '@/calculator/flow-result-transfer';
 import { createEmptyTfgp } from '@/schema/tfgp';
 import type { TfgpMachineNode } from '@/schema/tfgp';
-import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
+import { schemeFlowRevision } from '@/editor-graph/scheme-flow-revision';
 import '@/stores/editor-store';
 import { useSchemeStore } from '@/stores/scheme-store';
 import { useFlowStore } from '@/stores/flow-store';

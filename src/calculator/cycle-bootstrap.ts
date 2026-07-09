@@ -1,6 +1,6 @@
 import type { Recipe } from '@/data/types';
-import type { TagIndex } from '@/lib/tag-index';
-import { primaryOutputIndex } from '@/lib/primary-output';
+import type { TagIndex } from '@/shared/tag-index';
+import { primaryOutputIndex } from '@/shared/primary-output';
 import { R, type Rational } from '@/calculator/rational';
 import {
   analyzeCycles,
@@ -29,7 +29,7 @@ import {
   findCatalystPortChancesInScc,
   resolveBufferMaintainAmount,
   resolveCycleSeedDisplayMode,
-} from '@/lib/cycle-seed-metrics';
+} from '@/editor-graph/cycle-seed-metrics';
 
 export interface CycleBootstrapPlan {
   pinnedFlows: Map<string, Rational>;

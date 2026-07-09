@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isMachineNode } from '@/lib/node-kind';
+import { isMachineNode } from '@/shared/node-kind';
 import type { TfgpMachineNode } from '@/schema/tfgp';
 import { normalizeNodeScaling, type RawTfgpNode } from './node-scaling';
 

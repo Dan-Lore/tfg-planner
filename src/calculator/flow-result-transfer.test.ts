@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { R } from '@/calculator/rational';
 import { hydrateFlowResult, dehydrateFlowResult } from '@/calculator/flow-result-transfer';
-import { normalizeCycleSeedInfo } from '@/lib/cycle-seed-metrics';
+import { normalizeCycleSeedInfo } from '@/editor-graph/cycle-seed-metrics';
 import type { FlowResult } from '@/calculator/flow-solver';
 
 describe('hydrateFlowResult', () => {

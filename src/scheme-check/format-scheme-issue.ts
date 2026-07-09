@@ -1,7 +1,7 @@
 import type { PackLike } from '@/data/pack-registry';
 import { getItemName, getMachineName } from '@/data/pack-registry';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
-import { isMachineNode } from '@/lib/node-kind';
+import { isMachineNode } from '@/shared/node-kind';
 import type { SchemeIssue, SchemeIssueCode } from '@/scheme-check/check-scheme';
 
 export type SchemeIssueTranslator = (

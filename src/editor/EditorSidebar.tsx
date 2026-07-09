@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { EditorInspector } from '@/editor/EditorInspector';
 import { SchemeIssuesPanel } from '@/editor/SchemeIssuesPanel';
-import type { FlowResult } from '@/calculator/flow-solver';
+import type { FlowResult } from '@/calculator';
 import type { SchemeCheckResult } from '@/scheme-check/check-scheme';
 import type { ActivePack } from '@/data/pack-runtime';
 import type { TfgpFile } from '@/schema/tfgp';
-import type { FlowEdgeData } from '@/lib/flow-edge-types';
+import type { FlowEdgeData } from '@/editor-graph/flow-edge-types';
 import type { SchemeIssue } from '@/scheme-check/check-scheme';
 import type { EditorActions } from '@/editor/editor-actions';
 

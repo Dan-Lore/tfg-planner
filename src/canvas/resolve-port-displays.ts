@@ -1,4 +1,4 @@
-import type { PortDisplay } from '@/canvas/MachineNode';
+import type { PortDisplay } from '@/editor-graph/port-display-types';
 
 /** Render a handle for every port id; prefer display metadata when present. */
 export function resolvePortDisplays(

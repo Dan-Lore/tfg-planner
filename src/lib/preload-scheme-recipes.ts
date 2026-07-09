@@ -1,6 +1,6 @@
 import type { ActivePack } from '@/data/pack-runtime';
 import { getRecipe } from '@/data/pack-registry';
-import { isMachineNode } from '@/lib/node-kind';
+import { isMachineNode } from '@/shared/node-kind';
 import type { TfgpFile } from '@/schema/tfgp';
 
 /** Load recipe shards required by scheme machine nodes (parallel). */

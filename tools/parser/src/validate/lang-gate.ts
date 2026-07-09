@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { join } from 'node:path';
-import { isFallbackName } from '../../../../src/lib/product-lexicon/lang-keys.js';
-import type { PackLangArtifact } from '../../../../src/lib/product-lexicon/types.js';
+import { isFallbackName } from '../../../../src/shared/product-lexicon/lang-keys.js';
+import type { PackLangArtifact } from '../../../../src/shared/product-lexicon/types.js';
 import type { BuildReport } from '../types.js';
 import { effectiveLangFloors, validateLangRegression } from './lang-baseline.js';
 

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { buildTagIndexFromMeta } from '@/lib/tag-index';
-import { productMatchesTag } from '@/lib/tag-rules';
+import { buildTagIndexFromMeta } from '@/shared/tag-index';
+import { productMatchesTag } from '@/shared/tag-rules';
 
 describe('tag index on pack 0.12.8', () => {
   it('builds quickly with broad coverage', () => {

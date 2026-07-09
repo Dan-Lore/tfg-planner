@@ -5,6 +5,12 @@
 
 ## [Unreleased]
 
+## [0.4.4] — 2026-07-09
+
+### Changed
+- Архитектура спринт 2: `editor-graph/routing/`, `machine-layout-width`, `flow-edge-display` / `flow-node-load`, `scheme-obstacles`, `editor/inspector/`; удалены shim-re-export в `src/lib/`; depcruise `no-editor-graph-canvas`, `no-circular-canvas`; `calculator/buffers/`, `check-scheme-structural` / `check-scheme-cycles`
+- Архитектура спринт 3: декомпозиция `scheme-store` (`scheme-mutations`, `scheme-attach-mutations`, `scheme-lifecycle`, `scheme-clipboard`, `scheme-selection`, `scheme-edge-constraints`, `scheme-history-actions`); `editor/build-rf-graph` + утоньшение `useEditorRfGraph`; удалён дубликат `lib/product-lexicon/`; миграции `lib/` → `shared/` (`node-kind`, `primary-output`), `editor-graph/` (`cycle-seed-*`, `selection-energy`), `data/` (`pack-*`); тесты editor-graph из `lib/`; split `scheme-check/structural/`, `editor-graph/flow-display/`, `pages/editor/` hooks
+
 ## [0.4.3] — 2026-07-08
 
 ### Fixed

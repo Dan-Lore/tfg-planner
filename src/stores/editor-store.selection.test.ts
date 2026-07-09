@@ -3,11 +3,11 @@ import { createEmptyTfgp } from '@/schema/tfgp';
 import type { TfgpMachineNode } from '@/schema/tfgp';
 import { useEditorStore } from '@/stores/editor-store';
 
-vi.mock('@/lib/flow-compute', () => ({
+vi.mock('@/editor-graph/flow-compute', () => ({
   computeFlowsAsync: vi.fn().mockResolvedValue(null),
 }));
 
-vi.mock('@/lib/debounce-flow-update', () => ({
+vi.mock('@/editor-graph/debounce-flow-update', () => ({
   debounceFlowUpdate: (fn: () => void) => {
     fn();
     return fn;

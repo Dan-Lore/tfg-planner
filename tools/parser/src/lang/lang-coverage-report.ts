@@ -4,9 +4,9 @@ import {
   isFallbackName,
   langKeysForResource,
   pickLang,
-} from '../../../../src/lib/product-lexicon/lang-keys.js';
-import { gtceuTierRepresentativeItem, parseGtceuTierTag } from '../../../../src/lib/product-lexicon/gtceu-tier-tags.js';
-import type { LangBundle } from '../../../../src/lib/product-lexicon/types.js';
+} from '../../../../src/shared/product-lexicon/lang-keys.js';
+import { gtceuTierRepresentativeItem, parseGtceuTierTag } from '../../../../src/shared/product-lexicon/gtceu-tier-tags.js';
+import type { LangBundle } from '../../../../src/shared/product-lexicon/types.js';
 import type { LocalizedName } from '../../../../src/data/types.js';
 import {
   computeRecipeIoLocalizedByKind,

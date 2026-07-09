@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { findCycleComponents, analyzeCycles } from '@/calculator/cycle-analysis';
 import { solveFlows, type FlowResult } from '@/calculator/flow-solver';
 import { R } from '@/calculator/rational';
-import { computeReproductionPercent } from '@/lib/cycle-seed-metrics';
+import { computeReproductionPercent } from '@/editor-graph/cycle-seed-metrics';
 import type { PackData } from '@/data/types';
-import { buildTagIndex } from '@/lib/tag-index';
+import { buildTagIndex } from '@/shared/tag-index';
 import { loadTestPack } from '@/test-fixtures/load-test-pack';
 
 const samplePack: PackData = {

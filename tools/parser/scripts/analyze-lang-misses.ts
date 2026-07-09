@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isFallbackName } from '../../../src/lib/product-lexicon/lang-keys.js';
+import { isFallbackName } from '../../../src/shared/product-lexicon/lang-keys.js';
 import { classifyMissReason } from '../src/lang/lang-coverage-report.js';
-import type { LangBundle } from '../../../src/lib/product-lexicon/types.js';
+import type { LangBundle } from '../../../src/shared/product-lexicon/types.js';
 
 const tag = process.argv[2] ?? '0.12.8';
 const packDir = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', 'public/data/packs', tag);

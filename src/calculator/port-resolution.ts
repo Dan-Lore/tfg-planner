@@ -1,8 +1,8 @@
 import type { Recipe } from '@/data/types';
-import type { TagIndex } from '@/lib/tag-index';
-import { recipeInputMatchesProduct } from '@/lib/flow-match';
-import { chanceRateMultiplier } from '@/lib/flow-chance';
-import { normalizePortId, parsePortId, productKey } from '@/lib/ports';
+import type { TagIndex } from '@/shared/tag-index';
+import { recipeInputMatchesProduct } from '@/shared/flow-match';
+import { chanceRateMultiplier } from '@/shared/flow-chance';
+import { normalizePortId, parsePortId, productKey } from '@/shared/ports';
 import { R, type Rational } from '@/calculator/rational';
 
 export interface PortEdge {

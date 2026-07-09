@@ -5,7 +5,7 @@ import {
   findDownstreamCandidates,
   findUpstreamCandidates,
 } from './recipe-index';
-import { buildTagIndex } from './tag-index';
+import { buildTagIndex } from '@/shared/tag-index';
 
 function miniPack(recipes: Recipe[]): PackData {
   return {

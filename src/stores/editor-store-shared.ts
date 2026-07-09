@@ -1,7 +1,7 @@
 import type { TfgpFile } from '@/schema/tfgp';
-import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
-import { dehydrateFlowResult, hydrateFlowResult } from '@/calculator/flow-result-transfer';
-import type { FlowResult } from '@/calculator/flow-solver';
+import { schemeFlowRevision } from '@/editor-graph/scheme-flow-revision';
+import { dehydrateFlowResult, hydrateFlowResult } from '@/calculator';
+import type { FlowResult } from '@/calculator';
 import type { PersistedPackFlowCache } from '@/lib/editor-persist';
 import type { EditorSnapshot } from '@/stores/editor-utils';
 

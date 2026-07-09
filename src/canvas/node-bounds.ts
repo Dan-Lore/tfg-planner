@@ -1,21 +1,41 @@
 import type { Node } from '@xyflow/react';
-import type { MachineNodeData } from '@/canvas/MachineNode';
-import type { CustomMachineNodeData } from '@/canvas/CustomMachineNode';
-import type { BufferNodeData } from '@/canvas/BufferNode';
-import type { PackLike } from '@/data/pack-registry';
-import { getMachineRecipeCount, getRecipe } from '@/data/pack-registry';
-import type { TfgpBufferKind } from '@/schema/tfgp';
+import type { MachineNodeData } from '@/canvas/node-data-types';
+import type { CustomMachineNodeData } from '@/canvas/node-data-types';
+import type { BufferNodeData } from '@/canvas/node-data-types';
 
-export const MACHINE_NODE_WIDTH = 220;
-export const MACHINE_NODE_MIN_WIDTH = 200;
-export const CUSTOM_MACHINE_WIDTH_FACTOR = 2.5;
-export const CUSTOM_MACHINE_NODE_MIN_WIDTH = Math.round(
-  MACHINE_NODE_MIN_WIDTH * CUSTOM_MACHINE_WIDTH_FACTOR,
-);
-export const CUSTOM_MACHINE_NODE_WIDTH = Math.round(
-  MACHINE_NODE_WIDTH * CUSTOM_MACHINE_WIDTH_FACTOR,
-);
-export const BUFFER_NODE_WIDTH = 200;
+export {
+  estimateHeaderHeight,
+  estimateMachineNodeHeightFromPorts,
+  estimateMachineNodeHeight,
+  estimateBufferNodeHeight,
+  estimateBufferNodeHeightFromData,
+  type MachineHeightInput,
+} from '@/editor-graph/node-layout-estimates';
+
+export {
+  MACHINE_NODE_WIDTH,
+  MACHINE_NODE_MIN_WIDTH,
+  CUSTOM_MACHINE_WIDTH_FACTOR,
+  CUSTOM_MACHINE_NODE_MIN_WIDTH,
+  CUSTOM_MACHINE_NODE_WIDTH,
+  BUFFER_NODE_WIDTH,
+  machineNodeRfStyle,
+  PORT_ROW_HEIGHT,
+  PORT_SECTION_PADDING,
+  NODE_HEADER_MIN,
+  EDGE_ROUTE_PADDING,
+  type NodeRect,
+} from '@/editor-graph/node-layout-constants';
+import {
+  MACHINE_NODE_WIDTH,
+  MACHINE_NODE_MIN_WIDTH,
+  BUFFER_NODE_WIDTH,
+  CUSTOM_MACHINE_NODE_WIDTH,
+  EDGE_ROUTE_PADDING,
+  PORT_ROW_HEIGHT,
+  PORT_SECTION_PADDING,
+  type NodeRect,
+} from '@/editor-graph/node-layout-constants';
 
 /** Top-left position so a node of given size is centered on `center`. */
 export function nodeTopLeftAtCenter(
@@ -36,14 +56,6 @@ export function estimateEmptyCustomMachineNodeHeight(): number {
   return header + portCount * PORT_ROW_HEIGHT + PORT_SECTION_PADDING + 28;
 }
 
-/** React Flow node.style — use instead of node.width with onlyRenderVisibleElements. */
-export function machineNodeRfStyle(
-  layoutWidth: number | undefined,
-): { width: number; minWidth: number } | undefined {
-  if (layoutWidth == null || layoutWidth <= 0) return undefined;
-  return { width: layoutWidth, minWidth: layoutWidth };
-}
-
 /** Prefer computed layout width; ignore stale small React Flow measurements. */
 export function resolveMachineCardWidth(
   layoutWidth: number | undefined,
@@ -55,35 +67,12 @@ export function resolveMachineCardWidth(
   }
   return MACHINE_NODE_MIN_WIDTH;
 }
-/** Matches `.machine-port` min-height (1.35rem) + column gap (~0.2rem). */
-export const PORT_ROW_HEIGHT = 24;
-export const PORT_SECTION_PADDING = 6;
-export const NODE_HEADER_MIN = 48;
-export const EDGE_ROUTE_PADDING = 8;
 
-export interface NodeRect {
-  left: number;
-  top: number;
-  right: number;
-  bottom: number;
-}
-
-export function estimateHeaderHeight(
-  pack: PackLike,
-  machineId: string,
-  recipeId: string,
-  balanceLineCount = 0,
-): number {
-  const recipeCount = getMachineRecipeCount(pack, machineId);
-  const recipe = getRecipe(pack, recipeId);
-
-  let header = 28;
-  if (recipeCount > 1) header += 32;
-  header += 24;
-  if (recipe?.energy) header += 16;
-  header += balanceLineCount * 16;
-  return header;
-}
+import {
+  estimateHeaderHeight,
+  estimateMachineNodeHeight,
+  estimateBufferNodeHeightFromData,
+} from '@/editor-graph/node-layout-estimates';
 
 export function estimateHeaderHeightFromData(data: MachineNodeData): number {
   return estimateHeaderHeight(
@@ -96,32 +85,6 @@ export function estimateHeaderHeightFromData(data: MachineNodeData): number {
 
 export function estimatePortsTopY(nodeY: number, data: MachineNodeData): number {
   return nodeY + estimateHeaderHeightFromData(data);
-}
-
-export function estimateMachineNodeHeightFromPorts(
-  pack: PackLike,
-  machineId: string,
-  recipeId: string,
-  portCount: number,
-  balanceLineCount = 0,
-): number {
-  const header = estimateHeaderHeight(pack, machineId, recipeId, balanceLineCount);
-  return header + portCount * PORT_ROW_HEIGHT + PORT_SECTION_PADDING;
-}
-
-export function estimateMachineNodeHeight(data: MachineNodeData): number {
-  const portCount = Math.max(
-    data.inputPorts?.length ?? 0,
-    data.outputPorts?.length ?? 0,
-    1,
-  );
-  return estimateMachineNodeHeightFromPorts(
-    data.pack,
-    data.machineId,
-    data.recipeId,
-    portCount,
-    data.balanceLines?.length ?? 0,
-  );
 }
 
 export function estimateCustomMachineNodeHeight(data: CustomMachineNodeData): number {
@@ -145,17 +108,6 @@ export function getCustomMachineNodeRect(node: Node, padding = EDGE_ROUTE_PADDIN
     right: node.position.x + width + padding,
     bottom: node.position.y + height + padding,
   };
-}
-
-export function estimateBufferNodeHeight(bufferKind: TfgpBufferKind): number {
-  const header = 56;
-  const fields = bufferKind === 'start_buffer' ? 88 : 36;
-  const portRows = 1;
-  return header + fields + portRows * PORT_ROW_HEIGHT + PORT_SECTION_PADDING;
-}
-
-export function estimateBufferNodeHeightFromData(data: BufferNodeData): number {
-  return estimateBufferNodeHeight(data.bufferKind);
 }
 
 export function getBufferNodeRect(node: Node, padding = EDGE_ROUTE_PADDING): NodeRect {

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   applyFlowEdgeSelection,
   mergeFlowEdges,
-} from '@/lib/merge-flow-nodes';
+} from '@/editor-graph/merge-flow-nodes';
 
 /**
  * Regression: box-select on a node with incident edges caused Maximum update depth

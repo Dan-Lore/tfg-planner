@@ -20,7 +20,11 @@
   ],
   "ignoreIssues": {
     "src/calculator/**": ["exports"],
+    "src/editor-graph/**": ["exports"],
+    "src/shared/**": ["exports"],
+    "src/editor/**": ["exports"],
     "src/lib/**": ["exports"],
+    "src/app/**": ["exports"],
     "src/canvas/**": ["exports"],
     "src/data/**": ["exports"],
     "src/schema/**": ["exports"],

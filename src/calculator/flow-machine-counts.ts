@@ -1,9 +1,9 @@
 import type { Recipe } from '@/data/types';
-import type { TagIndex } from '@/lib/tag-index';
+import type { TagIndex } from '@/shared/tag-index';
 import { Rational, R } from '@/calculator/rational';
-import { productKey } from '@/lib/ports';
-import { primaryOutputIndex, primaryOutputProductKey } from '@/lib/primary-output';
-import { recipeInputMatchesProduct } from '@/lib/flow-match';
+import { productKey } from '@/shared/ports';
+import { primaryOutputIndex, primaryOutputProductKey } from '@/shared/primary-output';
+import { recipeInputMatchesProduct } from '@/shared/flow-match';
 import { ceilMachineCount, idealMachineCount } from '@/calculator/rounding';
 import {
   applyEdgeConstraintsToMachineCountPhase,

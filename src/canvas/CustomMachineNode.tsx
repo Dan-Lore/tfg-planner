@@ -1,9 +1,8 @@
 import { memo, type MouseEvent as ReactMouseEvent } from 'react';
 import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
-import type { PackLike } from '@/data/pack-registry';
-import type { TfgpCustomPort } from '@/schema/tfgp';
-import type { NodeBalanceLine } from '@/canvas/flow-display';
+import type { CustomMachineNodeData, PortDisplay } from '@/canvas/node-data-types';
+export type { CustomMachineNodeData } from '@/canvas/node-data-types';
 import { formatRecipeDuration } from '@/lib/recipe-duration';
 import { loadGradientStyle } from '@/lib/load-gradient';
 import {
@@ -16,29 +15,6 @@ import { useNodeInternalsSync } from '@/canvas/use-node-internals-sync';
 import { useMeasureNodeCard } from '@/canvas/node-card-measure-context';
 import { useNodeSelected } from '@/canvas/selection-context';
 import { resolvePortDisplays } from '@/canvas/resolve-port-displays';
-import type { PortDisplay } from '@/canvas/MachineNode';
-
-export interface CustomMachineNodeData {
-  label?: string;
-  durationTicks: number;
-  machineCount: number;
-  overclock: number;
-  inputs: TfgpCustomPort[];
-  outputs: TfgpCustomPort[];
-  pack: PackLike;
-  inputPorts?: PortDisplay[];
-  outputPorts?: PortDisplay[];
-  balanceLines?: NodeBalanceLine[];
-  loadPercent?: number;
-  loadLabel?: string;
-  loadTitle?: string;
-  inputPortIds?: string[];
-  outputPortIds?: string[];
-  checkSeverity?: 'error' | 'warning';
-  checkTitle?: string;
-  layoutWidth?: number;
-  [key: string]: unknown;
-}
 
 function formatOverclock(value: number): string {
   return Number.isInteger(value) ? String(value) : value.toFixed(1);

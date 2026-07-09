@@ -1,8 +1,8 @@
 import type { Recipe } from '@/data/types';
-import type { TagIndex } from '@/lib/tag-index';
+import type { TagIndex } from '@/shared/tag-index';
 import { Rational, R } from '@/calculator/rational';
-import { productKey } from '@/lib/ports';
-import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
+import { productKey } from '@/shared/ports';
+import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/shared/primary-output';
 import {
   type SchemeEdge,
   type SchemeNode,

@@ -5,7 +5,7 @@ import type { PackData } from '@/data/types';
 import type { TfgpFile } from '@/schema/tfgp';
 import { parseTfgp } from '@/schema/tfgp';
 import { loadTestPack } from '@/test-fixtures/load-test-pack';
-import { runSolver } from '@/lib/scheme-solver';
+import { runSolver } from '@/editor-graph/scheme-solver';
 import { checkScheme } from './check-scheme';
 
 const miniPack: PackData = {

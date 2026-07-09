@@ -5,8 +5,8 @@ import {
   EDGE_LABEL_NEAR_TARGET,
   edgeLabelPosition,
   pointOnBezierEdge,
-} from '@/lib/bezier-edge-label';
-import { flowEdgeLabelCenterOffsetFromTextWidth, measureFlowEdgeLabelTextWidth } from '@/lib/flow-edge-label-metrics';
+} from '@/editor-graph/bezier-edge-label';
+import { flowEdgeLabelCenterOffsetFromTextWidth, measureFlowEdgeLabelTextWidth } from '@/editor-graph/flow-edge-label-metrics';
 
 describe('pointOnBezierEdge', () => {
   it('places near-source and near-target on the same curve', () => {

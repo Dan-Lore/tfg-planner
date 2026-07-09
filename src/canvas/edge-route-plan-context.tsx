@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import type { EdgeRoutePlanEntry } from '@/lib/edge-route-plan';
+import type { EdgeRoutePlanEntry } from '@/editor-graph/edge-route-plan';
 
 const emptyPlan = new Map<string, EdgeRoutePlanEntry>();
 

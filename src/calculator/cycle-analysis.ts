@@ -5,11 +5,11 @@ import { perMachineOutputRateAtIndex } from '@/calculator/flow-rates';
 import { portInputDemandRate } from '@/calculator/port-resolution';
 import { R, type Rational } from '@/calculator/rational';
 import type { PackData, Recipe } from '@/data/types';
-import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/lib/primary-output';
-import type { TagIndex } from '@/lib/tag-index';
-import { productKey } from '@/lib/ports';
-import { recipeInputMatchesProduct } from '@/lib/flow-match';
-import { productMatchesTag } from '@/lib/tag-rules';
+import { primaryOutputIndex, primaryTheoreticalPortRate } from '@/shared/primary-output';
+import type { TagIndex } from '@/shared/tag-index';
+import { productKey } from '@/shared/ports';
+import { recipeInputMatchesProduct } from '@/shared/flow-match';
+import { productMatchesTag } from '@/shared/tag-rules';
 
 const BALANCE_EPS_R = R.of(1, 1_000_000n);
 const FLOW_EPS_R = R.of(1, 1_000_000_000n);

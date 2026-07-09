@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { edgeHandlesReady, mergedNodePortIds } from '@/lib/scheme-port-ids';
+import { edgeHandlesReady, mergedNodePortIds } from '@/editor-graph/scheme-port-ids';
 
 describe('mergedNodePortIds', () => {
   it('includes edge ports before recipe is loaded', () => {

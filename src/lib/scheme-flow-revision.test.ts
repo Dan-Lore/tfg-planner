@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { schemeFlowRevision } from '@/lib/scheme-flow-revision';
+import { schemeFlowRevision } from '@/editor-graph/scheme-flow-revision';
 import type { TfgpFile, TfgpMachineNode } from '@/schema/tfgp';
 
 function scheme(nodes: TfgpMachineNode[]): TfgpFile {

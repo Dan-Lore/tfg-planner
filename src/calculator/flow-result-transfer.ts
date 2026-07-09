@@ -1,6 +1,6 @@
 import type { FlowResult } from '@/calculator/flow-solver';
 import { Rational } from '@/calculator/rational';
-import { normalizeCycleSeedInfo } from '@/lib/cycle-seed-metrics';
+import { normalizeCycleSeedInfo } from '@/editor-graph/cycle-seed-metrics';
 
 interface RationalLike {
   num: bigint | string;

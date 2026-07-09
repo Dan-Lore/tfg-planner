@@ -20,6 +20,7 @@
 | Вдохновение | [inspiration.md](inspiration.md) | Референсы, в т.ч. Factorio Calculator |
 | Глоссарий | [glossary.md](glossary.md) | Термины TFG и проекта |
 | Открытые вопросы | [open-questions.md](open-questions.md) | Неясности для уточнения с заказчиком |
+| Доп. инструменты | [additional-tools.md](additional-tools.md) | Внешние утилиты (code2prompt и др.) |
 
 ## Связанные ресурсы
 

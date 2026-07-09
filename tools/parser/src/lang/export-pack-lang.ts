@@ -7,8 +7,8 @@ import {
   pruneLangBundle,
   type LangBundle,
   type PackLangArtifact,
-} from '../../../../src/lib/product-lexicon/index.js';
-import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/lib/tag-index.js';
+} from '../../../../src/shared/product-lexicon/index.js';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../../src/shared/tag-index.js';
 
 export interface ExportPackLangResult {
   artifact: PackLangArtifact;

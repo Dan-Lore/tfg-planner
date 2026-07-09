@@ -1,4 +1,4 @@
-import { isFallbackName } from '../../../../src/lib/product-lexicon/index.js';
+import { isFallbackName } from '../../../../src/shared/product-lexicon/index.js';
 import type { LocalizedName } from '../../../../src/data/types.js';
 
 export interface RecipeIoLocalizedStats {

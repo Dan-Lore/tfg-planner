@@ -7,8 +7,8 @@ import {
   resolveTargetInputPort,
 } from '@/calculator/port-resolution';
 import { R } from '@/calculator/rational';
-import { chanceRateMultiplier } from '@/lib/flow-chance';
-import { buildTagIndex } from '@/lib/tag-index';
+import { chanceRateMultiplier } from '@/shared/flow-chance';
+import { buildTagIndex } from '@/shared/tag-index';
 
 describe('port-resolution', () => {
   const recipe = minimalPack.recipes[0]!;

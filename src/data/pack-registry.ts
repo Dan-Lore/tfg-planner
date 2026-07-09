@@ -9,8 +9,8 @@ import type {
 } from './types';
 import { PackRuntime, wrapPackData } from './pack-runtime';
 import { publicPath } from '@/lib/public-path';
-import { dedupeRecipesForDisplay } from '@/lib/recipe-canon';
-import { packKey } from '@/lib/pack-key';
+import { dedupeRecipesForDisplay } from '@/shared/recipe-canon';
+import { packKey } from '@/data/pack-key';
 import type { PackBuildManifest } from '@/lib/pack-build-manifest';
 import { ensurePackLexicon } from './pack-lang-loader';
 

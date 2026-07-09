@@ -10,7 +10,6 @@ import { sanitizeRecipeEnergy } from './pipeline/sanitize-energy.js';
 import { buildLangBundle } from './lang/build-lang-bundle.js';
 import { countNamedDefs } from './lang/resolve-name.js';
 import { exportPackLang } from './lang/export-pack-lang.js';
-import { computeRecipeIoLocalizedByKind } from './lang/lang-coverage.js';
 import { buildLangCoverageReport } from './lang/lang-coverage-report.js';
 import { loadTfgExcludes } from './datapack/excludes.js';
 import { validatePackSchema, buildReportFromPack, writeShardedPack } from './validate/schema.js';

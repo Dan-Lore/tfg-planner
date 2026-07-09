@@ -3,8 +3,8 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { PackMeta, Recipe } from '@/data/types';
 import { buildRecipeFlowAttachIndex } from '@/lib/recipe-flow-attach-index';
-import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/lib/tag-index';
-import { recipePathSuffix, normalizeRecipeCanon } from '@/lib/recipe-canon';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '@/shared/tag-index';
+import { recipePathSuffix, normalizeRecipeCanon } from '@/shared/recipe-canon';
 
 const PACK_DIR = join(process.cwd(), 'public/data/packs/0.12.8');
 const RECIPES_DIR = join(PACK_DIR, 'recipes');

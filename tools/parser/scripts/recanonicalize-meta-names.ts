@@ -6,8 +6,8 @@ import { resolveLangBundleOptions } from '../src/lang/lang-bundle-options.js';
 import { buildModIndex } from '../src/lockfile/parse-pakku.js';
 import { exportPackLang } from '../src/lang/export-pack-lang.js';
 import { buildLangCoverageReport } from '../src/lang/lang-coverage-report.js';
-import { ProductLexicon } from '../../../src/lib/product-lexicon/index.js';
-import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../src/lib/tag-index.js';
+import { ProductLexicon } from '../../../src/shared/product-lexicon/index.js';
+import { buildTagIndexForRecipes, buildTagIndexFromMeta } from '../../../src/shared/tag-index.js';
 import type { PackData, PackMeta, Recipe } from '../../../src/data/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

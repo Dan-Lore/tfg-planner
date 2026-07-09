@@ -7,7 +7,7 @@ import {
   effectiveEuPerTick,
   effectiveTotalEu,
 } from './energy';
-import { sumSelectionEnergyEuPerTick } from '@/lib/selection-energy';
+import { sumSelectionEnergyEuPerTick } from '@/editor-graph/selection-energy';
 
 function recipeWithEnergy(
   partial: Partial<Recipe> & { energy: NonNullable<Recipe['energy']> },

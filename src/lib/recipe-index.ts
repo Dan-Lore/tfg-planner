@@ -1,11 +1,11 @@
-import { flowKey, inputPortId, outputPortId } from '@/lib/ports';
+import { flowKey, inputPortId, outputPortId } from '@/shared/ports';
 import { getMachineName } from '@/data/pack-registry';
 import type { PackLike } from '@/data/pack-registry';
 import type { Flow, Recipe, PackData } from '@/data/types';
-import { flowAttachLookupKeys } from '@/lib/flow-match';
+import { flowAttachLookupKeys } from '@/shared/flow-match';
 import { formatRecipeLabel } from '@/lib/recipe-label';
-import { dedupeAttachCandidates } from '@/lib/recipe-canon';
-import type { TagIndex } from '@/lib/tag-index';
+import { dedupeAttachCandidates } from '@/shared/recipe-canon';
+import type { TagIndex } from '@/shared/tag-index';
 import type { RecipeFlowAttachIndex } from '@/data/types';
 import type { AttachCandidate } from '@/lib/recipe-attach-types';
 

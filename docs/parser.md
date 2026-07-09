@@ -35,7 +35,7 @@ Manifest entry: `path` → `pack.meta.json`, `recipesRoot` → `recipes/`, `lang
 | Tier representatives | `parser:generate-gtceu-tier-reps -- <tag>` |
 | Dev: miss breakdown | `npx tsx tools/parser/scripts/analyze-lang-misses.ts <tag>` (не в CI) |
 
-Lang bundle flags: `--download-mod-jars` / `--no-download-mod-jars`, env `TFG_DOWNLOAD_MOD_JARS`. Regression baseline: `tools/parser/lang-baseline/`. Браузер грузит артефакт лениво после `pack.meta`, кэш IndexedDB. Resolve: [`src/lib/product-lexicon/`](../src/lib/product-lexicon/).
+Lang bundle flags: `--download-mod-jars` / `--no-download-mod-jars`, env `TFG_DOWNLOAD_MOD_JARS`. Regression baseline: `tools/parser/lang-baseline/`. Браузер грузит артефакт лениво после `pack.meta`, кэш IndexedDB. Resolve: [`src/shared/product-lexicon/`](../src/shared/product-lexicon/).
 
 **Принцип:** рецепты = **все** записи `RecipeManager` после полной загрузки modpack (mods + KubeJS + post-reload), не KubeJS AST и не GT-only subset.
 

@@ -6,8 +6,8 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { PackMeta } from '../../../src/data/types.js';
-import { buildTagIndexFromMeta } from '../../../src/lib/tag-index.js';
-import tierRepresentatives from '../../../src/lib/product-lexicon/gtceu-tier-representatives.json' with { type: 'json' };
+import { buildTagIndexFromMeta } from '../../../src/shared/tag-index.js';
+import tierRepresentatives from '../../../src/shared/product-lexicon/gtceu-tier-representatives.json' with { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..', '..', '..');
@@ -34,7 +34,7 @@ for (const kind of kinds) {
   }
 }
 
-const outApp = join(root, 'src/lib/product-lexicon/gtceu-tier-representatives.json');
+const outApp = join(root, 'src/shared/product-lexicon/gtceu-tier-representatives.json');
 const outTools = join(root, 'tools/parser/data/gtceu-tier-representatives.json');
 mkdirSync(dirname(outTools), { recursive: true });
 

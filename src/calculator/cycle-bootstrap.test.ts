@@ -11,7 +11,7 @@ import {
 } from '@/calculator/cycle-bootstrap';
 import { findCycleComponents } from '@/calculator/cycle-analysis';
 import type { SchemeEdge, SchemeNode } from '@/calculator/flow-solver-types';
-import { buildTagIndex } from '@/lib/tag-index';
+import { buildTagIndex } from '@/shared/tag-index';
 import type { PackData } from '@/data/types';
 
 const rheniumNodes: SchemeNode[] = [

@@ -2,7 +2,7 @@ import { useCallback, type RefObject } from 'react';
 import type { EditorCanvasHandle } from '@/canvas/EditorCanvas';
 import type { NodeDynamicDisplay } from '@/canvas/node-display-context';
 import type { ActivePack } from '@/data/pack-runtime';
-import { resolveIssueFocusPoint } from '@/lib/viewport-focus';
+import { resolveIssueFocusPoint } from '@/editor-graph/viewport-focus';
 import type { SchemeIssue } from '@/scheme-check/check-scheme';
 import type { TfgpEdge, TfgpNode } from '@/schema/tfgp';
 import type { FocusSelectionParams } from '@/hooks/useEditorSelection';

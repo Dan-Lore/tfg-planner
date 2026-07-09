@@ -3,8 +3,8 @@ import { persist } from 'zustand/middleware';
 import type { PackManifestEntry } from '@/data/types';
 import type { ActivePack, PackLoadStage } from '@/data/pack-runtime';
 import { loadManifest, loadActivePack, peekSessionCachedPack } from '@/data/pack-registry';
-import { buildTagIndexFromMeta } from '@/lib/tag-index';
-import { readPersistedActiveEntry } from '@/lib/pack-persist';
+import { buildTagIndexFromMeta } from '@/shared/tag-index';
+import { readPersistedActiveEntry } from '@/data/pack-persist';
 
 export type PackRestoreState = 'idle' | 'restoring' | 'ready';
 

@@ -12,7 +12,9 @@ alwaysApply: false
 | Слой | Путь | Зависимости |
 |------|------|-------------|
 | Parser CLI | `tools/parser/` | Node, Babel AST; **без React** |
-| Calculator | `src/calculator/` | `@/data`, `@/lib`; **без React** |
+| Calculator | `src/calculator/` | `@/shared`, `@/data`; public API: `calculator/index.ts` |
+| Shared domain | `src/shared/` | `@/data`; без React |
+| Editor graph | `src/editor-graph/` | routing, layout, scheme-solver, flow-compute |
 | Canvas / Editor | `src/canvas/`, `src/editor/`, `src/stores/` | React Flow, Zustand |
 | Pack runtime | `src/data/`, `public/data/packs/` | IndexedDB cache |
 | Schema I/O | `src/schema/` | `.tfgp` serialize/deserialize |

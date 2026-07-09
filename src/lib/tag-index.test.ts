@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildTagIndexFromMeta } from '@/lib/tag-index';
-import { productMatchesTag } from '@/lib/tag-rules';
-import { flowsCompatible } from '@/lib/flow-match';
+import { buildTagIndexFromMeta } from '@/shared/tag-index';
+import { productMatchesTag } from '@/shared/tag-rules';
+import { flowsCompatible } from '@/shared/flow-match';
 
 const metaFixture = {
   items: [

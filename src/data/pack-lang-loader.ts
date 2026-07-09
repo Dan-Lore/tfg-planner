@@ -1,5 +1,5 @@
 import { publicPath } from '@/lib/public-path';
-import { ProductLexicon, type PackLangArtifact } from '@/lib/product-lexicon';
+import { ProductLexicon, type PackLangArtifact } from '@/shared/product-lexicon';
 import type { PackBuildManifest } from '@/lib/pack-build-manifest';
 import type { PackManifestEntry } from './types';
 import {
